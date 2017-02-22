@@ -1,0 +1,25 @@
+{
+  "name": "@nzz/q-editor",
+  "version": "1.0.0",
+  "description": "Q Editor - The editor part of the Q toolbox",
+  "homepage": "https://github.com/nzzdev/Q-editor",
+  "bugs": {
+    "url": "https://github.com/nzzdev/Q-editor/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nzzdev/Q-editor"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Beni Buess <beni.buess@nzz.ch>",
+  "license": "MIT",
+  "dependencies": {
+    "boom": "^4.2.0",
+    "hapi": "^16.1.0",
+    "hoek": "^4.1.0",
+    "inert": "^4.1.0"
+  }
+}

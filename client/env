@@ -1,0 +1,5 @@
+{
+  "QServerBaseUrl": "http://localhost:3001",
+  "devLogging": true,
+  "pushState": false
+}

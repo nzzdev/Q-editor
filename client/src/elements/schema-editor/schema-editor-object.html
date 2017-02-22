@@ -1,0 +1,29 @@
+<template>
+    <require from="./schema-editor-wrapper"></require>
+
+    <div if.bind="schema.properties" repeat.for="propertyName of schema.properties | keys">
+
+      <fieldset if.bind="getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'">
+        <legend>
+          ${$parent.schema.properties[propertyName]['Q:label'] ? $parent.schema.properties[propertyName]['Q:label'] : $parent.schema.properties[propertyName]['title']}
+        </legend>
+
+        <schema-editor-wrapper
+            if.bind="!$parent.schema.properties[propertyName]['Q:options'] || !$parent.schema.properties[propertyName]['Q:options'].hideInEditor"
+            schema.bind="$parent.schema.properties[propertyName]"
+            data.two-way="$parent.data[propertyName]"
+            change.bind="$parent.change"
+            required.bind="isRequired($parent.schema, propertyName)">
+        </schema-editor-wrapper>
+      </fieldset>
+
+      <schema-editor-wrapper
+        if.bind="(!$parent.schema.properties[propertyName]['Q:options'] || !$parent.schema.properties[propertyName]['Q:options'].hideInEditor) && getType($parent.schema.properties[propertyName]) !== 'object' && getType($parent.schema.properties[propertyName]) !== 'array'"
+        schema.bind="$parent.schema.properties[propertyName]"
+        data.two-way="$parent.data[propertyName]"
+        change.bind="$parent.change"
+        required.bind="isRequired($parent.schema, propertyName)">
+      </schema-editor-wrapper>
+
+    </div>
+</template>

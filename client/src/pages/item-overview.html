@@ -1,0 +1,46 @@
+<template>
+  <require from="elements/item-preview/item-preview"></require>
+  <require from="./item-overview.css"></require>
+  <main class="item-overview">
+    <q-messages></q-messages>
+    <div class="item-overview-container">
+      <div class="item-overview__content">
+        <item-preview if.bind="itemId" id.bind="itemId" on-drag.bind="handleDrag"></item-preview>
+      </div>
+      <aside class="item-overview__controls">
+        <div class="item-overview__status q-text-small">
+          <icon-active-state class="tool-status-bar__item" is-active.bind="item.conf.active"></icon-active-state>
+          <span>${ 'general.created' | t } ${ item.conf.createdDate | timeAgo:7*24*60*60 }<br>
+          ${ 'general.by' | t } ${item.conf.createdBy}</span>
+        </div>
+
+        <button-primary if.bind="!item.conf.active" click.delegate="activateItem()" icon="activate">
+          <span t="item.activate"></span>
+        </button-primary>
+
+        <button-primary if.bind="item.conf.active" click.delegate="deactivateItem()" icon="deactivate">
+          <span t="item.deactivate"></span>
+        </button-primary>
+
+        <div class="item-overview__embed-code">
+          <h6>Free HTML Code</h6>
+          <pre><code class="q-text-small q-text--light" if.bind="item.conf.active">${embedCode}</code></pre>
+        </div>
+
+
+        <button-primary click.delegate="blueprint()" icon="blueprint">
+          <span t="item.blueprint"></span>
+        </button-primary>
+
+        <button-primary click.delegate="edit()" icon="edit">
+          <span t="item.edit"></span>
+        </button-primary>
+
+        <button-secondary click.delegate="back()" icon="close">
+          <span t="general.goToOverview"></span>
+        </button-secondary>
+
+      </aside>
+    <div>
+  </main>
+</template>

@@ -1,0 +1,68 @@
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--q-color-gray-1);
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.q-container {
+  height: 100%;
+  max-width: 100vw;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+.q-container--playground {
+  padding-left: 5px;
+}
+
+.q-container--playground::before {
+  content: '';
+  display: block;
+  width: 5px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M8,48L-8,32 M48,48L-8-8 M48,8L32-8' stroke-width='14' stroke='#f00'/></svg>");
+  background-repeat: repeat;
+  background-color: white;
+}
+
+q-bar {
+  height: 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  width: 52px;
+}
+
+q-screen {
+  height: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  transition: opacity 0.2s ease-out;
+}
+
+q-screen.is-navigating {
+  opacity: 0.5;
+}
+
+q-screen main {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+main.index,
+main.item-overview {
+  padding: calc(var(--q-space-base) * 3);
+}

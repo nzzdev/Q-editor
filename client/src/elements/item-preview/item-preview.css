@@ -1,0 +1,19 @@
+item-preview {
+  display: block;
+}
+
+item-preview > div {
+  max-width: 540px;
+}
+
+.item-preview__settings {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-preview__settings > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}

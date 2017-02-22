@@ -1,0 +1,15 @@
+<template>
+  <require from="https://fonts.googleapis.com/css?family=Inconsolata|Roboto!css"></require>
+  <require from="./styles/config.css"></require>
+  <require from="./styles/layout.css"></require>
+  <require from="./styles/fonts.css"></require>
+  <require from="./styles/q-form.css"></require>
+  <require from="./styles/app.css"></require>
+
+  <div class="q-container ${env.PLAYGROUND ? 'q-container--playground' : ''}">
+    <q-bar if.bind="user.isLoggedIn" router.bind="router"></q-bar>
+    <q-screen class="${router.isNavigating ? 'is-navigating' : ''}">
+      <router-view containerless name="default"></router-view>
+    </q-screen>
+  </div>
+</template>

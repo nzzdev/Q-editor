@@ -1,0 +1,82 @@
+body {
+  font-family: 'Inconsolata', monospace;
+  line-height: 1.2;
+  color: var(--q-text-color);
+}
+
+h1 {
+  font-size: var(--q-h1-size);
+  font-weight: var(--q-h1-weight);
+  margin-top: 0;
+  margin-bottom: var(--q-space-base);
+}
+
+h2 {
+  font-size: var(--q-h2-size);
+  font-weight: var(--q-h2-weight);
+  margin-top: 0;
+  margin-bottom: var(--q-space-base);
+}
+
+h3 {
+  font-size: var(--q-h3-size);
+  font-weight: var(--q-h3-weight);
+  margin-top: 0;
+  margin-bottom: calc(var(--q-space-base) / 2);
+}
+
+h4 {
+  font-size: var(--q-h4-size);
+  font-weight: var(--q-h4-weight);
+  margin-top: 0;
+  margin-bottom: calc(var(--q-space-base) / 2);
+}
+
+h5 {
+  font-size: var(--q-h5-size);
+  font-weight: var(--q-h5-weight);
+  margin-top: 0;
+  margin-bottom: calc(var(--q-space-base) / 2);
+}
+
+h6 {
+  font-size: var(--q-h6-size);
+  font-weight: var(--q-h6-weight);
+  color: var(--q-text-light-color);
+  margin-top: 0;
+  margin-bottom: calc(var(--q-space-base) / 2);
+
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--q-color-gray-4);
+}
+
+.q-text {
+  font-size: var(--q-text-size);
+  line-height: 1.28;
+}
+
+.q-text-small {
+  font-size: var(--q-text-small-size);
+  line-height: 1.33;
+}
+
+.q-text--light {
+  color: var(--q-text-light-color);
+}
+
+.q-text--success {
+  color: var(--q-color-success);
+}
+
+.q-text--error {
+  color: var(--q-color-error);
+}
+
+a, a:hover, a:visited {
+  color: var(--q-link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

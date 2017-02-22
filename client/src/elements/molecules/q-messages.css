@@ -1,0 +1,60 @@
+q-messages {
+  display: block;
+  z-index: 20000;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 0 5px 10px rgba(255,255,255,0.9);
+}
+
+.q-message {
+  display: flex;
+  border: 1px solid currentColor;
+  margin-bottom: calc(var(--q-space-base)/2);
+}
+.q-message svg {
+  fill: currentColor;
+}
+
+.q-message .message-icon {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.q-message button {
+  border: none;
+  background: none;
+  font-weight: bold;
+  color: currentColor;
+  margin-left: auto;
+  margin-right: calc(var(--q-space-base)/2);
+  outline: none;
+  cursor: pointer;
+}
+
+.q-message--success {
+  color: var(--q-color-success);
+  background: var(--q-color-success--light);
+}
+
+.q-message--info {
+  color: var(--q-color-info);
+  background: var(--q-color-info--light);
+}
+
+.q-message--warning {
+  color: var(--q-color-warning);
+  background: var(--q-color-warning--light);
+}
+
+.q-message--error {
+  color: var(--q-color-error);
+  background: var(--q-color-error--light);
+}
+
+.q-message p {
+  color: inherit;
+  size: 16px;
+}
+
+.q-message .js-error {
+  font-size: 0.4em;
+}

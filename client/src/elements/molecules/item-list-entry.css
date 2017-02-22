@@ -1,0 +1,34 @@
+item-list-entry {
+  background: var(--q-color-primary-2);
+
+  padding: calc(var(--q-space-base) / 4);
+  margin-bottom: calc(var(--q-space-base) / 4);
+
+  display: flex;
+  align-items: center;
+
+  transition: transform 0.2s ease-in;
+}
+
+item-list-entry:hover {
+  cursor: pointer;
+}
+
+item-list-entry.inactive {
+  background: var(--q-color-primary-1);
+  border: 1px dashed var(--q-color-primary-2);
+}
+
+item-list-entry .tool-icon {
+  width: 26px;
+  height: 26px;
+  color: var(--q-color-gray-6);
+}
+
+item-list-entry span {
+  width: calc((100% - (2 * 26px)) / 3);
+}
+
+item-list-entry delete-button {
+  margin-left: auto;
+}

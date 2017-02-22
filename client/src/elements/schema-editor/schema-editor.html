@@ -1,0 +1,10 @@
+<template>
+  <require from="./schema-editor.css"></require>
+  <require from="./schema-editor-wrapper"></require>
+  <slot></slot>
+  <schema-editor-wrapper
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change">
+  </schema-editor-wrapper>
+</template>

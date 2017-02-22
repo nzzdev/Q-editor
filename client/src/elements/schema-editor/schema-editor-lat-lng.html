@@ -1,0 +1,14 @@
+<template>
+  <require from="./schema-editor-lat-lng.css"></require>
+  <div style="height: 400px;" ref="mapContainer"></div>
+  <div>
+    <label>
+      Latitude
+      <input type="number" step="any" value.bind="data.lat">
+    </label>
+    <label>
+      Longitute
+      <input type="number" step="any" value.bind="data.lng">
+    </label>
+  </div>
+</template>

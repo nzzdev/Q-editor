@@ -1,0 +1,8 @@
+<template>
+  <label>
+    ${schema["Q:label"] ? schema["Q:label"] : schema["title"]}
+    <select value.bind="data" change.delegate="change()">
+      <option repeat.for="option of schema.enum" value.bind="option">${optionLabels[$index]}</option>
+    </select>
+  </label>
+</template>

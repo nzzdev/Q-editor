@@ -1,0 +1,34 @@
+<template>
+  <require from="./editor.css"></require>
+  <require from="elements/schema-editor/schema-editor"></require>
+  <require from="elements/item-preview/item-preview"></require>
+  <require from="elements/organisms/tool-status-bar"></require>
+  <section class="editor">
+    <main>
+        <q-messages></q-messages>
+        <section>
+          <form ref="form" class="q-form" validate>
+            <schema-editor schema.bind="schema" data.bind="item.conf" change.call="handleChange()">
+              <h1>${schema.title || 'Grafik'}</h1>
+            </schema-editor>
+            <button ref="formSubmitButton" type="submit" style="display: none;"></button>
+          </form>
+        </section>
+        <section>
+          <h2>Vorschau</h2>
+          <item-preview data.bind="previewData"></item-preview>
+        </section>
+        <section>
+          <meta-editor data.bind="item.conf"></meta-editor>
+        </section>
+    </main>
+    <div class="editor__options" if.bind="optionsSchema">
+      <form ref="form" class="q-form" validate>
+        <schema-editor schema.bind="optionsSchema" data.bind="item.conf.options" change.call="handleChange()">
+          <h6>${optionsSchema.title || 'Optionen'}</h6>
+        </schema-editor>
+      </form>
+    </div>
+    <tool-status-bar item.bind="item" save-action.call="userSave()" activate-action.call="openItemModal()"></tool-status-bar>
+  </section>
+</template>

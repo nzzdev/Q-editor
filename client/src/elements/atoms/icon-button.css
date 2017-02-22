@@ -1,0 +1,82 @@
+icon-button {
+  display: block;
+  cursor: pointer;
+  width: auto;
+}
+
+icon-button button {
+  padding: 0;
+  margin: 0;
+  background: none;
+  width: 100%;
+
+  cursor: pointer;
+
+  font-family: inherit;
+  line-height: inherit;
+  font-size: 14px;
+  color: inherit;
+
+  background-color: var(--q-color-primary-1);
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: 18px;
+  
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+icon-button button:focus {
+  outline: none;
+}
+
+.icon-button__icon {
+  width: 34px;
+  height: 34px;
+}
+
+/*.icon-button__text {
+  padding-right: calc(var(--q-space-base) / 2);*/
+/*}*/
+
+.icon-button__icon:empty {
+  display: none;
+}
+
+.icon-button__text:empty {
+  display: none;
+}
+
+icon-button.size-small {
+  height: 24px;
+}
+
+icon-button.size-small .icon-button__icon {
+  height: 22px;
+  width: 22px;
+}
+
+icon-button.size-small button {
+  height: 24px;
+  border-radius: 12px;
+}
+
+icon-button.size-big {
+  height: 48px;
+}
+
+icon-button.size-big .icon-button__icon {
+  height: 46px;
+  width: 46px;
+}
+
+icon-button.size-big button {
+  height: 48px;
+  border-radius: 24px;
+}
+

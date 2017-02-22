@@ -1,0 +1,36 @@
+schema-editor-array {
+  display: block;
+}
+
+.schema-editor-array__entry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border-bottom: 1px solid var(--q-color-gray-3);
+  padding-bottom: var(--q-space-base);
+  margin-bottom: var(--q-space-base);
+}
+
+schema-editor-array schema-editor-wrapper {
+  flex-grow: 1;
+}
+
+.schema-editor-array__add-item-button {
+  margin: calc(var(--q-space-base) / 2) 0;
+}
+
+.schema-editor-array__entry-actions {
+  width: 150px;
+  flex-grow: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  align-self: flex-start;
+  margin-top: 20px; /* magic number, roughly the height of the label on top of an input field */
+}
+
+.schema-editor-array__entry-actions > * {
+  margin-right: calc(var(--q-space-base) / 2);
+}
+
+

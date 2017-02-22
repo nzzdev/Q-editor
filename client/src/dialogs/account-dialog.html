@@ -1,0 +1,35 @@
+<template>
+  <require from="../styles/q-dialog.css"></require>
+  <div class="q-dialog">
+    <div class="q-dialog__content">
+      <h1 class="q-dialog-title">Konto</h1>
+      <p class="q-dialog-text">
+        Username: ${user.data.username}<br>
+      </p>
+      <form class="q-form" ref="userForm">
+        <label for="department">Ressort</label>
+        <div class="q-select">
+          <select value.bind="user.data.department">
+            <option repeat.for="department of departments" value.bind="department">${department}</option>
+          </select>
+        </div>
+        <label for="acronym">Kürzel
+          <input type="text" id="acronym" value.bind="user.data.acronym">
+        </label>
+        <button-primary
+          click.delegate="saveUser()"
+          icon="proceed"><span t="general.saveChanges"></span></button-primary>
+      </form>
+      <p class="q-text q-text--success" if.bind="userFormMessage">${userFormMessage}</p>
+      <p class="q-text q-text--error" if.bind="userFormErrors">${userFormErrors}</p>
+    </div>
+    <aside class="q-dialog__controls">
+      <button-primary
+        click.trigger="logout()"
+        icon="logout"><span t="general.logout"></span></button-primary>
+      <button-secondary
+        click.trigger="controller.cancel()"
+        icon="close"><span t="general.close"></span></button-secondary>
+    </aside>
+  </div>
+</template>

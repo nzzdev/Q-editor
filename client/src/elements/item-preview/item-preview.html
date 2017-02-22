@@ -1,0 +1,22 @@
+<template>
+  <require from="./preview-container"></require>
+  <require from="./item-preview.css"></require>
+  <require from="../molecules/radio-button-group"></require>
+
+  <form class="q-form item-preview__settings">
+    <div>
+      <label class="q-text-small q-text--light"><span t="editor.previewTargetLabel"></span>
+        <select value.bind="targetProxy.target">
+          <option repeat.for="target of availableTargets" model.bind="target">${target.label}</option>
+        </select>
+      </label>
+    </div>
+    <div>
+      <label class="q-text-small q-text--light" t="editor.previewSizeLabel"></label>
+      <radio-button-group options.bind="sizeOptions" value.two-way="previewWidth"></radio-button-group>
+    </div>
+  </form>
+  <p class="q-text q-text--error" if.bind="errorMessage">${errorMessage}</p>
+  <preview-container ref="previewContainer" width.bind="previewWidth" rendering-info.bind="renderingInfo"></preview-container> 
+  
+</template>

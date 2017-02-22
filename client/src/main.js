@@ -1,0 +1,74 @@
+import QConfig from 'resources/QConfig.js';
+import Auth from 'resources/Auth.js';
+import User from 'resources/User.js';
+import MessageService from 'resources/MessageService.js';
+import EmbedCodeGenerator from 'resources/EmbedCodeGenerator.js';
+import ItemStore from 'resources/ItemStore.js';
+import Statistics from 'resources/Statistics.js';
+import ToolsInfo from 'resources/ToolsInfo.js';
+import qEnv from 'resources/qEnv.js';
+import { registerEastereggs } from 'eastereggs.js';
+
+import { I18N } from 'aurelia-i18n';
+import Backend from 'i18next-xhr-backend';
+
+var pouchOptions = {
+  skipSetup: true,
+}
+
+export function configure(aurelia) {
+  aurelia.use
+    .standardConfiguration()
+    .feature('elements/atoms')
+    .feature('elements/molecules')
+    .feature('elements/organisms')
+    .feature('icons')
+    .feature('value-converters')
+    .plugin('aurelia-dialog')
+    .plugin('aurelia-i18n', (instance) => {
+      // register backend plugin
+      instance.i18next.use(Backend);
+
+      // adapt options to your needs (see http://i18next.com/docs/options/)
+      // make sure to return the promise of the setup method, in order to guarantee proper loading
+      return instance.setup({
+        backend: {
+          loadPath: './locales/{{lng}}/{{ns}}.json',
+        },
+        lng: navigator.language || 'de',
+        attributes: ['t','i18n'],
+        fallbackLng: 'de',
+        debug: false
+      });
+    })
+  ;
+
+  qEnv.devLogging
+    .then(devLogging => {
+      if (devLogging) {
+        aurelia.use
+          .plugin('aurelia-testing')
+          .developmentLogging();
+      }
+
+      aurelia.use.singleton(QConfig);
+      
+      aurelia.use.singleton(Auth);
+      aurelia.use.singleton(EmbedCodeGenerator);
+      aurelia.use.singleton(Statistics);
+      aurelia.use.singleton(ToolsInfo);
+      aurelia.use.singleton(ItemStore);
+      aurelia.use.singleton(MessageService);
+
+      aurelia.use.singleton(User);
+
+      aurelia.start().then(a => a.setRoot());
+
+      aurelia.container.get(QConfig).get('eastereggs')
+        .then(eastereggConfig => {
+          if (eastereggConfig) {
+            registerEastereggs(eastereggConfig);
+          }
+        })
+    })
+}

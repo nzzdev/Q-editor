@@ -1,0 +1,10 @@
+<template>
+  <require from="./tool-selection.css"></require>
+  <a repeat.for="tool of tools" route-href="route: editor; params.bind: {tool: tool.name}">
+    <button-primary
+      size="big"
+      code.bind=tool.icon
+    ></button-primary>
+    ${tool.label}
+  </a>
+</template>

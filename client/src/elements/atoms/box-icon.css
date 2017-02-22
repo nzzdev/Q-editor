@@ -1,0 +1,28 @@
+box-icon {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+box-icon > * {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+box-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+box-icon path, box-icon polygon, box-icon circle {
+  fill: currentColor;
+}
+
+box-icon.size-big svg {
+  width: 20px;
+  height: 20px;
+}

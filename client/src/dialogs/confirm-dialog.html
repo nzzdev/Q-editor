@@ -1,0 +1,12 @@
+<template>
+  <require from="../styles/q-dialog.css"></require>
+  <div class="q-dialog q-dialog--bottom-controls">
+    <div class="q-dialog__content">
+      <h1 class="q-dialog-title">${config.confirmQuestion}</h1>
+    </div>
+    <aside class="q-dialog__controls">
+      <button-yes click.delegate="controller.ok()">Ja</button-yes>
+      <button-no click.delegate="controller.cancel()">Nein</button-yes>
+    </aside>
+  </div>
+</template>

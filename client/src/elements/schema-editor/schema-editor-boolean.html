@@ -1,0 +1,8 @@
+<template class="schema-editor-input" bindable="schema, data, change">
+  <div class="q-form__checkbox">
+    <label>
+      <input type="checkbox" checked.bind="data" change.delegate="change()">
+      <span>${schema["Q:label"] ? schema["Q:label"] : schema["title"]}</span>
+    </label>
+  </div>
+</template>

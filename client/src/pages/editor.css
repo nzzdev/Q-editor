@@ -1,0 +1,39 @@
+.editor {
+  height: 100%;
+  display: flex;
+}
+
+.editor main {
+  padding: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 3);
+  flex-grow: 1;
+}
+
+.editor main section {
+  padding-bottom: var(--q-space-base);
+  border-bottom: 1px solid var(--q-color-gray-4);
+  margin-bottom: calc(var(--q-space-base) * 2);
+  max-width: 630px;
+}
+
+.editor__options {
+  background-color: var(--q-color-gray-2);
+  box-shadow: -1px 0 2px 0 rgba(0, 0, 0, 0.25);
+  padding: calc(var(--q-space-base) * 2) var(--q-space-base);
+
+  width: 280px;
+  flex-grow: 0;
+}
+
+.editor tool-status-bar {
+  width: 52px;
+  flex-grow: 0;
+}
+
+.editor main::-webkit-scrollbar {
+  background: transparent;
+  width: 2px;
+}
+
+.editor main::-webkit-scrollbar-thumb {
+  background: var(--q-color-gray-5);
+}

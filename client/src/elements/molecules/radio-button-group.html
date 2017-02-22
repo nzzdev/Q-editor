@@ -1,0 +1,11 @@
+<template bindable="options, value">
+  <require from="./radio-button-group.css"></require>
+  <radiogroup>
+    <div class="radio-button-group__option" repeat.for="option of options">
+      <input type="radio" id="button-${option.value}" value.bind="option.value" checked.bind="value" matcher.bind="valueMatcher">
+      <label for="button-${option.value}">
+        <compose if.bind="option.icon" view="icons/icon-${option.icon}.html"></compose>
+      </label>
+    </div>
+  </radiogroup>
+</template>

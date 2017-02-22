@@ -1,0 +1,13 @@
+.item-dialog pre {
+  background: white;
+  border: 1px solid var(--q-color-gray-3);
+  padding: 10px 3px;
+  margin: 0;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.item-dialog code {
+  white-space: normal;
+  overflow-wrap: break-word;
+}

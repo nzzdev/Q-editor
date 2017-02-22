@@ -1,0 +1,88 @@
+<template style="display: block;">
+
+  <div if.bind="getType(schema) === 'string'" class="schema-editor-block">
+    <require from="./schema-editor-string.html"></require>
+    <schema-editor-string 
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-string>
+  </div>
+
+  <div if.bind="getType(schema) === 'boolean'" class="schema-editor-block">
+    <require from="./schema-editor-boolean.html"></require>
+    <schema-editor-boolean 
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"></schema-editor-boolean>
+  </div>
+
+  <div if.bind="getType(schema) === 'url'" class="schema-editor-block">
+    <require from="./schema-editor-url.html"></require>
+    <schema-editor-url 
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-url>
+  </div>
+
+  <div if.bind="getType(schema) === 'link'" class="schema-editor-block">
+    <require from="./schema-editor-link"></require>
+    <schema-editor-link 
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-link>
+  </div>
+
+  <div if.bind="getType(schema) === 'number'" class="schema-editor-block">
+    <require from="./schema-editor-number"></require>
+    <schema-editor-number 
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-number>
+  </div>
+
+  <div if.bind="getType(schema) === 'object'" class="schema-editor-block">
+    <require from="./schema-editor-object"></require>
+    <schema-editor-object 
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"></schema-editor-object>
+  </div>
+
+  <div if.bind="getType(schema) === 'array'" class="schema-editor-block">
+    <require from="./schema-editor-array"></require>
+    <schema-editor-array 
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"></schema-editor-array>
+  </div>
+
+  <div if.bind="getType(schema) === 'select'" class="schema-editor-block">
+    <require from="./schema-editor-select"></require>
+    <schema-editor-select 
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"></schema-editor-select>
+  </div>
+
+  <div if.bind="getType(schema) === 'latLng'" class="schema-editor-block">
+    <require from="./schema-editor-lat-lng"></require>
+    <schema-editor-lat-lng 
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"></schema-editor-lat-lng>
+  </div>
+
+  <div if.bind="getType(schema) === 'base64image'" class="schema-editor-block">
+    <require from="./schema-editor-base64image"></require>
+    <schema-editor-base64image 
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-base64image>
+  </div>
+
+</template>

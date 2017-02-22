@@ -1,0 +1,14 @@
+tool-status-bar {
+  padding: calc(var(--q-space-base) / 2);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: var(--q-color-gray-2);
+  border-left: 1px solid var(--q-color-gray-5);
+}
+
+.tool-status-bar__item {
+  margin-bottom: calc(var(--q-space-base) / 2);
+}

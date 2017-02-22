@@ -1,0 +1,11 @@
+<template bindable="icon, code, size, iconSize" class="size-${size}">
+  <require from="./icon-button.css"></require>
+  <button>
+    <div class="icon-button__icon">
+      <box-icon if.bind="code || icon" code.bind="code" icon.bind="icon" size="${iconSize || size}"></box-icon>
+    </div>
+    <div class="icon-button__text">
+      <slot></slot>
+    </div>
+  </button>
+</template>

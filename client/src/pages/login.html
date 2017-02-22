@@ -1,0 +1,14 @@
+<template>
+  <main class="login-page">
+    <div if.bind="!isChrome" style="text-align: center; color: #FF0000;" t="general.browserSupportMessage"></div>
+    <icon-logo style="width: 100px; margin-left: auto; margin-right: auto;"></icon-logo>
+    <form class="q-form">
+      <input type="text" id="username" value.bind="username" placeholder="Email">
+      <input type="password" id="password" value.bind="password" placeholder="Passwort">
+      <button class="q-form-button button small" click.delegate="tryLogin()">Anmelden</button>
+      <div class="q-text q-text--error" if.bind="loginError">
+        ${loginError}
+      </div>
+    </form>
+  </main>
+</template>

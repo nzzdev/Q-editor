@@ -1,0 +1,17 @@
+icon-save-state {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+icon-save-state svg {
+  color: white;
+}
+
+icon-save-state.state-saved box-icon {
+  background: var(--q-color-yes-5);
+}
+
+icon-save-state.state-unsaved box-icon {
+  background: var(--q-color-no-5);
+}

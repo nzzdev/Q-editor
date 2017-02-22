@@ -1,0 +1,19 @@
+schema-editor-base64image label {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+schema-editor-base64image label span {
+  width: 100%;
+}
+
+schema-editor-base64image label .schema-editor-base64image__input {
+  flex-grow: 1;
+  width: auto;
+}
+
+schema-editor-base64image label img {
+  height: 30px;
+  align-self: center;
+  padding-left: calc(var(--q-space-base) / 2);
+}

@@ -1,0 +1,12 @@
+<template>
+  <form class="q-form">
+    <label class="q-text-small q-text--light">Ressort
+      <select value.bind="data.department">
+        <option repeat.for="department of departments" value.bind="department">${department}</option>
+      </select>
+    </label>
+    <label class="q-text-small q-text--light">Annotationen
+      <textarea value.bind="data.annotations" style="height: 150px;"></textarea>
+    </label>
+  </form>
+</template>

@@ -1,0 +1,5 @@
+<template bindable="icon, code, size" class="size-${size}">
+  <require from="./box-icon.css"></require>
+  <div innerhtml.bind="code" if.bind="code"></div>
+  <compose if.bind="icon" view="icons/icon-${icon}.html"></compose>
+</template>

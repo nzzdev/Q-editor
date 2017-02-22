@@ -1,0 +1,47 @@
+{
+  "general": {
+    "back": "zurück",
+    "loadMore": "mehr laden",
+    "itemNotActivated": "Grafik ist noch nicht aktiviert",
+    "saveChanges": "Änderungen speichern",
+    "logout": "abmelden",
+    "close": "schliessen",
+    "goToOverview": "zur Übersicht",
+    "created": "erstellt",
+    "by": "von",
+    "graphic": "Grafik",
+    "graphic_plural": "Grafiken",
+    "browserSupportMessage": "Q ist für Chrome optimiert und funktioniert in Ihrem Browser evtl. nicht.",
+    "changesSaved": "Die Änderungen wurden gespeichert.",
+    "failedToSaveChanges": "Die Änderung konnten nicht gespeichert werden.",
+    "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt."
+  },
+  "statistics": {
+    "tooFewNewGraphics": "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",    
+    "enoughNewGraphics": "{{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive."
+  },
+  "editor": {
+    "questionLeaveWithUnsavedChanges": "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
+    "previewTargetLabel": "Publikation",
+    "previewSizeLabel": "Angezeigte Grösse",
+    "add": "hinzufügen",
+    "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen."
+  },
+  "item": {
+    "activate": "aktivieren",
+    "deactivate": "deaktivieren",
+    "blueprint": "als Vorlage benutzen",
+    "blueprintTitlePrefix": "Kopie von ",
+    "edit": "edititieren"
+  },
+  "itemsFilter": {
+    "allGraphics": "alle Grafiken",
+    "fromEveryone": "von allen",
+    "byMe": "von mir",
+    "allDepartments": "alle Ressorts",
+    "myDepartment": "nur mein Ressorts",
+    "allStates": "alle Zustände",
+    "onlyActive": "nur Aktive",
+    "onlyInactive": "nur Inaktive"
+  }
+}

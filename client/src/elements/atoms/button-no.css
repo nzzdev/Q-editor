@@ -1,0 +1,23 @@
+button-no {
+  display: block;
+}
+
+button-no icon-button button {
+  color: var(--q-color-gray-6);
+  background-color: var(--q-color-no-2);
+  border-color: var(--q-color-no-4);
+}
+
+button-no icon-button button:focus {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);
+}
+
+button-no icon-button button:hover {
+  color: var(--q-color-black);
+  background-color: var(--q-color-no-3);
+}
+
+button-no icon-button button[disabled] {
+  color: var(--q-color-no-3);
+  border-color: var(--q-color-no-2);
+}

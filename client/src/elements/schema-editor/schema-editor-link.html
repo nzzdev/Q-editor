@@ -1,0 +1,6 @@
+<template>
+  <label>
+    ${schema.properties.url["title"] || ''}
+    <input type="url" required.bind="required" value.bind="data.url" ref="urlInput" keyup.delegate="handleUrlChange() & debounce:800">
+  <label>
+</template>
