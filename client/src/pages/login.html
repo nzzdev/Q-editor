@@ -1,14 +1,24 @@
 <template>
-  <main class="login-page">
+  <main class="login-page" style="max-width: 500px; margin-left: auto; margin-right: auto; overflow-y: auto;">
     <div if.bind="!isChrome" style="text-align: center; color: #FF0000;" t="general.browserSupportMessage"></div>
-    <icon-logo style="width: 100px; margin-left: auto; margin-right: auto;"></icon-logo>
+    <icon-logo style="width: 100px; height: 100px; margin: 50px auto 100px auto;"></icon-logo>
     <form class="q-form">
-      <input type="text" id="username" value.bind="username" placeholder="Email">
-      <input type="password" id="password" value.bind="password" placeholder="Passwort">
-      <button class="q-form-button button small" click.delegate="tryLogin()">Anmelden</button>
-      <div class="q-text q-text--error" if.bind="loginError">
-        ${loginError}
+      <div class="q-form__block">
+        <label>
+          <span t="general.username"></span>
+          <input type="text" id="username" value.bind="username">
+        </label>
       </div>
+      <div class="q-form__block">
+        <label>
+          <span t="general.password"></span>
+          <input type="password" id="password" value.bind="password">
+        </label>
+      </div>
+      <button-primary click.delegate="tryLogin()"><span t="general.login"></span></button-primary>
+      <p class="q-text q-text--error" if.bind="loginError">
+        ${loginError}
+      </p>
     </form>
   </main>
 </template>

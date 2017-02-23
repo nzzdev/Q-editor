@@ -40,6 +40,10 @@
   padding: 9px;
 }
 
+.q-form__block {
+  display: block;
+  margin-bottom: calc(var(--q-space-base) / 2);
+}
 
 /*
 
