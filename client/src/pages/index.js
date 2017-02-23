@@ -23,12 +23,10 @@ export class Index {
   }
 
   canActivate() {
-    console.log('index canActivate');
     return this.user.loaded;
   }
 
   activate() {
-    console.log('index activate');
     if (this.initialised) {
       this.reloadItems();
       this.loadStatistics();
