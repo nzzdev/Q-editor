@@ -6,7 +6,8 @@ var config = {
   force: true,
   baseURL: '.',
   configPath: './config.js',
-  bundles: bundles.bundles
+  bundles: bundles.bundles,
+  runtime: false
 };
 
 gulp.task('bundle', ['build'], function() {
