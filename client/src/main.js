@@ -1,3 +1,6 @@
+// clear the load error timeout
+window.clearTimeout(window.QLoadErrorTimeout);
+
 import QConfig from 'resources/QConfig.js';
 import Auth from 'resources/Auth.js';
 import User from 'resources/User.js';
@@ -16,7 +19,7 @@ var pouchOptions = {
   skipSetup: true,
 }
 
-export function configure(aurelia) {
+export async function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .feature('elements/atoms')
@@ -43,32 +46,26 @@ export function configure(aurelia) {
     })
   ;
 
-  qEnv.devLogging
-    .then(devLogging => {
-      if (devLogging) {
-        aurelia.use
-          .plugin('aurelia-testing')
-          .developmentLogging();
-      }
+  const devLogging = await qEnv.devLogging;
+  if (devLogging) {
+    aurelia.use
+      .plugin('aurelia-testing')
+      .developmentLogging();
+  }
 
-      aurelia.use.singleton(QConfig);
-      
-      aurelia.use.singleton(Auth);
-      aurelia.use.singleton(EmbedCodeGenerator);
-      aurelia.use.singleton(Statistics);
-      aurelia.use.singleton(ToolsInfo);
-      aurelia.use.singleton(ItemStore);
-      aurelia.use.singleton(MessageService);
+  aurelia.use.singleton(QConfig);
+  
+  aurelia.use.singleton(Auth);
+  aurelia.use.singleton(EmbedCodeGenerator);
+  aurelia.use.singleton(Statistics);
+  aurelia.use.singleton(ToolsInfo);
+  aurelia.use.singleton(ItemStore);
+  aurelia.use.singleton(MessageService);
 
-      aurelia.use.singleton(User);
+  aurelia.use.singleton(User);
 
-      aurelia.start().then(a => a.setRoot());
+  aurelia.start().then(a => a.setRoot());
 
-      aurelia.container.get(QConfig).get('eastereggs')
-        .then(eastereggConfig => {
-          if (eastereggConfig) {
-            registerEastereggs(eastereggConfig);
-          }
-        })
-    })
+  const eastereggConfig = await aurelia.container.get(QConfig).get('eastereggs')
+  registerEastereggs(eastereggConfig);
 }
