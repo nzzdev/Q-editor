@@ -116,28 +116,29 @@ export class Index {
     }
   }
 
-  loadStatistics() {
-    this.statsValues = {};
+  async loadStatistics() {
+    this.statsValues = null;
 
-    this.statistics.getNumberOfActiveItems()
-      .then(res => {
-        this.statsValues.totalActiveCount = res;
-      })
+    try {
+      let statsValues = {};
+      statsValues.totalActiveCount = await this.statistics.getNumberOfActiveItems();
 
-    this.qConfig.get('lowNewItems')
-      .then(lowNewItemsConfig => {
-        this.lowNewItemsConfig = lowNewItemsConfig;
-        this.statsValues.days = lowNewItemsConfig.days;
-        return this.statistics.getNumberOfActiveItems(lowNewItemsConfig.days);
-      })
-      .then(newInLastXDays => {
-        this.statsValues.count = newInLastXDays;
-        if (newInLastXDays <= this.lowNewItemsConfig.threshold) {
-          this.enoughNewItems = false;
-        } else {
-          this.enoughNewItems = true;
-        }
-      })
+      const lowNewItemsConfig = await this.qConfig.get('lowNewItems');
+      statsValues.days = lowNewItemsConfig.days;
+
+      statsValues.count = await this.statistics.getNumberOfActiveItems(lowNewItemsConfig.days);
+
+      // only set the stats after all values are available
+      this.statsValues = statsValues;
+
+      if (newInLastXDays <= this.lowNewItemsConfig.threshold) {
+        this.enoughNewItems = false;
+      } else {
+        this.enoughNewItems = true;
+      }
+    } catch(e) {
+      // we do not care about errors here but just do not show statistics if something failed
+    }
   }
 
 }
