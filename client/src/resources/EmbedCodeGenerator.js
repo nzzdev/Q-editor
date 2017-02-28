@@ -13,6 +13,9 @@ export default class EmbedCodeGenerator {
   getEmbedCodeForItem(item) {
     return this.qConfig.get('browserLoaderUrl')
       .then(browserLoaderUrl => {
+        if (!browserLoaderUrl) {
+          return null;
+        }
         let embedCode = `<div class="q-item" id="q-${item.id}"></div><script src="${browserLoaderUrl}"></script>`;
         return embedCode;
       })

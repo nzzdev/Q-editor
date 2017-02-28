@@ -21,7 +21,7 @@
         <span t="item.deactivate"></span>
       </button-primary>
 
-      <div class="item-dialog__embed-code" if.bind="config.showEmbedCode">
+      <div class="item-dialog__embed-code" if.bind="config.showEmbedCode && embedCode !== null">
         <h6>Free HTML Code</h6>
         <pre><code class="q-text-small q-text--light" if.bind="item.conf.active">${embedCode}</code></pre>
       </div>

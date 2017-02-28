@@ -22,7 +22,7 @@
           <span t="item.deactivate"></span>
         </button-primary>
 
-        <div class="item-overview__embed-code">
+        <div class="item-overview__embed-code" if.bind="embedCode">
           <h6>Free HTML Code</h6>
           <pre><code class="q-text-small q-text--light" if.bind="item.conf.active">${embedCode}</code></pre>
         </div>
