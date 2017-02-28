@@ -15,14 +15,12 @@
         <delete-button action.call="deleteElement(data, $index)" size="small"></delete-button>
       </div>
     </div>
-    <div>
-      <schema-editor-wrapper
-          if.bind="collapsedStates[$index] === 'expanded' || !options.expandable"
-          schema.bind="$parent.schema.items"
-          data.two-way="data[$index]"
-          change.bind="$parent.change">
-      </schema-editor-wrapper>
-    </div>
+    <schema-editor-wrapper
+        if.bind="collapsedStates[$index] === 'expanded' || !options.expandable"
+        schema.bind="$parent.schema.items"
+        data.two-way="data[$index]"
+        change.bind="$parent.change">
+    </schema-editor-wrapper>
     <div class="schema-editor-array__entry-actions" if.bind="!options.expandable">
       <button-secondary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-secondary>
       <button-secondary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-secondary>
@@ -30,5 +28,5 @@
     </div>
   </div>
   
-  <button-secondary class="schema-editor-array__add-item-button" click.delegate="addElement(data, schema.items)">${arrayEntryLabel} <span t="editor.add">hinzufügen</span></button-secondary>
+  <button-secondary class="schema-editor-array__add-item-button" click.delegate="addElement(data, schema.items)">${arrayEntryLabel} <span t="editor.add"></span></button-secondary>
 </template>

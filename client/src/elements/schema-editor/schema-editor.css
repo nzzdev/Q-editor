@@ -11,7 +11,12 @@ schema-editor label {
 schema-editor fieldset {
   border: none;
   padding: 0 0 0 20px;
-  margin: calc(var(--q-space-base) * 2) 0 0 0;
+  margin: calc(var(--q-space-base) * 2) 0 calc(var(--q-space-base) / 2) 0;
+}
+
+schema-editor fieldset.compact {
+  padding: 0 0 0 10px;
+  margin-top: calc(var(--q-space-base) / 2);
 }
 
 schema-editor-wrapper legend {

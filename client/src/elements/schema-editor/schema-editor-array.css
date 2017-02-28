@@ -29,7 +29,7 @@ schema-editor-array {
 
 .schema-editor-array__entry > schema-editor-wrapper {
   flex-grow: 1;
-  padding-left: var(--q-space-base);
+  /*padding-left: var(--q-space-base);*/
 }
 
 .schema-editor-array__add-item-button {
@@ -43,7 +43,6 @@ schema-editor-array {
   align-items: center;
   justify-content: flex-end;
   align-self: flex-start;
-  /*margin-top: 20px;  magic number, roughly the height of the label on top of an input field */
   margin-left: auto;
 }
 

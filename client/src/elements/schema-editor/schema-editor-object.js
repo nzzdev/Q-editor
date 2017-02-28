@@ -15,11 +15,11 @@ export class SchemaEditorObject {
     return schema.hasOwnProperty('required') && schema.required.includes(propertyName)
   }
 
-  activate(model) {
-    console.log(model)
-    this.schema = model.schema;
-    this.data = model.data;
-    this.change = model.change;
+  isCompact(schema) {
+    if (schema && schema['Q:options'] && schema['Q:options'].compact) {
+      return true;
+    }
+    return false;
   }
 
 }
