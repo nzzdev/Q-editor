@@ -5,7 +5,7 @@
 
       <fieldset if.bind="getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'">
         <legend>
-          ${$parent.schema.properties[propertyName]['Q:label'] ? $parent.schema.properties[propertyName]['Q:label'] : $parent.schema.properties[propertyName]['title']}
+          ${$parent.schema.properties[propertyName]['title']}
         </legend>
 
         <schema-editor-wrapper
