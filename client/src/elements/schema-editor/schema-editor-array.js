@@ -7,9 +7,31 @@ export class SchemaEditorArray {
   @bindable data;
   @bindable change;
 
+  collapsedStates = {};
+
+  expand(index) {
+    this.collapsedStates[index] = 'expanded';
+  }
+
+  collapse(index) {
+    this.collapsedStates[index] = 'collapsed';
+  }
+
+  schemaChanged() {
+    this.applyOptions();
+  }
+
+  applyOptions() {
+    if (this.schema.hasOwnProperty('Q:options')) {
+      this.options = this.schema['Q:options'];
+    }
+  }
+
   addElement(data, schema) {
     let entry = generateFromSchema(schema);
     data.push(entry);
+    this.expand(data.indexOf(entry));
+    
     if (this.change) {
       this.change();
     }
@@ -36,6 +58,11 @@ export class SchemaEditorArray {
     }
   }
 
+  getFirstPropertyValue(index) {
+    console.log(index, Object.keys(this.schema.items.properties)[0])
+    return this.data[index][Object.keys(this.schema.items.properties)[0]];
+  }
+
   @computedFrom('schema')
   get arrayEntryLabel() {
     if (this.schema && this.schema.items && this.schema.items.title) {
@@ -44,4 +71,5 @@ export class SchemaEditorArray {
       return this.schema.title
     }
   }
+
 }

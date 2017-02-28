@@ -98,11 +98,13 @@ export default class Item {
         })
       })
       .then(response => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          throw response
+        return response.json()
+      })
+      .then(body => {
+        if (body.error) {
+          throw body;
         }
+        return body;
       })
       .then(newItemProperties => {
         // we get the changed properties back from Q Server and apply them here

@@ -10,12 +10,8 @@ schema-editor label {
 
 schema-editor fieldset {
   border: none;
-  padding: 0;
+  padding: 0 0 0 20px;
   margin: calc(var(--q-space-base) * 2) 0 0 0;
-}
-
-schema-editor fieldset {
-  padding-left: 20px;
 }
 
 schema-editor-wrapper legend {

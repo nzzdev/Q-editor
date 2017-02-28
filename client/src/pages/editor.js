@@ -140,11 +140,12 @@ export class Editor {
 
   save() {
     this.item.save()
-      .then(args => {
-        console.log('item saved', args, this.item);
+      .then(() => {
+        console.log('item saved', this.item);
       })
       .catch(error => {
-        this.messageService.pushMessage('error', `Speichern ist fehlgeschlagen ${error}`);
+        console.log(error)
+        this.messageService.pushMessage('error', this.i18n.tr('editor.failedToSave', { reason: error.message }));
       });
   }
 

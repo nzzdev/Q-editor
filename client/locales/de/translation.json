@@ -28,7 +28,8 @@
     "previewTargetLabel": "Publikation",
     "previewSizeLabel": "Angezeigte Grösse",
     "add": "hinzufügen",
-    "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen."
+    "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
+    "failedToSave": "Speichern ist fehlgeschlagen: {{reason}}."
   },
   "item": {
     "activate": "aktivieren",
