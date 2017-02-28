@@ -25,16 +25,14 @@ export class ItemOverview {
     }.bind(this);
   }
 
-  activate(routeParams) {
-    this.itemId = routeParams.id;
-    this.itemLoaded = this.itemStore.getItem(routeParams.id)
-      .then(item => {
-        this.item = item;
-        this.embedCodeGenerator.getEmbedCodeForItem(this.item)
-          .then(embedCode => {
-            this.embedCode = embedCode;
-          })
-      })
+  async activate(routeParams) {
+    try {
+      this.itemId = routeParams.id;
+      this.item = await this.itemStore.getItem(routeParams.id)
+      this.embedCode = await this.embedCodeGenerator.getEmbedCodeForItem(this.item);
+    } catch (e) {
+      this.messageService.pushMessage('error', this.i18n.tr('item.failedToLoadItem'));
+    }
   }
 
   edit() {
@@ -42,14 +40,16 @@ export class ItemOverview {
     this.router.navigate(`/editor/${tool}/${this.item.conf._id}`)
   }
 
-  blueprint() {
-    this.item.blueprint()
-      .then(() => {
-        this.item.conf.title = this.i18n.tr('item.blueprintTitlePrefix');
+  async blueprint() {
+    try {
+      await this.item.blueprint();
+      this.item.conf.title = this.i18n.tr('item.blueprintTitlePrefix');
 
-        let tool = this.item.conf.tool.replace(new RegExp('-', 'g'), '_')
-        this.router.navigate(`/editor/${tool}/${this.item.conf._id}`)
-      });
+      let tool = this.item.conf.tool.replace(new RegExp('-', 'g'), '_')
+      this.router.navigate(`/editor/${tool}/${this.item.conf._id}`)
+    } catch (e) {
+      this.messageService.pushMessage('error', this.i18n.tr('item.failedToLoadItem'))
+    }
   }
 
   activateItem() {

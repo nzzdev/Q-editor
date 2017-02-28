@@ -16,14 +16,15 @@ export class ItemDialog {
     controller.settings.centerHorizontalOnly = true;
   }
 
-  activate(config) {
+  async activate(config) {
     this.config = config;
     this.item = config.item;
 
-    this.embedCodeGenerator.getEmbedCodeForItem(this.item)
-      .then(embedCode => {
-        this.embedCode = embedCode;
-      })
+    try {
+      this.embedCode = await this.embedCodeGenerator.getEmbedCodeForItem(this.item);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   activateItem() {

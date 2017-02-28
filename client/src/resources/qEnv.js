@@ -1,16 +1,18 @@
 class QEnv {
   constructor() {
-    this.env = fetch('/env')
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          throw response;
-        }
-      })
-      .catch(() => {
-        this.env = null;
-      })
+    this.env = this.load();
+  }
+
+  async load() {
+    try {
+      const response = await fetch('/env');
+      if (!response.ok) {
+        throw response;
+      }
+      return await response.json();
+    } catch (e) {
+      return null;
+    }
   }
 }
 
@@ -20,7 +22,7 @@ let proxy = new Proxy(qEnv, {
   get: function(target, name, receiver) {
     return target.env
       .then(env => {
-        return env[name]; 
+        return env[name];
       })
   }
 })

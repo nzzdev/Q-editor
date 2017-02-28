@@ -100,12 +100,13 @@ export default class ItemStore {
     return item;
   }
 
-  getItem(id) {
+  async getItem(id) {
     if (!this.items.hasOwnProperty(id)) {
       let item = this.getNewItem();
       this.items[id] = item;
     }
-    return this.items[id].load(id);
+    await this.items[id].load(id);
+    return this.items[id];
   }
 
   getSearchRequestBody(searchString, limit, onlyTools) {
@@ -164,41 +165,35 @@ export default class ItemStore {
     return this.loadItems(searchRequestBody);
   }
 
-  // getNextItems(searchString, bookmark, limit, onlyTools = undefined) {
-  //   let searchRequestBody = this.getSearchRequestBody(searchString, limit, onlyTools);
-  //   searchRequestBody.bookmark = bookmark;
-  //   return this.loadItems(searchRequestBody);
-  // }
+  async loadItems(searchRequestBody) {
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    const response = await fetch(`${QServerBaseUrl}/search`, {
+      method: 'POST',
+      body: JSON.stringify(searchRequestBody)
+    })
 
-  loadItems(searchRequestBody) {
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/search`, {
-          method: 'POST',
-          body: JSON.stringify(searchRequestBody)
-        })
-      })
-      .then(response => {
-        return response.json();
-      })
-      .then(result => {
-        if (!result.rows) {
-          result.rows = []
-        }
-        let items = result.rows
-          .map(row => {
-            let item = new Item(this.user);
-            item.addConf(row.doc);
-            this.items[row.doc._id];
-            return item;
-          });
+    if (!response.ok) {
+      throw response;
+    }
 
-        return {
-          items: items,
-          total_rows: result.total_rows,
-          bookmark: result.bookmark
-        };
-      })
+    const data = await response.json();
+    if (!data.rows) {
+      data.rows = []
+    }
+
+    const items = data.rows
+      .map(row => {
+        let item = new Item(this.user);
+        item.addConf(row.doc);
+        this.items[row.doc._id];
+        return item;
+      });
+
+    return {
+      items: items,
+      total_rows: data.total_rows,
+      bookmark: data.bookmark
+    };
   }
 
   getFilters() {

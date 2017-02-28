@@ -21,7 +21,7 @@ export class Login {
     this.isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
   }
 
-  canActivate() {
+  async canActivate() {
     this.user.loaded
       .then(() => {
         if (this.user.isLoggedIn) {
@@ -32,14 +32,13 @@ export class Login {
       })
   }
 
-  tryLogin() {
-    this.auth.login(this.username, this.password)
-      .then(() => {
-        this.router.navigateToRoute('index');
-      })
-      .catch(err => {
-        this.loginError = this.i18n.tr('general.loginFailed');
-      })
+  async tryLogin() {
+    try {
+      await this.auth.login(this.username, this.password)
+      this.router.navigateToRoute('index');
+    } catch (e) {
+      this.loginError = this.i18n.tr('general.loginFailed');
+    }
   }
 
 }

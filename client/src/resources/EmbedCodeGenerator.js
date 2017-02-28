@@ -10,15 +10,13 @@ export default class EmbedCodeGenerator {
     this.qConfig = qConfig;
   }
 
-  getEmbedCodeForItem(item) {
-    return this.qConfig.get('browserLoaderUrl')
-      .then(browserLoaderUrl => {
-        if (!browserLoaderUrl) {
-          return null;
-        }
-        let embedCode = `<div class="q-item" id="q-${item.id}"></div><script src="${browserLoaderUrl}"></script>`;
-        return embedCode;
-      })
+  async getEmbedCodeForItem(item) {
+    const browserLoaderUrl = await this.qConfig.get('browserLoaderUrl');
+    if (!browserLoaderUrl) {
+      return null;
+    }
+    const embedCode = `<div class="q-item" id="q-${item.id}"></div><script src="${browserLoaderUrl}"></script>`;
+    return embedCode;
   }
 
 }

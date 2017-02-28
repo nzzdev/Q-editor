@@ -29,14 +29,11 @@ export class HelpDialog {
     return newOrderFaq;
   }
 
-  activate(config) {
+  async activate(config) {
     this.config = config;
-
-    this.qConfig.get('help')
-      .then(helpConfig => {
-        this.intro = helpConfig.intro;
-        this.faq = helpConfig.faq;
-      })
+    const helpConfig = await this.qConfig.get('help');
+    this.intro = helpConfig.intro;
+    this.faq = helpConfig.faq;
   }
 
   selectFaqSection(faqSection) {

@@ -7,28 +7,23 @@ export default class User {
     this.loaded = this.load();
   }
 
-  load() {
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/user`, {
-          credentials: 'include'
-        })
+  async load() {
+    try {
+      const QServerBaseUrl = await qEnv.QServerBaseUrl;
+      const response = await fetch(`${QServerBaseUrl}/user`, {
+        credentials: 'include'
       })
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        }
-        return null;
-      })
-      .then(data => {
-        this.data = data;
-      })
-      .catch(err => {
-        this.data = null;
-      })
-      .then(() => {
-        this.setLoggedInState();
-      })
+
+      if (!response.ok) {
+        throw response;
+      }
+
+      this.data = await response.json();
+
+    } catch (e) {
+      this.data = null;
+      this.setLoggedInState();
+    }
   }
 
   setLoggedInState() {
@@ -54,21 +49,23 @@ export default class User {
     return this.data.config.roles;
   }
 
-  save() {
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/user`, {
-          credentials: 'include',
-          method: 'PUT',
-          body: JSON.stringify(this.data)
-        })
+  async save() {
+    try {
+      const QServerBaseUrl = await qEnv.QServerBaseUrl;
+      const response = fetch(`${QServerBaseUrl}/user`, {
+        credentials: 'include',
+        method: 'PUT',
+        body: JSON.stringify(this.data)
       })
-      .then(response => {
-        if (!response.ok) {
-          return false;
-        }
-        return true;
-      })
+
+      if (!response.ok) {
+        throw response;
+      }
+      return true;
+
+    } catch (e) {
+      return false;
+    }
   }
 
 }
