@@ -3,7 +3,7 @@ import qEnv from 'resources/qEnv.js';
 export default class User {
 
   constructor() {
-    this.isLoggedIn = false;    
+    this.isLoggedIn = false;
     this.loaded = this.load();
   }
 
@@ -19,10 +19,12 @@ export default class User {
       }
 
       this.data = await response.json();
-
+      return true;
     } catch (e) {
       this.data = null;
+    } finally {
       this.setLoggedInState();
+      return true;
     }
   }
 

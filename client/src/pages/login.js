@@ -35,8 +35,10 @@ export class Login {
   async tryLogin() {
     try {
       await this.auth.login(this.username, this.password)
+      console.log('logged in')
       this.router.navigateToRoute('index');
     } catch (e) {
+      console.log(e)
       this.loginError = this.i18n.tr('general.loginFailed');
     }
   }

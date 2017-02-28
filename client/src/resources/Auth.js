@@ -28,7 +28,7 @@ export default class Auth {
       throw response;
     }
 
-    return await this.user.load();
+    return this.user.load();
   }
 
   async logout() {
@@ -43,7 +43,7 @@ export default class Auth {
         throw response;
       }
     } finally {
-      return await this.user.load();
+      return this.user.load();
     }
   }
 
