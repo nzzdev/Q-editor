@@ -7,7 +7,11 @@ export class SchemaEditorArray {
   @bindable data;
   @bindable change;
 
-  collapsedStates = {};
+  options = {
+    expandable: false
+  }
+
+  collapsedStates = {};  
 
   expand(index) {
     this.collapsedStates[index] = 'expanded';
@@ -23,7 +27,7 @@ export class SchemaEditorArray {
 
   applyOptions() {
     if (this.schema.hasOwnProperty('Q:options')) {
-      this.options = this.schema['Q:options'];
+      this.options = Object.assign(this.options, this.schema['Q:options']);
     }
   }
 
