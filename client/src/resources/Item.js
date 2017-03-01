@@ -100,7 +100,8 @@ export default class Item {
       throw body;
     }
 
-    this.conf = Object.assign(this.conf, newItemProperties);
+    // we get new properties as a response to the save and assign them the the conf
+    this.conf = Object.assign(this.conf, body);
     this.isSaved = true;
   }
 

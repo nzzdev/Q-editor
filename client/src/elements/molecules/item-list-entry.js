@@ -44,7 +44,6 @@ export class ItemListEntry {
   }
 
   redirectToItemView() {
-    console.log('redirectToItemView', this.item.id)
     this.router.navigateToRoute('item', {id: this.item.id});
   }
 
