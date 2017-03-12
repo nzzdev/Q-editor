@@ -18,7 +18,7 @@ export default class QConfig {
         .then(config => {
           this.config = config;
         })
-        .catch(() => {
+        .catch((e) => {
           this.config = null;
         })
   }

@@ -36,9 +36,13 @@ export async function configure(aurelia) {
       instance.i18next.use(Backend);
 
       let availableLanguages = ['de', 'en'];
-      let configuredLanguages = await aurelia.container.get(QConfig).get('languages');
-      if (configuredLanguages && configuredLanguages.length > 0) {
-        availableLanguages = configuredLanguages.map(lang => lang.key);
+      try {
+        let configuredLanguages = await aurelia.container.get(QConfig).get('languages');
+        if (configuredLanguages && configuredLanguages.length > 0) {
+          availableLanguages = configuredLanguages.map(lang => lang.key);
+        }
+      } catch (e) {
+        // do not care and use the default availableLanguages
       }
 
       // adapt options to your needs (see http://i18next.com/docs/options/)
@@ -51,7 +55,7 @@ export async function configure(aurelia) {
         fallbackLng: 'de',
         whitelist: availableLanguages,
         load: 'languageOnly',        
-        debug: true
+        debug: false
       });
     })
   ;

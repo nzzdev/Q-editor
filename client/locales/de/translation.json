@@ -19,7 +19,8 @@
     "browserSupportMessage": "Q ist für Chrome optimiert und funktioniert in Ihrem Browser evtl. nicht.",
     "changesSaved": "Die Änderungen wurden gespeichert.",
     "failedToSaveChanges": "Die Änderung konnten nicht gespeichert werden.",
-    "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt."
+    "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt.",
+    "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen."
   },
   "statistics": {
     "tooFewNewGraphics": "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",    

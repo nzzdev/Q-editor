@@ -21,7 +21,8 @@ export class App {
   configureRouter(config, router) {
     this.router = router;
     config.title = 'NZZ Q';
-    config.addPipelineStep('authorize', AuthorizeStep); // Add a route filter to the authorize extensibility point.
+    config.addPreActivateStep(ConfigAvailableCheckStep)
+    config.addAuthorizeStep(AuthorizeStep); // Add a route filter to the authorize extensibility point.
 
     let routerMap = [
       {
@@ -50,7 +51,13 @@ export class App {
         name: 'editor',
         moduleId: 'pages/editor',
         auth: true,
-      }
+      },
+      {
+        route: ['server-unavailable'],
+        name: 'server-unavailable',
+        moduleId: 'pages/server-unavailable',
+        title: 'Error'
+      },
     ];
 
     router.configure(config => {
@@ -80,8 +87,6 @@ class AuthorizeStep {
 
   run(navigationInstruction, next) {
     // Check if the route has an "auth" key
-    // The reason for using `nextInstructions` is because
-    // this includes child routes.
     if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
       return this.user.loaded
         .then(() => {
@@ -98,4 +103,29 @@ class AuthorizeStep {
 
     return next();
   }
+}
+
+@inject(QConfig)
+class ConfigAvailableCheckStep {
+  
+  constructor(qConfig) {
+    this.qConfig = qConfig;
+  }
+  
+  async run(navigationInstruction, next) {
+    if (navigationInstruction.getAllInstructions().some(i => i.config.name === 'server-unavailable')) {
+      return next();
+    }
+    try {
+      await this.qConfig.configLoaded;
+      if (!this.qConfig.config) {
+        return next.cancel(new Redirect('server-unavailable'));
+      } else {
+        return next();
+      }
+    } catch(e) {
+      return next.cancel(new Redirect('server-unavailable'));
+    }
+  }
+
 }

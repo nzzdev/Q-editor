@@ -19,7 +19,8 @@
     "browserSupportMessage": "Q is optimised for Chrome and may does not work in your browser.",
     "changesSaved": "Changes saved.",
     "failedToSaveChanges": "Failed to save changes.",
-    "loginFailed": "Your username or password is not correct."
+    "loginFailed": "Your username or password is not correct.",
+    "serverConnectionFailed": "Failed to connect to server."
   },
   "statistics": {
     "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total {{totalActiveCount}} active.",    

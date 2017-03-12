@@ -4,6 +4,7 @@
   height: 40px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: var(--q-space-base);
 }
 
 .items-filter {
