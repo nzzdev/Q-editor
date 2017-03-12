@@ -98,7 +98,7 @@ export class Index {
   }
 
   async loadMore() {
-    const result = this.loadItems(this.currentSearchString, this.bookmark);
+    const result = await this.loadItems(this.currentSearchString, this.bookmark);
     this.items = this.items.concat(result.items);
     this.bookmark = result.bookmark;
     this.updateMoreItemsAvailableState(result);
