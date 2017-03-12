@@ -1,0 +1,6 @@
+<template>
+  <require from="./language-switcher.css"></require>
+  <div if.bind="availableLanguages.length > 1">
+    <button repeat.for="availableLanguage of availableLanguages" click.delegate="switchLanguage(availableLanguage.key)">${availableLanguage.label}</button>
+  </div>
+</template>

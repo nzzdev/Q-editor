@@ -20,6 +20,9 @@ var pouchOptions = {
 }
 
 export async function configure(aurelia) {
+
+  aurelia.use.singleton(QConfig);
+
   aurelia.use
     .standardConfiguration()
     .feature('elements/atoms')
@@ -28,9 +31,15 @@ export async function configure(aurelia) {
     .feature('icons')
     .feature('value-converters')
     .plugin('aurelia-dialog')
-    .plugin('aurelia-i18n', (instance) => {
+    .plugin('aurelia-i18n', async (instance) => {
       // register backend plugin
       instance.i18next.use(Backend);
+
+      let availableLanguages = ['de', 'en'];
+      let configuredLanguages = await aurelia.container.get(QConfig).get('languages');
+      if (configuredLanguages && configuredLanguages.length > 0) {
+        availableLanguages = configuredLanguages.map(lang => lang.key);
+      }
 
       // adapt options to your needs (see http://i18next.com/docs/options/)
       // make sure to return the promise of the setup method, in order to guarantee proper loading
@@ -38,10 +47,11 @@ export async function configure(aurelia) {
         backend: {
           loadPath: './locales/{{lng}}/{{ns}}.json',
         },
-        lng: navigator.language || 'de',
         attributes: ['t','i18n'],
         fallbackLng: 'de',
-        debug: false
+        whitelist: availableLanguages,
+        load: 'languageOnly',        
+        debug: true
       });
     })
   ;
@@ -52,8 +62,6 @@ export async function configure(aurelia) {
       .plugin('aurelia-testing')
       .developmentLogging();
   }
-
-  aurelia.use.singleton(QConfig);
   
   aurelia.use.singleton(Auth);
   aurelia.use.singleton(EmbedCodeGenerator);

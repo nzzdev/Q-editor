@@ -5,6 +5,7 @@
       <button-secondary icon="logo" icon-size="big"></button-secondary>
     </a>
   </section>
+  <language-switcher></language-switcher>
   <section class="q-bar__section q-bar__section q-bar__user">
     <button-secondary if.bind="user.isLoggedIn" click.delegate="showHelp()" icon="help" icon-size="big" class="q-bar__item"></button-secondary>
     <button-secondary if.bind="user.isLoggedIn" click.delegate="showAccountModal()" class="q-bar__item">${user.data.initials}</button-secondary>

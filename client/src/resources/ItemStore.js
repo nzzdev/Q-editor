@@ -1,21 +1,19 @@
 import { inject } from 'aurelia-framework'
-import { I18N } from 'aurelia-i18n';
 import { BindingEngine } from 'aurelia-binding'
 import qEnv from 'resources/qEnv.js'
 import User from 'resources/User.js'
 import Item from 'resources/Item.js'
 import ToolsInfo from 'resources/ToolsInfo.js'
 
-@inject(User, ToolsInfo, BindingEngine, I18N)
+@inject(User, ToolsInfo, BindingEngine)
 export default class ItemStore {
 
   items = {};
 
-  constructor(user, toolsInfo, bindingEngine, i18n) {
+  constructor(user, toolsInfo, bindingEngine) {
     this.user = user;
     this.toolsInfo = toolsInfo;
     this.bindingEngine = bindingEngine;
-    this.i18n = i18n;
 
     this.filters = [
       {
@@ -23,7 +21,7 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: this.i18n.tr('itemsFilter.allGraphics')
+            label: 'itemsFilter.allGraphics'
           }
         ],
         selected: 'all'
@@ -33,11 +31,11 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: this.i18n.tr('itemsFilter.fromEveryone')
+            label: 'itemsFilter.byAll'
           },
           {
             name: 'byMe',
-            label: this.i18n.tr('itemsFilter.byMe')
+            label: 'itemsFilter.byMe'
           }
         ],
         selected: 'all'
@@ -47,11 +45,11 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: this.i18n.tr('itemsFilter.allDepartments')
+            label: 'itemsFilter.allDepartments'
           },
           {
             name: 'myDepartment',
-            label: this.i18n.tr('itemsFilter.myDepartment')
+            label: 'itemsFilter.myDepartment'
           }
         ],
         selected: 'all'
@@ -61,15 +59,15 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: this.i18n.tr('itemsFilter.allStates')
+            label: 'itemsFilter.allStates'
           },
           {
             name: 'onlyActive',
-            label: this.i18n.tr('itemsFilter.onlyActive')
+            label: 'itemsFilter.onlyActive'
           },
           {
             name: 'onlyInactive',
-            label: this.i18n.tr('itemsFilter.onlyInactive')
+            label: 'itemsFilter.onlyInactive'
           }
         ],
         selected: 'all'
@@ -81,7 +79,7 @@ export default class ItemStore {
         tools.map(tool => {
           this.filters[0].options.push({
             name: tool.name,
-            label: `nur ${tool.label}`
+            label: `$t(general.only) ${tool.label}`
           })
         })
       });
