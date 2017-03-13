@@ -8,8 +8,8 @@
     <aside class="q-dialog__controls">
       <div class="q-text-small">
         <icon-active-state is-active.bind="item.conf.active"></icon-active-state>
-        <span>${ 'general.created' | t } ${ item.conf.createdDate | timeAgo:7*24*60*60 }<br>
-        ${ 'general.by' | t } ${item.conf.createdBy}</span>
+        <span>${ 'general.created' & t } ${ item.conf.createdDate & timeAgo:7*24*60*60 }<br>
+        ${ 'general.by' & t } ${item.conf.createdBy}</span>
       </div>
 
       <button-primary if.bind="config.allowActivate && !item.conf.active" click.delegate="activateItem()" icon="activate">

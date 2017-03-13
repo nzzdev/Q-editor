@@ -10,8 +10,8 @@
       <aside class="item-overview__controls">
         <div class="item-overview__status q-text-small">
           <icon-active-state class="tool-status-bar__item" is-active.bind="item.conf.active"></icon-active-state>
-          <span>${ 'general.created' | t } ${ item.conf.createdDate | timeAgo:7*24*60*60 }<br>
-          ${ 'general.by' | t } ${item.conf.createdBy}</span>
+          <span>${ 'general.created' & t } ${ item.conf.createdDate & timeAgo:7*24*60*60 }<br>
+          ${ 'general.by' & t } ${item.conf.createdBy}</span>
         </div>
 
         <button-primary if.bind="!item.conf.active" click.delegate="activateItem()" icon="activate">

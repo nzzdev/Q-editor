@@ -4,8 +4,8 @@
   <box-icon if.bind="iconSvg" code.bind="iconSvg" class="tool-icon"></box-icon>
   
   <span class="q-text-small">${item.conf.title}</span>
-  <span class="q-text-small" if.bind="item.conf.updatedDate">${item.conf.updatedDate | timeAgo:7*24*60*60}</span>
-  <span class="q-text-small" if.bind="!item.conf.updatedDate">${item.conf.createdDate | timeAgo:7*24*60*60}</span>
+  <span class="q-text-small" if.bind="item.conf.updatedDate">${item.conf.updatedDate & timeAgo:7*24*60*60}</span>
+  <span class="q-text-small" if.bind="!item.conf.updatedDate">${item.conf.createdDate & timeAgo:7*24*60*60}</span>
   <span class="q-text-small">${item.conf.createdBy} ${user.roles.contains('poweruser')}</span>
 
   <delete-button

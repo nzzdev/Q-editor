@@ -12,6 +12,7 @@ language-switcher button {
   background: none;
   border-right: 1px solid var(--q-color-gray-4);
   cursor: pointer;
+  padding: 0 calc(var(--q-space-base) / 8);
 }
 
 language-switcher button:last-child {
