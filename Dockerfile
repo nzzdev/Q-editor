@@ -29,7 +29,7 @@ COPY ./routes /app/routes
 COPY ./client/favicon.png /app/client/favicon.png
 COPY ./client/favicon-playground.png /app/client/favicon-playground.png
 
-COPY ./client/locales/de /app/client/locales/de
+COPY ./client/locales /app/client/locales
 
 COPY ./client/export /app/client/export
 
