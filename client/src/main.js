@@ -53,6 +53,7 @@ export async function configure(aurelia) {
         },
         attributes: ['t','i18n'],
         fallbackLng: 'de',
+        lng: availableLanguages[0],
         whitelist: availableLanguages,
         load: 'languageOnly',        
         debug: false
