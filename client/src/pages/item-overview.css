@@ -2,20 +2,6 @@
   display: flex;
 }
 
-.item-overview pre {
-  background: white;
-  border: 1px solid var(--q-color-gray-3);
-  padding: calc(var(--q-space-base) / 2);
-  margin: 0;
-  white-space: normal;
-  overflow-wrap: break-word;
-}
-
-.item-overview pre code {
-  white-space: normal;
-  overflow-wrap: break-word;
-}
-
 .item-overview__content {
   width: auto;
   flex-grow: 1;

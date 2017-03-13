@@ -5,7 +5,7 @@
     <q-messages></q-messages>
     <div class="item-overview-container">
       <div class="item-overview__content">
-        <item-preview if.bind="itemId" id.bind="itemId" on-drag.bind="handleDrag"></item-preview>
+        <item-preview if.bind="itemId" id.bind="itemId" on-drag.bind="handleDrag" target.two-way="currentTarget"></item-preview>
       </div>
       <aside class="item-overview__controls">
         <div class="item-overview__status q-text-small">
@@ -22,11 +22,7 @@
           <span t="item.deactivate"></span>
         </button-primary>
 
-        <div class="item-overview__embed-code" if.bind="embedCode">
-          <h6>Free HTML Code</h6>
-          <pre><code class="q-text-small q-text--light" if.bind="item.conf.active">${embedCode}</code></pre>
-        </div>
-
+        <embed-code item.bind="item" target.bind="currentTarget"></embed-code>
 
         <button-primary click.delegate="blueprint()" icon="blueprint">
           <span t="item.blueprint"></span>

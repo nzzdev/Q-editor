@@ -2,6 +2,7 @@
 window.clearTimeout(window.QLoadErrorTimeout);
 
 import QConfig from 'resources/QConfig.js';
+import QTargets from 'resources/QTargets.js';
 import Auth from 'resources/Auth.js';
 import User from 'resources/User.js';
 import MessageService from 'resources/MessageService.js';
@@ -74,6 +75,7 @@ export async function configure(aurelia) {
   aurelia.use.singleton(ToolsInfo);
   aurelia.use.singleton(ItemStore);
   aurelia.use.singleton(MessageService);
+  aurelia.use.singleton(QTargets);
 
   aurelia.use.singleton(User);
 

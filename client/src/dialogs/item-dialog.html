@@ -1,10 +1,9 @@
 <template>
   <require from="../styles/q-dialog.css"></require>
-  <require from="./item-dialog.css"></require>
   <require from="elements/item-preview/item-preview"></require>
   <div class="q-dialog item-dialog">
     <div class="q-dialog__content">
-      <item-preview if.bind="item.id" id.bind="item.id" on-drag.bind="handleDrag"></item-preview>
+      <item-preview if.bind="item.id" id.bind="item.id" on-drag.bind="handleDrag" target.two-way="currentTarget"></item-preview>
     </div>
     <aside class="q-dialog__controls">
       <div class="q-text-small">
@@ -21,10 +20,7 @@
         <span t="item.deactivate"></span>
       </button-primary>
 
-      <div class="item-dialog__embed-code" if.bind="config.showEmbedCode && embedCode !== null">
-        <h6>Free HTML Code</h6>
-        <pre><code class="q-text-small q-text--light" if.bind="item.conf.active">${embedCode}</code></pre>
-      </div>
+      <embed-code item.bind="item" target.bind="currentTarget"></embed-code>
 
       <div class="item-dialog__embed-code" if.bind="config.showId && item.conf._id">
         <h6>ID</h6>

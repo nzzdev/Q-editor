@@ -1,12 +1,14 @@
 import { bindable, inject } from 'aurelia-framework'
 import qEnv from 'resources/qEnv.js';
+import QTargets from 'resources/QTargets.js';
 import MessageService from 'resources/MessageService.js';
 
-@inject(MessageService)
+@inject(QTargets, MessageService)
 export class ItemPreview {
 
   @bindable data
   @bindable id
+  @bindable target
   @bindable onDrag
   
   previewWidth = 540;
@@ -26,35 +28,25 @@ export class ItemPreview {
     }
   ]
 
-  constructor(messageService) {
+  constructor(qTargets, messageService) {
+    this.qTargets = qTargets;
     this.messageService = messageService;
 
     // we use this proxy to catch any changes to the target and then load the preview after we have it
     this.targetProxy = new Proxy({}, {
       set: (target, property, value, receiver) => {
         target[property] = value;
+        this.target = value;
         this.loadPreview();
         return true;
       }
     })
 
-    qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/editor/targets`);
-      })
-      .then(response => {
-        if (response.ok && response.status >= 200 && response.status < 400) {
-          return response.json();
-        } else {
-          throw new Error(response.statusText)
-        }
-      })
-      .then(targets => {
-        this.availableTargets = targets;
-      })
-      .catch(err => {
-        this.messageService.pushMessage('error', 'failedLoadingTargets')
-      })
+    this.init()
+  }
+
+  async init() {
+    this.availableTargets = await this.qTargets.get('availableTargets')
   }
 
   dataChanged() {
