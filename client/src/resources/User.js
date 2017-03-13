@@ -48,7 +48,7 @@ export default class User {
     if (!this.data || !this.data.hasOwnProperty('roles')) {
       return null;
     }
-    return this.data.config.roles;
+    return this.data.roles;
   }
 
   async save() {
