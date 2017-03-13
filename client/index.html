@@ -22,7 +22,6 @@
     <script>
       System.import('aurelia-bootstrapper');
       window.QLoadErrorTimeout = setTimeout(function() {
-        console.log("TIMEOUT");
         document.getElementById('q-load-error-message').insertAdjacentHTML('beforeend', 'This is taking way too long, are you using the latest version of Chrome?')
       }, 3000)
     </script>

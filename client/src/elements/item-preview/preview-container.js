@@ -31,27 +31,28 @@ export class PreviewContainer {
 
     return qEnv.QServerBaseUrl
       .then(QServerBaseUrl => {
-
-        this.previewElement.innerHTML = renderingInfo.markup;
     
         // load the stylesheets
         if (Array.isArray(renderingInfo.stylesheets)) {
           renderingInfo.stylesheets
             .map(stylesheet => {
-              if (stylesheet.url) {
-                return stylesheet.url;
+              if (!stylesheet.url && stylesheet.path) {
+                stylesheet.url = `${QServerBaseUrl}${stylesheet.path}`
               }
-              if (stylesheet.path) {
-                return `${QServerBaseUrl}${stylesheet.path}`
-              }
+              return stylesheet
             })
-            .map(url => {
-              if (url) {
+            .map(stylesheet => {
+              if (stylesheet.url) {
                 let link = document.createElement('link');
                 link.type = 'text/css';
                 link.rel = "stylesheet";
-                link.href = url;
-                this.element.shadowRoot.appendChild(link);
+                link.href = stylesheet.url;
+                this.element.shadowRoot.insertBefore(link, this.element.shadowRoot.firstChild);
+              } else if (stylesheet.content) {
+                let style = document.createElement('style');
+                style.type = 'text/css';
+                style.appendChild(document.createTextNode(stylesheet.content));
+                this.element.shadowRoot.insertBefore(style, this.element.shadowRoot.firstChild);
               }
             })
         }
@@ -67,32 +68,36 @@ export class PreviewContainer {
               return script;
             })
 
-          loadAllScripts(renderingInfo.scripts);
+          loadAllScripts(renderingInfo.scripts, this.element.shadowRoot);
         }
+
+        this.previewElement.innerHTML = renderingInfo.markup;
       })
   }
 }
 
-function loadAllScripts(scripts, index = 0, callback) {
+function loadAllScripts(scripts, parentElement, index = 0, callback) {
   if (scripts && scripts[index] && scripts[index].url) {
-    let script = document.createElement('script');
+    let script = scripts[index];
+    let scriptElement = document.createElement('script');
 
     if (script.url) {
-      script.src = src;
+      scriptElement.src = script.url;
       script.async = true;
 
-      script.onload = () => {
-        loadAllScripts(scripts, index + 1, callback)
+      scriptElement.onload = () => {
+        console.log('script loaded')
+        loadAllScripts(scripts, parentElement, index + 1, callback)
       }
-      this.element.shadowRoot.appendChild(script);
+      parentElement.appendChild(scriptElement);
 
     } else if (script.content) {
-      script.innerHTML = script.content;
-      this.element.shadowRoot.appendChild(script);
-      loadAllScripts(scripts, index + 1, callback)
+      scriptElement.innerHTML = script.content;
+      parentElement.appendChild(scriptElement);
+      loadAllScripts(scripts, parentElement, index + 1, callback)
     }
 
-  } else {
+  } else if (typeof callback === 'function') {
     callback();
   }
 }

@@ -134,6 +134,16 @@ export class ItemPreview {
             renderingInfo.stylesheets.push(stylesheet);
           })
         }
+
+        // add scripts for target preview if any
+        if (this.targetProxy.target.preview && this.targetProxy.target.preview.scripts) {
+          if (!renderingInfo.scripts) {
+            renderingInfo.scripts = []
+          }
+          this.targetProxy.target.preview.scripts.forEach(script => {
+            renderingInfo.scripts.push(script);
+          })
+        }
         return renderingInfo;
       })
   }
