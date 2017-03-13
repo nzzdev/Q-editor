@@ -80,7 +80,7 @@ export class App {
   async attached() {
     // load any additional stylesheets defined for themeing or font-face loading as @font-face doesn't work within ShadowRoot (used for the preview)
     try {
-      const stylesheets = await qConfig.get('stylesheets');
+      const stylesheets = await this.qConfig.get('stylesheets');
       if (stylesheets && stylesheets.length) {
         stylesheets
           .map(stylesheet => {
