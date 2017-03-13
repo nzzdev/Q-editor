@@ -1,5 +1,7 @@
 {
   "general": {
+    "yes": "yes",
+    "no": "no",
     "searchLabel": "Search a graphic",
     "login": "login",
     "logout": "logout",
