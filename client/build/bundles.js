@@ -21,9 +21,7 @@ const editorBundle = [
   "elements/item-preview/*.css!text",
   "elements/organisms/tool-status-bar.js",
   "elements/organisms/tool-status-bar.html!text",
-  "elements/organisms/tool-status-bar.css!text",
-  "leaflet",
-  "npm:leaflet-geocoder-mapzen@1.7.1",
+  "elements/organisms/tool-status-bar.css!text"
 ]
 
 const aureliaBundle = [

@@ -1,37 +1,20 @@
+import { bindable, inject, Loader } from 'aurelia-framework';
+
 import qEnv from 'resources/qEnv';
-import { bindable } from 'aurelia-framework';
-import Leaflet from 'leaflet';
-import 'npm:leaflet@1.0.3/dist/leaflet.css!';
-import 'npm:leaflet-geocoder-mapzen@1.7.1';
-import 'npm:leaflet-geocoder-mapzen@1.7.1/dist/leaflet-geocoder-mapzen.css!';
+import QConfig from 'resources/QConfig';
 
 const iconPinSvg = '<svg viewBox="0 0 52 52"><path d="M31.5,35.5 M20.5,16.5 M20.5,35.5 M31.5,16.5 M30,18c0-2.2-1.8-4-4-4s-4,1.8-4,4c0,1.9,1.3,3.4,3,3.9V38h1h1V21.9C28.7,21.4,30,19.9,30,18z"/></svg>';
-const markerPinIcon = Leaflet.divIcon({
-  className: 'q-map-editor-pin',
-  html: iconPinSvg,
-  iconSize: [52,52],
-  iconAnchor: [26,38]
-})
 
-const streetsUrl = 'https://api.mapbox.com/styles/v1/neuezuercherzeitung/cii8pg52u00kdbpm0wxfr9802/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibmV1ZXp1ZXJjaGVyemVpdHVuZyIsImEiOiJjaXV5NmZ4NTgwMDF4MnlyM2dvbWIxcHdzIn0.XNDydQCjdVfoHWRGgIQHRw';
-
-const layerConfig = {
-  url: streetsUrl,
-  minimapLayerUrl: streetsUrl,
-  config: {
-    attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &amp; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  },
-  containerClass: 'with-base-layer-streets',
-  maxZoom: 18,
-};
-
+@inject(QConfig, Loader)
 export class SchemaEditorLatLng {
 
   @bindable schema;
   @bindable data;
   @bindable change;
   
-  constructor() {
+  constructor(qConfig, loader) {
+    this.qConfig = qConfig;
+    this.loader = loader;
     this.mapInit = new Promise((resolve, reject) => {
       this.resolveMapInit = resolve;
     })
@@ -45,6 +28,27 @@ export class SchemaEditorLatLng {
   }
 
   async attached() {
+    if (!window.Leaflet) {
+      window.Leaflet = window.L = await this.loader.loadModule('leaflet');
+      this.loader.loadModule('npm:leaflet@1.0.3/dist/leaflet.css!');
+    }
+
+    if (!Leaflet.control.geocoder) {
+      try {
+        this.loader.loadModule('npm:leaflet-geocoder-mapzen@1.8.0/dist/leaflet-geocoder-mapzen.css!');
+        await this.loader.loadModule('leaflet-geocoder-mapzen');
+      } catch (e) {
+        // leaflet-geocoder-mapzen is probably loaded, nevermind the error here
+      }
+    }
+
+    this.markerPinIcon = Leaflet.divIcon({
+      className: 'q-map-editor-pin',
+      html: iconPinSvg,
+      iconSize: [52,52],
+      iconAnchor: [26,38]
+    })
+
     this.map = Leaflet.map(this.mapContainer, {
       zoomControl: false, // we add this later after the search control
       touchZoom: 'center',
@@ -63,7 +67,7 @@ export class SchemaEditorLatLng {
     })
 
     const mapzenApiKey = await qEnv.mapzenApiKey;
-    this.geocoder = L.control.geocoder(mapzenApiKey, {
+    this.geocoder = Leaflet.control.geocoder(mapzenApiKey, {
       attribution: null,
       fullWidth: true,
       markers: false,
@@ -84,12 +88,14 @@ export class SchemaEditorLatLng {
       this.geocoder.collapse();
       this.data.lat = e.feature.geometry.coordinates[1];
       this.data.lng = e.feature.geometry.coordinates[0];
-      this.updateMarker();
       if (this.change) {
         this.change();
       }
+      this.updateMarker();
     });
 
+    const schemaEditorConfig = await this.qConfig.get('schemaEditor');
+    const layerConfig = schemaEditorConfig.latLng.layer;
     Leaflet.tileLayer(layerConfig.url, layerConfig.config).addTo(this.map);
 
     if (this.map) {
@@ -112,21 +118,25 @@ export class SchemaEditorLatLng {
         this.pin.setLatLng(this.data);
       }
     } else {
-      console.log('add pin')
       this.pin = Leaflet.marker(this.data, {
-        icon: markerPinIcon,
+        icon: this.markerPinIcon,
         clickable: false,
         keyboard: false,
         draggable: true
       });
-      console.log(this.pin, this.data)
+      this.pin.on('drag', () => {
+        this.data.lat = this.pin.getLatLng().lat;
+        this.data.lng = this.pin.getLatLng().lng;
+        if (this.change) {
+          this.change();
+        }
+      })
       this.mapInit
         .then(() => {
           this.pin.addTo(this.map);
           this.map.panTo(this.data);
         });
     }
-
   }
 }
 
