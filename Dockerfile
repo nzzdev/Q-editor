@@ -21,7 +21,7 @@ COPY ./client/locales /app/client/locales
 COPY ./client/export /app/client/export
 
 # Copy the jspm_packages as there are some modules that are not loaded from a bundle
-COPY ./jspm_packages /app/jspm_packages
+COPY ./client/jspm_packages /app/client/jspm_packages
 
 # Run node app with env variable
 CMD npm run start
