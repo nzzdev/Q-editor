@@ -44,7 +44,7 @@ export class SchemaEditorLatLng {
       })
   }
 
-  attached() {
+  async attached() {
     this.map = Leaflet.map(this.mapContainer, {
       zoomControl: false, // we add this later after the search control
       touchZoom: 'center',
@@ -59,38 +59,36 @@ export class SchemaEditorLatLng {
         if (this.change) {
           this.change();
         }
-      } 
+      }
     })
 
-    qEnv.mapzenApiKey
-      .then(mapzenApiKey => {
-        this.geocoder = L.control.geocoder(this.QEnv.MAPZEN_API_KEY, {
-          attribution: null,
-          fullWidth: true,
-          markers: false,
-          focus: false
-        });
+    const mapzenApiKey = await qEnv.mapzenApiKey;
+    this.geocoder = L.control.geocoder(mapzenApiKey, {
+      attribution: null,
+      fullWidth: true,
+      markers: false,
+      focus: false
+    });
 
-        this.geocoder.addTo(this.map);
-        this.geocoder.expand();
-        if (this.geocoder._input) {
-          this.geocoder._input.focus();
-        }
+    this.geocoder.addTo(this.map);
+    this.geocoder.expand();
+    if (this.geocoder._input) {
+      this.geocoder._input.focus();
+    }
 
-        this.zoomControl = Leaflet.control.zoom({
-          position: 'topleft'
-        });
+    this.zoomControl = Leaflet.control.zoom({
+      position: 'topleft'
+    });
 
-        this.geocoder.on('select', e => {
-          this.geocoder.collapse();
-          this.data.lat = e.feature.geometry.coordinates[1];
-          this.data.lng = e.feature.geometry.coordinates[0];
-          this.updateMarker();
-          if (this.change) {
-            this.change();
-          }
-        });
-      })
+    this.geocoder.on('select', e => {
+      this.geocoder.collapse();
+      this.data.lat = e.feature.geometry.coordinates[1];
+      this.data.lng = e.feature.geometry.coordinates[0];
+      this.updateMarker();
+      if (this.change) {
+        this.change();
+      }
+    });
 
     Leaflet.tileLayer(layerConfig.url, layerConfig.config).addTo(this.map);
 

@@ -13,6 +13,10 @@ export default class EmbedCodeGenerator {
   async getEmbedCodeForItem(item, target) {
     const availableTargets = await this.qTargets.get('availableTargets')
     let embedCode = null;
+
+    if (!target) {
+      target = availableTargets[0];
+    }
     
     for (let availableTarget of availableTargets) {
       if (availableTarget.key === target.key) {

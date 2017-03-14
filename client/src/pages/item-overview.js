@@ -10,6 +10,8 @@ import DragDataGenerator from 'resources/DragDataGenerator.js';
 @inject(Router, RelativeTime, I18N, ItemStore, MessageService, DragDataGenerator)
 export class ItemOverview {
 
+  currentTarget;
+
   constructor(router, relativeTime, i18n, itemStore, messageService, dragDataGenerator) {
     this.router = router;
     this.relativeTime = relativeTime;
@@ -19,7 +21,7 @@ export class ItemOverview {
     this.dragDataGenerator = dragDataGenerator;
 
     this.handleDrag = function(event) {
-      this.dragDataGenerator.addDragDataToDataTransfer(event.dataTransfer, this.item);
+      this.dragDataGenerator.addDragDataToDataTransfer(event.dataTransfer, this.item, this.currentTarget);
     }.bind(this);
   }
 

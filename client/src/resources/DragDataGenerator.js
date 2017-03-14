@@ -10,9 +10,9 @@ export default class DragDataGenerator {
     this.embedCodeGenerator = embedCodeGenerator;
   }
 
-  getDragDataForItem(item) {
+  getDragDataForItem(item, target) {
     if (!this.dragData[item.id]) {
-      this.dragData[item.id] = this.embedCodeGenerator.getEmbedCodeForItem(item)
+      this.dragData[item.id] = this.embedCodeGenerator.getEmbedCodeForItem(item, target)
         .then(embedCode => {
           let data = {
             "origin": window.location.origin,
@@ -28,8 +28,8 @@ export default class DragDataGenerator {
     return this.dragData[item.id];
   }
 
-  async addDragDataToDataTransfer(dataTransfer, item) {
-    let data = await this.getDragDataForItem(item);
+  async addDragDataToDataTransfer(dataTransfer, item, target) {
+    let data = await this.getDragDataForItem(item, target);
     dataTransfer.setData('application/nzz.q+json', data);
   }
 

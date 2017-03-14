@@ -67,6 +67,11 @@ export class PreviewContainer {
         })
     }
 
+    // add the markup if any
+    if (renderingInfo.markup) {
+      this.previewElement.innerHTML = renderingInfo.markup;
+    }
+
     // load the scripts one after the other
     if (Array.isArray(renderingInfo.scripts)) {
       renderingInfo.scripts = renderingInfo.scripts
@@ -78,16 +83,12 @@ export class PreviewContainer {
           return script;
         })
 
-      this.loadAllScripts(renderingInfo.scripts, this.previewElement);
-    }
-
-    if (renderingInfo.markup) {
-      this.previewElement.innerHTML = renderingInfo.markup;
+      this.loadAllScripts(renderingInfo.scripts);
     }
   }
 
-  loadAllScripts(scripts, index = 0, callback) {
-    if (scripts && scripts[index] && scripts[index].url) {
+  loadAllScripts(scripts, callback = null, index = 0) {
+    if (scripts && scripts[index] && (scripts[index].url || scripts[index].content)) {
       let script = scripts[index];
       let scriptElement = document.createElement('script');
 
@@ -96,15 +97,18 @@ export class PreviewContainer {
         script.async = true;
 
         scriptElement.onload = () => {
-          loadAllScripts(scripts, index + 1, callback)
+          this.loadAllScripts(scripts, callback, index + 1)
         }
         this.insertedElements.push(scriptElement);
         this.element.shadowRoot.appendChild(scriptElement);
       } else if (script.content) {
+
+        script.content = script.content.replace(new RegExp('document.querySelector', 'g'), "document.querySelector('#preview-container').shadowRoot.querySelector");
+
         scriptElement.innerHTML = script.content;
         this.insertedElements.push(scriptElement);
         this.element.shadowRoot.appendChild(scriptElement);
-        loadAllScripts(scripts, index + 1, callback)
+        this.loadAllScripts(scripts, callback, index + 1)
       }
 
     } else if (typeof callback === 'function') {
