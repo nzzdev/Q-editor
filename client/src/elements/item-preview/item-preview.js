@@ -11,8 +11,6 @@ export class ItemPreview {
   @bindable target
   @bindable onDrag
   
-  previewWidth = 540;
-
   sizeOptions = [
     {
       value: 290,
@@ -42,10 +40,21 @@ export class ItemPreview {
       }
     })
 
+    // we use this proxy to catch any changes to the previewWidth and reload the preview renderingInfo on change
+    this.previewWidthProxy = new Proxy({}, {
+      set: (target, property, value, receiver) => {
+        target[property] = value;
+        this.target = value;
+        this.handleSizeChange();
+        return true;
+      }
+    })
+
     this.init()
   }
 
   async init() {
+    this.previewWidthProxy.width = this.sizeOptions[1].value;
     this.availableTargets = await this.qTargets.get('availableTargets')
   }
 
@@ -87,19 +96,30 @@ export class ItemPreview {
   }
 
   handleSizeChange() {
-    this.previewContainer.style.width = `${this.previewWidth}px`;
     this.loadPreview();
   }
 
   fetchRenderingInfo() {
+    const toolRuntimeConfig = {
+      size: {
+        width: [
+          {
+            value: this.previewContainer.getBoundingClientRect().width,
+            comparison: '='
+          }
+        ]
+      }
+    }
+
     return qEnv.QServerBaseUrl
       .then(QServerBaseUrl => {
         if (this.id) {
-          return fetch(`${QServerBaseUrl}/rendering-info/${this.id}/${this.targetProxy.target.key}`)
+          return fetch(`${QServerBaseUrl}/rendering-info/${this.id}/${this.targetProxy.target.key}?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`)
         } else if (this.data) {
           this.data.tool = this.data.tool.replace(new RegExp('-','g'), '_');
           const body = {
-            item: this.data
+            item: this.data,
+            toolRuntimeConfig: toolRuntimeConfig
           }
           return fetch(`${QServerBaseUrl}/rendering-info/${this.targetProxy.target.key}`, {
             method: 'POST',
