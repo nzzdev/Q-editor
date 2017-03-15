@@ -7,6 +7,7 @@ export class ConfirmButton {
   @bindable action;
   @bindable state = 'init';
   @bindable size;
+  @bindable buttonType = 'secondary';
 
   toggle(event) {
     event.stopPropagation();

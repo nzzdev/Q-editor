@@ -4,15 +4,15 @@
   <require from="../molecules/delete-button.html"></require>
   <div if.bind="data" repeat.for="entry of data" class="schema-editor-array__entry">
     <div class="schema-editor-array__collapsecontrol" if.bind="options.expandable">
-      <button-secondary icon="expand" size="small" if.bind="collapsedStates[$index] !== 'expanded'" click.delegate="expand($index)"></button-secondary>
-      <button-secondary icon="collapse" size="small" if.bind="collapsedStates[$index] === 'expanded'" click.delegate="collapse($index)"></button-secondary>
+      <button-tertiary icon="expand" size="small" if.bind="collapsedStates[$index] !== 'expanded'" click.delegate="expand($index)"></button-tertiary>
+      <button-tertiary icon="collapse" size="small" if.bind="collapsedStates[$index] === 'expanded'" click.delegate="collapse($index)"></button-tertiary>
       
       <span class="q-text">${options.expandable.itemLabelProperty ? entry[options.expandable.itemLabelProperty] : $index + 1}</span>
       
       <div class="schema-editor-array__entry-actions">
-        <button-secondary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-secondary>
-        <button-secondary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-secondary>
-        <delete-button action.call="deleteElement(data, $index)" size="small"></delete-button>
+        <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
+        <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-tertiary>
+        <delete-button action.call="deleteElement(data, $index)" size="small" button-type="tertiary"></delete-button>
       </div>
     </div>
     <schema-editor-wrapper
@@ -22,9 +22,9 @@
         change.bind="$parent.change">
     </schema-editor-wrapper>
     <div class="schema-editor-array__entry-actions" if.bind="!options.expandable">
-      <button-secondary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-secondary>
-      <button-secondary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-secondary>
-      <delete-button action.call="deleteElement(data, $index)" size="small"></delete-button>
+      <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
+      <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-tertiary>
+      <delete-button action.call="deleteElement(data, $index)" size="small" button-type="tertiary"></delete-button>
     </div>
   </div>
   
