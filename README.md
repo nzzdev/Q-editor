@@ -1,32 +1,33 @@
 # Q Editor
 
-This is the editor for the Q Toolbox. You will also need a [Q server](https://github.com/nzzdev/Q-server) to make use this.
+This is the editor for the Q Toolbox. To make use of Q editor you will also need a [Q server](https://nzzdev.github.io/Q-server/).
 Here you find some technical documentation to get your own Q editor running.
 
 Demo: https://q-demo.st.nzz.ch
 
 ## Setup
 We provide automatically built docker images for Q editor at https://hub.docker.com/r/nzzonline/q-editor/.
-You have 3 options:
+You have three options for deployment:
 - use the provided images
 - build your own docker images
 - deploy the service using another technology
 
-### Using the provided docker images
+### Deployment
+#### Use the provided docker images
 1. Deploy `nzzonline/q-editor` to a docker environment
 2. You can set the following ENV variables
     - `PORT`: defaults to `8080`, the port Q editor will be listening on
-    - `Q_SERVER_BASE_URL`: required, the url to a running [Q server](https://github.io/nzzdev/Q-server)
+    - `Q_SERVER_BASE_URL`: required, the url to a running [Q server](https://nzzdev.github.io/Q-server/)
     - `LOGIN_MESSAGE`: defaults to `null`, a string that is displayed on the login screen
     - `DEV_LOGGING`: defaults to `false`, if `true` lots of console log messages will appear
     - `PUSH_STATE`: defaults to `true`, if `true` the editor will use nice urls without `#` but needs server support (so it's only used for production, for development `#` is used)
     - `MAPZEN_API_KEY`: defaults to `null`, only needed if the geocoding is used in one of your tools. Get one at https://mapzen.com
 
-### Build your own docker images / deploy using another technology
+#### Build your own docker images / deploy using another technology
 If you choose to build your own docker image or deploy it some other way make sure that you run `cd client && npm install && jspm install && gulp export` to build the client.
 
 ### Configuration
-Apart from the few ENV variables mentioned before, Q editor gets it's configuration from the Q server. You need a running [Q server](https://github.com/nzzdev/Q-server) now so head over to https://github.io/nzzdev/Q-server/install.html if you haven't already. This is what you can configure in `config/editorConfig.js` of your Q server implementation:
+Apart from the ENV variables mentioned above, Q editor gets its configuration from the Q server. You need a running [Q server](https://nzzdev.github.io/Q-server/) now so head over to https://nzzdev.github.io/Q-server/install.html if you haven't already. This is what you can configure in `config/editorConfig.js` of your Q server implementation:
 
 ```js
 const editorConfig = {
@@ -109,7 +110,7 @@ npm install
 jspm install
 ```
 
-After that you can start a livereloading webserver by running `gulp watch` within the folder `client`.
+After that you can start a live reloading webserver by running `gulp watch` within the folder `client`.
 
 ### env
 See the file `client/env`. This is loaded for development only and "fakes" the environment served by the Q editor server part on production:
