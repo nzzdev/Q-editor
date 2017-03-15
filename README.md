@@ -113,7 +113,7 @@ jspm install
 After that you can start a live reloading webserver by running `gulp watch` within the folder `client`.
 
 ### env
-See the file `client/env`. This is loaded for development only and "fakes" the environment served by the Q editor server part on production:
+See the file `client/env`. This is loaded for development only and "fakes" the environment served by the Q server part on production:
 ```
 {
   "QServerBaseUrl": "http://localhost:3001",
