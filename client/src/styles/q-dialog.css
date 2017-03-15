@@ -4,7 +4,7 @@
   align-items: stretch;
   width: 80vw;
   height: auto;
-  padding: var(--q-space-base);
+  padding: calc(var(--q-space-base) * 3);
   background-color: var(--q-color-gray-1);
   border: 1px solid var(--q-color-gray-4);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);

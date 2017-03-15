@@ -8,13 +8,13 @@
 }
 
 .item-overview__content > section {
-  margin-top: var(--q-ui-space-large);
+  margin-top: calc(var(--q-space-base) * 2);
 }
 
 .item-overview__controls {
   width: 240px;
   flex-grow: 0;
-  padding-left: var(--q-ui-space-large);
+  padding-left: calc(var(--q-space-base) * 3);
 
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@
 .item-overview__controls > * {
   width: 100%;
   flex-grow: 0;
-  margin-bottom: var(--q-ui-space-small);
+  margin-bottom: var(--q-space-base);
 }
 
 .item-overview__controls > *:last-child {

@@ -6,9 +6,9 @@
     <div class="schema-editor-array__collapsecontrol" if.bind="options.expandable">
       <button-tertiary icon="expand" size="small" if.bind="collapsedStates[$index] !== 'expanded'" click.delegate="expand($index)"></button-tertiary>
       <button-tertiary icon="collapse" size="small" if.bind="collapsedStates[$index] === 'expanded'" click.delegate="collapse($index)"></button-tertiary>
-      
+
       <span class="q-text">${options.expandable.itemLabelProperty ? entry[options.expandable.itemLabelProperty] : $index + 1}</span>
-      
+
       <div class="schema-editor-array__entry-actions">
         <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
         <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-tertiary>
@@ -27,6 +27,6 @@
       <delete-button action.call="deleteElement(data, $index)" size="small" button-type="tertiary"></delete-button>
     </div>
   </div>
-  
+
   <button-secondary class="schema-editor-array__add-item-button" click.delegate="addElement(data, schema.items)">${arrayEntryLabel} <span t="editor.add"></span></button-secondary>
 </template>

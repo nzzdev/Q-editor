@@ -24,12 +24,11 @@ schema-editor-array {
 }
 
 .schema-editor-array__collapsecontrol > span {
-  padding-left: var(--q-space-base);
+  padding-left: calc(var(--q-space-base) / 2);
 }
 
 .schema-editor-array__entry > schema-editor-wrapper {
   flex-grow: 1;
-  /*padding-left: var(--q-space-base);*/
 }
 
 .schema-editor-array__add-item-button {
@@ -49,5 +48,3 @@ schema-editor-array {
 .schema-editor-array__entry-actions > * {
   margin-right: calc(var(--q-space-base) / 2);
 }
-
-

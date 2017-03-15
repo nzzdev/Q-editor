@@ -62,11 +62,4 @@
 
   /* layout */
   --q-space-base: 16px;
-
-
-  /* legacy NEEDS TO GO AWAY */
-  --q-ui-space-small: 9px;
-  --q-ui-space-medium: 18px;
-  --q-ui-space-large: 36px;
-  --q-ui-space-huge: 72px;
 }
