@@ -5,6 +5,7 @@ import { I18N } from 'aurelia-i18n';
 
 import Auth from 'resources/Auth.js';
 import User from 'resources/User.js';
+import qEnv from 'resources/qEnv.js';
 
 @inject(Auth, User, I18N, Router)
 export class Login {
@@ -32,10 +33,13 @@ export class Login {
       })
   }
 
+  async activate() {
+    this.loginMessage = await qEnv.loginMessage;
+  }
+
   async tryLogin() {
     try {
       await this.auth.login(this.username, this.password)
-      console.log('logged in')
       this.router.navigateToRoute('index');
     } catch (e) {
       console.log(e)
