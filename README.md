@@ -6,13 +6,13 @@ Here you find some technical documentation to get your own Q editor running.
 Demo: https://q-demo.st.nzz.ch
 
 ## Setup
+### Deployment
 We provide automatically built docker images for Q editor at https://hub.docker.com/r/nzzonline/q-editor/.
 You have three options for deployment:
 - use the provided images
 - build your own docker images
 - deploy the service using another technology
 
-### Deployment
 #### Use the provided docker images
 1. Deploy `nzzonline/q-editor` to a docker environment
 2. You can set the following ENV variables
