@@ -1,12 +1,106 @@
 # Q Editor
 
 This is the editor for the Q Toolbox. You will also need a [Q server](https://github.com/nzzdev/Q-server) to make use this.
+Here you find some technical documentation to get your own Q editor running. The user documentation is available at https://github.io/nzzdev/Q-editor.
 
+Demo: https://q-demo.st.nzz.ch
+
+## Setup
+We provide automatically built docker images for Q editor at https://hub.docker.com/r/nzzonline/q-editor/.
+You have 3 options:
+- use the provided images
+- build your own docker images
+- deploy the service using another technology
+
+### Using the provided docker images
+1. Deploy `nzzonline/q-editor` to a docker environment
+2. You can set the following ENV variables
+    - `PORT`: defaults to `8080`, the port Q editor will be listening on
+    - `Q_SERVER_BASE_URL`: required, the url to a running [Q server](https://github.io/nzzdev/Q-server)
+    - `LOGIN_MESSAGE`: defaults to `null`, a string that is displayed on the login screen
+    - `DEV_LOGGING`: defaults to `false`, if `true` lots of console log messages will appear
+    - `PUSH_STATE`: defaults to `true`, if `true` the editor will use nice urls without `#` but needs server support (so it's only used for production, for development `#` is used)
+    - `MAPZEN_API_KEY`: defaults to `null`, only needed if the geocoding is used in one of your tools. Get one at https://mapzen.com
+
+### Build your own docker images / deploy using another technology
+If you choose to build your own docker image or deploy it some other way make sure that you run `cd client && npm install && jspm install && gulp export` to build the client.
+
+### Configuration
+Apart from the few ENV variables mentioned before, Q editor gets it's configuration from the Q server. You need a running [Q server](https://github.com/nzzdev/Q-server) now so head over to https://github.io/nzzdev/Q-server/install.html if you haven't already. This is what you can configure in `config/editorConfig.js` of your Q server implementation:
+
+```js
+const editorConfig = {
+  languages: [ // an array of languages, if more that one is configured, Q editor will show a language switcher
+    {
+      key: 'de',
+      label: 'de'
+    },
+    {
+      key: 'en',
+      label: 'en'
+    }
+  ],
+  departments: [ // every item is assign one department. These are used for the filtering on the overview.
+    "International",
+    "Economics",
+    "Sport"
+  ],
+  lowNewItems: {   // if there are not enough graphics, M will appear instead of Q. This is used to configure 'not enough'.
+    threshold: 21, // less than that many new items..
+    days: 7        // in the last days are considered 'not enough'
+  },
+  itemList: {
+    itemsPerLoad: 18 // how many items to load per step (load more) on item overview
+  },
+  schemaEditor: {
+    latLngLayerConfig: { // if you use schema-editor-lat-lng this is the layer config for Leaflet
+      url: 'https://stamen-tiles.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png',
+      config: {
+        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+      }
+    }
+  },
+  help: { // configuration for the help dialog. this has no localization support for now :-(
+    intro: 'some text that can contain html', // shown on top of the dialog
+    faq: [ // a list of questions and answers shown below the intro
+      {
+        question: 'What is this?',
+        answer: 'This is a Storytelling Toolbox'
+      },
+      {
+        question: 'Why?',
+        answer: 'Because there is more than letters.'
+      }
+    ]
+  },
+  stylesheets: [ // a list of stylesheets to load in addition to the default styles. Use this to load your theme if you do not like our design
+    {
+      url: ''
+    },
+  ],
+  eastereggs: { // there are some eastereggs in Q. provide the urls to the soundfiles here. We do not distribute them because we do not have the copyright for the tunes we use at NZZ.
+    sounds: {
+      m: '', // played if M is visible and user hovers her
+      q: '', // played/paused if user types Shift+Q
+      bondTheme: '' // played if user types Shift+0 Shift+0 Shift+7
+    }
+  }
+```
 
 ## Development
 
-To develop the Q editor you need npm first.
-Running the following commands in the root of this project should give you a working environment.
+Q editor consists of two parts:
+- the server part
+- the client part
+
+The server part is a small webserver built on [hapijs](https://hapijs.com/) that serves the client files and the ENV variables at `/env` endpoint.
+The client part is a web application built on [Aurelia](http://aurelia.io). This is were most of the work is done.
+
+Q editor communicates with the endpoints provided by a Q server directly.
+
+For development you can run the client part without the server part:
+You need [Node.js](https://nodejs.org/) and `npm`.
+When you have this installed running the following commands in the root of this project should give you a working environment.
 
 ```
 npm install -g jspm
@@ -18,10 +112,11 @@ jspm install
 After that you can start a livereloading webserver by running `gulp watch` within the folder `client`.
 
 ### env
-See the file `client/env`. This is loaded for development only and should contain JSON like this:
+See the file `client/env`. This is loaded for development only and "fakes" the environment served by the Q editor server part on production:
 ```
 {
   "QServerBaseUrl": "http://localhost:3001",
+  "loginMessage": "some text to be shown on the login screen",
   "devLogging": true,
   "pushState": false
 }
