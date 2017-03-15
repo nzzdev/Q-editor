@@ -126,6 +126,6 @@ Start one locally or use your staging environment. You probably do not want to d
 
 
 ## License
-Copyright (c) 2016 Neue Zürcher Zeitung. All rights reserved.
+Copyright (c) 2017 Neue Zürcher Zeitung. All rights reserved.
 
 This software is published under the MIT license.
