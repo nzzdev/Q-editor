@@ -70,6 +70,8 @@ export class PreviewContainer {
     // add the markup if any
     if (renderingInfo.markup) {
       this.previewElement.innerHTML = renderingInfo.markup;
+    } else {
+      this.previewElement.innerHTML = '';
     }
 
     // load the scripts one after the other
