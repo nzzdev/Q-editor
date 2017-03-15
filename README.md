@@ -1,7 +1,7 @@
 # Q Editor
 
 This is the editor for the Q Toolbox. You will also need a [Q server](https://github.com/nzzdev/Q-server) to make use this.
-Here you find some technical documentation to get your own Q editor running. The user documentation is available at https://github.io/nzzdev/Q-editor.
+Here you find some technical documentation to get your own Q editor running.
 
 Demo: https://q-demo.st.nzz.ch
 
