@@ -56,7 +56,8 @@
   --q-h6-weight: 400;
 
   --q-text-color: var(--q-color-black);
-  --q-text-light-color: #5c5c5c;
+  --q-text-light-color: var(--q-color-gray-6);
+  --q-text-ultralight-color: var(--q-color-gray-5);
 
   --q-link-color: var(--q-color-primary-5);
 

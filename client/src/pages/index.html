@@ -18,7 +18,7 @@
     </div>
     
     <div class="items-filter q-form">
-      <select value.bind="filter.selected" change.delegate="filterChanged()" repeat.for="filter of availableFilters">
+      <select value.bind="filter.selected" change.delegate="filterChanged()" repeat.for="filter of availableFilters" class="${filter.selected === filter.options[0].name ? 'q-text--ultralight' : ''}">
         <option repeat.for="option of filter.options" value.bind="option.name">${option.label & t}</option>
       </select>
     </div>
