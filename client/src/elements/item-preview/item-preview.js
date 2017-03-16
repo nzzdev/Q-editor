@@ -44,7 +44,6 @@ export class ItemPreview {
     this.previewWidthProxy = new Proxy({}, {
       set: (target, property, value, receiver) => {
         target[property] = value;
-        this.target = value;
         this.handleSizeChange();
         return true;
       }
