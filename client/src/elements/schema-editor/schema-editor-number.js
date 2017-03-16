@@ -10,13 +10,6 @@ export class SchemaEditorNumber {
     step: 1
   }
 
-  handleChange() {
-    if (this.data === '') {
-      this.data = undefined;
-    }
-    this.change();
-  }
-
   schemaChanged() {
     this.applyOptions();
   }
