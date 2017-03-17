@@ -19,7 +19,7 @@
 }
 
 .q-form input:invalid {
-  border-color: var(--q-color-no-1);
+  border-color: var(--q-color-error-light);
 }
 
 .q-form input:focus,

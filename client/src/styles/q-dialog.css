@@ -43,6 +43,7 @@
 .q-dialog--bottom-controls .q-dialog__controls .button {
   flex-grow: 1;
   margin-right: var(--q-space-base);
+  max-width: 25%;
 }
 
 .q-dialog--bottom-controls .q-dialog__controls .button:last-child {
