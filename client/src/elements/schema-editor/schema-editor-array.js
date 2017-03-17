@@ -68,12 +68,18 @@ export class SchemaEditorArray {
   }
 
   @computedFrom('schema')
-  get arrayEntryLabel() {
+  get labels() {
+    let arrayEntryLabel = '';
     if (this.schema && this.schema.items && this.schema.items.title) {
-      return this.schema.items.title;
+      arrayEntryLabel = this.schema.items.title;
     } else if (this.schema && this.schema.title) {
-      return this.schema.title
+      arrayEntryLabel = this.schema.title
     }
+    let labels = {
+      arrayEntryLabel: arrayEntryLabel
+    }
+    console.log(labels)
+    return labels;
   }
 
 }

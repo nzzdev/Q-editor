@@ -32,7 +32,7 @@
     "questionLeaveWithUnsavedChanges": "Not all changes are saved, close anyway?",
     "previewTargetLabel": "Publication",
     "previewSizeLabel": "Size",
-    "add": "add",
+    "arrayEntryAdd": "add {{ arrayEntryLabel }}",
     "activatingEditorTakesTooLong": "It takes too long to load the editor, something is wrong.",
     "failedToSave": "Failed to save: {{reason}}."
   },

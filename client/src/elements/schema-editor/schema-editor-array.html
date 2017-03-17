@@ -28,5 +28,5 @@
     </div>
   </div>
 
-  <button-secondary class="schema-editor-array__add-item-button" click.delegate="addElement(data, schema.items)">${arrayEntryLabel} <span t="editor.add"></span></button-secondary>
+  <button-secondary class="schema-editor-array__add-item-button" click.delegate="addElement(data, schema.items)"><span t="editor.arrayEntryAdd" t-params.bind="labels"></span></button-secondary>
 </template>

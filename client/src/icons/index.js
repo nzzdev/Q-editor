@@ -3,6 +3,7 @@ export function configure(frameworkConfiguration) {
     .globalResources('./icon-abort.html')
     .globalResources('./icon-activate.html')
     .globalResources('./icon-active-state.html')
+    .globalResources('./icon-add.html')
     .globalResources('./icon-back.html')
     .globalResources('./icon-blueprint.html')
     .globalResources('./icon-collapse.html')

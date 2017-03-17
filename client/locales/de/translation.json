@@ -32,7 +32,7 @@
     "questionLeaveWithUnsavedChanges": "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
     "previewTargetLabel": "Publikation",
     "previewSizeLabel": "Angezeigte Grösse",
-    "add": "hinzufügen",
+    "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",
     "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
     "failedToSave": "Speichern ist fehlgeschlagen: {{reason}}."
   },
