@@ -4,8 +4,8 @@
   <require from="../molecules/delete-button.html"></require>
   <div if.bind="data" repeat.for="entry of data" class="schema-editor-array__entry">
     <div class="schema-editor-array__collapsecontrol" if.bind="options.expandable">
-      <button-tertiary icon="expand" size="small" if.bind="collapsedStates[$index] !== 'expanded'" click.delegate="expand($index)"></button-tertiary>
-      <button-tertiary icon="collapse" size="small" if.bind="collapsedStates[$index] === 'expanded'" click.delegate="collapse($index)"></button-tertiary>
+      <button-secondary icon="expand" size="small" if.bind="collapsedStates[$index] !== 'expanded'" click.delegate="expand($index)"></button-secondary>
+      <button-secondary icon="collapse" size="small" if.bind="collapsedStates[$index] === 'expanded'" click.delegate="collapse($index)"></button-secondary>
 
       <span class="q-text">${options.expandable.itemLabelProperty ? entry[options.expandable.itemLabelProperty] : $index + 1}</span>
 

@@ -53,7 +53,9 @@ export class ItemPreview {
   }
 
   async init() {
-    this.previewWidthProxy.width = this.sizeOptions[1].value;
+    // set the default preview width to the most narrow variant
+    this.previewWidthProxy.width = this.sizeOptions[0].value;
+
     this.availableTargets = await this.qTargets.get('availableTargets')
   }
 

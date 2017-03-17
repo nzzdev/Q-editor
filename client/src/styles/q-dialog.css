@@ -10,12 +10,19 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);
 }
 
+.q-dialog--bottom-controls {
+  flex-direction: column;
+}
+
 .q-dialog__content {
   width: 70%;
+  flex-shrink: 0;
 }
 
 .q-dialog__controls {
   width: 30%;
+  flex-shrink: 0;
+
   padding-left: calc(var(--q-space-base) * 3);
 
   display: flex;
@@ -25,6 +32,21 @@
 .q-dialog__controls > *:last-child {
   margin-top: auto;
   margin-bottom: 0;
+}
+
+.q-dialog--bottom-controls .q-dialog__controls {
+  padding-left: 0;
+  flex-direction: row;
+  width: 100%;
+}
+
+.q-dialog--bottom-controls .q-dialog__controls .button {
+  flex-grow: 1;
+  margin-right: var(--q-space-base);
+}
+
+.q-dialog--bottom-controls .q-dialog__controls .button:last-child {
+  margin-right: 0;
 }
 
 ai-dialog-overlay {
