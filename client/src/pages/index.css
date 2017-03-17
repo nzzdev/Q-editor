@@ -40,6 +40,8 @@
 .search input {
   flex-grow: 1;
   order: 2;
+
+  background: none;
   
   border: none;
   border-bottom: 1px solid var(--q-color-gray-4);
