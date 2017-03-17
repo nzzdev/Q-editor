@@ -62,11 +62,6 @@ export class SchemaEditorArray {
     }
   }
 
-  getFirstPropertyValue(index) {
-    console.log(index, Object.keys(this.schema.items.properties)[0])
-    return this.data[index][Object.keys(this.schema.items.properties)[0]];
-  }
-
   @computedFrom('schema')
   get labels() {
     let arrayEntryLabel = '';
@@ -78,7 +73,6 @@ export class SchemaEditorArray {
     let labels = {
       arrayEntryLabel: arrayEntryLabel
     }
-    console.log(labels)
     return labels;
   }
 
