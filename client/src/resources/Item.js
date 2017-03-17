@@ -107,7 +107,11 @@ export default class Item {
   }
 
   async reset() {
-    return this.load(this.id);
+    if (this.id) {
+      return this.load(this.id);
+    } else {
+      return true;
+    }
   }
 
 }

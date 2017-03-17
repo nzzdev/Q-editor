@@ -63,7 +63,6 @@ export class Editor {
           let item = this.itemStore.getNewItem();
           item.conf = generateFromSchema(this.fullSchema)
           item.conf.tool = routeParams.tool;
-          item.changed();
           return item;
         }
       })
