@@ -87,27 +87,24 @@ export class Editor {
     this.previewData = JSON.parse(JSON.stringify(this.item.conf));
   }
 
-  canDeactivate() {
-    return new Promise((resolve, reject) => {
-      if (this.item.isSaved || this.deactivationConfirmed) {
-        resolve();
+  async canDeactivate() {
+    if (this.item.isSaved || this.deactivationConfirmed) {
+      return true;
+    } else {
+      this.deactivationConfirmed = false;
+      let dialogResponse = await this.dialogService.open({
+        viewModel: ConfirmDialog,
+        model: {
+          confirmQuestion: this.i18n.tr('editor.questionLeaveWithUnsavedChanges')
+        }
+      })
+      if (dialogResponse.wasCancelled) {
+        return false;
       } else {
-        this.deactivationConfirmed = false;
-        this.dialogService.open({
-          viewModel: ConfirmDialog,
-          model: {
-            confirmQuestion: this.i18n.tr('editor.questionLeaveWithUnsavedChanges')
-          }
-        }).then(response => {
-          if (response.wasCancelled) {
-            reject();
-          } else {
-            this.deactivationConfirmed = true;
-            resolve();
-          }
-        });
+        this.deactivationConfirmed = true;
+        return await this.item.reset();
       }
-    });
+    }
   }
 
   deactivate() {

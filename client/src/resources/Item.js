@@ -21,6 +21,7 @@ export default class Item {
   }
 
   getToolName() {
+    // this is used because we have legacy tool names with - which is not supported in Q server config
     return this.conf.tool.replace(new RegExp('-','g'), '_');
   }
 
@@ -103,6 +104,10 @@ export default class Item {
     // we get new properties as a response to the save and assign them the the conf
     this.conf = Object.assign(this.conf, body);
     this.isSaved = true;
+  }
+
+  async reset() {
+    return this.load(this.id);
   }
 
 }
