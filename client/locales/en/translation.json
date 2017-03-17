@@ -2,7 +2,7 @@
   "general": {
     "yes": "yes",
     "no": "no",
-    "searchLabel": "Search a graphic",
+    "searchLabel": "Search for a graphic",
     "login": "login",
     "logout": "logout",
     "username": "Username",
@@ -25,8 +25,8 @@
     "serverConnectionFailed": "Failed to connect to server."
   },
   "statistics": {
-    "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total {{totalActiveCount}} active.",    
-    "enoughNewGraphics": "{{count}} new active $t(general.graphic) in the last {{days}} days. Total {{totalActiveCount}} active."
+    "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",    
+    "enoughNewGraphics": "{{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active."
   },
   "editor": {
     "questionLeaveWithUnsavedChanges": "Not all changes are saved, close anyway?",
@@ -39,7 +39,7 @@
   "item": {
     "activate": "activate",
     "deactivate": "deactivate",
-    "blueprint": "blueprint",
+    "blueprint": "use as blueprint",
     "blueprintTitlePrefix": "Copy of ",
     "edit": "edit",
     "failedToLoadItem": "Failed to load the graphic.",
