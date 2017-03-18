@@ -3,6 +3,9 @@ import { Router } from 'aurelia-router';
 
 import { I18N } from 'aurelia-i18n';
 
+import { LogManager } from 'aurelia-framework';
+const log = LogManager.getLogger('Q');
+
 import Auth from 'resources/Auth.js';
 import User from 'resources/User.js';
 import qEnv from 'resources/qEnv.js';
@@ -40,7 +43,7 @@ export class Login {
       await this.auth.login(this.username, this.password);
       this.router.navigateToRoute('index');
     } catch (e) {
-      console.log(e);
+      log.error(e);
       this.loginError = this.i18n.tr('general.loginFailed');
     }
   }

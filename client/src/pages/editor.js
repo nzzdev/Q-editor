@@ -2,6 +2,9 @@ import { inject } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
 import { I18N } from 'aurelia-i18n';
 
+import { LogManager } from 'aurelia-framework';
+const log = LogManager.getLogger('Q');
+
 import { ConfirmDialog } from 'dialogs/confirm-dialog.js';
 
 import qEnv from 'resources/qEnv.js';
@@ -138,10 +141,10 @@ export class Editor {
   save() {
     this.item.save()
       .then(() => {
-        console.log('item saved', this.item);
+        log.info('item saved', this.item);
       })
       .catch(error => {
-        console.log(error);
+        log.error(error);
         this.messageService.pushMessage('error', this.i18n.tr('editor.failedToSave', { reason: error.message }));
       });
   }

@@ -1,6 +1,9 @@
 // clear the load error timeout
 window.clearTimeout(window.QLoadErrorTimeout);
 
+import { LogManager } from 'aurelia-framework';
+import { ConsoleAppender } from 'aurelia-logging-console';
+
 import QConfig from 'resources/QConfig.js';
 import QTargets from 'resources/QTargets.js';
 import Auth from 'resources/Auth.js';
@@ -58,11 +61,15 @@ export async function configure(aurelia) {
   ;
 
   const devLogging = await qEnv.devLogging;
+  let logLevel = LogManager.logLevel.info;
   if (devLogging) {
     aurelia.use
-      .plugin('aurelia-testing')
-      .developmentLogging();
+      .plugin('aurelia-testing');
+    logLevel = LogManager.logLevel.debug;
   }
+
+  LogManager.addAppender(new ConsoleAppender());
+  LogManager.setLevel(logLevel);
 
   aurelia.use.singleton(Auth);
   aurelia.use.singleton(EmbedCodeGenerator);
