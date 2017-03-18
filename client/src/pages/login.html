@@ -16,10 +16,10 @@
           <input type="password" id="password" value.bind="password">
         </label>
       </div>
-      <button-primary click.delegate="tryLogin()"><span t="general.login"></span></button-primary>
       <p class="q-text q-text--error" if.bind="loginError">
         ${loginError}
       </p>
+      <button-primary click.delegate="tryLogin()"><span t="general.login"></span></button-primary>
     </form>
   </main>
 </template>

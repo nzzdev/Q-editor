@@ -2,12 +2,6 @@ schema-editor {
   display: block;
 }
 
-schema-editor label {
-  font-size: var(--q-text-small-size);
-  line-height: 1.33;
-  color: var(--q-text-light-color);
-}
-
 schema-editor fieldset {
   border: none;
   padding: 0 0 0 20px;
