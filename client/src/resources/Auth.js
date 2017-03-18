@@ -22,8 +22,8 @@ export default class Auth {
         username: username,
         password: password
       })
-    })
-    
+    });
+
     if (!response.ok) {
       throw response;
     }
@@ -37,7 +37,7 @@ export default class Auth {
       const response = await fetch(`${QServerBaseUrl}/logout`, {
         credentials: 'include',
         method: 'POST'
-      })
+      });
 
       if (!response.ok) {
         throw response;

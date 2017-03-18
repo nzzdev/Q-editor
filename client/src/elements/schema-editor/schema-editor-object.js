@@ -12,7 +12,7 @@ export class SchemaEditorObject {
   }
 
   isRequired(schema, propertyName) {
-    return schema.hasOwnProperty('required') && schema.required.includes(propertyName)
+    return schema.hasOwnProperty('required') && schema.required.includes(propertyName);
   }
 
   isCompact(schema) {

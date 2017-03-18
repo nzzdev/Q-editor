@@ -10,7 +10,7 @@ export class MetaEditor {
     qConfig.get('departments')
       .then(departments => {
         this.departments = departments.sort();
-      })
+      });
   }
 
 }

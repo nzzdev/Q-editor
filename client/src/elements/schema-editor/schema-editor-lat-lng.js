@@ -11,20 +11,18 @@ export class SchemaEditorLatLng {
   @bindable schema;
   @bindable data;
   @bindable change;
-  
+
   constructor(qConfig, loader) {
     this.qConfig = qConfig;
     this.loader = loader;
     this.mapInit = new Promise((resolve, reject) => {
       this.resolveMapInit = resolve;
-    })
+    });
   }
 
-  dataChanged() {
-    this.mapInit
-      .then(() => {
-        this.updateMarker();
-      })
+  async dataChanged() {
+    await this.mapInit;
+    this.updateMarker();
   }
 
   async attached() {
@@ -45,14 +43,14 @@ export class SchemaEditorLatLng {
     this.markerPinIcon = Leaflet.divIcon({
       className: 'q-map-editor-pin',
       html: iconPinSvg,
-      iconSize: [52,52],
-      iconAnchor: [26,38]
-    })
+      iconSize: [52, 52],
+      iconAnchor: [26, 38]
+    });
 
     this.map = Leaflet.map(this.mapContainer, {
       zoomControl: false, // we add this later after the search control
       touchZoom: 'center',
-      scrollWheelZoom: 'center',
+      scrollWheelZoom: 'center'
     }).setView([47.36521171867246, 8.547435700893404], 13);
 
     this.map.on('click', e => {
@@ -64,7 +62,7 @@ export class SchemaEditorLatLng {
           this.change();
         }
       }
-    })
+    });
 
     const mapzenApiKey = await qEnv.mapzenApiKey;
     this.geocoder = Leaflet.control.geocoder(mapzenApiKey, {
@@ -104,7 +102,7 @@ export class SchemaEditorLatLng {
     }
   }
 
-  updateMarker() {
+  async updateMarker() {
     if (isNaN(this.data.lat) || isNaN(this.data.lng)) {
       if (this.pin) {
         this.map.removeLayer(this.pin);
@@ -130,12 +128,11 @@ export class SchemaEditorLatLng {
         if (this.change) {
           this.change();
         }
-      })
-      this.mapInit
-        .then(() => {
-          this.pin.addTo(this.map);
-          this.map.panTo(this.data);
-        });
+      });
+
+      await this.mapInit;
+      this.pin.addTo(this.map);
+      this.map.panTo(this.data);
     }
   }
 }

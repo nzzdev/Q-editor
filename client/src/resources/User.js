@@ -12,7 +12,7 @@ export default class User {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await fetch(`${QServerBaseUrl}/user`, {
         credentials: 'include'
-      })
+      });
 
       if (!response.ok) {
         throw response;
@@ -54,17 +54,16 @@ export default class User {
   async save() {
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
-      const response = fetch(`${QServerBaseUrl}/user`, {
+      const response = await fetch(`${QServerBaseUrl}/user`, {
         credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(this.data)
-      })
+      });
 
       if (!response.ok) {
         throw response;
       }
       return true;
-
     } catch (e) {
       return false;
     }

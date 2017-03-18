@@ -1,4 +1,4 @@
-import qEnv from 'resources/qEnv.js'
+import qEnv from 'resources/qEnv.js';
 
 export default class QTargets {
 
@@ -12,23 +12,22 @@ export default class QTargets {
       .then(response => {
         if (response.ok && response.status >= 200 && response.status < 400) {
           return response.json();
-        } else {
-          throw new Error(response.statusText)
         }
+        throw new Error(response.statusText);
       })
       .then(targets => {
         this.data.availableTargets = targets;
       })
       .catch(err => {
-        this.messageService.pushMessage('error', 'failedLoadingTargets')
-      })
+        this.messageService.pushMessage('error', 'failedLoadingTargets');
+      });
   }
 
   get(key) {
     return this.loaded
       .then(() => {
-        return this.data[key]
-      })
+        return this.data[key];
+      });
   }
 
 }

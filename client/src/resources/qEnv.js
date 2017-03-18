@@ -23,8 +23,8 @@ let proxy = new Proxy(qEnv, {
     return target.env
       .then(env => {
         return env[name];
-      })
+      });
   }
-})
+});
 
 export default proxy;

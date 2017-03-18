@@ -1,11 +1,11 @@
-import { inject, singleton } from 'aurelia-framework'
-import { Router } from 'aurelia-router'
-import User from 'resources/User.js'
-import ItemStore from 'resources/ItemStore.js'
-import ToolsInfo from 'resources/ToolsInfo.js'
-import Statistics from 'resources/Statistics.js'
-import QConfig from 'resources/QConfig.js'
-import MessageService from 'resources/MessageService.js'
+import { inject, singleton } from 'aurelia-framework';
+import { Router } from 'aurelia-router';
+import User from 'resources/User.js';
+import ItemStore from 'resources/ItemStore.js';
+import ToolsInfo from 'resources/ToolsInfo.js';
+import Statistics from 'resources/Statistics.js';
+import QConfig from 'resources/QConfig.js';
+import MessageService from 'resources/MessageService.js';
 
 @singleton()
 @inject(ItemStore, User, ToolsInfo, Router, QConfig, Statistics, MessageService)
@@ -34,18 +34,19 @@ export class Index {
       this.loadStatistics();
       return;
     }
-    
+
     // load filter defaults
     this.availableFilters = this.itemStore.getFilters();
 
     // apply stored user filter selections
     if (this.user.getUserConfig('q-filters')) {
       for (let userFilterSelection of this.user.getUserConfig('q-filters')) {
-        this.availableFilters.map(filter => {
-          if (filter.name === userFilterSelection.name) {
-            filter.selected = userFilterSelection.selected;
-          }
-        })
+        this.availableFilters
+          .map(filter => {
+            if (filter.name === userFilterSelection.name) {
+              filter.selected = userFilterSelection.selected;
+            }
+          });
       }
     }
 
@@ -64,7 +65,7 @@ export class Index {
           return {
             name: filter.name,
             selected: filter.selected
-          }
+          };
         })
       );
     }
@@ -77,11 +78,10 @@ export class Index {
       let availableToolsNames = await this.toolsInfo.getAvailableToolsNames();
 
       let numberOfItemsToLoadPerStep = itemListConfig.itemsPerLoad || 18;
-      
-      const result = await this.itemStore.getItems(searchString, numberOfItemsToLoadPerStep, availableToolsNames, bookmark)
+
+      const result = await this.itemStore.getItems(searchString, numberOfItemsToLoadPerStep, availableToolsNames, bookmark);
       this.itemsLoading = false;
       return result;
-
     } catch (e) {
       this.messageService.push('error', 'failedLoadingItems');
     }
@@ -133,7 +133,7 @@ export class Index {
       } else {
         this.enoughNewItems = true;
       }
-    } catch(e) {
+    } catch (e) {
       // we do not care about errors here but just do not show statistics if something failed
     }
   }

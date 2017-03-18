@@ -10,20 +10,16 @@ export default class DragDataGenerator {
     this.embedCodeGenerator = embedCodeGenerator;
   }
 
-  getDragDataForItem(item, target) {
+  async getDragDataForItem(item, target) {
     if (!this.dragData[item.id]) {
-      this.dragData[item.id] = this.embedCodeGenerator.getEmbedCodeForItem(item, target)
-        .then(embedCode => {
-          let data = {
-            "origin": window.location.origin,
-            "id": item.id,
-            "title": item.conf.title,
-            "tool": item.conf.tool,
-            "html": embedCode.replace(/"/g,"'")
-          };
-
-          return JSON.stringify(data);
-        })
+      let embedCode = await this.embedCodeGenerator.getEmbedCodeForItem(item, target);
+      this.dragData[item.id] = JSON.stringify({
+        origin: window.location.origin,
+        id: item.id,
+        title: item.conf.title,
+        tool: item.conf.tool,
+        html: embedCode.replace(/"/g, "'")
+      });
     }
     return this.dragData[item.id];
   }

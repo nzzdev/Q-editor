@@ -21,6 +21,6 @@ export class LanguageSwitcher {
   }
 
   switchLanguage(language) {
-    this.i18n.setLocale(language)
+    this.i18n.setLocale(language);
   }
 }

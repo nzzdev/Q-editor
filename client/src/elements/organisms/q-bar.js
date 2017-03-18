@@ -1,8 +1,8 @@
 import { bindable, inject } from 'aurelia-framework';
-import { DialogService } from 'aurelia-dialog'
-import { Router } from 'aurelia-router'
-import { HelpDialog } from 'dialogs/help-dialog'
-import { AccountDialog } from 'dialogs/account-dialog'
+import { DialogService } from 'aurelia-dialog';
+import { Router } from 'aurelia-router';
+import { HelpDialog } from 'dialogs/help-dialog';
+import { AccountDialog } from 'dialogs/account-dialog';
 
 import User from 'resources/User.js';
 import Auth from 'resources/Auth.js';
@@ -41,14 +41,6 @@ export class QBar {
       model: {
         router: this.router
       }
-    }).then(response => {
-      // if (response.wasCancelled) {
-      //   this.auth.logout()
-      //     .then(() => {
-      //       console.log('going to navigate')
-      //       this.router.navigateToRoute('index');
-      //     })
-      // }
     });
   }
 

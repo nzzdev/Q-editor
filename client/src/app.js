@@ -22,7 +22,7 @@ export class App {
   configureRouter(config, router) {
     this.router = router;
     config.title = 'NZZ Q';
-    config.addPreActivateStep(ConfigAvailableCheckStep)
+    config.addPreActivateStep(ConfigAvailableCheckStep);
     config.addAuthorizeStep(AuthorizeStep); // Add a route filter to the authorize extensibility point.
 
     let routerMap = [
@@ -45,25 +45,23 @@ export class App {
         route: ['item/:id'],
         name: 'item',
         moduleId: 'pages/item-overview',
-        auth: true,
+        auth: true
       },
       {
         route: ['editor/:tool/:id?'],
         name: 'editor',
         moduleId: 'pages/editor',
-        auth: true,
+        auth: true
       },
       {
         route: ['server-unavailable'],
         name: 'server-unavailable',
         moduleId: 'pages/server-unavailable',
         title: 'Error'
-      },
+      }
     ];
 
-    router.configure(config => {
-      config.map(routerMap);
-    })
+    config.map(routerMap);
 
     config.fallbackRoute('index');
 
@@ -74,7 +72,7 @@ export class App {
         }
         config.options.pushState = true;
         config.options.root = '/';
-      })
+      });
   }
 
   async attached() {
@@ -85,15 +83,15 @@ export class App {
         stylesheets
           .map(stylesheet => {
             if (!stylesheet.url && stylesheet.path) {
-              stylesheet.url = `${QServerBaseUrl}${stylesheet.path}`
+              stylesheet.url = `${QServerBaseUrl}${stylesheet.path}`;
             }
-            return stylesheet
+            return stylesheet;
           })
           .map(stylesheet => {
             if (stylesheet.url) {
               let link = document.createElement('link');
               link.type = 'text/css';
-              link.rel = "stylesheet";
+              link.rel = 'stylesheet';
               link.href = stylesheet.url;
               document.head.appendChild(link);
             } else if (stylesheet.content) {
@@ -102,7 +100,7 @@ export class App {
               style.appendChild(document.createTextNode(stylesheet.content));
               document.head.appendChild(style);
             }
-          })
+          });
       }
     } catch (e) {
       // nevermind
@@ -125,13 +123,12 @@ class AuthorizeStep {
         .then(() => {
           if (!this.user.isLoggedIn) {
             return next.cancel(new Redirect('login'));
-          } else {
-            return next();
           }
+          return next();
         })
         .catch((e) => {
           return next.cancel(new Redirect('login'));
-        })
+        });
     }
 
     return next();
@@ -140,11 +137,11 @@ class AuthorizeStep {
 
 @inject(QConfig)
 class ConfigAvailableCheckStep {
-  
+
   constructor(qConfig) {
     this.qConfig = qConfig;
   }
-  
+
   async run(navigationInstruction, next) {
     if (navigationInstruction.getAllInstructions().some(i => i.config.name === 'server-unavailable')) {
       return next();
@@ -153,10 +150,9 @@ class ConfigAvailableCheckStep {
       await this.qConfig.configLoaded;
       if (!this.qConfig.config) {
         return next.cancel(new Redirect('server-unavailable'));
-      } else {
-        return next();
       }
-    } catch(e) {
+      return next();
+    } catch (e) {
       return next.cancel(new Redirect('server-unavailable'));
     }
   }

@@ -3,7 +3,7 @@ import { valueConverter } from 'aurelia-framework';
 @valueConverter('forceNumber')
 export class ForceNumberValueConverter {
 
-  fromView(value){
+  fromView(value) {
     if (!value || value === '') {
       return undefined;
     }

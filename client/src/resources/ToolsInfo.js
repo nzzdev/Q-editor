@@ -1,6 +1,6 @@
-import { inject } from 'aurelia-framework'
-import User from 'resources/User.js'
-import qEnv from 'resources/qEnv.js'
+import { inject } from 'aurelia-framework';
+import User from 'resources/User.js';
+import qEnv from 'resources/qEnv.js';
 
 @inject(User)
 export default class ToolsInfo {
@@ -50,8 +50,6 @@ export default class ToolsInfo {
   async getAvailableToolsNames() {
     const tools = await this.getAvailableTools();
     return tools
-      .map(tool => {
-        return tool.name
-      })
+      .map(tool => tool.name);
   }
 }

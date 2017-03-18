@@ -1,4 +1,4 @@
-import { bindable, useShadowDOM } from 'aurelia-framework'
+import { bindable } from 'aurelia-framework';
 
 export class ConfirmButton {
 

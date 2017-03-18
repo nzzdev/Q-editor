@@ -22,7 +22,7 @@ export default class Item {
 
   getToolName() {
     // this is used because we have legacy tool names with - which is not supported in Q server config
-    return this.conf.tool.replace(new RegExp('-','g'), '_');
+    return this.conf.tool.replace(new RegExp('-', 'g'), '_');
   }
 
   changed() {
@@ -89,14 +89,14 @@ export default class Item {
       method: method,
       credentials: 'include',
       body: JSON.stringify(this.conf)
-    })
+    });
 
     if (!response.ok) {
       throw response;
     }
 
     const body = await response.json();
-    
+
     if (body.error) {
       throw body;
     }
@@ -109,9 +109,9 @@ export default class Item {
   async reset() {
     if (this.id) {
       return this.load(this.id);
-    } else {
-      return true;
     }
+
+    return true;
   }
 
 }

@@ -26,7 +26,7 @@ export class PreviewContainer {
     if (!this.previewElement) {
       return;
     }
-    
+
     if (!renderingInfo) {
       this.previewElement.innerHTML = '';
       return;
@@ -35,7 +35,7 @@ export class PreviewContainer {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
     // remove all previously inserted elements
-    while(this.insertedElements.length > 0) {
+    while (this.insertedElements.length > 0) {
       let element = this.insertedElements.pop();
       element.parentNode.removeChild(element);
     }
@@ -45,15 +45,15 @@ export class PreviewContainer {
       renderingInfo.stylesheets
         .map(stylesheet => {
           if (!stylesheet.url && stylesheet.path) {
-            stylesheet.url = `${QServerBaseUrl}${stylesheet.path}`
+            stylesheet.url = `${QServerBaseUrl}${stylesheet.path}`;
           }
-          return stylesheet
+          return stylesheet;
         })
         .map(stylesheet => {
           if (stylesheet.url) {
             let link = document.createElement('link');
             link.type = 'text/css';
-            link.rel = "stylesheet";
+            link.rel = 'stylesheet';
             link.href = stylesheet.url;
             this.insertedElements.push(link);
             this.element.shadowRoot.appendChild(link);
@@ -64,7 +64,7 @@ export class PreviewContainer {
             this.insertedElements.push(style);
             this.element.shadowRoot.appendChild(style);
           }
-        })
+        });
     }
 
     // add the markup if any
@@ -83,7 +83,7 @@ export class PreviewContainer {
             script.url = `${QServerBaseUrl}${script.path}`;
           }
           return script;
-        })
+        });
 
       this.loadAllScripts(renderingInfo.scripts);
     }
@@ -99,20 +99,19 @@ export class PreviewContainer {
         script.async = true;
 
         scriptElement.onload = () => {
-          this.loadAllScripts(scripts, callback, index + 1)
-        }
+          this.loadAllScripts(scripts, callback, index + 1);
+        };
+
         this.insertedElements.push(scriptElement);
         this.element.shadowRoot.appendChild(scriptElement);
       } else if (script.content) {
-
         script.content = script.content.replace(new RegExp('document.querySelector', 'g'), "document.querySelector('#preview-container').shadowRoot.querySelector");
 
         scriptElement.innerHTML = script.content;
         this.insertedElements.push(scriptElement);
         this.element.shadowRoot.appendChild(scriptElement);
-        this.loadAllScripts(scripts, callback, index + 1)
+        this.loadAllScripts(scripts, callback, index + 1);
       }
-
     } else if (typeof callback === 'function') {
       callback();
     }

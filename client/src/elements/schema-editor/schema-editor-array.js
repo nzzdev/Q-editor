@@ -11,7 +11,7 @@ export class SchemaEditorArray {
     expandable: false
   }
 
-  collapsedStates = {};  
+  collapsedStates = {};
 
   expand(index) {
     this.collapsedStates[index] = 'expanded';
@@ -35,21 +35,21 @@ export class SchemaEditorArray {
     let entry = generateFromSchema(schema);
     data.push(entry);
     this.expand(data.indexOf(entry));
-    
+
     if (this.change) {
       this.change();
     }
   }
 
   moveElementUp(data, index) {
-    data.splice(index - 1, 0, data.splice(index, 1)[0])
+    data.splice(index - 1, 0, data.splice(index, 1)[0]);
     if (this.change) {
       this.change();
     }
   }
 
   moveElementDown(data, index) {
-    data.splice(index + 1, 0, data.splice(index, 1)[0])
+    data.splice(index + 1, 0, data.splice(index, 1)[0]);
     if (this.change) {
       this.change();
     }
@@ -68,11 +68,11 @@ export class SchemaEditorArray {
     if (this.schema && this.schema.items && this.schema.items.title) {
       arrayEntryLabel = this.schema.items.title;
     } else if (this.schema && this.schema.title) {
-      arrayEntryLabel = this.schema.title
+      arrayEntryLabel = this.schema.title;
     }
     let labels = {
       arrayEntryLabel: arrayEntryLabel
-    }
+    };
     return labels;
   }
 

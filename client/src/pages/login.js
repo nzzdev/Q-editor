@@ -23,14 +23,12 @@ export class Login {
   }
 
   async canActivate() {
-    this.user.loaded
-      .then(() => {
-        if (this.user.isLoggedIn) {
-          this.router.navigateToRoute('index');
-        } else {
-          return true;
-        }
-      })
+    await this.user.loaded;
+    if (this.user.isLoggedIn) {
+      this.router.navigateToRoute('index');
+    } else {
+      return true;
+    }
   }
 
   async activate() {
@@ -39,10 +37,10 @@ export class Login {
 
   async tryLogin() {
     try {
-      await this.auth.login(this.username, this.password)
+      await this.auth.login(this.username, this.password);
       this.router.navigateToRoute('index');
     } catch (e) {
-      console.log(e)
+      console.log(e);
       this.loginError = this.i18n.tr('general.loginFailed');
     }
   }

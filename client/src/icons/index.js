@@ -25,9 +25,9 @@ export function configure(frameworkConfiguration) {
     .globalResources('./icon-no.html')
     .globalResources('./icon-proceed.html')
     .globalResources('./icon-save-state.html')
-    .globalResources('./icon-save.html')    
+    .globalResources('./icon-save.html')
     .globalResources('./icon-tablet.html')
     .globalResources('./icon-up.html')
     .globalResources('./icon-widescreen.html')
-    .globalResources('./icon-yes.html')
+    .globalResources('./icon-yes.html');
 }

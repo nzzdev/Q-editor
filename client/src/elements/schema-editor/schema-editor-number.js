@@ -19,7 +19,7 @@ export class SchemaEditorNumber {
       return;
     }
     if (this.schema.hasOwnProperty('Q:options')) {
-      this.options = Object.assign(this.options, this.schema['Q:options'])
+      this.options = Object.assign(this.options, this.schema['Q:options']);
     }
   }
 

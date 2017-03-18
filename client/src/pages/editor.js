@@ -15,9 +15,9 @@ function getSchemaForSchemaEditor(schema) {
     let newSchema = JSON.parse(JSON.stringify(schema));
     delete newSchema.properties.options;
     return newSchema;
-  } else {
-    return schema;
   }
+
+  return schema;
 }
 
 @inject(ItemStore, MessageService, DialogService, I18N)
@@ -35,19 +35,19 @@ export class Editor {
     let timeoutPromise = new Promise((resolve, reject) => {
       showMessageTimeout = setTimeout(() => {
         this.messageService.pushMessage('error', this.i18n.tr('editor.activatingEditorTakesTooLong'));
-        reject(new Error('activating editor takes too long'))
-      }, 5000)
-    })
+        reject(new Error('activating editor takes too long'));
+      }, 5000);
+    });
     let allLoaded = qEnv.QServerBaseUrl
       .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/tools/${routeParams.tool}/schema.json`)
+        return fetch(`${QServerBaseUrl}/tools/${routeParams.tool}/schema.json`);
       })
       .then(response => {
         if (response.ok) {
-          return response.json()
-        } else {
-          return Promise.reject();
+          return response.json();
         }
+
+        return Promise.reject();
       })
       .then(schema => {
         this.fullSchema = schema;
@@ -59,23 +59,23 @@ export class Editor {
       .then(() => {
         if (routeParams.hasOwnProperty('id') && routeParams.id !== undefined) {
           return this.itemStore.getItem(routeParams.id);
-        } else {
-          let item = this.itemStore.getNewItem();
-          item.conf = generateFromSchema(this.fullSchema)
-          item.conf.tool = routeParams.tool;
-          return item;
         }
+
+        let item = this.itemStore.getNewItem();
+        item.conf = generateFromSchema(this.fullSchema);
+        item.conf.tool = routeParams.tool;
+        return item;
       })
       .then(item => {
         if (item) {
           this.item = item;
           this.optionsData = this.item.options;
         }
-      })
+      });
 
     return Promise.race([timeoutPromise, allLoaded])
       .then(() => {
-        clearTimeout(showMessageTimeout)
+        clearTimeout(showMessageTimeout);
       });
   }
 
@@ -89,21 +89,22 @@ export class Editor {
   async canDeactivate() {
     if (this.item.isSaved || this.deactivationConfirmed) {
       return true;
-    } else {
-      this.deactivationConfirmed = false;
-      let dialogResponse = await this.dialogService.open({
-        viewModel: ConfirmDialog,
-        model: {
-          confirmQuestion: this.i18n.tr('editor.questionLeaveWithUnsavedChanges')
-        }
-      })
-      if (dialogResponse.wasCancelled) {
-        return false;
-      } else {
-        this.deactivationConfirmed = true;
-        return await this.item.reset();
-      }
     }
+
+    this.deactivationConfirmed = false;
+    let dialogResponse = await this.dialogService.open({
+      viewModel: ConfirmDialog,
+      model: {
+        confirmQuestion: this.i18n.tr('editor.questionLeaveWithUnsavedChanges')
+      }
+    });
+
+    if (dialogResponse.wasCancelled) {
+      return false;
+    }
+
+    this.deactivationConfirmed = true;
+    return await this.item.reset();
   }
 
   deactivate() {
@@ -118,7 +119,7 @@ export class Editor {
             this.save();
           }
         }
-      },20*1000);
+      }, 20 * 1000);
     }
   }
 
@@ -140,7 +141,7 @@ export class Editor {
         console.log('item saved', this.item);
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
         this.messageService.pushMessage('error', this.i18n.tr('editor.failedToSave', { reason: error.message }));
       });
   }

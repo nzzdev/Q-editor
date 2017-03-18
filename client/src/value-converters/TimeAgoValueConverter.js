@@ -14,9 +14,9 @@ export class TimeAgoValueConverter {
     if (!value) {
       return value;
     }
-  
+
     let timestamp = Date.parse(value);
-    if (timestamp === NaN) {
+    if (isNaN(timestamp)) {
       return value;
     }
 
@@ -27,9 +27,8 @@ export class TimeAgoValueConverter {
 
     if (max && (max > timeDiff)) {
       return this.relativeTime.getRelativeTime(date);
-    } else {
-      return this.i18n.df().format(date);
     }
-  }
 
+    return this.i18n.df().format(date);
+  }
 }

@@ -1,5 +1,4 @@
 import { inject } from 'aurelia-framework';
-import { Container } from 'aurelia-dependency-injection';
 import { DialogController } from 'aurelia-dialog';
 import QConfig from 'resources/QConfig.js';
 
@@ -22,8 +21,8 @@ export class HelpDialog {
     let half = Math.ceil(faq.length / 2);
     for (let i = 0; i < half; i++) {
       newOrderFaq.push(faq[i]);
-      if (faq[i+half]) {
-        newOrderFaq.push(faq[i+half]);
+      if (faq[i + half]) {
+        newOrderFaq.push(faq[i + half]);
       }
     }
     return newOrderFaq;

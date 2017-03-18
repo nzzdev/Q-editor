@@ -1,7 +1,7 @@
-import { bindable, inject } from 'aurelia-framework';
+import { bindable } from 'aurelia-framework';
 
 export class IconButton {
-  
+
   @bindable icon
   @bindable code
   @bindable size

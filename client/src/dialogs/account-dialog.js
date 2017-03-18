@@ -5,7 +5,7 @@ import { Router } from 'aurelia-router';
 
 import { I18N } from 'aurelia-i18n';
 
-import QConfig from 'resources/QConfig.js'
+import QConfig from 'resources/QConfig.js';
 import User from 'resources/User.js';
 import Auth from 'resources/Auth.js';
 
@@ -28,17 +28,16 @@ export class AccountDialog {
   }
 
   async loadDepartments() {
-    let departments = await this.qConfig.get('departments')
+    let departments = await this.qConfig.get('departments');
     this.departments = departments.sort();
   }
 
-  activate(config) {
+  async activate(config) {
     this.config = config;
-    this.user.loaded.then(() => {
-      if (!this.user.isLoggedIn) {
-        this.router.navigateToRoute('login');
-      }
-    })
+    await this.user.loaded;
+    if (!this.user.isLoggedIn) {
+      this.router.navigateToRoute('login');
+    }
   }
 
   async logout() {

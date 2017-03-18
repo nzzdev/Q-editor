@@ -13,15 +13,9 @@ import ToolsInfo from 'resources/ToolsInfo.js';
 import qEnv from 'resources/qEnv.js';
 import { registerEastereggs } from 'eastereggs.js';
 
-import { I18N } from 'aurelia-i18n';
 import Backend from 'i18next-xhr-backend';
 
-var pouchOptions = {
-  skipSetup: true,
-}
-
 export async function configure(aurelia) {
-
   aurelia.use.singleton(QConfig);
 
   aurelia.use
@@ -51,13 +45,13 @@ export async function configure(aurelia) {
       // make sure to return the promise of the setup method, in order to guarantee proper loading
       return instance.setup({
         backend: {
-          loadPath: './locales/{{lng}}/{{ns}}.json',
+          loadPath: './locales/{{lng}}/{{ns}}.json'
         },
-        attributes: ['t','i18n'],
+        attributes: ['t', 'i18n'],
         fallbackLng: 'de',
         lng: availableLanguages[0],
         whitelist: availableLanguages,
-        load: 'languageOnly',        
+        load: 'languageOnly',
         debug: false
       });
     })
@@ -69,7 +63,7 @@ export async function configure(aurelia) {
       .plugin('aurelia-testing')
       .developmentLogging();
   }
-  
+
   aurelia.use.singleton(Auth);
   aurelia.use.singleton(EmbedCodeGenerator);
   aurelia.use.singleton(Statistics);
@@ -82,6 +76,6 @@ export async function configure(aurelia) {
 
   aurelia.start().then(a => a.setRoot());
 
-  const eastereggConfig = await aurelia.container.get(QConfig).get('eastereggs')
+  const eastereggConfig = await aurelia.container.get(QConfig).get('eastereggs');
   registerEastereggs(eastereggConfig);
 }
