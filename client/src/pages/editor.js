@@ -2,6 +2,9 @@ import { inject } from 'aurelia-framework';
 import { DialogService } from 'aurelia-dialog';
 import { I18N } from 'aurelia-i18n';
 
+import { LogManager } from 'aurelia-framework';
+const log = LogManager.getLogger('Q');
+
 import { ConfirmDialog } from 'dialogs/confirm-dialog.js';
 
 import qEnv from 'resources/qEnv.js';
@@ -15,9 +18,9 @@ function getSchemaForSchemaEditor(schema) {
     let newSchema = JSON.parse(JSON.stringify(schema));
     delete newSchema.properties.options;
     return newSchema;
-  } else {
-    return schema;
   }
+
+  return schema;
 }
 
 @inject(ItemStore, MessageService, DialogService, I18N)
@@ -35,19 +38,19 @@ export class Editor {
     let timeoutPromise = new Promise((resolve, reject) => {
       showMessageTimeout = setTimeout(() => {
         this.messageService.pushMessage('error', this.i18n.tr('editor.activatingEditorTakesTooLong'));
-        reject(new Error('activating editor takes too long'))
-      }, 5000)
-    })
+        reject(new Error('activating editor takes too long'));
+      }, 5000);
+    });
     let allLoaded = qEnv.QServerBaseUrl
       .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/tools/${routeParams.tool}/schema.json`)
+        return fetch(`${QServerBaseUrl}/tools/${routeParams.tool}/schema.json`);
       })
       .then(response => {
         if (response.ok) {
-          return response.json()
-        } else {
-          return Promise.reject();
+          return response.json();
         }
+
+        return Promise.reject();
       })
       .then(schema => {
         this.fullSchema = schema;
@@ -59,24 +62,23 @@ export class Editor {
       .then(() => {
         if (routeParams.hasOwnProperty('id') && routeParams.id !== undefined) {
           return this.itemStore.getItem(routeParams.id);
-        } else {
-          let item = this.itemStore.getNewItem();
-          item.conf = generateFromSchema(this.fullSchema)
-          item.conf.tool = routeParams.tool;
-          item.changed();
-          return item;
         }
+
+        let item = this.itemStore.getNewItem();
+        item.conf = generateFromSchema(this.fullSchema);
+        item.conf.tool = routeParams.tool;
+        return item;
       })
       .then(item => {
         if (item) {
           this.item = item;
           this.optionsData = this.item.options;
         }
-      })
+      });
 
     return Promise.race([timeoutPromise, allLoaded])
       .then(() => {
-        clearTimeout(showMessageTimeout)
+        clearTimeout(showMessageTimeout);
       });
   }
 
@@ -87,27 +89,25 @@ export class Editor {
     this.previewData = JSON.parse(JSON.stringify(this.item.conf));
   }
 
-  canDeactivate() {
-    return new Promise((resolve, reject) => {
-      if (this.item.isSaved || this.deactivationConfirmed) {
-        resolve();
-      } else {
-        this.deactivationConfirmed = false;
-        this.dialogService.open({
-          viewModel: ConfirmDialog,
-          model: {
-            confirmQuestion: this.i18n.tr('editor.questionLeaveWithUnsavedChanges')
-          }
-        }).then(response => {
-          if (response.wasCancelled) {
-            reject();
-          } else {
-            this.deactivationConfirmed = true;
-            resolve();
-          }
-        });
+  async canDeactivate() {
+    if (this.item.isSaved || this.deactivationConfirmed) {
+      return true;
+    }
+
+    this.deactivationConfirmed = false;
+    let dialogResponse = await this.dialogService.open({
+      viewModel: ConfirmDialog,
+      model: {
+        confirmQuestion: this.i18n.tr('editor.questionLeaveWithUnsavedChanges')
       }
     });
+
+    if (dialogResponse.wasCancelled) {
+      return false;
+    }
+
+    this.deactivationConfirmed = true;
+    return await this.item.reset();
   }
 
   deactivate() {
@@ -122,7 +122,7 @@ export class Editor {
             this.save();
           }
         }
-      },20*1000);
+      }, 20 * 1000);
     }
   }
 
@@ -140,11 +140,12 @@ export class Editor {
 
   save() {
     this.item.save()
-      .then(args => {
-        console.log('item saved', args, this.item);
+      .then(() => {
+        log.info('item saved', this.item);
       })
       .catch(error => {
-        this.messageService.pushMessage('error', `Speichern ist fehlgeschlagen ${error}`);
+        log.error(error);
+        this.messageService.pushMessage('error', this.i18n.tr('editor.failedToSave', { reason: error.message }));
       });
   }
 

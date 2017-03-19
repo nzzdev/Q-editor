@@ -4,7 +4,6 @@ schema-editor-lat-lng .leaflet-pelias-input {
 
 schema-editor-lat-lng .leaflet-pelias-expanded .leaflet-pelias-input {
   padding-right: 30px; /* Space for close button */
-  /*background-color: white; /* Only show background color when expanded */
 
   /* The properties below should be tweaked if height of .leaflet-pelias-expanded is changed */
   padding-top: 5px;

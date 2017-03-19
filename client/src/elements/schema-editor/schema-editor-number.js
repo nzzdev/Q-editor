@@ -6,11 +6,21 @@ export class SchemaEditorNumber {
   @bindable schema
   @bindable change
 
-  handleChange() {
-    if (this.data === '') {
-      this.data = undefined;
+  options = {
+    step: 1
+  }
+
+  schemaChanged() {
+    this.applyOptions();
+  }
+
+  applyOptions() {
+    if (!this.schema) {
+      return;
     }
-    this.change();
+    if (this.schema.hasOwnProperty('Q:options')) {
+      this.options = Object.assign(this.options, this.schema['Q:options']);
+    }
   }
 
 }

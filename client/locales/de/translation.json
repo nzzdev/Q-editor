@@ -1,20 +1,28 @@
 {
   "general": {
+    "yes": "Ja",
+    "no": "Nein",
+    "searchLabel": "Eine Grafik suchen",
+    "login": "anmelden",
+    "logout": "abmelden",
+    "username": "Benutzername",
+    "password": "Passwort",
     "back": "zurück",
     "loadMore": "mehr laden",
     "itemNotActivated": "Grafik ist noch nicht aktiviert",
     "saveChanges": "Änderungen speichern",
-    "logout": "abmelden",
     "close": "schliessen",
     "goToOverview": "zur Übersicht",
     "created": "erstellt",
     "by": "von",
+    "only": "nur",
     "graphic": "Grafik",
     "graphic_plural": "Grafiken",
     "browserSupportMessage": "Q ist für Chrome optimiert und funktioniert in Ihrem Browser evtl. nicht.",
     "changesSaved": "Die Änderungen wurden gespeichert.",
     "failedToSaveChanges": "Die Änderung konnten nicht gespeichert werden.",
-    "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt."
+    "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt.",
+    "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen."
   },
   "statistics": {
     "tooFewNewGraphics": "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",    
@@ -24,19 +32,22 @@
     "questionLeaveWithUnsavedChanges": "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
     "previewTargetLabel": "Publikation",
     "previewSizeLabel": "Angezeigte Grösse",
-    "add": "hinzufügen",
-    "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen."
+    "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",
+    "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
+    "failedToSave": "Speichern ist fehlgeschlagen: {{reason}}."
   },
   "item": {
     "activate": "aktivieren",
     "deactivate": "deaktivieren",
     "blueprint": "als Vorlage benutzen",
     "blueprintTitlePrefix": "Kopie von ",
-    "edit": "edititieren"
+    "edit": "bearbeiten",
+    "failedToLoadItem": "Die Grafik konnte nicht geladen werden.",
+    "failedToBlueprintItem": "Die Grafik konnte nicht als Vorlage verwendet werden."
   },
   "itemsFilter": {
     "allGraphics": "alle Grafiken",
-    "fromEveryone": "von allen",
+    "byAll": "von allen",
     "byMe": "von mir",
     "allDepartments": "alle Ressorts",
     "myDepartment": "nur mein Ressorts",

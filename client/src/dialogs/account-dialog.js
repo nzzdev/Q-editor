@@ -5,7 +5,7 @@ import { Router } from 'aurelia-router';
 
 import { I18N } from 'aurelia-i18n';
 
-import QConfig from 'resources/QConfig.js'
+import QConfig from 'resources/QConfig.js';
 import User from 'resources/User.js';
 import Auth from 'resources/Auth.js';
 
@@ -24,40 +24,40 @@ export class AccountDialog {
     controller.settings.lock = false;
     controller.settings.centerHorizontalOnly = true;
 
-    this.qConfig.get('departments')
-      .then(departments => {
-        this.departments = departments.sort();
-      })
+    this.loadDepartments();
   }
 
-  activate(config) {
+  async loadDepartments() {
+    let departments = await this.qConfig.get('departments');
+    this.departments = departments.sort();
+  }
+
+  async activate(config) {
     this.config = config;
-    this.user.loaded.then(() => {
-      if (!this.user.isLoggedIn) {
-        this.router.navigateToRoute('login');
-      }
-    })
+    await this.user.loaded;
+    if (!this.user.isLoggedIn) {
+      this.router.navigateToRoute('login');
+    }
   }
 
-  logout() {
+  async logout() {
     this.controller.cancel();
-    this.auth.logout()
-      .then(() => {
-        this.router.navigateToRoute('index', { replace: true });
-      })
+    await this.auth.logout();
+    this.router.navigateToRoute('index', { replace: true });
   }
 
-  saveUser() {
+  async saveUser() {
     this.userFormErrors = [];
     this.userFormMessage = null;
-    this.user.save()
-      .then(saved => {
-        if (saved) {
-          this.userFormMessage = this.i18n.tr('general.changesSaved');
-        } else {
-          this.userFormErrors.push(this.i18n.tr('general.failedToSaveChanges'));
-        }
-      })
+    try {
+      const saved = await this.user.save();
+      if (!saved) {
+        throw saved;
+      }
+      this.userFormMessage = this.i18n.tr('general.changesSaved');
+    } catch (e) {
+      this.userFormErrors.push(this.i18n.tr('general.failedToSaveChanges'));
+    }
   }
 
 }

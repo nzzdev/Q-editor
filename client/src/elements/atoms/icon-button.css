@@ -21,7 +21,6 @@ icon-button button {
 
   border-width: 1px;
   border-style: solid;
-  border-color: transparent;
   border-radius: 18px;
   
   height: 36px;
@@ -39,10 +38,6 @@ icon-button button:focus {
   width: 34px;
   height: 34px;
 }
-
-/*.icon-button__text {
-  padding-right: calc(var(--q-space-base) / 2);*/
-/*}*/
 
 .icon-button__icon:empty {
   display: none;

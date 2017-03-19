@@ -1,6 +1,6 @@
 <template class="schema-editor-input" >
   <label>
-    ${schema["Q:label"] ? schema["Q:label"] : schema["title"]}
-    <input type="number" required.bind="required" value.bind="data" keyup.delegate="handleChange() & debounce:800">
+    ${schema["title"]}
+    <input type="number" required.bind="required" value.bind="data | forceNumber" step.bind="options.step" keyup.delegate="change() & debounce:800">
   <label>
 </template>

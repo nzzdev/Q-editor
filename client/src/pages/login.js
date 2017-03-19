@@ -3,8 +3,12 @@ import { Router } from 'aurelia-router';
 
 import { I18N } from 'aurelia-i18n';
 
+import { LogManager } from 'aurelia-framework';
+const log = LogManager.getLogger('Q');
+
 import Auth from 'resources/Auth.js';
 import User from 'resources/User.js';
+import qEnv from 'resources/qEnv.js';
 
 @inject(Auth, User, I18N, Router)
 export class Login {
@@ -21,25 +25,27 @@ export class Login {
     this.isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
   }
 
-  canActivate() {
-    this.user.loaded
-      .then(() => {
-        if (this.user.isLoggedIn) {
-          this.router.navigateToRoute('index');
-        } else {
-          return true;
-        }
-      })
+  async canActivate() {
+    await this.user.loaded;
+    if (this.user.isLoggedIn) {
+      this.router.navigateToRoute('index');
+    } else {
+      return true;
+    }
   }
 
-  tryLogin() {
-    this.auth.login(this.username, this.password)
-      .then(() => {
-        this.router.navigateToRoute('index');
-      })
-      .catch(err => {
-        this.loginError = this.i18n.tr('general.loginFailed');
-      })
+  async activate() {
+    this.loginMessage = await qEnv.loginMessage;
+  }
+
+  async tryLogin() {
+    try {
+      await this.auth.login(this.username, this.password);
+      this.router.navigateToRoute('index');
+    } catch (e) {
+      log.error(e);
+      this.loginError = this.i18n.tr('general.loginFailed');
+    }
   }
 
 }

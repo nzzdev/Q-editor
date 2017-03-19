@@ -7,7 +7,6 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <base href="/">
   </head>
-
   <body aurelia-app="main">
     <div style="position: absolute; top: calc(50% - 20vh); left: calc(50% - 15vh); width: 30vh; width: 30vh;">
       <svg viewBox="0 0 172 172">
@@ -15,11 +14,15 @@
         <path d="M126.9,147c-0.4,0-0.7-0.1-1.1-0.1c-6.4-0.7-10.8-4.5-15.9-13.1c11.7-10.4,17.7-27.2,17.6-47.1c-0.3-16.9-4.9-32.4-13.4-43.4C105.5,32.1,93.2,25,77.9,23.7C43,20.8,27.7,46.2,28,80.2c0.4,36.4,22.1,60.4,49.5,62.7c7.8,0.7,14.6-0.2,21.4-2.7c6,11.6,12.6,20.7,23.5,21.6c9.8,0.8,18.4-9.9,22.8-20.5C138.5,145.8,134.5,147.6,126.9,147z M77.9,133.3c-8.3-0.7-14.7-3.8-19.7-8.6c0.1-10.1,6.3-16.7,14.9-16c10.7,0.9,15.5,11.1,20.7,21.5C89,132.9,84.1,134,77.9,133.3z M102.5,121.7c-8.3-13-15.1-21.9-27.4-22.9c-11.3-0.9-18.8,5.3-22.3,19.3c-5.9-11.7-7.4-24.3-7.6-37.1c-0.3-24.9,6.3-50.2,32.6-48c25.4,2.1,31.6,28,31.8,52.6C109.7,98.7,108.2,111.4,102.5,121.7z"/>
       </svg>
       <img style="display: block; margin: 0 auto;" src="data:image/gif;base64,R0lGODlhEAALAPQAAP///xcTE93c3NTT0+vr6xwYGBcTE0A9PY2Li25ra8C/vzUyMlpXV5SSknFvb8PCwjk2NhoWFl1bW+jn59va2vT09ElGRt/e3vPy8ry7u6inp87Nze/v7wAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCwAAACwAAAAAEAALAAAFLSAgjmRpnqSgCuLKAq5AEIM4zDVw03ve27ifDgfkEYe04kDIDC5zrtYKRa2WQgAh+QQJCwAAACwAAAAAEAALAAAFJGBhGAVgnqhpHIeRvsDawqns0qeN5+y967tYLyicBYE7EYkYAgAh+QQJCwAAACwAAAAAEAALAAAFNiAgjothLOOIJAkiGgxjpGKiKMkbz7SN6zIawJcDwIK9W/HISxGBzdHTuBNOmcJVCyoUlk7CEAAh+QQJCwAAACwAAAAAEAALAAAFNSAgjqQIRRFUAo3jNGIkSdHqPI8Tz3V55zuaDacDyIQ+YrBH+hWPzJFzOQQaeavWi7oqnVIhACH5BAkLAAAALAAAAAAQAAsAAAUyICCOZGme1rJY5kRRk7hI0mJSVUXJtF3iOl7tltsBZsNfUegjAY3I5sgFY55KqdX1GgIAIfkECQsAAAAsAAAAABAACwAABTcgII5kaZ4kcV2EqLJipmnZhWGXaOOitm2aXQ4g7P2Ct2ER4AMul00kj5g0Al8tADY2y6C+4FIIACH5BAkLAAAALAAAAAAQAAsAAAUvICCOZGme5ERRk6iy7qpyHCVStA3gNa/7txxwlwv2isSacYUc+l4tADQGQ1mvpBAAIfkECQsAAAAsAAAAABAACwAABS8gII5kaZ7kRFGTqLLuqnIcJVK0DeA1r/u3HHCXC/aKxJpxhRz6Xi0ANAZDWa+kEAA7AAAAAAAAAAAA"/>
+      <p style="color: red" id="q-load-error-message"></p>
     </div>
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
     <script>
       System.import('aurelia-bootstrapper');
+      window.QLoadErrorTimeout = setTimeout(function() {
+        document.getElementById('q-load-error-message').insertAdjacentHTML('beforeend', 'This is taking way too long, are you using the latest version of Chrome?')
+      }, 3000)
     </script>
   </body>
 </html>

@@ -5,38 +5,34 @@
     <q-messages></q-messages>
     <div class="item-overview-container">
       <div class="item-overview__content">
-        <item-preview if.bind="itemId" id.bind="itemId" on-drag.bind="handleDrag"></item-preview>
+        <item-preview if.bind="itemId" id.bind="itemId" on-drag.bind="handleDrag" target.two-way="currentTarget"></item-preview>
       </div>
       <aside class="item-overview__controls">
-        <div class="item-overview__status q-text-small">
+        <div class="item-overview__status q-text-small q-text--light">
           <icon-active-state class="tool-status-bar__item" is-active.bind="item.conf.active"></icon-active-state>
-          <span>${ 'general.created' | t } ${ item.conf.createdDate | timeAgo:7*24*60*60 }<br>
-          ${ 'general.by' | t } ${item.conf.createdBy}</span>
+          <span>${ 'general.created' & t } ${ item.conf.createdDate & timeAgo:7*24*60*60 }<br>
+          ${ 'general.by' & t } ${item.conf.createdBy}</span>
         </div>
 
-        <button-primary if.bind="!item.conf.active" click.delegate="activateItem()" icon="activate">
+        <button-secondary if.bind="!item.conf.active" click.delegate="activateItem()" icon="activate">
           <span t="item.activate"></span>
-        </button-primary>
+        </button-secondary>
 
-        <button-primary if.bind="item.conf.active" click.delegate="deactivateItem()" icon="deactivate">
+        <button-secondary if.bind="item.conf.active" click.delegate="deactivateItem()" icon="deactivate">
           <span t="item.deactivate"></span>
-        </button-primary>
+        </button-secondary>
 
-        <div class="item-overview__embed-code">
-          <h6>Free HTML Code</h6>
-          <pre><code class="q-text-small q-text--light" if.bind="item.conf.active">${embedCode}</code></pre>
-        </div>
+        <embed-code item.bind="item" target.bind="currentTarget"></embed-code>
 
-
-        <button-primary click.delegate="blueprint()" icon="blueprint">
+        <button-secondary click.delegate="blueprint()" icon="blueprint">
           <span t="item.blueprint"></span>
-        </button-primary>
+        </button-secondary>
 
-        <button-primary click.delegate="edit()" icon="edit">
+        <button-secondary click.delegate="edit()" icon="edit">
           <span t="item.edit"></span>
-        </button-primary>
+        </button-secondary>
 
-        <button-secondary click.delegate="back()" icon="close">
+        <button-secondary click.delegate="back()" icon="leave">
           <span t="general.goToOverview"></span>
         </button-secondary>
 

@@ -13,10 +13,10 @@
     </div>
     <div>
       <label class="q-text-small q-text--light" t="editor.previewSizeLabel"></label>
-      <radio-button-group options.bind="sizeOptions" value.two-way="previewWidth"></radio-button-group>
+      <radio-button-group options.bind="sizeOptions" value.two-way="previewWidthProxy.width"></radio-button-group>
     </div>
   </form>
   <p class="q-text q-text--error" if.bind="errorMessage">${errorMessage}</p>
-  <preview-container ref="previewContainer" width.bind="previewWidth" rendering-info.bind="renderingInfo"></preview-container> 
+  <preview-container ref="previewContainer" id="preview-container" width.bind="previewWidthProxy.width" rendering-info.bind="renderingInfo"></preview-container> 
   
 </template>

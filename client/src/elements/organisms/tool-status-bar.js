@@ -1,8 +1,7 @@
 import { bindable, inject } from 'aurelia-framework';
-import { DialogService } from 'aurelia-dialog'
+import { DialogService } from 'aurelia-dialog';
 
-import { ItemDialog } from 'dialogs/item-dialog.js'
-import { ConfirmDialog } from 'dialogs/confirm-dialog.js'
+import { ItemDialog } from 'dialogs/item-dialog.js';
 
 import MessageService from 'resources/MessageService.js';
 
@@ -31,7 +30,7 @@ export class ToolStatusBar {
         this.item.save()
           .then(() => {
             this.openItemModal();
-          })
+          });
       } else {
         this.openItemModal();
       }
@@ -45,7 +44,7 @@ export class ToolStatusBar {
         allowActivate: true,
         showEmbedCode: true,
         showId: false,
-        item: this.item,
+        item: this.item
       }
     }).then(response => {
       if (!response.wasCancelled) {

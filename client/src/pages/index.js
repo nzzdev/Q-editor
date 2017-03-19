@@ -1,25 +1,27 @@
-import { inject, singleton } from 'aurelia-framework'
-import { Router } from 'aurelia-router'
-import User from 'resources/User.js'
-import ItemStore from 'resources/ItemStore.js'
-import ToolsInfo from 'resources/ToolsInfo.js'
-import Statistics from 'resources/Statistics.js'
-import QConfig from 'resources/QConfig.js'
+import { inject, singleton } from 'aurelia-framework';
+import { Router } from 'aurelia-router';
+import User from 'resources/User.js';
+import ItemStore from 'resources/ItemStore.js';
+import ToolsInfo from 'resources/ToolsInfo.js';
+import Statistics from 'resources/Statistics.js';
+import QConfig from 'resources/QConfig.js';
+import MessageService from 'resources/MessageService.js';
 
 @singleton()
-@inject(ItemStore, User, ToolsInfo, Router, QConfig, Statistics)
+@inject(ItemStore, User, ToolsInfo, Router, QConfig, Statistics, MessageService)
 export class Index {
 
   enoughNewItems = true;
   initialised = false;
 
-  constructor(itemStore, user, toolsInfo, router, qConfig, statistics) {
+  constructor(itemStore, user, toolsInfo, router, qConfig, statistics, messageService) {
     this.itemStore = itemStore;
     this.user = user;
     this.toolsInfo = toolsInfo;
     this.router = router;
     this.qConfig = qConfig;
     this.statistics = statistics;
+    this.messageService = messageService;
   }
 
   canActivate() {
@@ -32,18 +34,19 @@ export class Index {
       this.loadStatistics();
       return;
     }
-    
+
     // load filter defaults
     this.availableFilters = this.itemStore.getFilters();
 
     // apply stored user filter selections
     if (this.user.getUserConfig('q-filters')) {
       for (let userFilterSelection of this.user.getUserConfig('q-filters')) {
-        this.availableFilters.map(filter => {
-          if (filter.name === userFilterSelection.name) {
-            filter.selected = userFilterSelection.selected;
-          }
-        })
+        this.availableFilters
+          .map(filter => {
+            if (filter.name === userFilterSelection.name) {
+              filter.selected = userFilterSelection.selected;
+            }
+          });
       }
     }
 
@@ -62,50 +65,44 @@ export class Index {
           return {
             name: filter.name,
             selected: filter.selected
-          }
+          };
         })
       );
     }
   }
 
-  loadItems(searchString, bookmark) {
-    this.itemsLoading = true;
-    let itemListConfig = this.qConfig.get('itemList');
-    let availableToolsNames = this.toolsInfo.getAvailableToolsNames();
+  async loadItems(searchString, bookmark) {
+    try {
+      this.itemsLoading = true;
+      let itemListConfig = await this.qConfig.get('itemList');
+      let availableToolsNames = await this.toolsInfo.getAvailableToolsNames();
 
-    return Promise.all([itemListConfig, availableToolsNames])
-      .then(conf => {
-        let itemListConfig = conf[0];
-        let availableToolsNames = conf[1];
+      let numberOfItemsToLoadPerStep = itemListConfig.itemsPerLoad || 18;
 
-        let numberOfItemsToLoadPerStep = itemListConfig.itemsPerLoad || 18;
-        return this.itemStore.getItems(searchString, numberOfItemsToLoadPerStep, availableToolsNames, bookmark)
-      })
-      .then(result => {
-        this.itemsLoading = false;
-        return result;        
-      })
+      const result = await this.itemStore.getItems(searchString, numberOfItemsToLoadPerStep, availableToolsNames, bookmark);
+      this.itemsLoading = false;
+      return result;
+    } catch (e) {
+      this.messageService.push('error', 'failedLoadingItems');
+    }
   }
 
-  reloadItems() {
-    this.items = []
-    return this.loadItems(this.currentSearchString)
-      .then(result => {
-        this.items = result.items;
-        this.bookmark = result.bookmark;
-        this.updateMoreItemsAvailableState(result);
-        return this.items;
-      })
+  async reloadItems() {
+    this.items = [];
+    const result = await this.loadItems(this.currentSearchString);
+    this.items = result.items;
+    this.bookmark = result.bookmark;
+    this.updateMoreItemsAvailableState(result);
+
+    return this.items;
   }
 
-  loadMore() {
-    return this.loadItems(this.currentSearchString, this.bookmark)
-      .then(result => {
-        this.items = this.items.concat(result.items);
-        this.bookmark = result.bookmark;
-        this.updateMoreItemsAvailableState(result);
-        return this.items;
-      })
+  async loadMore() {
+    const result = await this.loadItems(this.currentSearchString, this.bookmark);
+    this.items = this.items.concat(result.items);
+    this.bookmark = result.bookmark;
+    this.updateMoreItemsAvailableState(result);
+    return this.items;
   }
 
   updateMoreItemsAvailableState(result) {
@@ -116,28 +113,29 @@ export class Index {
     }
   }
 
-  loadStatistics() {
-    this.statsValues = {};
+  async loadStatistics() {
+    this.statsValues = null;
 
-    this.statistics.getNumberOfActiveItems()
-      .then(res => {
-        this.statsValues.totalActiveCount = res;
-      })
+    try {
+      let statsValues = {};
+      statsValues.totalActiveCount = await this.statistics.getNumberOfActiveItems();
 
-    this.qConfig.get('lowNewItems')
-      .then(lowNewItemsConfig => {
-        this.lowNewItemsConfig = lowNewItemsConfig;
-        this.statsValues.days = lowNewItemsConfig.days;
-        return this.statistics.getNumberOfActiveItems(lowNewItemsConfig.days);
-      })
-      .then(newInLastXDays => {
-        this.statsValues.count = newInLastXDays;
-        if (newInLastXDays <= this.lowNewItemsConfig.threshold) {
-          this.enoughNewItems = false;
-        } else {
-          this.enoughNewItems = true;
-        }
-      })
+      const lowNewItemsConfig = await this.qConfig.get('lowNewItems');
+      statsValues.days = lowNewItemsConfig.days;
+
+      statsValues.count = await this.statistics.getNumberOfActiveItems(lowNewItemsConfig.days);
+
+      // only set the stats after all values are available
+      this.statsValues = statsValues;
+
+      if (newInLastXDays <= this.lowNewItemsConfig.threshold) {
+        this.enoughNewItems = false;
+      } else {
+        this.enoughNewItems = true;
+      }
+    } catch (e) {
+      // we do not care about errors here but just do not show statistics if something failed
+    }
   }
 
 }

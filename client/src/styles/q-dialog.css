@@ -4,18 +4,25 @@
   align-items: stretch;
   width: 80vw;
   height: auto;
-  padding: var(--q-space-base);
+  padding: calc(var(--q-space-base) * 3);
   background-color: var(--q-color-gray-1);
   border: 1px solid var(--q-color-gray-4);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);
 }
 
+.q-dialog--bottom-controls {
+  flex-direction: column;
+}
+
 .q-dialog__content {
   width: 70%;
+  flex-shrink: 0;
 }
 
 .q-dialog__controls {
   width: 30%;
+  flex-shrink: 0;
+
   padding-left: calc(var(--q-space-base) * 3);
 
   display: flex;
@@ -27,87 +34,22 @@
   margin-bottom: 0;
 }
 
-/*
-// @import 'Q-style-conf';
-// @import 'storytelling-ui-kit/font';
+.q-dialog--bottom-controls .q-dialog__controls {
+  padding-left: 0;
+  flex-direction: row;
+  width: 100%;
+}
 
-// $q-dialog-padding: 20px !default;
-// $q-dialog-width: 80vw !default;
-// $q-dialog-background: white !default;
-// $q-dialog-backdrop-background: rgba(0,0,0,0.5) !default;
+.q-dialog--bottom-controls .q-dialog__controls .button {
+  flex-grow: 1;
+  margin-right: var(--q-space-base);
+  max-width: 25%;
+}
 
-// ai-dialog-overlay {
-//   background: $q-dialog-backdrop-background;
-// }
+.q-dialog--bottom-controls .q-dialog__controls .button:last-child {
+  margin-right: 0;
+}
 
-// .q-dialog {
-//   pointer-events: initial;
-//   display: flex;
-//   flex-direction: row;
-//   align-items: stretch;
-//   width: $q-dialog-width;
-//   margin-left: auto;
-//   margin-right: auto;
-//   height: auto;
-//   padding: $q-dialog-padding;
-//   background: $q-dialog-background;
-
-//   p {
-//     margin: var(--q-ui-space-small) 0;
-//   }
-// }
-
-// .q-dialog__content {
-//   width: 70%;
-// }
-
-// .q-dialog__controls {
-//   width: 30%;
-//   padding-left: $q-dialog-padding;
-
-//   display: flex;
-//   flex-direction: column;
-
-//   > * {
-//     width: 100%;
-//     flex-grow: 0;
-//     margin-bottom: var(--q-ui-space-small);
-
-//     &:last-child {
-//       margin-top: auto;
-//       margin-bottom: 0;
-//     }
-//   }
-// }
-
-// .q-dialog--bottom-controls {
-//   flex-direction: column;
-
-//   .q-dialog__content {
-//     width: 100%;
-//     flex-shrink: 0;
-//   }
-
-//   .q-dialog__controls {
-//     width: 100%;
-//     flex-shrink: 0;
-//     padding-left: 0;
-//     margin-top: var(--q-ui-space-large);
-//     flex-direction: row;
-
-//     > * {
-//       margin-bottom: var(--q-ui-space-small);
-//       &:last-child {
-//         margin-bottom: var(--q-ui-space-small);
-//       }
-//     }
-
-//     icon-button {
-//       width: auto;
-//       &:not(:last-child) {
-//         margin-right: var(--q-ui-space-small);
-//       }
-//     }
-//   }
-// }
-*/
+ai-dialog-overlay {
+  background: rgba(0,0,0,0.5);
+}

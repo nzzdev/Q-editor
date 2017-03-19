@@ -35,7 +35,7 @@
   --q-color-warning: #ff9000;
   --q-color-warning-light: #ffecd3;
   --q-color-error: #c31906;
-  --q-color-error-light: f3d1cd;
+  --q-color-error-light: #f3d1cd;
 
   /* fonts */
   --q-h1-size: 22px;
@@ -56,19 +56,11 @@
   --q-h6-weight: 400;
 
   --q-text-color: var(--q-color-black);
-  --q-text-light-color: #5c5c5c;
+  --q-text-light-color: var(--q-color-gray-6);
+  --q-text-ultralight-color: var(--q-color-gray-5);
 
   --q-link-color: var(--q-color-primary-5);
 
   /* layout */
   --q-space-base: 16px;
-
-
-  /* legacy NEEDS TO GO AWAY */
-  --q-ui-space-small: 9px;
-  --q-ui-space-medium: 18px;
-  --q-ui-space-large: 36px;
-  --q-ui-space-huge: 72px;
-
-  
 }

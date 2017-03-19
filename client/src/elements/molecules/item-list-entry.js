@@ -26,7 +26,7 @@ export class ItemListEntry {
   setupDragHandlers() {
     this.element.addEventListener('dragstart', event => {
       this.dragDataGenerator.addDragDataToDataTransfer(event.dataTransfer, this.item);
-    })
+    });
   }
 
   itemChanged() {
@@ -34,8 +34,8 @@ export class ItemListEntry {
       .then(tools => {
         let itemTool = tools
           .filter(tool => {
-            return tool.name === this.item.getToolName()
-          })[0]
+            return tool.name === this.item.getToolName();
+          })[0];
 
         if (itemTool) {
           this.iconSvg = itemTool.icon;
@@ -44,7 +44,6 @@ export class ItemListEntry {
   }
 
   redirectToItemView() {
-    console.log('redirectToItemView', this.item.id)
     this.router.navigateToRoute('item', {id: this.item.id});
   }
 
@@ -55,7 +54,7 @@ export class ItemListEntry {
           this.element.parentNode.removeChild(this.element);
         });
         this.element.style.transform = 'scale(0)';
-      })
+      });
   }
 
 }

@@ -1,21 +1,8 @@
 # Use latest version of Node as the base image
-FROM node:7.5.0
+FROM node:7.6.0
 
 # Set work directory for run/cmd 
 WORKDIR /app
-
-# Build variable for setting app environment
-# ARG Q_SERVER_BASE_URL
-# ENV Q_SERVER_BASE_URL ${Q_SERVER_BASE_URL}
-
-# ARG DEV_LOGGING
-# ENV DEV_LOGGING ${DEV_LOGGING}
-
-# ARG PUSH_STATE
-# ENV PUSH_STATE ${PUSH_STATE}
-
-# ARG IS_PLAYGROUND_INSTANCE
-# ENV IS_PLAYGROUND_INSTANCE ${IS_PLAYGROUND_INSTANCE}
 
 # Copy everything else to work directory
 COPY ./package.json /app
@@ -29,9 +16,12 @@ COPY ./routes /app/routes
 COPY ./client/favicon.png /app/client/favicon.png
 COPY ./client/favicon-playground.png /app/client/favicon-playground.png
 
-COPY ./client/locales/de /app/client/locales/de
+COPY ./client/locales /app/client/locales
 
 COPY ./client/export /app/client/export
+
+# Copy the jspm_packages as there are some modules that are not loaded from a bundle
+COPY ./client/jspm_packages /app/client/jspm_packages
 
 # Run node app with env variable
 CMD npm run start

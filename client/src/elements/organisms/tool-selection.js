@@ -1,5 +1,5 @@
 import {inject} from 'aurelia-framework';
-import ToolsInfo from 'resources/ToolsInfo'
+import ToolsInfo from 'resources/ToolsInfo';
 
 @inject(ToolsInfo)
 export class ToolSelection {
@@ -8,10 +8,7 @@ export class ToolSelection {
     this.toolsInfo = toolsInfo;
   }
 
-  attached() {
-    this.toolsInfo.getAvailableTools()
-      .then(tools => {
-        this.tools = tools;
-      })
+  async attached() {
+    this.tools = await this.toolsInfo.getAvailableTools();
   }
 }

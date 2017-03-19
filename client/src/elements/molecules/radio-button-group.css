@@ -29,23 +29,26 @@ radio-button-group radiogroup {
   left: 0;
   cursor: pointer;
 
-  background: var(--q-color-gray-3);  
+  background: var(--q-color-gray-3);
 
+  border-style: solid;
   border-color: var(--q-color-gray-5);
-  border-top: 1px solid;
-  border-bottom: 1px solid;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
 }
 
 .radio-button-group__option:first-child label {
   border-top-left-radius: 18px;
   border-bottom-left-radius: 18px;
-  border-left: 1px solid;
+  border-left-width: 1px;
 }
 
 .radio-button-group__option:last-child label {
   border-top-right-radius: 18px;
   border-bottom-right-radius: 18px;
-  border-right: 1px solid;
+  border-right-width: 1px;
 }
 
 .radio-button-group__option label:hover {

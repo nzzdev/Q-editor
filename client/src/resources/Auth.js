@@ -13,51 +13,38 @@ export default class Auth {
     this.user = user;
   }
 
-  login(username, password) {
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/authenticate`, {
-          credentials: 'include',
-          method: 'POST',
-          body: JSON.stringify({
-            username: username,
-            password: password
-          })
-        })
+  async login(username, password) {
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    const response = await fetch(`${QServerBaseUrl}/authenticate`, {
+      credentials: 'include',
+      method: 'POST',
+      body: JSON.stringify({
+        username: username,
+        password: password
       })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw response;
-        }
-      })
-      .then(() => {
-        return this.user.load();
-      })
+    });
+
+    if (!response.ok) {
+      throw response;
+    }
+
+    return this.user.load();
   }
 
-  logout() {
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/logout`, {
-          credentials: 'include',
-          method: 'POST'
-        })
-      })
-      .then(response => {
-        if (response.ok) {
-          return true;
-        } else {
-          throw response;
-        }
-      })
-      .then(() => {
-        return this.user.load();
-      })
-      .catch(err => {
-        return this.user.load();
-      })
+  async logout() {
+    try {
+      const QServerBaseUrl = await qEnv.QServerBaseUrl;
+      const response = await fetch(`${QServerBaseUrl}/logout`, {
+        credentials: 'include',
+        method: 'POST'
+      });
+
+      if (!response.ok) {
+        throw response;
+      }
+    } finally {
+      return this.user.load();
+    }
   }
 
 }

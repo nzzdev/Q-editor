@@ -1,37 +1,33 @@
 <template>
   <require from="../styles/q-dialog.css"></require>
-  <require from="./item-dialog.css"></require>
   <require from="elements/item-preview/item-preview"></require>
   <div class="q-dialog item-dialog">
     <div class="q-dialog__content">
-      <item-preview if.bind="item.id" id.bind="item.id" on-drag.bind="handleDrag"></item-preview>
+      <item-preview if.bind="item.id" id.bind="item.id" on-drag.bind="handleDrag" target.two-way="currentTarget"></item-preview>
     </div>
     <aside class="q-dialog__controls">
-      <div class="q-text-small">
+      <div class="q-text-small q-text--light">
         <icon-active-state is-active.bind="item.conf.active"></icon-active-state>
-        <span>${ 'general.created' | t } ${ item.conf.createdDate | timeAgo:7*24*60*60 }<br>
-        ${ 'general.by' | t } ${item.conf.createdBy}</span>
+        <span>${ 'general.created' & t } ${ item.conf.createdDate & timeAgo:7*24*60*60 }<br>
+        ${ 'general.by' & t } ${item.conf.createdBy}</span>
       </div>
 
-      <button-primary if.bind="config.allowActivate && !item.conf.active" click.delegate="activateItem()" icon="activate">
+      <button-secondary if.bind="config.allowActivate && !item.conf.active" click.delegate="activateItem()" icon="activate">
         <span t="item.activate"></span>
-      </button-primary>
+      </button-secondary>
 
-      <button-primary if.bind="config.allowActivate && item.conf.active" click.delegate="deactivateItem()" icon="deactivate">
+      <button-secondary if.bind="config.allowActivate && item.conf.active" click.delegate="deactivateItem()" icon="deactivate">
         <span t="item.deactivate"></span>
-      </button-primary>
+      </button-secondary>
 
-      <div class="item-dialog__embed-code" if.bind="config.showEmbedCode">
-        <h6>Free HTML Code</h6>
-        <pre><code class="q-text-small q-text--light" if.bind="item.conf.active">${embedCode}</code></pre>
-      </div>
+      <embed-code item.bind="item" target.bind="currentTarget"></embed-code>
 
       <div class="item-dialog__embed-code" if.bind="config.showId && item.conf._id">
         <h6>ID</h6>
         <pre><code class="q-text-small q-text--light">${item.conf._id}</code></pre>
       </div>
 
-      <button-secondary click.delegate="controller.cancel()" icon="close"><span t="general.close"></span></button-secondary>
+      <button-secondary click.delegate="controller.cancel()" icon="leave"><span t="general.close"></span></button-secondary>
     </aside>
   </div>
 </template>

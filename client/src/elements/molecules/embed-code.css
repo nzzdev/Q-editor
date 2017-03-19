@@ -1,13 +1,17 @@
-.item-dialog pre {
+embed-code:empty {
+  display: none;
+}
+
+embed-code pre {
   background: white;
   border: 1px solid var(--q-color-gray-3);
-  padding: 10px 3px;
+  padding: calc(var(--q-space-base) / 2);
   margin: 0;
   white-space: normal;
   overflow-wrap: break-word;
 }
 
-.item-dialog code {
+embed-code pre code {
   white-space: normal;
   overflow-wrap: break-word;
 }

@@ -4,6 +4,7 @@
   height: 40px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: var(--q-space-base);
 }
 
 .items-filter {
@@ -20,7 +21,7 @@
 }
 
 .search {
-  max-width: 300px;
+  max-width: 400px;
   margin: calc(var(--q-space-base) * 3) auto;
 
   display: flex;
@@ -33,26 +34,34 @@
   fill: var(--q-color-gray-4);
   width: 34px;
   position: relative;
-  left: calc(var(--q-space-base) / 2);
+  left: var(--q-space-base);
 }
 
 .search input {
   flex-grow: 1;
   order: 2;
+
+  background: none;
   
   border: none;
   border-bottom: 1px solid var(--q-color-gray-4);
-  padding: var(--q-space-base);
+  padding-top: calc(var(--q-space-base) / 2);
+  padding-right: calc(var(--q-space-base) / 2);
+  padding-bottom: calc(var(--q-space-base) / 2);
+  padding-left: calc(var(--q-space-base) * 2);
 
-  font-size: 1.2em;
-  font-family: inherit;
-  color: inherit;
+  font-family: Roboto, sans-serif;
+  font-size: var(--q-text-size);
   caret-color: var(--q-color-primary-5);
+}
 
+.search input::placeholder {
+  color: var(--q-text-ultralight-color);
 }
 
 .search input:focus {
-  border-bottom-color: var(--q-color-gray-6);
+  border-bottom-color: var(--q-color-gray-5);
+  background: none;
   outline: none;
 }
 

@@ -1,21 +1,32 @@
-import { inject } from 'aurelia-framework'
-import QConfig from 'resources/QConfig.js'
+import { inject } from 'aurelia-framework';
+import QTargets from 'resources/QTargets.js';
 
-@inject(QConfig)
+@inject(QTargets)
 export default class EmbedCodeGenerator {
 
   embedCodes = {}
 
-  constructor(qConfig) {
-    this.qConfig = qConfig;
+  constructor(qTargets) {
+    this.qTargets = qTargets;
   }
 
-  getEmbedCodeForItem(item) {
-    return this.qConfig.get('browserLoaderUrl')
-      .then(browserLoaderUrl => {
-        let embedCode = `<div class="q-item" id="q-${item.id}"></div><script src="${browserLoaderUrl}"></script>`;
-        return embedCode;
-      })
+  async getEmbedCodeForItem(item, target) {
+    const availableTargets = await this.qTargets.get('availableTargets');
+    let embedCode = null;
+
+    if (!target) {
+      target = availableTargets[0];
+    }
+
+    for (let availableTarget of availableTargets) {
+      if (availableTarget.key === target.key) {
+        if (availableTarget.browserLoaderUrl) {
+          embedCode = `<div class="q-item" id="q-${item.id}"></div><script src="${availableTarget.browserLoaderUrl}"></script>`;
+        }
+        break;
+      }
+    }
+    return embedCode;
   }
 
 }

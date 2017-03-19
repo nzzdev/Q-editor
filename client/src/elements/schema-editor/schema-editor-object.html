@@ -3,9 +3,9 @@
 
     <div if.bind="schema.properties" repeat.for="propertyName of schema.properties | keys">
 
-      <fieldset if.bind="getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'">
+      <fieldset if.bind="getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'" class="${isCompact($parent.schema.properties[propertyName]) ? 'compact' : ''}">
         <legend>
-          ${$parent.schema.properties[propertyName]['Q:label'] ? $parent.schema.properties[propertyName]['Q:label'] : $parent.schema.properties[propertyName]['title']}
+          ${$parent.schema.properties[propertyName]['title']}
         </legend>
 
         <schema-editor-wrapper

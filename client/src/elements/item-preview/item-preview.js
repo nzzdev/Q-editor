@@ -1,15 +1,15 @@
-import { bindable, inject } from 'aurelia-framework'
+import { bindable, inject } from 'aurelia-framework';
 import qEnv from 'resources/qEnv.js';
+import QTargets from 'resources/QTargets.js';
 import MessageService from 'resources/MessageService.js';
 
-@inject(MessageService)
+@inject(QTargets, MessageService)
 export class ItemPreview {
 
   @bindable data
   @bindable id
+  @bindable target
   @bindable onDrag
-  
-  previewWidth = 540;
 
   sizeOptions = [
     {
@@ -26,35 +26,37 @@ export class ItemPreview {
     }
   ]
 
-  constructor(messageService) {
+  constructor(qTargets, messageService) {
+    this.qTargets = qTargets;
     this.messageService = messageService;
 
     // we use this proxy to catch any changes to the target and then load the preview after we have it
     this.targetProxy = new Proxy({}, {
       set: (target, property, value, receiver) => {
         target[property] = value;
+        this.target = value;
         this.loadPreview();
         return true;
       }
-    })
+    });
 
-    qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/editor/targets`);
-      })
-      .then(response => {
-        if (response.ok && response.status >= 200 && response.status < 400) {
-          return response.json();
-        } else {
-          throw new Error(response.statusText)
-        }
-      })
-      .then(targets => {
-        this.availableTargets = targets;
-      })
-      .catch(err => {
-        this.messageService.pushMessage('error', 'failedLoadingTargets')
-      })
+    // we use this proxy to catch any changes to the previewWidth and reload the preview renderingInfo on change
+    this.previewWidthProxy = new Proxy({}, {
+      set: (target, property, value, receiver) => {
+        target[property] = value;
+        this.handleSizeChange();
+        return true;
+      }
+    });
+
+    this.init();
+  }
+
+  async init() {
+    // set the default preview width to the most narrow variant
+    this.previewWidthProxy.width = this.sizeOptions[0].value;
+
+    this.availableTargets = await this.qTargets.get('availableTargets');
   }
 
   dataChanged() {
@@ -67,7 +69,7 @@ export class ItemPreview {
 
   onDragChanged(onDrag, oldOnDrag) {
     if (this.onDrag && this.previewContainer) {
-      this.ensureDragHandling()
+      this.ensureDragHandling();
     } else if (oldOnDrag && this.previewContainer) {
       this.previewContainer.removeAttribute('draggable');
       this.previewContainer.removeEventListener('dragstart', oldOnDrag);
@@ -95,47 +97,68 @@ export class ItemPreview {
   }
 
   handleSizeChange() {
-    this.previewContainer.style.width = `${this.previewWidth}px`;
     this.loadPreview();
   }
 
   fetchRenderingInfo() {
+    const toolRuntimeConfig = {
+      size: {
+        width: [
+          {
+            value: this.previewContainer.getBoundingClientRect().width,
+            comparison: '='
+          }
+        ]
+      }
+    };
+
     return qEnv.QServerBaseUrl
       .then(QServerBaseUrl => {
         if (this.id) {
-          return fetch(`${QServerBaseUrl}/rendering-info/${this.id}/${this.targetProxy.target.key}`)
+          return fetch(`${QServerBaseUrl}/rendering-info/${this.id}/${this.targetProxy.target.key}?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`);
         } else if (this.data) {
-          this.data.tool = this.data.tool.replace(new RegExp('-','g'), '_');
+          this.data.tool = this.data.tool.replace(new RegExp('-', 'g'), '_');
           const body = {
-            item: this.data
-          }
+            item: this.data,
+            toolRuntimeConfig: toolRuntimeConfig
+          };
           return fetch(`${QServerBaseUrl}/rendering-info/${this.targetProxy.target.key}`, {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
               'Content-Type': 'application/json'
             }
-          })
+          });
         }
       })
       .then(res => {
         if (res.ok && res.status >= 200 && res.status < 400) {
-          return res.json()
+          return res.json();
         }
-        throw res.statusText
+        throw res.statusText;
       })
       .then(renderingInfo => {
         // add stylesheets for target preview if any
         if (this.targetProxy.target.preview && this.targetProxy.target.preview.stylesheets) {
           if (!renderingInfo.stylesheets) {
-            renderingInfo.stylesheets = []
+            renderingInfo.stylesheets = [];
           }
           this.targetProxy.target.preview.stylesheets.forEach(stylesheet => {
             renderingInfo.stylesheets.push(stylesheet);
-          })
+          });
+        }
+
+        // add scripts for target preview if any
+        if (this.targetProxy.target.preview && this.targetProxy.target.preview.scripts) {
+          if (!renderingInfo.scripts) {
+            renderingInfo.scripts = [];
+          }
+          this.targetProxy.target.preview.scripts.forEach(script => {
+            renderingInfo.scripts.push(script);
+          });
         }
         return renderingInfo;
-      })
+      });
   }
 
   loadPreview() {
@@ -155,6 +178,6 @@ export class ItemPreview {
       .catch(errorMessage => {
         this.errorMessage = errorMessage;
         this.renderingInfo = {};
-      })
+      });
   }
 }

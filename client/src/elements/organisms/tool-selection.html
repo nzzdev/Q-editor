@@ -2,9 +2,10 @@
   <require from="./tool-selection.css"></require>
   <a repeat.for="tool of tools" route-href="route: editor; params.bind: {tool: tool.name}">
     <button-primary
+      tabindex="-1"
       size="big"
       code.bind=tool.icon
     ></button-primary>
-    ${tool.label}
+    <span class="q-text-small q-text--light">${tool.label}</span>
   </a>
 </template>

@@ -1,5 +1,11 @@
-.q-form icon-button {
-  /*margin-top: var(--q-space-base);*/
+.q-form button-primary {
+  margin-top: calc(var(--q-space-base) * 2);
+}
+
+.q-form label {
+  font-size: var(--q-text-small-size);
+  line-height: 1.33;
+  color: var(--q-text-light-color);
 }
 
 .q-form input,
@@ -19,7 +25,7 @@
 }
 
 .q-form input:invalid {
-  border-color: var(--q-color-no-1);
+  border-color: var(--q-color-error-light);
 }
 
 .q-form input:focus,
@@ -40,6 +46,10 @@
   padding: 9px;
 }
 
+.q-form__block {
+  display: block;
+  margin-bottom: calc(var(--q-space-base) / 2);
+}
 
 /*
 
@@ -53,6 +63,7 @@
 
 .q-form__checkbox input[type="checkbox"] {
   position: absolute;
+  top: 1px;
   left: 0;
   margin: 0;
 }
@@ -103,17 +114,15 @@
 */
 .q-form select {
   height: 2.4375rem;
-  margin: 0 0 1rem;
-  padding: 0.5rem;
+  margin: 0 0 var(--q-space-base) 0;
+  padding: calc(var(--q-space-base) / 2);
   appearance: none;
   -webkit-appearance: none;
   border-radius: 0;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
-  -webkit-background-origin: content-box;
   background-origin: content-box;
   background-position: right -1rem center;
   background-repeat: no-repeat;
-  -webkit-background-size: 9px 6px;
   background-size: 9px 6px;
   padding-right: 1.5rem;
   transition: border-color 0.25s ease-in-out;

@@ -64,6 +64,10 @@ h6 {
   color: var(--q-text-light-color);
 }
 
+.q-text--ultralight {
+  color: var(--q-text-ultralight-color);
+}
+
 .q-text--success {
   color: var(--q-color-success);
 }

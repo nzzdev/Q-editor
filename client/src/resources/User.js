@@ -3,32 +3,29 @@ import qEnv from 'resources/qEnv.js';
 export default class User {
 
   constructor() {
-    this.isLoggedIn = false;    
+    this.isLoggedIn = false;
     this.loaded = this.load();
   }
 
-  load() {
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/user`, {
-          credentials: 'include'
-        })
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        }
-        return null;
-      })
-      .then(data => {
-        this.data = data;
-      })
-      .catch(err => {
-        this.data = null;
-      })
-      .then(() => {
-        this.setLoggedInState();
-      })
+  async load() {
+    try {
+      const QServerBaseUrl = await qEnv.QServerBaseUrl;
+      const response = await fetch(`${QServerBaseUrl}/user`, {
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw response;
+      }
+
+      this.data = await response.json();
+      return true;
+    } catch (e) {
+      this.data = null;
+    } finally {
+      this.setLoggedInState();
+      return true;
+    }
   }
 
   setLoggedInState() {
@@ -51,24 +48,25 @@ export default class User {
     if (!this.data || !this.data.hasOwnProperty('roles')) {
       return null;
     }
-    return this.data.config.roles;
+    return this.data.roles;
   }
 
-  save() {
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/user`, {
-          credentials: 'include',
-          method: 'PUT',
-          body: JSON.stringify(this.data)
-        })
-      })
-      .then(response => {
-        if (!response.ok) {
-          return false;
-        }
-        return true;
-      })
+  async save() {
+    try {
+      const QServerBaseUrl = await qEnv.QServerBaseUrl;
+      const response = await fetch(`${QServerBaseUrl}/user`, {
+        credentials: 'include',
+        method: 'PUT',
+        body: JSON.stringify(this.data)
+      });
+
+      if (!response.ok) {
+        throw response;
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
 }

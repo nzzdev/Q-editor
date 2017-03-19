@@ -21,46 +21,38 @@ export default class Item {
   }
 
   getToolName() {
-    return this.conf.tool.replace(new RegExp('-','g'), '_');
+    // this is used because we have legacy tool names with - which is not supported in Q server config
+    return this.conf.tool.replace(new RegExp('-', 'g'), '_');
   }
 
   changed() {
     this.isSaved = false;
   }
 
-  setDepartmentToUserDepartment() {
-    return this.user.loaded
-      .then(() => {
-        this.conf.department = this.user.data.department;
-      })
+  async setDepartmentToUserDepartment() {
+    await this.user.loaded;
+    this.conf.department = this.user.data.department;
   }
 
-  load(id) {
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/item/${id}`)
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw response;
-        }
-      })
-      .then(doc => {
-        this.conf = Object.assign(this.conf, doc);
-        return this;
-      })
+  async load(id) {
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+
+    const response = await fetch(`${QServerBaseUrl}/item/${id}`);
+
+    if (!response.ok) {
+      throw response;
+    }
+
+    const doc = await response.json();
+    this.conf = Object.assign(this.conf, doc);
   }
 
-  blueprint() {
+  async blueprint() {
     this.conf._id = undefined;
     this.conf._rev = undefined;
     this.conf.active = false;
-    return this.setDepartmentToUserDepartment()
-      .then(() => {
-        return this.save();
-      });
+    await this.setDepartmentToUserDepartment();
+    return this.save();
   }
 
   addConf(conf) {
@@ -83,33 +75,43 @@ export default class Item {
     return this.save();
   }
 
-  save() {
+  async save() {
+    // per default we use POST to store a new item
     let method = 'POST';
+
+    // if we already have an id, we use PUT to update the item
     if (this.id) {
       method = 'PUT';
     }
 
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/item`, {
-          method: method,
-          credentials: 'include',
-          body: JSON.stringify(this.conf)
-        })
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          throw response
-        }
-      })
-      .then(newItemProperties => {
-        // we get the changed properties back from Q Server and apply them here
-        // this could include: _id, _rev, activateDate, deactivateDate, createdBy, updatedBy
-        this.conf = Object.assign(this.conf, newItemProperties);
-        this.isSaved = true;
-      })
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    const response = await fetch(`${QServerBaseUrl}/item`, {
+      method: method,
+      credentials: 'include',
+      body: JSON.stringify(this.conf)
+    });
+
+    if (!response.ok) {
+      throw response;
+    }
+
+    const body = await response.json();
+
+    if (body.error) {
+      throw body;
+    }
+
+    // we get new properties as a response to the save and assign them the the conf
+    this.conf = Object.assign(this.conf, body);
+    this.isSaved = true;
+  }
+
+  async reset() {
+    if (this.id) {
+      return this.load(this.id);
+    }
+
+    return true;
   }
 
 }

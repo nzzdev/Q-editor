@@ -1,0 +1,7 @@
+<template>
+  <require from="./embed-code.css"></require>
+  <div if.bind="embedCode">
+    <h6>Embed Code</h6>
+    <pre><code class="q-text-small q-text--light" if.bind="item.conf.active">${embedCode}</code></pre>
+  </div>
+</template>

@@ -1,0 +1,58 @@
+{
+  "general": {
+    "yes": "yes",
+    "no": "no",
+    "searchLabel": "Search for a graphic",
+    "login": "login",
+    "logout": "logout",
+    "username": "Username",
+    "password": "Password",
+    "back": "back",
+    "loadMore": "load more",
+    "itemNotActivated": "Item is not activated",
+    "saveChanges": "save changes",
+    "close": "close",
+    "goToOverview": "Overview",
+    "created": "created",
+    "by": "by",
+    "only": "only",
+    "graphic": "graphic",
+    "graphic_plural": "graphics",
+    "browserSupportMessage": "Q is optimised for Chrome and may does not work in your browser.",
+    "changesSaved": "Changes saved.",
+    "failedToSaveChanges": "Failed to save changes.",
+    "loginFailed": "Your username or password is not correct.",
+    "serverConnectionFailed": "Failed to connect to server."
+  },
+  "statistics": {
+    "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",    
+    "enoughNewGraphics": "{{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active."
+  },
+  "editor": {
+    "questionLeaveWithUnsavedChanges": "Not all changes are saved, close anyway?",
+    "previewTargetLabel": "Publication",
+    "previewSizeLabel": "Size",
+    "arrayEntryAdd": "add {{ arrayEntryLabel }}",
+    "activatingEditorTakesTooLong": "It takes too long to load the editor, something is wrong.",
+    "failedToSave": "Failed to save: {{reason}}."
+  },
+  "item": {
+    "activate": "activate",
+    "deactivate": "deactivate",
+    "blueprint": "use as blueprint",
+    "blueprintTitlePrefix": "Copy of ",
+    "edit": "edit",
+    "failedToLoadItem": "Failed to load the graphic.",
+    "failedToBlueprintItem": "Failed to blueprint the graphic."
+  },
+  "itemsFilter": {
+    "allGraphics": "all graphics",
+    "byAll": "by all",
+    "byMe": "by me",
+    "allDepartments": "all departments",
+    "myDepartment": "my department only",
+    "allStates": "all states",
+    "onlyActive": "active only",
+    "onlyInactive": "inactive only"
+  }
+}

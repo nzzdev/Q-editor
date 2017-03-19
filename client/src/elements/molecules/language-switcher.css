@@ -1,0 +1,20 @@
+language-switcher {
+  margin: calc(var(--q-space-base) / 4) 0;
+}
+
+language-switcher div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+language-switcher button {
+  border: none;
+  background: none;
+  border-right: 1px solid var(--q-color-gray-4);
+  cursor: pointer;
+  padding: 0 calc(var(--q-space-base) / 8);
+}
+
+language-switcher button:last-child {
+  border-right: none;
+}

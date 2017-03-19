@@ -1,7 +1,7 @@
-import { bindable, inject } from 'aurelia-framework';
+import { bindable } from 'aurelia-framework';
 
 export class IconButton {
-  
+
   @bindable icon
   @bindable code
   @bindable size
@@ -12,7 +12,6 @@ export class IconButton {
 
   attached() {
     if (this.view.slots['__au-default-slot-key__'].children.length > 0) {
-      console.log(this.view.slots);
       this.hasText = true;
     }
   }

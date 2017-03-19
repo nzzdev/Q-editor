@@ -22,6 +22,11 @@ box-icon path, box-icon polygon, box-icon circle {
   fill: currentColor;
 }
 
+box-icon.size-medium svg {
+  width: 16px;
+  height: 16px;
+}
+
 box-icon.size-big svg {
   width: 20px;
   height: 20px;

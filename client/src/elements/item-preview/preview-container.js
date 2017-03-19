@@ -8,6 +8,8 @@ export class PreviewContainer {
   @bindable width
   @bindable renderingInfo
 
+  insertedElements = [];
+
   constructor(element) {
     this.element = element;
   }
@@ -20,79 +22,98 @@ export class PreviewContainer {
     this.showPreview(this.renderingInfo);
   }
 
-  showPreview(renderingInfo) {
+  async showPreview(renderingInfo) {
     if (!this.previewElement) {
       return;
     }
+
     if (!renderingInfo) {
       this.previewElement.innerHTML = '';
       return;
     }
 
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
-        this.previewElement.innerHTML = renderingInfo.markup;
-    
-        // load the stylesheets
-        if (Array.isArray(renderingInfo.stylesheets)) {
-          renderingInfo.stylesheets
-            .map(stylesheet => {
-              if (stylesheet.url) {
-                return stylesheet.url;
-              }
-              if (stylesheet.path) {
-                return `${QServerBaseUrl}${stylesheet.path}`
-              }
-            })
-            .map(url => {
-              if (url) {
-                let link = document.createElement('link');
-                link.type = 'text/css';
-                link.rel = "stylesheet";
-                link.href = url;
-                this.element.shadowRoot.appendChild(link);
-              }
-            })
-        }
-
-        // load the scripts one after the other
-        if (Array.isArray(renderingInfo.scripts)) {
-          renderingInfo.scripts = renderingInfo.scripts
-            .filter(script => script.name !== 'system.js') // do not laod system.js if the tool wants it, it's already here
-            .map(script => {
-              if (script.path) {
-                script.url = `${QServerBaseUrl}${script.path}`;
-              }
-              return script;
-            })
-
-          loadAllScripts(renderingInfo.scripts);
-        }
-      })
-  }
-}
-
-function loadAllScripts(scripts, index = 0, callback) {
-  if (scripts && scripts[index] && scripts[index].url) {
-    let script = document.createElement('script');
-
-    if (script.url) {
-      script.src = src;
-      script.async = true;
-
-      script.onload = () => {
-        loadAllScripts(scripts, index + 1, callback)
-      }
-      this.element.shadowRoot.appendChild(script);
-
-    } else if (script.content) {
-      script.innerHTML = script.content;
-      this.element.shadowRoot.appendChild(script);
-      loadAllScripts(scripts, index + 1, callback)
+    // remove all previously inserted elements
+    while (this.insertedElements.length > 0) {
+      let element = this.insertedElements.pop();
+      element.parentNode.removeChild(element);
     }
 
-  } else {
-    callback();
+    // load the stylesheets
+    if (Array.isArray(renderingInfo.stylesheets)) {
+      renderingInfo.stylesheets
+        .map(stylesheet => {
+          if (!stylesheet.url && stylesheet.path) {
+            stylesheet.url = `${QServerBaseUrl}${stylesheet.path}`;
+          }
+          return stylesheet;
+        })
+        .map(stylesheet => {
+          if (stylesheet.url) {
+            let link = document.createElement('link');
+            link.type = 'text/css';
+            link.rel = 'stylesheet';
+            link.href = stylesheet.url;
+            this.insertedElements.push(link);
+            this.element.shadowRoot.appendChild(link);
+          } else if (stylesheet.content) {
+            let style = document.createElement('style');
+            style.type = 'text/css';
+            style.appendChild(document.createTextNode(stylesheet.content));
+            this.insertedElements.push(style);
+            this.element.shadowRoot.appendChild(style);
+          }
+        });
+    }
+
+    // add the markup if any
+    if (renderingInfo.markup) {
+      this.previewElement.innerHTML = renderingInfo.markup;
+    } else {
+      this.previewElement.innerHTML = '';
+    }
+
+    // load the scripts one after the other
+    if (Array.isArray(renderingInfo.scripts)) {
+      renderingInfo.scripts = renderingInfo.scripts
+        .filter(script => script.name !== 'system.js') // do not laod system.js if the tool wants it, it's already here
+        .map(script => {
+          if (script.path) {
+            script.url = `${QServerBaseUrl}${script.path}`;
+          }
+          return script;
+        });
+
+      this.loadAllScripts(renderingInfo.scripts);
+    }
+  }
+
+  loadAllScripts(scripts, callback = null, index = 0) {
+    if (scripts && scripts[index] && (scripts[index].url || scripts[index].content)) {
+      let script = scripts[index];
+      let scriptElement = document.createElement('script');
+
+      if (script.url) {
+        scriptElement.src = script.url;
+        script.async = true;
+
+        scriptElement.onload = () => {
+          this.loadAllScripts(scripts, callback, index + 1);
+        };
+
+        this.insertedElements.push(scriptElement);
+        this.element.shadowRoot.appendChild(scriptElement);
+      } else if (script.content) {
+        script.content = script.content.replace(new RegExp('document.querySelector', 'g'), "document.querySelector('#preview-container').shadowRoot.querySelector");
+
+        scriptElement.innerHTML = script.content;
+        this.insertedElements.push(scriptElement);
+        this.element.shadowRoot.appendChild(scriptElement);
+        this.loadAllScripts(scripts, callback, index + 1);
+      }
+    } else if (typeof callback === 'function') {
+      callback();
+    }
   }
 }

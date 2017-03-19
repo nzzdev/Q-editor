@@ -1,4 +1,11 @@
+// clear the load error timeout
+window.clearTimeout(window.QLoadErrorTimeout);
+
+import { LogManager } from 'aurelia-framework';
+import { ConsoleAppender } from 'aurelia-logging-console';
+
 import QConfig from 'resources/QConfig.js';
+import QTargets from 'resources/QTargets.js';
 import Auth from 'resources/Auth.js';
 import User from 'resources/User.js';
 import MessageService from 'resources/MessageService.js';
@@ -9,66 +16,73 @@ import ToolsInfo from 'resources/ToolsInfo.js';
 import qEnv from 'resources/qEnv.js';
 import { registerEastereggs } from 'eastereggs.js';
 
-import { I18N } from 'aurelia-i18n';
 import Backend from 'i18next-xhr-backend';
 
-var pouchOptions = {
-  skipSetup: true,
-}
+export async function configure(aurelia) {
+  aurelia.use.singleton(QConfig);
 
-export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .feature('elements/atoms')
     .feature('elements/molecules')
     .feature('elements/organisms')
     .feature('icons')
+    .feature('binding-behaviors')
     .feature('value-converters')
     .plugin('aurelia-dialog')
-    .plugin('aurelia-i18n', (instance) => {
+    .plugin('aurelia-i18n', async (instance) => {
       // register backend plugin
       instance.i18next.use(Backend);
+
+      let availableLanguages = ['de', 'en'];
+      try {
+        let configuredLanguages = await aurelia.container.get(QConfig).get('languages');
+        if (configuredLanguages && configuredLanguages.length > 0) {
+          availableLanguages = configuredLanguages.map(lang => lang.key);
+        }
+      } catch (e) {
+        // do not care and use the default availableLanguages
+      }
 
       // adapt options to your needs (see http://i18next.com/docs/options/)
       // make sure to return the promise of the setup method, in order to guarantee proper loading
       return instance.setup({
         backend: {
-          loadPath: './locales/{{lng}}/{{ns}}.json',
+          loadPath: './locales/{{lng}}/{{ns}}.json'
         },
-        lng: navigator.language || 'de',
-        attributes: ['t','i18n'],
+        attributes: ['t', 'i18n'],
         fallbackLng: 'de',
+        lng: availableLanguages[0],
+        whitelist: availableLanguages,
+        load: 'languageOnly',
         debug: false
       });
     })
   ;
 
-  qEnv.devLogging
-    .then(devLogging => {
-      if (devLogging) {
-        aurelia.use
-          .plugin('aurelia-testing')
-          .developmentLogging();
-      }
+  const devLogging = await qEnv.devLogging;
+  let logLevel = LogManager.logLevel.info;
+  if (devLogging) {
+    aurelia.use
+      .plugin('aurelia-testing');
+    logLevel = LogManager.logLevel.debug;
+  }
 
-      aurelia.use.singleton(QConfig);
-      
-      aurelia.use.singleton(Auth);
-      aurelia.use.singleton(EmbedCodeGenerator);
-      aurelia.use.singleton(Statistics);
-      aurelia.use.singleton(ToolsInfo);
-      aurelia.use.singleton(ItemStore);
-      aurelia.use.singleton(MessageService);
+  LogManager.addAppender(new ConsoleAppender());
+  LogManager.setLevel(logLevel);
 
-      aurelia.use.singleton(User);
+  aurelia.use.singleton(Auth);
+  aurelia.use.singleton(EmbedCodeGenerator);
+  aurelia.use.singleton(Statistics);
+  aurelia.use.singleton(ToolsInfo);
+  aurelia.use.singleton(ItemStore);
+  aurelia.use.singleton(MessageService);
+  aurelia.use.singleton(QTargets);
 
-      aurelia.start().then(a => a.setRoot());
+  aurelia.use.singleton(User);
 
-      aurelia.container.get(QConfig).get('eastereggs')
-        .then(eastereggConfig => {
-          if (eastereggConfig) {
-            registerEastereggs(eastereggConfig);
-          }
-        })
-    })
+  aurelia.start().then(a => a.setRoot());
+
+  const eastereggConfig = await aurelia.container.get(QConfig).get('eastereggs');
+  registerEastereggs(eastereggConfig);
 }

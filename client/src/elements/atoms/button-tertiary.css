@@ -1,0 +1,23 @@
+button-tertiary {
+  display: block;
+}
+
+button-tertiary icon-button button {
+  color: var(--q-color-gray-6);
+  background-color: transparent;
+  border-color: transparent;
+}
+
+button-tertiary icon-button button:focus {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);
+}
+
+button-tertiary icon-button button:hover {
+  color: var(--q-color-black);
+  background-color: transparent;
+}
+
+button-tertiary icon-button button[disabled] {
+  color: var(--q-color-gray-5);
+  border-color: transparent;
+}

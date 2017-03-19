@@ -1,4 +1,4 @@
-import { bindable, useShadowDOM } from 'aurelia-framework'
+import { bindable } from 'aurelia-framework';
 
 export class ConfirmButton {
 
@@ -7,6 +7,7 @@ export class ConfirmButton {
   @bindable action;
   @bindable state = 'init';
   @bindable size;
+  @bindable buttonType = 'secondary';
 
   toggle(event) {
     event.stopPropagation();

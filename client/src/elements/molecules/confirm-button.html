@@ -1,6 +1,8 @@
 <template containerless class="state-${state} size-${size}">
   <require from="./confirm-button.css"></require>
-  <button-secondary icon.bind="icon" click.delegate="toggle($event)" size.bind="size"></button-secondary>
+  <button-primary if.bind="buttonType === 'primary'" icon.bind="icon" click.delegate="toggle($event)" size.bind="size"></button-primary>
+  <button-secondary if.bind="buttonType === 'secondary'" icon.bind="icon" click.delegate="toggle($event)" size.bind="size"></button-secondary>
+  <button-tertiary if.bind="buttonType === 'tertiary'" icon.bind="icon" click.delegate="toggle($event)" size.bind="size"></button-tertiary>
   <div class="actions">
     <button-yes icon="proceed" click.delegate="proceed($event)" size.bind="size"></button-yes>
     <button-no icon="abort" click.delegate="abort($event)" size.bind="size"></button-no>

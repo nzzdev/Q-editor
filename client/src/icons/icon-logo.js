@@ -1,4 +1,4 @@
-import { inject } from 'aurelia-framework'
+import { inject } from 'aurelia-framework';
 
 @inject(Element)
 export class IconLogo {
