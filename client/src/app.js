@@ -144,7 +144,15 @@ class ConfigAvailableCheckStep {
 
   async run(navigationInstruction, next) {
     if (navigationInstruction.getAllInstructions().some(i => i.config.name === 'server-unavailable')) {
-      return next();
+      try {
+        await this.qConfig.configLoaded;
+        if (!this.qConfig.config) {
+          return next();
+        }
+        return next.cancel(new Redirect('index'));
+      } catch (e) {
+        return next();
+      }
     }
     try {
       await this.qConfig.configLoaded;
