@@ -3,6 +3,7 @@
   <div repeat.for="message of messageService.messages" class="q-message q-message--${message.type}">
     <div class="message-icon"><box-icon><compose class="q-icon" view="icons/icon-message-${message.type}.html"></compose></box-icon></div>
     <p innerhtml.bind="message.text"></p>
-    <button click.delegate="message.dismiss()">╳</button>
+    <button-tertiary click.delegate="message.dismiss()" icon="crossmark"></button-tertiary>
+    <!--<button click.delegate="message.dismiss()">╳</button>-->
   </div>
 </template>

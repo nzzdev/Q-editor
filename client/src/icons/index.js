@@ -7,6 +7,7 @@ export function configure(frameworkConfiguration) {
     .globalResources('./icon-back.html')
     .globalResources('./icon-blueprint.html')
     .globalResources('./icon-collapse.html')
+    .globalResources('./icon-crossmark.html')
     .globalResources('./icon-deactivate.html')
     .globalResources('./icon-delete.html')
     .globalResources('./icon-edit.html')
