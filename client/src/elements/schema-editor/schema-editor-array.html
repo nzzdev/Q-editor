@@ -7,7 +7,8 @@
       <button-secondary icon="expand" size="small" if.bind="collapsedStates[$index] !== 'expanded'" click.delegate="expand($index)"></button-secondary>
       <button-secondary icon="collapse" size="small" if.bind="collapsedStates[$index] === 'expanded'" click.delegate="collapse($index)"></button-secondary>
 
-      <span class="q-text">${options.expandable.itemLabelProperty ? entry[options.expandable.itemLabelProperty] : $index + 1}</span>
+      <span class="q-text" if.bind="options.expandable.itemLabelProperty && entryLabels[$index]" innerhtml.bind="entryLabels[$index]"></span>
+      <span class="q-text" if.bind="!options.expandable.itemLabelProperty || !entryLabels[$index]">${$index + 1}</span>
 
       <div class="schema-editor-array__entry-actions">
         <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
@@ -17,9 +18,9 @@
     </div>
     <schema-editor-wrapper
         if.bind="collapsedStates[$index] === 'expanded' || !options.expandable"
-        schema.bind="$parent.schema.items"
+        schema.bind="$parent.getSchemaForArrayEntry(data[$index])"
         data.two-way="data[$index]"
-        change.bind="$parent.change">
+        change.bind="$parent.handleChange">
     </schema-editor-wrapper>
     <div class="schema-editor-array__entry-actions" if.bind="!options.expandable">
       <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
@@ -28,5 +29,9 @@
     </div>
   </div>
 
-  <button-secondary class="schema-editor-array__add-item-button" click.delegate="addElement(data, schema.items)"><span t="editor.arrayEntryAdd" t-params.bind="labels"></span></button-secondary>
+  <button-secondary class="schema-editor-array__add-item-button"
+    repeat.for="arrayEntryOption of arrayEntryOptions"
+    click.delegate="addElement(data, arrayEntryOption.schema)">
+      <span t="editor.arrayEntryAdd" t-params.bind="arrayEntryOption"></span>
+  </button-secondary>
 </template>
