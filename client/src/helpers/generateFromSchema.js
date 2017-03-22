@@ -8,17 +8,29 @@ export default function generateFromSchema(schema) {
     let array = [];
     if (schema.minItems !== undefined) {
       for (let i = 0; i < schema.minItems; i++) {
-        array.push(generateFromSchema(schema.items));
+        let value = generateFromSchema(schema.items);
+        if (value) {
+          array.push();
+        }
       }
     }
     return array;
   } else if (schema.type === 'object') {
     let object = {};
+    if (schema.hasOwnProperty('default')) {
+      return schema.default;
+    }
+    if (!schema.hasOwnProperty('properties')) {
+      return undefined;
+    }
     Object.keys(schema.properties).forEach(propertyName => {
       if (schema.properties[propertyName]['Q:deprecated']) {
         return;
       }
-      object[propertyName] = generateFromSchema(schema.properties[propertyName]);
+      let value = generateFromSchema(schema.properties[propertyName]);
+      if (value) {
+        object[propertyName] = value;
+      }
     });
     return object;
   }
