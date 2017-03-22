@@ -150,12 +150,20 @@ export class Editor {
   }
 
   userSave() {
+    let valid = true;
     if (!this.form.checkValidity()) {
       // this triggers the HTML5 Form Validation in the browser
       this.formSubmitButton.click();
-      return;
+      valid = false;
     }
-    this.save();
+    if (this.optionsForm && !this.optionsForm.checkValidity()) {
+      // this triggers the HTML5 Form Validation in the browser
+      this.optionsFormSubmitButton.click();
+      valid = false;
+    }
+    if (valid) {
+      this.save();
+    }
   }
 
 }

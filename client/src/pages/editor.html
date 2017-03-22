@@ -23,10 +23,11 @@
         </section>
     </main>
     <div class="editor__options" if.bind="optionsSchema">
-      <form ref="form" class="q-form" validate>
+      <form ref="optionsForm" class="q-form" validate>
         <schema-editor schema.bind="optionsSchema" data.bind="item.conf.options" change.call="handleChange()">
           <h6>${optionsSchema.title || 'Optionen'}</h6>
         </schema-editor>
+        <button ref="optionsFormSubmitButton" type="submit" style="display: none;"></button>
       </form>
     </div>
     <tool-status-bar item.bind="item" save-action.call="userSave()" activate-action.call="openItemModal()"></tool-status-bar>
