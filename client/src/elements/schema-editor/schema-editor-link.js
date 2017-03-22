@@ -5,6 +5,7 @@ export class SchemaEditorLink {
   @bindable data
   @bindable schema
   @bindable change
+  @bindable required
 
   handleUrlChange() {
     if (this.urlInput.validity.valid) {
