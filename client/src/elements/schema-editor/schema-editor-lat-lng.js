@@ -11,6 +11,7 @@ export class SchemaEditorLatLng {
   @bindable schema;
   @bindable data;
   @bindable change;
+  @bindable required;
 
   constructor(qConfig, loader) {
     this.qConfig = qConfig;

@@ -128,7 +128,7 @@ export class Index {
       // only set the stats after all values are available
       this.statsValues = statsValues;
 
-      if (newInLastXDays <= this.lowNewItemsConfig.threshold) {
+      if (statsValues.count <= lowNewItemsConfig.threshold) {
         this.enoughNewItems = false;
       } else {
         this.enoughNewItems = true;
