@@ -5,6 +5,7 @@ export class SchemaEditorNumber {
   @bindable data
   @bindable schema
   @bindable change
+  @bindable required
 
   options = {
     step: 1

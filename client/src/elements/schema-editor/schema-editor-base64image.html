@@ -2,7 +2,7 @@
   <require from="./schema-editor-base64image.css"></require>
   <label>
     <span>${schema["title"]}</span>
-    <input type="file" accept="image/png" class="schema-editor-base64image__input" change.delegate="handleChange($event)">
+    <input type="file" accept="image/png" class="schema-editor-base64image__input" required.bind="required" change.delegate="handleChange($event)">
     <img if.bind="data" src="${data}" style="height: 30px;">
   </label>
 </template>
