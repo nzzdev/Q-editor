@@ -5,6 +5,7 @@ export class SchemaEditorBase64image {
   @bindable schema;
   @bindable data;
   @bindable change;
+  @bindable required;
 
   handleChange(event) {
     let reader = new FileReader();

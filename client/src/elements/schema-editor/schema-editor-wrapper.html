@@ -82,7 +82,8 @@
     <schema-editor-lat-lng
       schema.bind="schema"
       data.two-way="data"
-      change.bind="change"></schema-editor-lat-lng>
+      change.bind="change"
+      required.bind="required"></schema-editor-lat-lng>
   </div>
 
   <div if.bind="getType(schema) === 'base64image'" class="schema-editor-block">
