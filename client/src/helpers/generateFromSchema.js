@@ -28,7 +28,7 @@ export default function generateFromSchema(schema) {
         return;
       }
       let value = generateFromSchema(schema.properties[propertyName]);
-      if (value) {
+      if (value !== undefined) {
         object[propertyName] = value;
       }
     });
