@@ -18,6 +18,9 @@ export default function generateFromSchema(schema) {
   } else if (schema.type === 'object') {
     let object = {};
     if (schema.hasOwnProperty('default')) {
+      if (typeof schema.default === 'object') {
+        return JSON.parse(JSON.stringify(schema.default));
+      }
       return schema.default;
     }
     if (!schema.hasOwnProperty('properties')) {
