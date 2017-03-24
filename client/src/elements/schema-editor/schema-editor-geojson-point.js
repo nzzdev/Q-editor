@@ -94,7 +94,7 @@ export class SchemaEditorGeojsonPoint {
     });
 
     const schemaEditorConfig = await this.qConfig.get('schemaEditor');
-    const layerConfig = schemaEditorConfig.latLng.layer;
+    const layerConfig = schemaEditorConfig.geojson.layer;
 
     if (this.map) {
       this.resolveMapInit();
