@@ -29,16 +29,20 @@ function getTranslatedSchema(schema, toolName, i18n) {
     schema.title = i18n.tr(`${toolName}:${schema.title}`);
   }
   if (schema.hasOwnProperty('items')) {
-    if (schema.items.hasOwnProperty('title')) {
-      schema.items.title = i18n.tr(`${toolName}:${schema.title}`);
-    }
     if (schema.items.hasOwnProperty('oneOf')) {
       schema.items.oneOf = schema.items.oneOf.map(oneOfSchema => getTranslatedSchema(oneOfSchema));
+    } else {
+      schema.items = getTranslatedSchema(schema.items, toolName, i18n);
     }
   }
   if (schema.hasOwnProperty('properties')) {
     Object.keys(schema.properties).forEach(propertyName => {
       schema.properties[propertyName] = getTranslatedSchema(schema.properties[propertyName], toolName, i18n);
+    });
+  }
+  if (schema.hasOwnProperty('Q:options') && schema['Q:options'].hasOwnProperty('enum_titles')) {
+    schema['Q:options'].enum_titles = schema['Q:options'].enum_titles.map(title => {
+      return i18n.tr(`${toolName}:${title}`);
     });
   }
   return schema;
