@@ -12,6 +12,7 @@ System.config({
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.1",
     "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.3.0",
     "aurelia-dialog": "npm:aurelia-dialog@1.0.0-beta.3.0.1",
+    "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.1",
     "aurelia-fetch-client": "npm:aurelia-fetch-client@1.1.1",
     "aurelia-framework": "npm:aurelia-framework@1.1.0",
     "aurelia-history-browser": "npm:aurelia-history-browser@1.0.0",
@@ -36,8 +37,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.33",
-    "fetch": "github:github/fetch@1.1.1",
-    "i18next-xhr-backend": "npm:i18next-xhr-backend@1.3.0",
+    "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
     "leaflet": "npm:leaflet@1.0.3",
     "leaflet-geocoder-mapzen": "npm:leaflet-geocoder-mapzen@1.8.0",
     "text": "github:systemjs/plugin-text@0.0.8",
@@ -227,6 +227,9 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
+    "npm:i18next-fetch-backend@0.0.1": {
+      "i18next-xhr-backend": "npm:i18next-xhr-backend@1.4.1"
     },
     "npm:i18next@3.5.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"

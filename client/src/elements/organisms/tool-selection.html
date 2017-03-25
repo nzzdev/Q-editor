@@ -6,6 +6,7 @@
       size="big"
       code.bind=tool.icon
     ></button-primary>
-    <span class="q-text-small q-text--light">${tool.label}</span>
+    <span if.bind="tool.label" class="q-text-small q-text--light" t="tools:${tool.label}"></span>
+    <span if.bind="!tool.label" class="q-text-small q-text--light" t="tools:${tool.name}"></span>
   </a>
 </template>

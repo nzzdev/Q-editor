@@ -1,4 +1,5 @@
 import { inject } from 'aurelia-framework';
+import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
 import { I18N } from 'aurelia-i18n';
 
@@ -12,7 +13,6 @@ import MessageService from 'resources/MessageService.js';
 import ItemStore from 'resources/ItemStore.js';
 import generateFromSchema from 'helpers/generateFromSchema.js';
 
-
 function getSchemaForSchemaEditor(schema) {
   if (schema.properties.hasOwnProperty('options')) {
     let newSchema = JSON.parse(JSON.stringify(schema));
@@ -23,14 +23,36 @@ function getSchemaForSchemaEditor(schema) {
   return schema;
 }
 
-@inject(ItemStore, MessageService, DialogService, I18N)
+function getTranslatedSchema(schema, toolName, i18n) {
+  schema = JSON.parse(JSON.stringify(schema));
+  if (schema.title) {
+    schema.title = i18n.tr(`${toolName}:${schema.title}`);
+  }
+  if (schema.hasOwnProperty('items')) {
+    if (schema.items.hasOwnProperty('title')) {
+      schema.items.title = i18n.tr(`${toolName}:${schema.title}`);
+    }
+    if (schema.items.hasOwnProperty('oneOf')) {
+      schema.items.oneOf = schema.items.oneOf.map(oneOfSchema => getTranslatedSchema(oneOfSchema));
+    }
+  }
+  if (schema.hasOwnProperty('properties')) {
+    Object.keys(schema.properties).forEach(propertyName => {
+      schema.properties[propertyName] = getTranslatedSchema(schema.properties[propertyName], toolName, i18n);
+    });
+  }
+  return schema;
+}
+
+@inject(ItemStore, MessageService, DialogService, I18N, EventAggregator)
 export class Editor {
 
-  constructor(itemStore, messageService, dialogService, i18n) {
+  constructor(itemStore, messageService, dialogService, i18n, ea) {
     this.itemStore = itemStore;
     this.messageService = messageService;
     this.dialogService = dialogService;
     this.i18n = i18n;
+    this.ea = ea;
   }
 
   activate(routeParams) {
@@ -49,15 +71,23 @@ export class Editor {
         if (response.ok) {
           return response.json();
         }
-
-        return Promise.reject();
+        throw response;
       })
       .then(schema => {
         this.fullSchema = schema;
-        this.schema = getSchemaForSchemaEditor(schema);
-        if (schema.properties.hasOwnProperty('options')) {
-          this.optionsSchema = schema.properties.options;
+        const schemaForEditor = getSchemaForSchemaEditor(this.fullSchema);
+        this.schema = getTranslatedSchema(schemaForEditor, routeParams.tool, this.i18n);
+        if (this.fullSchema.properties.hasOwnProperty('options')) {
+          this.optionsSchema = getTranslatedSchema(this.fullSchema.properties.options, routeParams.tool, this.i18n);
         }
+
+        // whenever there is a language change, we calculate the schema and translate all title properties
+        this.ea.subscribe('i18n:locale:changed', () => {
+          this.schema = getTranslatedSchema(getSchemaForSchemaEditor(this.fullSchema), routeParams.tool, this.i18n);
+          if (this.fullSchema.properties.hasOwnProperty('options')) {
+            this.optionsSchema = getTranslatedSchema(this.fullSchema.properties.options, routeParams.tool, this.i18n);
+          }
+        });
       })
       .then(() => {
         if (routeParams.hasOwnProperty('id') && routeParams.id !== undefined) {
