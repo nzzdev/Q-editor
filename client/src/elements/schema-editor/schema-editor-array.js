@@ -1,6 +1,9 @@
-import { bindable, computedFrom } from 'aurelia-framework';
+import { bindable, computedFrom, LogManager } from 'aurelia-framework';
+const log = LogManager.getLogger('Q');
+
 import Ajv from 'ajv';
 import generateFromSchema from 'helpers/generateFromSchema.js';
+
 
 const ajv = new Ajv();
 
@@ -92,6 +95,9 @@ export class SchemaEditorArray {
         if (validate(data)) {
           return schema;
         }
+        log.info('schema-editor-array: no schema match for data');
+        log.info('schema-editor-array data:', JSON.stringify(data));
+        log.info('schema-editor-array schema:', JSON.stringify(schema));
       }
       return null;
     }

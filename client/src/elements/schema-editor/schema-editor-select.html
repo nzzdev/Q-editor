@@ -1,7 +1,10 @@
 <template>
   <label>
     ${schema["title"]}
-    <select value.bind="data" change.delegate="change()">
+    <select if.bind="!options.forceNumber" value.bind="data" change.delegate="change()">
+      <option repeat.for="option of schema.enum" value.bind="option">${optionLabels[$index]}</option>
+    </select>
+    <select if.bind="options.forceNumber" value.bind="data | forceNumber" change.delegate="change()">
       <option repeat.for="option of schema.enum" value.bind="option">${optionLabels[$index]}</option>
     </select>
   </label>
