@@ -109,7 +109,7 @@ export default class ItemStore {
     return this.items[id];
   }
 
-  getSearchRequestBody(searchString, limit, onlyTools) {
+  async getSearchRequestBody(searchString, limit, onlyTools) {
     let queries = [];
     for (let filter of this.filters) {
       if (filter.name === 'tool' && filter.selected !== 'all') {
@@ -118,11 +118,12 @@ export default class ItemStore {
         // we do have a specific tool filter, so we do not want to have the onlyTools processed
         onlyTools = null;
       }
+      await this.user.loaded;
       if (filter.name === 'createdBy' && filter.selected === 'byMe') {
-        queries.push(`createdBy:"${this.user.name}"`);
+        queries.push(`createdBy:"${this.user.data.username}"`);
       }
       if (filter.name === 'department' && filter.selected === 'myDepartment') {
-        queries.push(`department:"${this.user.department}"`);
+        queries.push(`department:"${this.user.data.department}"`);
       }
       if (filter.name === 'active' && filter.selected !== 'all') {
         queries.push(`active:${filter.selected === 'onlyActive' ? 'true' : 'false'}`);
@@ -157,8 +158,8 @@ export default class ItemStore {
     return body;
   }
 
-  getItems(searchString = undefined, limit, onlyTools = undefined, bookmark = undefined) {
-    let searchRequestBody = this.getSearchRequestBody(searchString, limit, onlyTools);
+  async getItems(searchString = undefined, limit, onlyTools = undefined, bookmark = undefined) {
+    let searchRequestBody = await this.getSearchRequestBody(searchString, limit, onlyTools);
     if (bookmark) {
       searchRequestBody.bookmark = bookmark;
     }
