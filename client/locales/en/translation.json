@@ -34,7 +34,8 @@
     "previewSizeLabel": "Size",
     "arrayEntryAdd": "add {{ arrayEntryLabel }}",
     "activatingEditorTakesTooLong": "It takes too long to load the editor, something is wrong.",
-    "failedToSave": "Failed to save: {{reason}}."
+    "failedToSave": "Failed to save: {{reason}}.",
+    "failedToLoadEditorPart": "failed to load the editor for this element"
   },
   "item": {
     "activate": "activate",

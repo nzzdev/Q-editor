@@ -1,0 +1,19 @@
+schema-editor-geojson-point .lat-lng-input {
+  display: flex;
+}
+
+schema-editor-geojson-point .lat-lng-input label {
+  flex-grow: 1;
+}
+
+schema-editor-geojson-point .leaflet-pelias-input {
+  padding: 0 0 0 26px;
+}
+
+schema-editor-geojson-point .leaflet-pelias-expanded .leaflet-pelias-input {
+  padding-right: 30px; /* Space for close button */
+
+  /* The properties below should be tweaked if height of .leaflet-pelias-expanded is changed */
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

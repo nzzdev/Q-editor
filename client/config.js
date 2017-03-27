@@ -7,6 +7,7 @@ System.config({
     "npm:*": "jspm_packages/npm/*"
   },
   map: {
+    "ajv": "npm:ajv@4.11.5",
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.1",
     "aurelia-binding": "npm:aurelia-binding@1.2.0",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.1",
@@ -53,11 +54,32 @@ System.config({
     "github:jspm/nodelibs-process@0.1.2": {
       "process": "npm:process@0.11.9"
     },
+    "github:jspm/nodelibs-punycode@0.1.0": {
+      "punycode": "npm:punycode@1.3.2"
+    },
+    "github:jspm/nodelibs-querystring@0.1.0": {
+      "querystring": "npm:querystring@0.2.0"
+    },
+    "github:jspm/nodelibs-url@0.1.0": {
+      "url": "npm:url@0.10.3"
+    },
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
     },
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
+    },
+    "npm:ajv@4.11.5": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "co": "npm:co@4.6.0",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "json-stable-stringify": "npm:json-stable-stringify@1.0.1",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "punycode": "github:jspm/nodelibs-punycode@0.1.0",
+      "querystring": "github:jspm/nodelibs-querystring@0.1.0",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2",
+      "url": "github:jspm/nodelibs-url@0.1.0"
     },
     "npm:assert@1.4.1": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
@@ -240,6 +262,9 @@ System.config({
     "npm:isarray@1.0.0": {
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
+    "npm:json-stable-stringify@1.0.1": {
+      "jsonify": "npm:jsonify@0.0.0"
+    },
     "npm:leaflet-geocoder-mapzen@1.8.0": {
       "leaflet": "npm:leaflet@1.0.3",
       "path": "github:jspm/nodelibs-path@0.1.0",
@@ -252,6 +277,15 @@ System.config({
       "assert": "github:jspm/nodelibs-assert@0.1.0",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "vm": "github:jspm/nodelibs-vm@0.1.0"
+    },
+    "npm:punycode@1.3.2": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:url@0.10.3": {
+      "assert": "github:jspm/nodelibs-assert@0.1.0",
+      "punycode": "npm:punycode@1.3.2",
+      "querystring": "npm:querystring@0.2.0",
+      "util": "github:jspm/nodelibs-util@0.1.0"
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",

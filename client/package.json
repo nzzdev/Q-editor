@@ -39,6 +39,7 @@
   },
   "jspm": {
     "dependencies": {
+      "ajv": "npm:ajv@^4.11.5",
       "aurelia-animator-css": "npm:aurelia-animator-css@^1.0.0",
       "aurelia-binding": "npm:aurelia-binding@^1.1.1",
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0",

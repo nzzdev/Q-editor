@@ -1,5 +1,11 @@
-import { bindable, computedFrom } from 'aurelia-framework';
+import { bindable, computedFrom, LogManager } from 'aurelia-framework';
+const log = LogManager.getLogger('Q');
+
+import Ajv from 'ajv';
 import generateFromSchema from 'helpers/generateFromSchema.js';
+
+
+const ajv = new Ajv();
 
 export class SchemaEditorArray {
 
@@ -13,6 +19,19 @@ export class SchemaEditorArray {
 
   collapsedStates = {};
 
+  constructor() {
+    this.handleChange = () => {
+      this.calculateEntryLabels();
+      if (this.change) {
+        this.change();
+      }
+    };
+  }
+
+  dataChanged() {
+    this.calculateEntryLabels();
+  }
+
   expand(index) {
     this.collapsedStates[index] = 'expanded';
   }
@@ -23,6 +42,7 @@ export class SchemaEditorArray {
 
   schemaChanged() {
     this.applyOptions();
+    this.calculateEntryLabels();
   }
 
   applyOptions() {
@@ -35,7 +55,7 @@ export class SchemaEditorArray {
     let entry = generateFromSchema(schema);
     data.push(entry);
     this.expand(data.indexOf(entry));
-
+    this.calculateEntryLabels();
     if (this.change) {
       this.change();
     }
@@ -43,6 +63,7 @@ export class SchemaEditorArray {
 
   moveElementUp(data, index) {
     data.splice(index - 1, 0, data.splice(index, 1)[0]);
+    this.calculateEntryLabels();
     if (this.change) {
       this.change();
     }
@@ -50,6 +71,7 @@ export class SchemaEditorArray {
 
   moveElementDown(data, index) {
     data.splice(index + 1, 0, data.splice(index, 1)[0]);
+    this.calculateEntryLabels();
     if (this.change) {
       this.change();
     }
@@ -57,23 +79,71 @@ export class SchemaEditorArray {
 
   deleteElement(data, index) {
     data.splice(index, 1);
+    this.calculateEntryLabels();
     if (this.change) {
       this.change();
     }
   }
 
-  @computedFrom('schema')
-  get labels() {
-    let arrayEntryLabel = '';
-    if (this.schema && this.schema.items && this.schema.items.title) {
-      arrayEntryLabel = this.schema.items.title;
-    } else if (this.schema && this.schema.title) {
-      arrayEntryLabel = this.schema.title;
+  getSchemaForArrayEntry(data) {
+    if (this.schema.items.type) {
+      return this.schema.items;
     }
-    let labels = {
-      arrayEntryLabel: arrayEntryLabel
-    };
-    return labels;
+    if (this.schema.items.oneOf) {
+      for (const schema of this.schema.items.oneOf) {
+        const validate = ajv.compile(schema);
+        if (validate(data)) {
+          return schema;
+        }
+        log.info('schema-editor-array: no schema match for data');
+        log.info('schema-editor-array data:', JSON.stringify(data));
+        log.info('schema-editor-array schema:', JSON.stringify(schema));
+      }
+      return null;
+    }
+  }
+
+  calculateEntryLabels() {
+    if (!this.data || !this.options) {
+      return;
+    }
+    this.entryLabels = this.data
+      .map(entry => {
+        try {
+          if (this.options.expandable.itemLabelProperty) {
+            return this.options.expandable.itemLabelProperty.split('.').reduce((o, i) => o[i], entry);
+          }
+        } catch (e) {
+          return undefined;
+        }
+      });
+  }
+
+  @computedFrom('schema')
+  get arrayEntryOptions() {
+    let arrayEntryOptions = [];
+
+    // if we have a type in the schema in items, we use this as a schema directly
+    if (this.schema.items && this.schema.items.type) {
+      let arrayEntryLabel = '';
+      if (this.schema.items.title) {
+        arrayEntryLabel = this.schema.items.title;
+      } else if (this.schema.title) {
+        arrayEntryLabel = this.schema.title;
+      }
+      arrayEntryOptions.push({
+        schema: this.schema.items,
+        arrayEntryLabel: arrayEntryLabel
+      });
+    } else if (this.schema.items && this.schema.items.oneOf) {
+      for (let schema of this.schema.items.oneOf) {
+        arrayEntryOptions.push({
+          schema: schema,
+          arrayEntryLabel: schema.title
+        });
+      }
+    }
+    return arrayEntryOptions;
   }
 
 }

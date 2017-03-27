@@ -1,7 +1,7 @@
 # Use latest version of Node as the base image
 FROM node:7.6.0
 
-# Set work directory for run/cmd 
+# Set work directory for run/cmd
 WORKDIR /app
 
 # Copy everything else to work directory
@@ -21,7 +21,7 @@ COPY ./client/locales /app/client/locales
 COPY ./client/export /app/client/export
 
 # Copy the jspm_packages as there are some modules that are not loaded from a bundle
-COPY ./client/jspm_packages /app/client/jspm_packages
+COPY ./client/jspm_packages /app/client/export/jspm_packages
 
 # Run node app with env variable
 CMD npm run start

@@ -6,7 +6,18 @@
       schema.bind="schema"
       data.two-way="data"
       change.bind="change"
-      required.bind="required"></schema-editor-string>
+      required.bind="required"
+      options.bind="getOptions(schema)"></schema-editor-string>
+  </div>
+
+  <div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
+    <require from="./schema-editor-textarea.html"></require>
+    <schema-editor-textarea
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"
+      options.bind="getOptions(schema)"></schema-editor-textarea>
   </div>
 
   <div if.bind="getType(schema) === 'boolean'" class="schema-editor-block">
@@ -14,7 +25,8 @@
     <schema-editor-boolean
       schema.bind="schema"
       data.two-way="data"
-      change.bind="change"></schema-editor-boolean>
+      change.bind="change"
+      options.bind="getOptions(schema)"></schema-editor-boolean>
   </div>
 
   <div if.bind="getType(schema) === 'url'" class="schema-editor-block">
@@ -23,7 +35,8 @@
       schema.bind="schema"
       data.two-way="data"
       change.bind="change"
-      required.bind="required"></schema-editor-url>
+      required.bind="required"
+      options.bind="getOptions(schema)"></schema-editor-url>
   </div>
 
   <div if.bind="getType(schema) === 'link'" class="schema-editor-block">
@@ -32,7 +45,8 @@
       schema.bind="schema"
       data.two-way="data"
       change.bind="change"
-      required.bind="required"></schema-editor-link>
+      required.bind="required"
+      options.bind="getOptions(schema)"></schema-editor-link>
   </div>
 
   <div if.bind="getType(schema) === 'number'" class="schema-editor-block">
@@ -41,7 +55,8 @@
       schema.bind="schema"
       data.two-way="data"
       change.bind="change"
-      required.bind="required"></schema-editor-number>
+      required.bind="required"
+      options.bind="getOptions(schema)"></schema-editor-number>
   </div>
 
   <div if.bind="getType(schema) === 'object'" class="schema-editor-block">
@@ -49,7 +64,8 @@
     <schema-editor-object
       schema.bind="schema"
       data.two-way="data"
-      change.bind="change"></schema-editor-object>
+      change.bind="change"
+      options.bind="getOptions(schema)"></schema-editor-object>
   </div>
 
   <div if.bind="getType(schema) === 'array'" class="schema-editor-block">
@@ -57,7 +73,8 @@
     <schema-editor-array
       schema.bind="schema"
       data.two-way="data"
-      change.bind="change"></schema-editor-array>
+      change.bind="change"
+      options.bind="getOptions(schema)"></schema-editor-array>
   </div>
 
   <div if.bind="getType(schema) === 'select'" class="schema-editor-block">
@@ -65,7 +82,8 @@
     <schema-editor-select
       schema.bind="schema"
       data.two-way="data"
-      change.bind="change"></schema-editor-select>
+      change.bind="change"
+      options.bind="getOptions(schema)"></schema-editor-select>
   </div>
 
   <div if.bind="getType(schema) === 'latLng'" class="schema-editor-block">
@@ -74,7 +92,8 @@
       schema.bind="schema"
       data.two-way="data"
       change.bind="change"
-      required.bind="required"></schema-editor-lat-lng>
+      required.bind="required"
+      options.bind="getOptions(schema)"></schema-editor-lat-lng>
   </div>
 
   <div if.bind="getType(schema) === 'base64image'" class="schema-editor-block">
@@ -83,7 +102,28 @@
       schema.bind="schema"
       data.two-way="data"
       change.bind="change"
-      required.bind="required"></schema-editor-base64image>
+      required.bind="required"
+      options.bind="getOptions(schema)"></schema-editor-base64image>
+  </div>
+
+  <div if.bind="getType(schema) === 'geojsonPoint'" class="schema-editor-block">
+    <require from="./schema-editor-geojson-point"></require>
+    <schema-editor-geojson-point
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"
+      options.bind="getOptions(schema)"></schema-editor-geojson-point>
+  </div>
+
+  <div if.bind="getType(schema) === 'json'" class="schema-editor-block">
+    <require from="./schema-editor-json"></require>
+    <schema-editor-json
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"
+      options.bind="getOptions(schema)"></schema-editor-json>
   </div>
 
 </template>

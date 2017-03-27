@@ -77,7 +77,7 @@ export class PreviewContainer {
     // load the scripts one after the other
     if (Array.isArray(renderingInfo.scripts)) {
       renderingInfo.scripts = renderingInfo.scripts
-        .filter(script => script.name !== 'system.js') // do not laod system.js if the tool wants it, it's already here
+        .filter(script => script.loadInEditorPreview !== false)
         .map(script => {
           if (script.path) {
             script.url = `${QServerBaseUrl}${script.path}`;

@@ -34,7 +34,8 @@
     "previewSizeLabel": "Angezeigte Grösse",
     "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",
     "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
-    "failedToSave": "Speichern ist fehlgeschlagen: {{reason}}."
+    "failedToSave": "Speichern ist fehlgeschlagen: {{reason}}.",
+    "failedToLoadEditorPart": "Der Editor für dieses Element konnte nicht geladen werden"
   },
   "item": {
     "activate": "aktivieren",

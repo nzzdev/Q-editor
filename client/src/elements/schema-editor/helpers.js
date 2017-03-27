@@ -1,5 +1,6 @@
 export function getType(schema) {
   let type;
+
   if (schema && schema.hasOwnProperty('type')) {
     type = schema.type;
   }
@@ -11,5 +12,27 @@ export function getType(schema) {
     type = 'select';
   }
 
+  if (type === 'number' && schema.enum) {
+    type = 'select';
+  }
+
   return type;
+}
+
+export function getOptions(schema) {
+  let type;
+  let options = {};
+
+  if (schema && schema.hasOwnProperty('type')) {
+    type = schema.type;
+  }
+  if (schema && schema.hasOwnProperty('Q:type')) {
+    type = schema['Q:type'];
+  }
+
+  if (type === 'number' && schema.enum) {
+    options.forceNumber = true;
+  }
+
+  return options;
 }
