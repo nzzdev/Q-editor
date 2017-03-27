@@ -30,7 +30,7 @@ function getTranslatedSchema(schema, toolName, i18n) {
   }
   if (schema.hasOwnProperty('items')) {
     if (schema.items.hasOwnProperty('oneOf')) {
-      schema.items.oneOf = schema.items.oneOf.map(oneOfSchema => getTranslatedSchema(oneOfSchema));
+      schema.items.oneOf = schema.items.oneOf.map(oneOfSchema => getTranslatedSchema(oneOfSchema, toolName, i18n));
     } else {
       schema.items = getTranslatedSchema(schema.items, toolName, i18n);
     }
@@ -51,12 +51,12 @@ function getTranslatedSchema(schema, toolName, i18n) {
 @inject(ItemStore, MessageService, DialogService, I18N, EventAggregator)
 export class Editor {
 
-  constructor(itemStore, messageService, dialogService, i18n, ea) {
+  constructor(itemStore, messageService, dialogService, i18n, eventAggregator) {
     this.itemStore = itemStore;
     this.messageService = messageService;
     this.dialogService = dialogService;
     this.i18n = i18n;
-    this.ea = ea;
+    this.eventAggregator = eventAggregator;
   }
 
   activate(routeParams) {
@@ -79,18 +79,11 @@ export class Editor {
       })
       .then(schema => {
         this.fullSchema = schema;
-        const schemaForEditor = getSchemaForSchemaEditor(this.fullSchema);
-        this.schema = getTranslatedSchema(schemaForEditor, routeParams.tool, this.i18n);
-        if (this.fullSchema.properties.hasOwnProperty('options')) {
-          this.optionsSchema = getTranslatedSchema(this.fullSchema.properties.options, routeParams.tool, this.i18n);
-        }
+        this.setTranslatedEditorAndOptionsSchema(this.fullSchema, routeParams.tool);
 
         // whenever there is a language change, we calculate the schema and translate all title properties
-        this.ea.subscribe('i18n:locale:changed', () => {
-          this.schema = getTranslatedSchema(getSchemaForSchemaEditor(this.fullSchema), routeParams.tool, this.i18n);
-          if (this.fullSchema.properties.hasOwnProperty('options')) {
-            this.optionsSchema = getTranslatedSchema(this.fullSchema.properties.options, routeParams.tool, this.i18n);
-          }
+        this.eventAggregator.subscribe('i18n:locale:changed', () => {
+          this.setTranslatedEditorAndOptionsSchema(this.fullSchema, routeParams.tool);
         });
       })
       .then(() => {
@@ -114,6 +107,14 @@ export class Editor {
       .then(() => {
         clearTimeout(showMessageTimeout);
       });
+  }
+
+  setTranslatedEditorAndOptionsSchema(fullSchema, toolName) {
+    const schemaForEditor = getSchemaForSchemaEditor(fullSchema);
+    this.schema = getTranslatedSchema(schemaForEditor, toolName, this.i18n);
+    if (fullSchema.properties.hasOwnProperty('options')) {
+      this.optionsSchema = getTranslatedSchema(fullSchema.properties.options, toolName, this.i18n);
+    }
   }
 
   attached() {
