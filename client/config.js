@@ -6,7 +6,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-
   map: {
     "ajv": "npm:ajv@4.11.5",
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.1",

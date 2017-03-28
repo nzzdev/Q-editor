@@ -18,21 +18,3 @@ export function getType(schema) {
 
   return type;
 }
-
-export function getOptions(schema) {
-  let type;
-  let options = {};
-
-  if (schema && schema.hasOwnProperty('type')) {
-    type = schema.type;
-  }
-  if (schema && schema.hasOwnProperty('Q:type')) {
-    type = schema['Q:type'];
-  }
-
-  if (type === 'number' && schema.enum) {
-    options.forceNumber = true;
-  }
-
-  return options;
-}
