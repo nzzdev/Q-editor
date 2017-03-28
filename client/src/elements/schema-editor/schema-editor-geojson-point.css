@@ -1,3 +1,7 @@
+schema-editor-geojson-point {
+  display: block;
+}
+
 schema-editor-geojson-point .lat-lng-input {
   display: flex;
 }
