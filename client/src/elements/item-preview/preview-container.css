@@ -24,7 +24,6 @@ preview-container::before {
   top: -9px;
 }
 
-
 preview-container::after {
   background-image: url('data:image/svg+xml;utf-8,<svg width="14" height="9" viewBox="0 0 14 9" xmlns="http://www.w3.org/2000/svg"><path fill="#adadad" d="M14 0v2L7 9 0 2V0l7 7z"/><path fill="#f6f6f6" d="M0 0h14L7 7z"/></svg>');
   bottom: -9px;
