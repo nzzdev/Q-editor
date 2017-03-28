@@ -25,7 +25,7 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: 'itemsFilter.allGraphics'
+            label_i18n_key: 'itemsFilter.allGraphics'
           }
         ],
         selected: 'all'
@@ -35,11 +35,11 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: 'itemsFilter.byAll'
+            label_i18n_key: 'itemsFilter.byAll'
           },
           {
             name: 'byMe',
-            label: 'itemsFilter.byMe'
+            label_i18n_key: 'itemsFilter.byMe'
           }
         ],
         selected: 'all'
@@ -49,11 +49,11 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: 'itemsFilter.allDepartments'
+            label_i18n_key: 'itemsFilter.allDepartments'
           },
           {
             name: 'myDepartment',
-            label: 'itemsFilter.myDepartment'
+            label_i18n_key: 'itemsFilter.myDepartment'
           }
         ],
         selected: 'all'
@@ -63,15 +63,15 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: 'itemsFilter.allStates'
+            label_i18n_key: 'itemsFilter.allStates'
           },
           {
             name: 'onlyActive',
-            label: 'itemsFilter.onlyActive'
+            label_i18n_key: 'itemsFilter.onlyActive'
           },
           {
             name: 'onlyInactive',
-            label: 'itemsFilter.onlyInactive'
+            label_i18n_key: 'itemsFilter.onlyInactive'
           }
         ],
         selected: 'all'
@@ -80,10 +80,7 @@ export default class ItemStore {
 
     let tools = await this.toolsInfo.getAvailableTools();
     tools.map(tool => {
-      this.filters[0].options.push({
-        name: tool.name,
-        label: `$t(general.only) ${tool.label}`
-      });
+      this.filters[0].options.push(tool);
     });
   }
 
