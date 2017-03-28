@@ -1,4 +1,5 @@
-import { bindable, inject, Loader } from 'aurelia-framework';
+import { bindable, inject, Loader, LogManager } from 'aurelia-framework';
+const log = LogManager.getLogger('Q');
 
 import qEnv from 'resources/qEnv';
 import QConfig from 'resources/QConfig';
@@ -27,6 +28,8 @@ export class SchemaEditorLatLng {
   }
 
   async attached() {
+    log.info('DEPRECATION NOTICE: schema-editor-lat-lng will be removed in Q editor 2.0');
+
     if (!window.Leaflet) {
       window.Leaflet = window.L = await this.loader.loadModule('leaflet');
       this.loader.loadModule('npm:leaflet@1.0.3/dist/leaflet.css!');
