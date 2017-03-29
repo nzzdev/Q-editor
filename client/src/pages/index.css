@@ -7,17 +7,10 @@
   margin-bottom: var(--q-space-base);
 }
 
-.items-filter {
-  display: flex;
-  justify-content: space-between;
+.index items-filter {
   margin-left: calc((var(--q-space-base) / 4) * -1);
   margin-right: calc((var(--q-space-base) / 4) * -1);
-
   margin-bottom: var(--q-space-base);
-}
-
-.items-filter select {
-  margin: 0 calc(var(--q-space-base) / 4);
 }
 
 .search {
