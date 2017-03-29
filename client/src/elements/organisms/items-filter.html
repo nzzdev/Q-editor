@@ -1,0 +1,8 @@
+<template>
+  <require from="./items-filter.css"></require>
+  <div class="items-filter-container q-form">
+    <select value.bind="filter.selected" change.delegate="handleChange()" repeat.for="filter of filters" class="${filter.selected === filter.options[0].name ? 'q-text--ultralight' : ''}">
+      <option repeat.for="option of filter.options" value.bind="option.name">${option.visibleLabel}</option>
+    </select>
+  </div>
+</template>

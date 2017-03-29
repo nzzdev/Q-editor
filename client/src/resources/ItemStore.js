@@ -110,7 +110,7 @@ export default class ItemStore {
     let queries = [];
     for (let filter of this.filters) {
       if (filter.name === 'tool' && filter.selected !== 'all') {
-        queries.push(`tool:"${filter.selected}" OR tool:${filter.selected.replace(new RegExp('_', 'g'), '-')}`);
+        queries.push(`(tool:"${filter.selected}" OR tool:${filter.selected.replace(new RegExp('_', 'g'), '-')})`);
 
         // we do have a specific tool filter, so we do not want to have the onlyTools processed
         onlyTools = null;

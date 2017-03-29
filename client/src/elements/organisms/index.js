@@ -1,6 +1,7 @@
 export function configure(frameworkConfiguration) {
   frameworkConfiguration
-    .globalResources('./item-list')
+    .globalResources('./items-filter')
+    .globalResources('./items-list.html')
     .globalResources('./meta-editor')
     .globalResources('./q-bar')
     .globalResources('./tool-selection');
