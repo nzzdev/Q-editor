@@ -5,14 +5,14 @@
 
   <form class="q-form item-preview__settings">
     <div>
-      <label class="q-text-small q-text--light"><span t="editor.previewTargetLabel"></span>
+      <label class="q-text-small q-text--light"><span t="general.previewTargetLabel"></span>
         <select value.bind="targetProxy.target">
           <option repeat.for="target of availableTargets" model.bind="target">${target.label}</option>
         </select>
       </label>
     </div>
     <div>
-      <label class="q-text-small q-text--light" t="editor.previewSizeLabel"></label>
+      <label class="q-text-small q-text--light" t="general.previewSizeLabel"></label>
       <radio-button-group options.bind="sizeOptions" value.two-way="previewWidthProxy.width"></radio-button-group>
     </div>
   </form>

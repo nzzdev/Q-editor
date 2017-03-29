@@ -22,7 +22,10 @@
     "changesSaved": "Changes saved.",
     "failedToSaveChanges": "Failed to save changes.",
     "loginFailed": "Your username or password is not correct.",
-    "serverConnectionFailed": "Failed to connect to server."
+    "serverConnectionFailed": "Failed to connect to server.",
+    "preview": "Preview",
+    "previewTargetLabel": "Publication",
+    "previewSizeLabel": "Size"
   },
   "statistics": {
     "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",    
@@ -30,8 +33,6 @@
   },
   "editor": {
     "questionLeaveWithUnsavedChanges": "Not all changes are saved, close anyway?",
-    "previewTargetLabel": "Publication",
-    "previewSizeLabel": "Size",
     "arrayEntryAdd": "add {{ arrayEntryLabel }}",
     "activatingEditorTakesTooLong": "It takes too long to load the editor, something is wrong.",
     "failedToSave": "Failed to save: {{reason}}.",

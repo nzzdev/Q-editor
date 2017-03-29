@@ -22,7 +22,10 @@
     "changesSaved": "Die Änderungen wurden gespeichert.",
     "failedToSaveChanges": "Die Änderung konnten nicht gespeichert werden.",
     "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt.",
-    "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen."
+    "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen.",
+    "preview": "Vorschau",
+    "previewTargetLabel": "Publikation",
+    "previewSizeLabel": "Angezeigte Grösse"
   },
   "statistics": {
     "tooFewNewGraphics": "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",    
@@ -30,8 +33,6 @@
   },
   "editor": {
     "questionLeaveWithUnsavedChanges": "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
-    "previewTargetLabel": "Publikation",
-    "previewSizeLabel": "Angezeigte Grösse",
     "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",
     "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
     "failedToSave": "Speichern ist fehlgeschlagen: {{reason}}.",
