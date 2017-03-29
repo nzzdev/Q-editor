@@ -9,6 +9,15 @@
       required.bind="required"></schema-editor-string>
   </div>
 
+  <div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
+    <require from="./schema-editor-textarea.html"></require>
+    <schema-editor-textarea
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-textarea>
+  </div>
+
   <div if.bind="getType(schema) === 'boolean'" class="schema-editor-block">
     <require from="./schema-editor-boolean.html"></require>
     <schema-editor-boolean
@@ -84,6 +93,24 @@
       data.two-way="data"
       change.bind="change"
       required.bind="required"></schema-editor-base64image>
+  </div>
+
+  <div if.bind="getType(schema) === 'geojsonPoint'" class="schema-editor-block">
+    <require from="./schema-editor-geojson-point"></require>
+    <schema-editor-geojson-point
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-geojson-point>
+  </div>
+
+  <div if.bind="getType(schema) === 'json'" class="schema-editor-block">
+    <require from="./schema-editor-json"></require>
+    <schema-editor-json
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-json>
   </div>
 
 </template>

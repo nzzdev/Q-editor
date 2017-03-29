@@ -2,7 +2,7 @@
   <label>
     ${schema["title"]}
     <select value.bind="data" change.delegate="change()">
-      <option repeat.for="option of schema.enum" value.bind="option">${optionLabels[$index]}</option>
+      <option repeat.for="option of schema.enum" model.bind="option">${optionLabels[$index]}</option>
     </select>
   </label>
 </template>

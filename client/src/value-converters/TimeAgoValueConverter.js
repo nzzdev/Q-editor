@@ -29,6 +29,6 @@ export class TimeAgoValueConverter {
       return this.relativeTime.getRelativeTime(date);
     }
 
-    return this.i18n.df().format(date);
+    return this.i18n.df(undefined, this.i18n.getLocale()).format(date);
   }
 }

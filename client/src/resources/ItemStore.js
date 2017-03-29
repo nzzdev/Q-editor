@@ -25,7 +25,7 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: 'itemsFilter.allGraphics'
+            label_i18n_key: 'itemsFilter.allGraphics'
           }
         ],
         selected: 'all'
@@ -35,11 +35,11 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: 'itemsFilter.byAll'
+            label_i18n_key: 'itemsFilter.byAll'
           },
           {
             name: 'byMe',
-            label: 'itemsFilter.byMe'
+            label_i18n_key: 'itemsFilter.byMe'
           }
         ],
         selected: 'all'
@@ -49,11 +49,11 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: 'itemsFilter.allDepartments'
+            label_i18n_key: 'itemsFilter.allDepartments'
           },
           {
             name: 'myDepartment',
-            label: 'itemsFilter.myDepartment'
+            label_i18n_key: 'itemsFilter.myDepartment'
           }
         ],
         selected: 'all'
@@ -63,15 +63,15 @@ export default class ItemStore {
         options: [
           {
             name: 'all',
-            label: 'itemsFilter.allStates'
+            label_i18n_key: 'itemsFilter.allStates'
           },
           {
             name: 'onlyActive',
-            label: 'itemsFilter.onlyActive'
+            label_i18n_key: 'itemsFilter.onlyActive'
           },
           {
             name: 'onlyInactive',
-            label: 'itemsFilter.onlyInactive'
+            label_i18n_key: 'itemsFilter.onlyInactive'
           }
         ],
         selected: 'all'
@@ -80,10 +80,7 @@ export default class ItemStore {
 
     let tools = await this.toolsInfo.getAvailableTools();
     tools.map(tool => {
-      this.filters[0].options.push({
-        name: tool.name,
-        label: `$t(general.only) ${tool.label}`
-      });
+      this.filters[0].options.push(tool);
     });
   }
 
@@ -109,7 +106,7 @@ export default class ItemStore {
     return this.items[id];
   }
 
-  getSearchRequestBody(searchString, limit, onlyTools) {
+  async getSearchRequestBody(searchString, limit, onlyTools) {
     let queries = [];
     for (let filter of this.filters) {
       if (filter.name === 'tool' && filter.selected !== 'all') {
@@ -118,11 +115,12 @@ export default class ItemStore {
         // we do have a specific tool filter, so we do not want to have the onlyTools processed
         onlyTools = null;
       }
+      await this.user.loaded;
       if (filter.name === 'createdBy' && filter.selected === 'byMe') {
-        queries.push(`createdBy:"${this.user.name}"`);
+        queries.push(`createdBy:"${this.user.data.username}"`);
       }
       if (filter.name === 'department' && filter.selected === 'myDepartment') {
-        queries.push(`department:"${this.user.department}"`);
+        queries.push(`department:"${this.user.data.department}"`);
       }
       if (filter.name === 'active' && filter.selected !== 'all') {
         queries.push(`active:${filter.selected === 'onlyActive' ? 'true' : 'false'}`);
@@ -157,8 +155,8 @@ export default class ItemStore {
     return body;
   }
 
-  getItems(searchString = undefined, limit, onlyTools = undefined, bookmark = undefined) {
-    let searchRequestBody = this.getSearchRequestBody(searchString, limit, onlyTools);
+  async getItems(searchString = undefined, limit, onlyTools = undefined, bookmark = undefined) {
+    let searchRequestBody = await this.getSearchRequestBody(searchString, limit, onlyTools);
     if (bookmark) {
       searchRequestBody.bookmark = bookmark;
     }

@@ -21,6 +21,7 @@ schema-editor-array {
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  z-index: 2; /* stay on top of schema-editor-wrapper */
 }
 
 .schema-editor-array__collapsecontrol > span {
@@ -29,6 +30,8 @@ schema-editor-array {
 
 .schema-editor-array__entry > schema-editor-wrapper {
   flex-grow: 1;
+  z-index: 1; /* stay below collapsecontrol */
+  margin-top: calc(var(--q-space-base) / 2);
 }
 
 .schema-editor-array__add-item-button {

@@ -1,0 +1,6 @@
+<template>
+  <label>
+    ${schema["title"]}
+    <textarea ref="inputElement" value.bind="data | json" required.bind="required" change.delegate="validate()" input.delegate="handleChange() & debounce:800"></textarea>
+  </label>
+</template>

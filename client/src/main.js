@@ -16,10 +16,18 @@ import ToolsInfo from 'resources/ToolsInfo.js';
 import qEnv from 'resources/qEnv.js';
 import { registerEastereggs } from 'eastereggs.js';
 
-import Backend from 'i18next-xhr-backend';
+import Backend from 'i18next-fetch-backend';
 
 export async function configure(aurelia) {
   aurelia.use.singleton(QConfig);
+  aurelia.use.singleton(Auth);
+  aurelia.use.singleton(EmbedCodeGenerator);
+  aurelia.use.singleton(Statistics);
+  aurelia.use.singleton(ItemStore);
+  aurelia.use.singleton(MessageService);
+  aurelia.use.singleton(QTargets);
+  aurelia.use.singleton(ToolsInfo);
+  aurelia.use.singleton(User);
 
   aurelia.use
     .standardConfiguration()
@@ -44,16 +52,37 @@ export async function configure(aurelia) {
         // do not care and use the default availableLanguages
       }
 
+      // we need these for the calculation of the path to the locales files
+      const QServerBaseUrl = await qEnv.QServerBaseUrl;
+      const configuredTools = await aurelia.container.get(ToolsInfo).getAvailableTools();
+      const toolNames = configuredTools.map(tool => tool.name);
+
       // adapt options to your needs (see http://i18next.com/docs/options/)
       // make sure to return the promise of the setup method, in order to guarantee proper loading
       return instance.setup({
         backend: {
-          loadPath: './locales/{{lng}}/{{ns}}.json'
+          loadPath: (lngs, namespaces) => {
+            const namespace = namespaces[0];
+            if (namespace === 'tools') {
+              return `${QServerBaseUrl}/editor/locales/{{lng}}/translation.json`;
+            }
+            if (toolNames.indexOf(namespace) >= 0) {
+              return `${QServerBaseUrl}/tools/${namespace}/locales/{{lng}}/translation.json`;
+            }
+            return '/locales/{{lng}}/{{ns}}.json';
+          },
+          init: {
+            mode: 'cors',
+            credentials: 'same-origin',
+            cache: 'default'
+          }
         },
         attributes: ['t', 'i18n'],
         fallbackLng: 'de',
         lng: availableLanguages[0],
         whitelist: availableLanguages,
+        ns: ['translation', 'tools'].concat(toolNames),
+        defaultNS: 'translation',
         load: 'languageOnly',
         debug: false
       });
@@ -70,16 +99,6 @@ export async function configure(aurelia) {
 
   LogManager.addAppender(new ConsoleAppender());
   LogManager.setLevel(logLevel);
-
-  aurelia.use.singleton(Auth);
-  aurelia.use.singleton(EmbedCodeGenerator);
-  aurelia.use.singleton(Statistics);
-  aurelia.use.singleton(ToolsInfo);
-  aurelia.use.singleton(ItemStore);
-  aurelia.use.singleton(MessageService);
-  aurelia.use.singleton(QTargets);
-
-  aurelia.use.singleton(User);
 
   aurelia.start().then(a => a.setRoot());
 

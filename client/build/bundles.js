@@ -31,6 +31,7 @@ const aureliaBundle = [
   "aurelia-bootstrapper",
   "aurelia-dependency-injection",
   "aurelia-dialog",
+  "aurelia-event-aggregator",
   "aurelia-fetch-client",
   "aurelia-framework",
   "aurelia-history-browser",
@@ -49,8 +50,7 @@ const aureliaBundle = [
   "aurelia-templating-binding",
   "aurelia-templating-resources",
   "aurelia-templating-router",
-  "i18next-xhr-backend",
-  "fetch",
+  "i18next-fetch-backend"
 ]
 
 module.exports = {
