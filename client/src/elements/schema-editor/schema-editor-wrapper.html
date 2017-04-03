@@ -61,6 +61,15 @@
       required.bind="required"></schema-editor-number>
   </div>
 
+  <div if.bind="getType(schema) === 'date'" class="schema-editor-block">
+    <require from="./schema-editor-date.html"></require>
+    <schema-editor-date
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-color>
+  </div>
+
   <div if.bind="getType(schema) === 'color'" class="schema-editor-block">
     <require from="./schema-editor-color"></require>
     <schema-editor-color
