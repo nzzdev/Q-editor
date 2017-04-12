@@ -1,0 +1,113 @@
+.cms-component-search {
+  max-width: 700px;
+}
+
+.cms-component-item-container {
+  max-width: 600px;
+}
+
+.cms-component-item__controls button-secondary {
+  margin-bottom: 5px;
+}
+
+.cms-component-item__controls a:hover {
+  text-decoration: none;
+}
+
+.search {
+  max-width: 400px;
+  margin: calc(var(--q-space-base) * 3) auto;
+
+  display: flex;
+  align-items: center;
+}
+
+.search svg {
+  order: 1;
+
+  fill: var(--q-color-gray-4);
+  width: 34px;
+  position: relative;
+  left: var(--q-space-base);
+}
+
+.search input {
+  flex-grow: 1;
+  order: 2;
+
+  background: none;
+
+  border: none;
+  border-bottom: 1px solid var(--q-color-gray-4);
+  padding-top: calc(var(--q-space-base) / 2);
+  padding-right: calc(var(--q-space-base) / 2);
+  padding-bottom: calc(var(--q-space-base) / 2);
+  padding-left: calc(var(--q-space-base) * 2);
+
+  font-family: Roboto, sans-serif;
+  font-size: var(--q-text-size);
+  caret-color: var(--q-color-primary-5);
+}
+
+.search input::placeholder {
+  color: var(--q-text-ultralight-color);
+}
+
+.search input:focus {
+  border-bottom-color: var(--q-color-gray-5);
+  background: none;
+  outline: none;
+}
+
+.search input:focus + svg {
+  fill: var(--q-color-gray-5);
+}
+
+.item-list-entry {
+  background: var(--q-color-primary-2);
+
+  padding: calc(var(--q-space-base) / 4);
+  margin-bottom: calc(var(--q-space-base) / 4);
+
+  display: flex;
+  align-items: center;
+
+  transition: transform 0.2s ease-in;
+}
+
+.item-list-entry:hover {
+  cursor: pointer;
+}
+
+.item-list-entry.inactive {
+  background: var(--q-color-primary-1);
+  border: 1px dashed var(--q-color-primary-2);
+}
+
+.item-list-entry .tool-icon {
+  width: 26px;
+  height: 26px;
+  color: var(--q-color-gray-6);
+}
+
+.item-list-entry .size-small {
+  width: 24px;
+  height: 24px;
+}
+
+.item-list-entry span {
+  width: calc((100% - (2 * 26px)) / 3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-list-entry .item-title {
+  width: 60%;
+  padding-left: 1em;
+}
+
+.cms-component-search__load-more-button {
+  max-width: 400px;
+  margin: calc(var(--q-space-base) * 2) auto;
+}
