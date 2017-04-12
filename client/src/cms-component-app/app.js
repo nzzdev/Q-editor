@@ -29,8 +29,8 @@ export class App {
       this.target = targets.filter(target => {
         return target.key === itemConfigObject.target;
       })[0];
-    } catch(e) {
-      window.parent.postMessage('sent target is unknown', this.cmsOrigin)
+    } catch (e) {
+      window.parent.postMessage('sent target is unknown', this.cmsOrigin);
     }
 
     if (itemConfigObject.id) {
@@ -58,7 +58,7 @@ export class App {
       toolRuntimeConfig: {
         displayOptions: {}
       }
-    }
+    };
     window.parent.postMessage(data, this.cmsOrigin);
   }
 
@@ -77,7 +77,7 @@ export class App {
       let itemTool = tools
         .filter(tool => {
           return tool.name === item.getToolName();
-      })[0];
+        })[0];
 
       if (itemTool) {
         item.conf.icon = itemTool.icon;
@@ -115,11 +115,11 @@ export class App {
           return tool.name === item.getToolName();
         })[0];
 
-        if (itemTool) {
-          item.conf.icon = itemTool.icon;
-        }
-          return item;
-      });
+      if (itemTool) {
+        item.conf.icon = itemTool.icon;
+      }
+      return item;
+    });
     this.bookmark = result.bookmark;
     this.updateMoreItemsAvailableState(result);
 
