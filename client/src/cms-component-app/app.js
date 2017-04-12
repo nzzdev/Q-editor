@@ -6,7 +6,6 @@ import qEnv from 'resources/qEnv.js';
 @singleton()
 @inject(ItemStore, QTargets)
 export class App {
-
   constructor(itemStore, qTargets) {
     this.itemStore = itemStore;
     this.qTargets = qTargets;
@@ -212,5 +211,4 @@ export class App {
         this.renderingInfo = {};
       });
   }
-
 }
