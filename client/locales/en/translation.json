@@ -28,7 +28,7 @@
     "previewSizeLabel": "Size"
   },
   "statistics": {
-    "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",    
+    "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",
     "enoughNewGraphics": "{{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active."
   },
   "editor": {
@@ -56,5 +56,12 @@
     "allStates": "all states",
     "onlyActive": "active only",
     "onlyInactive": "inactive only"
+  },
+  "cmsComponent": {
+    "insert": "insert",
+    "edit": "edit in Q",
+    "titleLabel": "title Q element: ",
+    "selectGraphic": "please select a Q element from the list",
+    "searchLabel": "Search for a Q element"
   }
 }

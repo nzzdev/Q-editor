@@ -1,21 +1,17 @@
-.cms-component-search {
-  max-width: 700px;
-}
 
 .cms-component-item-container {
-  max-width: 600px;
+  width: 50%;
+  float: right;
 }
 
-.cms-component-item__controls button-secondary {
-  margin-bottom: 5px;
-}
-
-.cms-component-item__controls a:hover {
-  text-decoration: none;
+.cms-component-search {
+  width: calc(50% - 1px);
+  border-right: 1px solid var(--q-color-gray-4);
+  float: left;
 }
 
 .search {
-  max-width: 400px;
+  max-width: 80%;
   margin: calc(var(--q-space-base) * 3) auto;
 
   display: flex;
@@ -63,20 +59,32 @@
   fill: var(--q-color-gray-5);
 }
 
+.item-list {
+  width: 85%;
+  height: 500px;
+  overflow-y: auto;
+  margin: var(--q-space-base) auto;
+}
+
 .item-list-entry {
   background: var(--q-color-primary-2);
 
   padding: calc(var(--q-space-base) / 4);
-  margin-bottom: calc(var(--q-space-base) / 4);
-
-  display: flex;
-  align-items: center;
+  margin-bottom: calc(var(--q-space-base) / 2);
 
   transition: transform 0.2s ease-in;
 }
 
+.item-list-entry-title {
+  display: flex;
+  align-items: center;
+}
+
 .item-list-entry:hover {
   cursor: pointer;
+  border-color: var(--q-color-gray-4);
+  outline: none;
+  box-shadow: 0px 0px 5px 1px var(--q-color-gray-4);
 }
 
 .item-list-entry.inactive {
@@ -84,10 +92,15 @@
   border: 1px dashed var(--q-color-primary-2);
 }
 
+.item-list-entry.selected {
+  background: var(--q-color-primary-4);
+  color: var(--q-color-white);
+}
+
 .item-list-entry .tool-icon {
   width: 26px;
   height: 26px;
-  color: var(--q-color-gray-6);
+  color: currentColor;
 }
 
 .item-list-entry .size-small {
@@ -95,19 +108,86 @@
   height: 24px;
 }
 
+.item-list-entry > div {
+  margin-bottom: calc(var(--q-space-base) / 4);
+}
+
 .item-list-entry span {
-  width: calc((100% - (2 * 26px)) / 3);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.item-list-entry .item-title {
-  width: 60%;
-  padding-left: 1em;
+.item-list-entry-title span {
+  width: calc(100% - (2 * 26px));
+}
+
+.item-list-entry-info {
+  display: flex;
+}
+
+.item-list-entry-info span {
+  margin-left: 1em;
+}
+
+.item-list-entry-info .item-date {
+  width: 30%;
 }
 
 .cms-component-search__load-more-button {
-  max-width: 400px;
+  max-width: 85%;
   margin: calc(var(--q-space-base) * 2) auto;
+}
+
+.cms-component-item__controls a:hover {
+  text-decoration: none;
+}
+
+.cms-component-item__content,
+.cms-component-item__controls {
+  width: 90%;
+  margin: calc(var(--q-space-base) * 3) auto;
+}
+
+.cms-component-item__content preview-container {
+  height: 370px;
+  --preview-container-height: 370px;
+  --preview-container-overflow-y: hidden;
+  --preview-container-position: relative;
+  /* über margin regeln */
+  --preview-container-top: -32px;
+}
+
+/* gebastel aufräumen! */
+.cms-component-item__content .no-item-selected {
+  font-family: Roboto, sans-serif;
+  font-size: var(--q-text-size);
+  color: var(--q-color-gray-5);
+  text-align: center;
+  width: 160px;
+  position: relative;
+  top: -220px;
+  left: 100px;
+}
+
+.cms-component-item__controls {
+  padding-top: var(--q-space-base);
+  border-top: 1px solid var(--q-color-gray-4);
+  display: flex;
+  justify-content: space-around;
+}
+
+.cms-component-item__controls > div {
+  text-align: center;
+}
+
+.cms-component-item__controls > div button-secondary,
+.cms-component-item__controls > div button-primary,
+.cms-component-item__controls > div span {
+  margin: 0 auto;
+}
+
+.cms-component-item__controls button-primary,
+.cms-component-item__controls button-secondary {
+  width: 48px;
 }

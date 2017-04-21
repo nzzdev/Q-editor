@@ -3,6 +3,10 @@
   <style>
     .container {
       overflow-x: auto;
+      height: var(--preview-container-height, auto);
+      overflow-y: var(--preview-container-overflow-y, auto);
+      position: var(--preview-container-position, static);
+      top: var(--preview-container-top, 0);
     }
   </style>
   <div class="container" css="width: ${width}px; max-width: 100%;">

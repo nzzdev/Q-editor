@@ -1,71 +1,88 @@
 import { inject, singleton } from 'aurelia-framework';
+import { I18N } from 'aurelia-i18n';
 import ItemStore from 'resources/ItemStore.js';
 import QTargets from 'resources/QTargets.js';
 import qEnv from 'resources/qEnv.js';
 
 @singleton()
-@inject(ItemStore, QTargets)
+@inject(ItemStore, QTargets, I18N)
 export class App {
-  constructor(itemStore, qTargets) {
+
+  constructor(itemStore, qTargets, i18n) {
     this.itemStore = itemStore;
     this.qTargets = qTargets;
+    this.i18n = i18n;
     this.showSearch = true;
+    this.previewWidth = 290;
+    // just for testing purposes:
+    this.givenTarget = 'demo1';
   }
 
-  attached() {
-    window.addEventListener('message', this.receiveMessage.bind(this));
+  activate() {
+    const query = decodeURI(window.location.search);
+    const data = JSON.parse(query.substring(6));
+    if (data.id) {
+      this.id = data.id;
+      this.displayOptions = data.toolRuntimeConfig.displayOptions;
+    }
   }
 
-  detached() {
-    window.removeEventListener('message', this.receiveMessage.unbind(this));
+  async attached() {
+    await this.loadTarget();
+    await this.reloadItems();
+    this.loadView();
   }
 
-  async receiveMessage(event) {
-    this.cmsOrigin = event.origin;
-    const itemConfigObject = event.data;
+  change() {
+    this.loadPreview();
+  }
 
+  async loadTarget() {
     try {
       const targets = await this.qTargets.get('availableTargets');
       this.target = targets.filter(target => {
-        return target.key === itemConfigObject.target;
+        return target.key === this.givenTarget;
       })[0];
     } catch (e) {
-      window.parent.postMessage('sent target is unknown', this.cmsOrigin);
+      //
     }
+  }
 
-    if (itemConfigObject.id) {
-      this.showSearch = false;
-      this.id = itemConfigObject.id;
-      this.tool = itemConfigObject.tool;
+  async loadView() {
+    if (this.id) {
+      this.selectedItem = this.items
+        .filter(item => {
+          return item.id === this.id;
+        })[0];
+
       this.loadPreview();
-    } else {
-      this.showSearch = true;
-      this.reloadItems();
+      this.loadDisplayOptions();
     }
+
   }
 
-  unselectItem() {
-    this.showSearch = true;
-    this.item = undefined;
-    this.id = undefined;
-    window.parent.postMessage({}, this.cmsOrigin);
-  }
+  insertItem() {
+    // delete all displayOptions set to false
+    Object.keys(this.displayOptions).forEach(displayOption => {
+      if (!this.displayOptions[displayOption]) {
+        delete this.displayOptions[displayOption];
+      }
+    });
 
-  sendItemToLd() {
     const data = {
-      id: this.id,
-      tool: this.tool,
+      id: this.selectedItem.conf._id,
+      tool: this.selectedItem.conf.tool,
       toolRuntimeConfig: {
-        displayOptions: {}
+        displayOptions: this.displayOptions
       }
     };
-    window.parent.postMessage(data, this.cmsOrigin);
+    window.parent.postMessage(data, 'http://localhost:8080');
   }
 
-  selectForLd(item) {
-    this.id = item.conf._id;
-    this.tool = item.conf.tool;
-    this.sendItemToLd();
+  selectItem(selectedItemId) {
+    this.id = selectedItemId;
+    this.displayOptions = {};
+    this.loadView();
   }
 
   async reloadItems() {
@@ -82,6 +99,7 @@ export class App {
       if (itemTool) {
         item.conf.icon = itemTool.icon;
       }
+
       return item;
     });
 
@@ -94,7 +112,7 @@ export class App {
   async loadItems(searchString, bookmark) {
     try {
       this.itemsLoading = true;
-      let numberOfItemsToLoadPerStep = 5;
+      let numberOfItemsToLoadPerStep = 6;
 
       const result = await this.itemStore.getItems(searchString, numberOfItemsToLoadPerStep, undefined, bookmark);
       this.itemsLoading = false;
@@ -118,6 +136,7 @@ export class App {
       if (itemTool) {
         item.conf.icon = itemTool.icon;
       }
+
       return item;
     });
     this.bookmark = result.bookmark;
@@ -141,26 +160,17 @@ export class App {
     }
   }
 
-  redirectToItemPreview(item) {
-    this.item = item.conf;
-    if (this.item && this.item._id) {
-      this.tool = this.item.tool;
-      this.showSearch = false;
-      this.id = item.conf._id;
-      this.loadPreview();
-    }
-  }
-
   fetchRenderingInfo() {
     const toolRuntimeConfig = {
       size: {
         width: [
           {
-            value: 290,
+            value: this.previewContainer.getBoundingClientRect().width,
             comparison: '='
           }
         ]
-      }
+      },
+      displayOptions: this.displayOptions
     };
 
     return qEnv.QServerBaseUrl
@@ -209,6 +219,44 @@ export class App {
       .catch(errorMessage => {
         this.errorMessage = errorMessage;
         this.renderingInfo = {};
+      });
+  }
+
+  loadDisplayOptions() {
+    qEnv.QServerBaseUrl
+      .then(QServerBaseUrl => {
+        if (this.selectedItem && this.selectedItem.conf.tool) {
+          const tool = this.selectedItem.conf.tool;
+          return fetch(`${QServerBaseUrl}/tools/${tool}/display-options-schema.json`);
+        }
+        throw new Error('no tool defined');
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then(schema => {
+        if (schema.hasOwnProperty('properties')) {
+          // we just accept one object containing simple boolean type properties
+          Object.keys(schema.properties).forEach(propertyName => {
+            // maybe delete all non boolean properties here??
+            let displayOption = schema.properties[propertyName];
+            if (displayOption.title) {
+              schema.properties[propertyName].title = this.i18n.tr(`${this.tool}:${displayOption.title}`);
+            }
+          });
+        }
+        this.optionKeys = Object.keys(schema.properties);
+        this.displayOptionsSchema = schema;
+
+        if (!this.displayOptions) {
+          this.displayOptions = {};
+          this.optionKeys.forEach(optionKey => {
+            this.displayOptions[optionKey] = false;
+          });
+        }
       });
   }
 }
