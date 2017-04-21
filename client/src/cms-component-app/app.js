@@ -58,7 +58,6 @@ export class App {
       this.loadPreview();
       this.loadDisplayOptions();
     }
-
   }
 
   insertItem() {
