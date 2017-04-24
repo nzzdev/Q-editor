@@ -81,7 +81,7 @@ export class App {
         displayOptions: this.displayOptions
       }
     };
-    window.parent.postMessage(data, 'http://localhost:8080');
+    window.parent.postMessage(data, '*');
   }
 
   selectItem(selectedItemId) {
