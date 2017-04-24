@@ -4,6 +4,7 @@
 module.exports = {
   'list': [
     'index.html',
+    'cms-component.html',
     'config.js',
     '../LICENSE',
     'jspm_packages/system.js',
