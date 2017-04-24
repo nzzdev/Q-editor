@@ -81,7 +81,11 @@ export class App {
         displayOptions: this.displayOptions
       }
     };
-    window.parent.postMessage(data, '*');
+    const message = {
+      action: 'update',
+      params: data
+    };
+    window.parent.postMessage(message, '*');
   }
 
   selectItem(selectedItemId) {
