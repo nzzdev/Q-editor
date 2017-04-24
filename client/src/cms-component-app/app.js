@@ -19,8 +19,8 @@ export class App {
   }
 
   activate() {
-    const query = decodeURI(window.location.search);
-    const data = JSON.parse(query.substring(6));
+    const query = /params=(.*)&?/.exec(window.location.search);
+    const data = JSON.parse(decodeURIComponent(query[1]));
     if (data.id) {
       this.id = data.id;
       this.displayOptions = data.toolRuntimeConfig.displayOptions;
