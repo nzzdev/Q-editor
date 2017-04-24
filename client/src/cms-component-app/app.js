@@ -20,10 +20,16 @@ export class App {
 
   activate() {
     const query = /params=(.*)&?/.exec(window.location.search);
-    const data = JSON.parse(decodeURIComponent(query[1]));
-    if (data.id) {
-      this.id = data.id;
-      this.displayOptions = data.toolRuntimeConfig.displayOptions;
+    try {
+      const data = JSON.parse(decodeURIComponent(query[1]));
+      if (data.id) {
+        this.id = data.id;
+      }
+      if (data.toolRuntimeConfig && data.toolRuntimeConfig.hasOwnProperty('displayOptions')) {
+        this.displayOptions = data.toolRuntimeConfig.displayOptions;
+      }
+    } catch (e) {
+      // nevermind an error here, if there is no valid config, we handle it like there is none at all
     }
   }
 
