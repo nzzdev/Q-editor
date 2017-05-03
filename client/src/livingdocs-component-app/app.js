@@ -84,7 +84,6 @@ export class App {
     } else {
       this.selectedItem = {
         id: item.conf._id,
-        tool: item.conf.tool,
         toolRuntimeConfig: {
           displayOptions: {}
         }
@@ -254,13 +253,22 @@ export class App {
   }
 
   loadDisplayOptions() {
+    let tool = '';
+    try {
+      tool = this.items
+      .filter(item => {
+        return item.conf._id === this.selectedItem.id;
+      })
+      .map(selected => {
+        return selected.conf.tool;
+      })[0];
+    } catch (e) {
+      throw new Error('no tool defined');
+    }
+
     qEnv.QServerBaseUrl
       .then(QServerBaseUrl => {
-        if (this.selectedItem && this.selectedItem.tool) {
-          const tool = this.selectedItem.tool;
-          return fetch(`${QServerBaseUrl}/tools/${tool}/display-options-schema.json`);
-        }
-        throw new Error('no tool defined');
+        return fetch(`${QServerBaseUrl}/tools/${tool}/display-options-schema.json`);
       })
       .then(response => {
         if (response.ok) {
@@ -275,7 +283,7 @@ export class App {
             // maybe delete all non boolean properties here??
             let displayOption = schema.properties[propertyName];
             if (displayOption.title) {
-              schema.properties[propertyName].title = this.i18n.tr(`${this.tool}:${displayOption.title}`);
+              schema.properties[propertyName].title = this.i18n.tr(`${tool}:${displayOption.title}`);
             }
           });
         }
@@ -291,6 +299,15 @@ export class App {
           this.optionKeys.forEach(optionKey => {
             this.selectedItem.toolRuntimeConfig.displayOptions[optionKey] = false;
           });
+        }
+      })
+      .catch(err => {
+        if (err.status === 404) {
+          this.selectedItem.toolRuntimeConfig = {
+            displayOptions: {}
+          };
+        } else {
+          throw err;
         }
       });
   }
