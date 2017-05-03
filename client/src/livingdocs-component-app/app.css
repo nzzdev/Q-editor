@@ -1,10 +1,10 @@
 
-.cms-component-item-container {
+.livingdocs-component-item-container {
   width: 50%;
   float: right;
 }
 
-.cms-component-search {
+.livingdocs-component-search {
   width: calc(50% - 1px);
   border-right: 1px solid var(--q-color-gray-4);
   float: left;
@@ -134,32 +134,31 @@
   width: 30%;
 }
 
-.cms-component-search__load-more-button {
+.livingdocs-component-search__load-more-button {
   max-width: 85%;
   margin: calc(var(--q-space-base) * 2) auto;
 }
 
-.cms-component-item__controls a:hover {
+.livingdocs-component-item__controls a:hover {
   text-decoration: none;
 }
 
-.cms-component-item__content,
-.cms-component-item__controls {
+.livingdocs-component-item__content,
+.livingdocs-component-item__controls {
   width: 90%;
   margin: calc(var(--q-space-base) * 3) auto;
 }
 
-.cms-component-item__content preview-container {
+.livingdocs-component-item__content preview-container {
   height: 370px;
   --preview-container-height: 370px;
+  --preview-container-max-height: 100%;
   --preview-container-overflow-y: hidden;
-  --preview-container-position: relative;
-  /* über margin regeln */
-  --preview-container-top: -32px;
+  --preview-container-margin-top: 0px;
 }
 
 /* gebastel aufräumen! */
-.cms-component-item__content .no-item-selected {
+.livingdocs-component-item__content .no-item-selected {
   font-family: Roboto, sans-serif;
   font-size: var(--q-text-size);
   color: var(--q-color-gray-5);
@@ -170,24 +169,24 @@
   left: 100px;
 }
 
-.cms-component-item__controls {
+.livingdocs-component-item__controls {
   padding-top: var(--q-space-base);
   border-top: 1px solid var(--q-color-gray-4);
   display: flex;
   justify-content: space-around;
 }
 
-.cms-component-item__controls > div {
+.livingdocs-component-item__controls > div {
   text-align: center;
 }
 
-.cms-component-item__controls > div button-secondary,
-.cms-component-item__controls > div button-primary,
-.cms-component-item__controls > div span {
+.livingdocs-component-item__controls > div button-secondary,
+.livingdocs-component-item__controls > div button-primary,
+.livingdocs-component-item__controls > div span {
   margin: 0 auto;
 }
 
-.cms-component-item__controls button-primary,
-.cms-component-item__controls button-secondary {
+.livingdocs-component-item__controls button-primary,
+.livingdocs-component-item__controls button-secondary {
   width: 48px;
 }

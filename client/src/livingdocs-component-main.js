@@ -63,5 +63,5 @@ export async function configure(aurelia) {
     })
   ;
 
-  aurelia.start().then(a => a.setRoot('cms-component-app/app'));
+  aurelia.start().then(a => a.setRoot('livingdocs-component-app/app'));
 }

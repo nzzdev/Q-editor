@@ -57,7 +57,7 @@
     "onlyActive": "active only",
     "onlyInactive": "inactive only"
   },
-  "cmsComponent": {
+  "livingdocsComponent": {
     "insert": "insert",
     "edit": "edit in Q",
     "titleLabel": "title Q element: ",
