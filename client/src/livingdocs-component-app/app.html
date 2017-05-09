@@ -16,7 +16,7 @@
       </svg>
     </div>
     <div class="item-list">
-      <div class="item-list-entry ${item.conf.active ? 'active' : 'inactive'} ${item.conf._id === selectedItem.id ? 'selected' : ''}" click.delegate="selectItem(item)" repeat.for="item of items">
+      <div class="item-list-entry ${item.conf.active ? 'active' : 'inactive'} ${item.conf._id === selectedItems[selectedItemIndex].id ? 'selected' : ''}" click.delegate="selectItem(item)" repeat.for="item of items">
         <div class="item-list-entry-title">
           <box-icon if.bind="item.conf.icon" code.bind="item.conf.icon" size="medium" class="tool-icon"></box-icon>
           <span class="q-text item-title">${item.conf.title}</span>
@@ -45,12 +45,12 @@
       <span class="q-text-small q-text--light" if.bind="title">${title}</span>
       <preview-container ref="previewContainer" id="preview-container" width.bind="previewWidth" rendering-info.bind="renderingInfo">
       </preview-container>
-      <div class="no-item-selected" if.bind="!selectedItem" t="livingdocsComponent.selectGraphic"></div>
-      <div if.bind="selectedItem">
+      <div class="no-item-selected" if.bind="selectedItemIndex === undefined" t="livingdocsComponent.selectGraphic"></div>
+      <div if.bind="selectedItemIndex !== undefinded">
         <form class="q-form">
-          <div class="q-form__checkbox" repeat.for="optionKey of optionKeys">
+          <div class="q-form__checkbox" if.bind="displayOptionsSchema.properties" repeat.for="optionKey of displayOptionsSchema.properties | keys">
             <label>
-              <input type="checkbox" checked.bind="selectedItem.toolRuntimeConfig.displayOptions[optionKey]" change.delegate="changeDisplayOptions()">
+              <input type="checkbox" checked.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions[optionKey]" change.delegate="loadPreview()">
               <span>${displayOptionsSchema.properties[optionKey].title}</span>
             </label>
           </div>
@@ -59,7 +59,7 @@
     </div>
     <div class="livingdocs-component-item__controls">
       <div class="item-edit">
-        <a href="#/editor/${tool}/${id}" target="_blank">
+        <a href="#/editor/${tool}/${selectedItems[selectedItemIndex].id}" target="_blank">
           <button-secondary size="big" icon="edit"></button-secondary>
         </a>
         <span class="q-text-small q-text--light" t="livingdocsComponent.edit"></span>
