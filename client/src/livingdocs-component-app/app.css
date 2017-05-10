@@ -2,6 +2,10 @@ html {
   box-sizing: border-box;
 }
 
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
 .livingdocs-component {
   display: flex;
   overflow-y: hidden;
@@ -153,29 +157,36 @@ html {
   margin: var(--q-space-base) auto;
 }
 
-.livingdocs-component-item--controls a:hover {
+.livingdocs-component-item-controls a:hover {
   text-decoration: none;
 }
 
-.livingdocs-component-item--title,
-.livingdocs-component-item--preview,
-.livingdocs-component-item--controls {
+.livingdocs-component-item-title,
+.livingdocs-component-item-preview,
+.livingdocs-component-item-controls {
   width: 90%;
   margin: var(--q-space-base) auto 0 auto;
 }
 
-.livingdocs-component-item--preview {
+.livingdocs-component-item-preview {
   margin-top: 0;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.livingdocs-component-item--preview preview-container {
+.livingdocs-component-item-controls {
+  margin-bottom: var(--q-space-base);
+}
+
+.livingdocs-component-item-preview preview-container {
+  flex-grow: 1;
   --preview-container-overflow-y: hidden;
   --preview-container-margin-top: 0px;
 }
 
 /* gebastel aufräumen! */
-.livingdocs-component-item--preview .no-item-selected {
+.livingdocs-component-item-preview .no-item-selected {
   font-family: Roboto, sans-serif;
   font-size: var(--q-text-size);
   color: var(--q-color-gray-5);
@@ -186,24 +197,24 @@ html {
   left: 100px;
 }
 
-.livingdocs-component-item--controls {
+.livingdocs-component-item-controls {
   padding-top: var(--q-space-base);
   border-top: 1px solid var(--q-color-gray-4);
   display: flex;
   justify-content: space-around;
 }
 
-.livingdocs-component-item--controls > div {
+.livingdocs-component-item-controls > div {
   text-align: center;
 }
 
-.livingdocs-component-item--controls > div button-secondary,
-.livingdocs-component-item--controls > div button-primary,
-.livingdocs-component-item--controls > div span {
+.livingdocs-component-item-controls > div button-secondary,
+.livingdocs-component-item-controls > div button-primary,
+.livingdocs-component-item-controls > div span {
   margin: 0 auto;
 }
 
-.livingdocs-component-item--controls button-primary,
-.livingdocs-component-item--controls button-secondary {
+.livingdocs-component-item-controls button-primary,
+.livingdocs-component-item-controls button-secondary {
   width: 48px;
 }

@@ -41,11 +41,11 @@
       </button-secondary>
     </div>
     <div class="livingdocs-component-item-container">
-      <div class="livingdocs-component-item--title">
+      <div class="livingdocs-component-item-title">
         <span class="q-text-small q-text--light" t="livingdocsComponent.titleLabel" if.bind="title"></span>
         <span class="q-text-small q-text--light" if.bind="title">${title}</span>
       </div>
-      <div class="livingdocs-component-item--preview">
+      <div class="livingdocs-component-item-preview">
         <preview-container ref="previewContainer" id="preview-container" width.bind="previewWidth" rendering-info.bind="renderingInfo">
         </preview-container>
         <div class="no-item-selected" if.bind="selectedItemIndex === undefined" t="livingdocsComponent.selectGraphic"></div>
@@ -60,7 +60,7 @@
           </form>
         </div>
       </div>
-      <div class="livingdocs-component-item--controls">
+      <div class="livingdocs-component-item-controls">
         <div class="item-edit">
           <a href="#/editor/${tool}/${selectedItems[selectedItemIndex].id}" target="_blank">
             <button-secondary size="big" icon="edit"></button-secondary>
