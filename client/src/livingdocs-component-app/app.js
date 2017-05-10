@@ -34,6 +34,7 @@ export class App {
     this.itemStore = itemStore;
     this.qTargets = qTargets;
     this.i18n = i18n;
+    this.previewWidth = 290;
   }
 
   activate() {
@@ -155,7 +156,7 @@ export class App {
 
   async loadItems(searchString, bookmark) {
     this.itemsLoading = true;
-    let numberOfItemsToLoadPerStep = 6;
+    let numberOfItemsToLoadPerStep = 9;
 
     const result = await this.itemStore.getItems(searchString, numberOfItemsToLoadPerStep, undefined, bookmark);
     this.itemsLoading = false;

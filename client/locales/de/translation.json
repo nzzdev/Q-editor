@@ -58,7 +58,7 @@
     "onlyInactive": "nur Inaktive"
   },
   "livingdocsComponent": {
-    "insert": "einfügen",
+    "insert": "Q Element verwenden",
     "edit": "in Q bearbeiten",
     "titleLabel": "Titel des Q Elements: ",
     "selectGraphic": "bitte ein Q Element aus der Liste auswählen",
