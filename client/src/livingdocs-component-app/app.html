@@ -47,7 +47,6 @@
         <span class="q-text-small q-text--light" if.bind="title">${title}</span>
       </div>
       <div class="livingdocs-component-item-preview">
-        <!--<div class="q-text q-text--light" if.bind="selectedItemIndex === undefined" t=""></div>-->
         <preview-container
           ref="previewContainer"
           id="preview-container"
@@ -59,12 +58,6 @@
       <div class="livingdocs-component-item-options">
         <div if.bind="selectedItemIndex !== undefinded">
           <form class="q-form">
-            <div class="q-form__checkbox">
-              <label>
-                <input type="checkbox">
-                <span>asd</span>
-              </label>
-            </div>
             <div class="q-form__checkbox" if.bind="displayOptionsSchema.properties" repeat.for="optionKey of displayOptionsSchema.properties | keys">
               <label>
                 <input type="checkbox" checked.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions[optionKey]" change.delegate="loadPreview()">
