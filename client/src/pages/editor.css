@@ -28,12 +28,3 @@
   width: 52px;
   flex-grow: 0;
 }
-
-.editor main::-webkit-scrollbar {
-  background: transparent;
-  width: 2px;
-}
-
-.editor main::-webkit-scrollbar-thumb {
-  background: var(--q-color-gray-5);
-}

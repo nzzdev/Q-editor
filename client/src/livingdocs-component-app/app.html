@@ -4,6 +4,7 @@
   <require from="../styles/layout.css"></require>
   <require from="../styles/fonts.css"></require>
   <require from="../styles/q-form.css"></require>
+  <require from="../styles/app.css"></require>  
   <require from="./app.css"></require>
   <require from="../elements/atoms/box-icon.html"></require>
   <require from="../elements/item-preview/preview-container"></require>
@@ -46,11 +47,24 @@
         <span class="q-text-small q-text--light" if.bind="title">${title}</span>
       </div>
       <div class="livingdocs-component-item-preview">
-        <preview-container ref="previewContainer" id="preview-container" width.bind="previewWidth" rendering-info.bind="renderingInfo">
+        <!--<div class="q-text q-text--light" if.bind="selectedItemIndex === undefined" t=""></div>-->
+        <preview-container
+          ref="previewContainer"
+          id="preview-container"
+          width.bind="previewWidth"
+          rendering-info.bind="renderingInfo"
+          no-rendering-info-text="${'livingdocsComponent.selectGraphic' & t}">
         </preview-container>
-        <div class="no-item-selected" if.bind="selectedItemIndex === undefined" t="livingdocsComponent.selectGraphic"></div>
+      </div>
+      <div class="livingdocs-component-item-options">
         <div if.bind="selectedItemIndex !== undefinded">
           <form class="q-form">
+            <div class="q-form__checkbox">
+              <label>
+                <input type="checkbox">
+                <span>asd</span>
+              </label>
+            </div>
             <div class="q-form__checkbox" if.bind="displayOptionsSchema.properties" repeat.for="optionKey of displayOptionsSchema.properties | keys">
               <label>
                 <input type="checkbox" checked.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions[optionKey]" change.delegate="loadPreview()">

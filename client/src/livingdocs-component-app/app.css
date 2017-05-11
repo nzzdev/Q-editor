@@ -15,7 +15,6 @@ html {
 .livingdocs-component-item-container {
   width: 50%;
   height: 100vh;
-  float: right;
   display: flex;
   flex-direction: column;
 }
@@ -23,7 +22,6 @@ html {
 .livingdocs-component-search {
   width: 50%;
   border-right: 1px solid var(--q-color-gray-4);
-  float: left;
   display: flex;
   flex-direction: column;
 }
@@ -163,6 +161,7 @@ html {
 
 .livingdocs-component-item-title,
 .livingdocs-component-item-preview,
+.livingdocs-component-item-options,
 .livingdocs-component-item-controls {
   width: 90%;
   margin: var(--q-space-base) auto 0 auto;
@@ -171,8 +170,7 @@ html {
 .livingdocs-component-item-preview {
   margin-top: 0;
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+  overflow: auto;
 }
 
 .livingdocs-component-item-controls {
@@ -183,18 +181,6 @@ html {
   flex-grow: 1;
   --preview-container-overflow-y: hidden;
   --preview-container-margin-top: 0px;
-}
-
-/* gebastel aufräumen! */
-.livingdocs-component-item-preview .no-item-selected {
-  font-family: Roboto, sans-serif;
-  font-size: var(--q-text-size);
-  color: var(--q-color-gray-5);
-  text-align: center;
-  width: 160px;
-  position: relative;
-  top: -220px;
-  left: 100px;
 }
 
 .livingdocs-component-item-controls {
