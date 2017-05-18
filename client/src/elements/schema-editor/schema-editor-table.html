@@ -1,0 +1,8 @@
+<template>
+  <require from="./schema-editor-table.css"></require>
+  <label>
+    ${schema["title"]}
+    <div ref="tableContainerElement"></div>
+  </label>
+  <button-secondary click.delegate="transpose()" icon="transpose" style="width: 36px;"></button-secondary>
+</template>

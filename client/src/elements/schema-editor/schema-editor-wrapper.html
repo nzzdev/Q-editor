@@ -122,4 +122,13 @@
       required.bind="required"></schema-editor-json>
   </div>
 
+  <div if.bind="getType(schema) === 'table'" class="schema-editor-block">
+    <require from="./schema-editor-table"></require>
+    <schema-editor-table
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-table>
+  </div>
+
 </template>
