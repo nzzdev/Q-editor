@@ -99,7 +99,6 @@ export class Editor {
       .then(item => {
         if (item) {
           this.item = item;
-          this.optionsData = this.item.options;
         }
       });
 
