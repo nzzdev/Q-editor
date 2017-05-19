@@ -3,8 +3,8 @@
   <require from="./item-preview.css"></require>
   <require from="../molecules/radio-button-group"></require>
 
-  <form class="q-form item-preview__settings">
-    <div>
+  <form class="item-preview__settings">
+    <div class="q-form">
       <label class="q-text-small q-text--light"><span t="general.previewTargetLabel"></span>
         <select value.bind="targetProxy.target">
           <option repeat.for="target of availableTargets" model.bind="target">${target.label}</option>
