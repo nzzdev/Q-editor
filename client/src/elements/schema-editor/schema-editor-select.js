@@ -12,6 +12,11 @@ export class SchemaEditorSelect {
     } else {
       this.optionLabels = schema.enum;
     }
+    if (schema['Q:options'] && schema['Q:options'].selectType === 'radio') {
+      this.selectType = 'radio';
+    } else {
+      this.selectType = 'select';
+    }
   }
 
 }

@@ -1,8 +1,14 @@
 <template>
   <label>
     ${schema["title"]}
-    <select value.bind="data" change.delegate="change()">
+    <select value.bind="data" change.delegate="change()" if.bind="selectType === 'select'">
       <option repeat.for="option of schema.enum" model.bind="option">${optionLabels[$index]}</option>
     </select>
+    <div if.bind="selectType === 'radio'">
+      <div repeat.for="option of schema.enum">
+        <input id="option-${option}" type="radio" name.bind="$parent.schema.title" model.bind="option" checked.bind="$parent.data" change.delegate="change()"></input>
+        <label for="option-${option}">${optionLabels[$index]}</label>
+      </div>
+    </div>
   </label>
 </template>
