@@ -93,7 +93,7 @@ export class SchemaEditorTable {
   replaceCommaWithPointIfDecimal() {
     let changed = false;
     try {
-      const newData = this.data
+      const newData = this.hot.getData()
         .map((row, rowIndex) => row.map((cell, colIndex) => {
           // do not change the first row or column
           if (rowIndex === 0 || colIndex === 0) {
