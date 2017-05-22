@@ -1,4 +1,4 @@
-import { inject } from 'aurelia-framework';
+import { inject, TaskQueue } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
 import { I18N } from 'aurelia-i18n';
@@ -48,15 +48,16 @@ function getTranslatedSchema(schema, toolName, i18n) {
   return schema;
 }
 
-@inject(ItemStore, MessageService, DialogService, I18N, EventAggregator)
+@inject(ItemStore, MessageService, DialogService, I18N, EventAggregator, TaskQueue)
 export class Editor {
 
-  constructor(itemStore, messageService, dialogService, i18n, eventAggregator) {
+  constructor(itemStore, messageService, dialogService, i18n, eventAggregator, taskQueue) {
     this.itemStore = itemStore;
     this.messageService = messageService;
     this.dialogService = dialogService;
     this.i18n = i18n;
     this.eventAggregator = eventAggregator;
+    this.taskQueue = taskQueue;
   }
 
   activate(routeParams) {
@@ -168,8 +169,10 @@ export class Editor {
   }
 
   handleChange() {
-    this.item.changed();
-    this.previewData = JSON.parse(JSON.stringify(this.item.conf));
+    this.taskQueue.queueMicroTask(() => {
+      this.item.changed();
+      this.previewData = JSON.parse(JSON.stringify(this.item.conf));
+    });
   }
 
   save() {
