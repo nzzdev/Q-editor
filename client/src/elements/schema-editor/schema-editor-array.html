@@ -2,6 +2,9 @@
   <require from="./schema-editor-wrapper"></require>
   <require from="./schema-editor-array.css"></require>
   <require from="../molecules/delete-button.html"></require>
+  <legend>
+    ${schema.title}
+  </legend>
   <div if.bind="data" repeat.for="entry of data" class="schema-editor-array__entry">
     <div class="schema-editor-array__collapsecontrol" if.bind="options.expandable">
       <button-secondary icon="expand" size="small" if.bind="collapsedStates[$index] !== 'expanded'" click.delegate="expand($index)"></button-secondary>

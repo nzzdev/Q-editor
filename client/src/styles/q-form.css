@@ -36,6 +36,12 @@
   box-shadow: 0px 0px 5px 1px var(--q-color-gray-4);
 }
 
+.q-form .disabled,
+.q-form input:disabled,
+.q-form textarea:disabled,
+.q-form select:disabled {
+  opacity: 0.5;
+}
 
 .q-form input[type="text"], 
 .q-form input[type="url"] {
@@ -176,7 +182,6 @@
   background-color: var(--q-color-primary-5);
   border-color: var(--q-color-primary-5);
 }
-
 
 .q-form input[type="radio"]:active + label::before, .q-form input[type="radio"]:focus + label::before {
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);

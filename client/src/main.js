@@ -13,6 +13,8 @@ import EmbedCodeGenerator from 'resources/EmbedCodeGenerator.js';
 import ItemStore from 'resources/ItemStore.js';
 import Statistics from 'resources/Statistics.js';
 import ToolsInfo from 'resources/ToolsInfo.js';
+import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
+import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
 import qEnv from 'resources/qEnv.js';
 import { registerEastereggs } from 'eastereggs.js';
 
@@ -27,6 +29,8 @@ export async function configure(aurelia) {
   aurelia.use.singleton(MessageService);
   aurelia.use.singleton(QTargets);
   aurelia.use.singleton(ToolsInfo);
+  aurelia.use.singleton(ToolEndpointChecker);
+  aurelia.use.singleton(SchemaEditorInputAvailabilityChecker);
   aurelia.use.singleton(User);
 
   aurelia.use

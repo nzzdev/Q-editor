@@ -2,18 +2,17 @@
     <require from="./schema-editor-wrapper"></require>
 
     <div if.bind="schema.properties" repeat.for="propertyName of schema.properties | keys">
-
       <fieldset if.bind="getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'" class="${isCompact($parent.schema.properties[propertyName]) ? 'compact' : ''}">
-        <legend>
-          ${$parent.schema.properties[propertyName]['title']}
+        <legend if.bind="getType($parent.schema.properties[propertyName]) === 'object'">
+          ${$parent.schema.properties[propertyName].title}
         </legend>
-
         <schema-editor-wrapper
             if.bind="!$parent.schema.properties[propertyName]['Q:options'] || !$parent.schema.properties[propertyName]['Q:options'].hideInEditor"
             schema.bind="$parent.schema.properties[propertyName]"
             data.two-way="$parent.data[propertyName]"
             change.bind="$parent.change"
-            required.bind="isRequired($parent.schema, propertyName)">
+            required.bind="isRequired($parent.schema, propertyName)"
+            is-available.bind="$parent.isAvailable">
         </schema-editor-wrapper>
       </fieldset>
 
@@ -22,7 +21,8 @@
         schema.bind="$parent.schema.properties[propertyName]"
         data.two-way="$parent.data[propertyName]"
         change.bind="$parent.change"
-        required.bind="isRequired($parent.schema, propertyName)">
+        required.bind="isRequired($parent.schema, propertyName)"
+        is-available.bind="$parent.isAvailable">
       </schema-editor-wrapper>
 
     </div>

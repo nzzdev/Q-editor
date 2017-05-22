@@ -1,4 +1,4 @@
-<template bindable="schema, data, change, required">
+<template>
   <label>
     ${schema["title"]}
     <input type="url" required.bind="required" value.bind="data" keyup.delegate="change() & debounce:800">

@@ -1,3 +1,24 @@
+function hasEnum(schema) {
+  if (schema.hasOwnProperty('enum')) {
+    return true;
+  }
+  if (schema['Q:options'] && schema['Q:options'].hasOwnProperty('dynamicEnum')) {
+    return true;
+  }
+  return false;
+}
+
+function hasType(schema, type) {
+  if (schema.hasOwnProperty('anyOf')) {
+    for (let anyOfType of schema.anyOf) {
+      if (anyOfType === type) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 export function getType(schema) {
   let type;
 
@@ -8,11 +29,11 @@ export function getType(schema) {
     type = schema['Q:type'];
   }
 
-  if (type === 'string' && schema.enum) {
+  if ((type === 'string' || hasType(schema, 'string')) && hasEnum(schema)) {
     type = 'select';
   }
 
-  if (type === 'number' && schema.enum) {
+  if ((type === 'number' || hasType(schema, 'number')) && hasEnum(schema)) {
     type = 'select';
   }
 

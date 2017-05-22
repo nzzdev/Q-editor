@@ -1,12 +1,12 @@
 import { bindable, computedFrom, LogManager } from 'aurelia-framework';
-const log = LogManager.getLogger('Q');
-
+import { checkAvailability } from 'resources/schemaEditorDecorators.js';
 import Ajv from 'ajv';
 import generateFromSchema from 'helpers/generateFromSchema.js';
 
-
+const log = LogManager.getLogger('Q');
 const ajv = new Ajv();
 
+@checkAvailability()
 export class SchemaEditorArray {
 
   @bindable schema;

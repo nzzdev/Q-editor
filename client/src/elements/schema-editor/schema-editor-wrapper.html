@@ -1,7 +1,14 @@
 <template style="display: block;">
+  <div if.bind="getType(schema) === 'object'" class="schema-editor-block">
+    <require from="./schema-editor-object"></require>
+    <schema-editor-object
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"></schema-editor-object>
+  </div>
 
   <div if.bind="getType(schema) === 'string'" class="schema-editor-block">
-    <require from="./schema-editor-string.html"></require>
+    <require from="./schema-editor-string"></require>
     <schema-editor-string
       schema.bind="schema"
       data.two-way="data"
@@ -10,7 +17,7 @@
   </div>
 
   <div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
-    <require from="./schema-editor-textarea.html"></require>
+    <require from="./schema-editor-textarea"></require>
     <schema-editor-textarea
       schema.bind="schema"
       data.two-way="data"
@@ -19,7 +26,7 @@
   </div>
 
   <div if.bind="getType(schema) === 'boolean'" class="schema-editor-block">
-    <require from="./schema-editor-boolean.html"></require>
+    <require from="./schema-editor-boolean"></require>
     <schema-editor-boolean
       schema.bind="schema"
       data.two-way="data"
@@ -27,7 +34,7 @@
   </div>
 
   <div if.bind="getType(schema) === 'url'" class="schema-editor-block">
-    <require from="./schema-editor-url.html"></require>
+    <require from="./schema-editor-url"></require>
     <schema-editor-url
       schema.bind="schema"
       data.two-way="data"
@@ -54,20 +61,12 @@
   </div>
 
   <div if.bind="getType(schema) === 'color'" class="schema-editor-block">
-    <require from="./schema-editor-color.html"></require>
+    <require from="./schema-editor-color"></require>
     <schema-editor-color
       schema.bind="schema"
       data.two-way="data"
       change.bind="change"
       required.bind="required"></schema-editor-color>
-  </div>
-
-  <div if.bind="getType(schema) === 'object'" class="schema-editor-block">
-    <require from="./schema-editor-object"></require>
-    <schema-editor-object
-      schema.bind="schema"
-      data.two-way="data"
-      change.bind="change"></schema-editor-object>
   </div>
 
   <div if.bind="getType(schema) === 'array'" class="schema-editor-block">
@@ -130,5 +129,4 @@
       change.bind="change"
       required.bind="required"></schema-editor-table>
   </div>
-
 </template>
