@@ -4,7 +4,8 @@
     <schema-editor-object
       schema.bind="schema"
       data.two-way="data"
-      change.bind="change"></schema-editor-object>
+      change.bind="change"
+      no-object-title.bind="noObjectTitle"></schema-editor-object>
   </div>
 
   <div if.bind="getType(schema) === 'string'" class="schema-editor-block">

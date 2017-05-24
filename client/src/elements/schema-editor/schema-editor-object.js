@@ -8,6 +8,7 @@ export class SchemaEditorObject {
   @bindable schema;
   @bindable data;
   @bindable change;
+  @bindable noObjectTitle;
 
   constructor() {
     this.getType = getType;

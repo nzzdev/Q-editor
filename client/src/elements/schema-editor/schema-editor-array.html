@@ -23,7 +23,8 @@
         if.bind="collapsedStates[$index] === 'expanded' || !options.expandable"
         schema.bind="$parent.getSchemaForArrayEntry(data[$index])"
         data.two-way="data[$index]"
-        change.bind="$parent.handleChange">
+        change.bind="$parent.handleChange"
+        no-object-title="true">
     </schema-editor-wrapper>
     <div class="schema-editor-array__entry-actions" if.bind="!options.expandable">
       <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
