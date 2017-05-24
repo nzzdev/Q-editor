@@ -20,6 +20,19 @@ export function checkAvailability() {
       bind(bindingContext, overrideContext) {
         if (super.bind) {
           super.bind(bindingContext, overrideContext);
+        } else {
+          // if we do not have bind implemented in the decorated class, we should call
+          // all the *Changed methods, as aurelia is not doing it for the first change if bind is implemented
+          let parentPrototype = Object.getPrototypeOf(Object.getPrototypeOf(this));          
+          if (!parentPrototype) {
+            return;
+          }
+          for (let prop of Object.getOwnPropertyNames(parentPrototype)) {
+            if (prop.endsWith('Changed')) {
+              let dataprop = prop.slice(0, -7); // 'Changed' has length of 7
+              this[prop](this[dataprop]);
+            }
+          }
         }
 
         this.__reevaluateCallbackId__ = this.__schemaEditorInputAvailabilityChecker__.registerReevaluateCallback(async () => {
