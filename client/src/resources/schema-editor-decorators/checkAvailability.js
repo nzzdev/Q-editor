@@ -23,7 +23,7 @@ export function checkAvailability() {
         } else {
           // if we do not have bind implemented in the decorated class, we should call
           // all the *Changed methods, as aurelia is not doing it for the first change if bind is implemented
-          let parentPrototype = Object.getPrototypeOf(Object.getPrototypeOf(this));          
+          let parentPrototype = Object.getPrototypeOf(Object.getPrototypeOf(this));
           if (!parentPrototype) {
             return;
           }
