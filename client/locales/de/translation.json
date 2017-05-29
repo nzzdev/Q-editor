@@ -28,7 +28,7 @@
     "previewSizeLabel": "Angezeigte Grösse"
   },
   "statistics": {
-    "tooFewNewGraphics": "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",    
+    "tooFewNewGraphics": "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",
     "enoughNewGraphics": "{{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive."
   },
   "editor": {
@@ -56,5 +56,12 @@
     "allStates": "alle Zustände",
     "onlyActive": "nur Aktive",
     "onlyInactive": "nur Inaktive"
+  },
+  "livingdocsComponent": {
+    "insert": "Q Element verwenden",
+    "edit": "in Q bearbeiten",
+    "titleLabel": "Titel des Q Elements: ",
+    "selectGraphic": "bitte ein Q Element aus der Liste auswählen",
+    "searchLabel": "Ein Q Element suchen"
   }
 }

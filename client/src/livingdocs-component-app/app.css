@@ -1,0 +1,206 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.livingdocs-component {
+  display: flex;
+  overflow-y: hidden;
+  height: 100vh;
+}
+
+.livingdocs-component-item-container {
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.livingdocs-component-search {
+  width: 50%;
+  border-right: 1px solid var(--q-color-gray-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.search {
+  width: 80%;
+  margin: calc(var(--q-space-base) * 2) auto;
+
+  display: flex;
+  align-items: center;
+}
+
+.search svg {
+  order: 1;
+
+  fill: var(--q-color-gray-4);
+  width: 34px;
+  position: relative;
+  left: var(--q-space-base);
+}
+
+.search input {
+  flex-grow: 1;
+  order: 2;
+
+  background: none;
+
+  border: none;
+  border-bottom: 1px solid var(--q-color-gray-4);
+  padding-top: calc(var(--q-space-base) / 2);
+  padding-right: calc(var(--q-space-base) / 2);
+  padding-bottom: calc(var(--q-space-base) / 2);
+  padding-left: calc(var(--q-space-base) * 2);
+
+  font-family: Roboto, sans-serif;
+  font-size: var(--q-text-size);
+  caret-color: var(--q-color-primary-5);
+}
+
+.search input::placeholder {
+  color: var(--q-text-ultralight-color);
+}
+
+.search input:focus {
+  border-bottom-color: var(--q-color-gray-5);
+  background: none;
+  outline: none;
+}
+
+.search input:focus + svg {
+  fill: var(--q-color-gray-5);
+}
+
+.item-list {
+  width: 85%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: var(--q-space-base) auto;
+}
+
+.item-list-entry {
+  background: var(--q-color-primary-2);
+
+  padding: calc(var(--q-space-base) / 4);
+  margin-bottom: calc(var(--q-space-base) / 2);
+
+  transition: transform 0.2s ease-in;
+}
+
+.item-list-entry-title {
+  display: flex;
+  align-items: center;
+}
+
+.item-list-entry:hover {
+  cursor: pointer;
+  border-color: var(--q-color-gray-4);
+  outline: none;
+  box-shadow: 0px 0px 5px 1px var(--q-color-gray-4);
+}
+
+.item-list-entry.inactive {
+  background: var(--q-color-primary-1);
+  border: 1px dashed var(--q-color-primary-2);
+}
+
+.item-list-entry.selected {
+  background: var(--q-color-primary-4);
+  color: var(--q-color-white);
+}
+
+.item-list-entry .tool-icon {
+  width: 26px;
+  height: 26px;
+  color: currentColor;
+}
+
+.item-list-entry .size-small {
+  width: 24px;
+  height: 24px;
+}
+
+.item-list-entry > div {
+  margin-bottom: calc(var(--q-space-base) / 4);
+}
+
+.item-list-entry span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-list-entry-title span {
+  width: calc(100% - (2 * 26px));
+}
+
+.item-list-entry-info {
+  display: flex;
+}
+
+.item-list-entry-info span {
+  margin-left: 1em;
+}
+
+.item-list-entry-info .item-date {
+  width: 30%;
+}
+
+.livingdocs-component-search__load-more-button {
+  width: 85%;
+  margin: var(--q-space-base) auto;
+}
+
+.livingdocs-component-item-controls a:hover {
+  text-decoration: none;
+}
+
+.livingdocs-component-item-title,
+.livingdocs-component-item-preview,
+.livingdocs-component-item-options,
+.livingdocs-component-item-controls {
+  width: 90%;
+  margin: var(--q-space-base) auto 0 auto;
+}
+
+.livingdocs-component-item-preview {
+  margin-top: 0;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.livingdocs-component-item-controls {
+  margin-bottom: var(--q-space-base);
+}
+
+.livingdocs-component-item-preview preview-container {
+  flex-grow: 1;
+  --preview-container-overflow-y: hidden;
+  --preview-container-margin-top: 0px;
+}
+
+.livingdocs-component-item-controls {
+  padding-top: var(--q-space-base);
+  border-top: 1px solid var(--q-color-gray-4);
+  display: flex;
+  justify-content: space-around;
+}
+
+.livingdocs-component-item-controls > div {
+  text-align: center;
+}
+
+.livingdocs-component-item-controls > div button-secondary,
+.livingdocs-component-item-controls > div button-primary,
+.livingdocs-component-item-controls > div span {
+  margin: 0 auto;
+}
+
+.livingdocs-component-item-controls button-primary,
+.livingdocs-component-item-controls button-secondary {
+  width: 48px;
+}

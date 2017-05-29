@@ -6,7 +6,7 @@ preview-container {
   margin-top: calc(var(--q-space-base) + 9px);
   margin-bottom: calc(var(--q-space-base) + 9px);
 
-  padding: var(--q-space-base) calc(var(--q-space-base) * 2);  
+  padding: var(--q-space-base) calc(var(--q-space-base) * 2);
 }
 
 preview-container::before, preview-container::after {
@@ -14,7 +14,7 @@ preview-container::before, preview-container::after {
   display: block;
   height: 9px;
   width: 100%;
-  background-repeat: repeat-x;    
+  background-repeat: repeat-x;
   position: absolute;
   left: 0;
 }
