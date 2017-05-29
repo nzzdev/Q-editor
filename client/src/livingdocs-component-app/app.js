@@ -156,9 +156,10 @@ export class App {
 
   async loadItems(searchString, bookmark) {
     this.itemsLoading = true;
-    let numberOfItemsToLoadPerStep = 9;
+    const numberOfItemsToLoadPerStep = 9;
 
-    const result = await this.itemStore.getItems(searchString, numberOfItemsToLoadPerStep, undefined, bookmark);
+    const availableToolNames = this.tools.map(tool => tool.name);
+    const result = await this.itemStore.getItems(searchString, numberOfItemsToLoadPerStep, availableToolNames, bookmark);
     this.itemsLoading = false;
     return result;
   }
