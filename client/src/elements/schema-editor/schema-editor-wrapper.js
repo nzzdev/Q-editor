@@ -7,6 +7,7 @@ export class SchemaEditorWrapper {
   @bindable data;
   @bindable change;
   @bindable required;
+  @bindable noObjectTitle;
 
   constructor() {
     this.getType = getType;

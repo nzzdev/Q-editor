@@ -1,5 +1,9 @@
 import { bindable } from 'aurelia-framework';
+import { resolveDynamicEnum } from 'resources/schemaEditorDecorators.js';
+import { checkAvailability } from 'resources/schemaEditorDecorators.js';
 
+@checkAvailability()
+@resolveDynamicEnum()
 export class SchemaEditorSelect {
 
   @bindable schema;

@@ -5,15 +5,19 @@ schema-editor {
 schema-editor fieldset {
   border: none;
   padding: 0;
+  margin: 0;
+}
+
+schema-editor fieldset > schema-editor-wrapper {
   margin: calc(var(--q-space-base) * 2) 0 calc(var(--q-space-base) / 2) 0;
 }
 
-schema-editor fieldset fieldset {
+schema-editor fieldset fieldset > schema-editor-wrapper {
   padding: 0 0 0 20px;
   margin: calc(var(--q-space-base) * 2) 0 calc(var(--q-space-base) / 2) 0;
 }
 
-schema-editor fieldset fieldset.compact {
+schema-editor fieldset fieldset.compact > schema-editor-wrapper {
   padding: 0 0 0 10px;
   margin-top: calc(var(--q-space-base) / 2);
 }
