@@ -1,4 +1,4 @@
-<template class="schema-editor-input" bindable="schema, data, change, required">
+<template class="schema-editor-input">
   <label>
     ${schema["title"]}
     <textare value.bind="data" required.bind="required" input.delegate="change() & debounce:800"></textare>

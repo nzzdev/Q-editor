@@ -1,8 +1,4 @@
 radio-button-group {
-  display: block;
-}
-
-radio-button-group radiogroup {
   width: 100%;
   display: flex;
   flex-direction: row;

@@ -1,5 +1,5 @@
 import { bindable } from 'aurelia-framework';
-import { getType, getOptions} from './helpers';
+import { getType } from './helpers';
 
 export class SchemaEditorWrapper {
 
@@ -7,10 +7,10 @@ export class SchemaEditorWrapper {
   @bindable data;
   @bindable change;
   @bindable required;
+  @bindable noObjectTitle;
 
   constructor() {
     this.getType = getType;
-    this.getOptions = getOptions;
   }
 
 }

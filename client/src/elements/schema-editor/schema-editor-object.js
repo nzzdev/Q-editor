@@ -1,11 +1,14 @@
-import {bindable} from 'aurelia-framework';
-import {getType} from './helpers.js';
+import { bindable } from 'aurelia-framework';
+import { getType } from './helpers.js';
+import { checkAvailability } from 'resources/schemaEditorDecorators.js';
 
+@checkAvailability()
 export class SchemaEditorObject {
 
   @bindable schema;
   @bindable data;
   @bindable change;
+  @bindable noObjectTitle;
 
   constructor() {
     this.getType = getType;

@@ -3,7 +3,7 @@
 This is the editor for the Q Toolbox. To make use of Q editor you will also need a [Q server](https://nzzdev.github.io/Q-server/).
 Here you find some technical documentation to get your own Q editor running.
 
-Q editor needs a modern browser with support for Shadow DOM, quite some ES2015 features and CSS Grid Layout. It works only in Chromium based browsers at the moment.
+Q editor needs a modern browser with support for Shadow DOM, quite some ES2015 features and CSS Grid Layout. It works only in Chromium based browsers and Safari >= 10.1 (with some minor visual problems) at the moment.
 
 Demo: https://q-demo.st.nzz.ch
 

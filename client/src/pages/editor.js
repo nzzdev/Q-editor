@@ -1,4 +1,4 @@
-import { inject } from 'aurelia-framework';
+import { inject, TaskQueue } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
 import { I18N } from 'aurelia-i18n';
@@ -11,6 +11,8 @@ import { ConfirmDialog } from 'dialogs/confirm-dialog.js';
 import qEnv from 'resources/qEnv.js';
 import MessageService from 'resources/MessageService.js';
 import ItemStore from 'resources/ItemStore.js';
+import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
+
 import generateFromSchema from 'helpers/generateFromSchema.js';
 
 function getSchemaForSchemaEditor(schema) {
@@ -48,18 +50,22 @@ function getTranslatedSchema(schema, toolName, i18n) {
   return schema;
 }
 
-@inject(ItemStore, MessageService, DialogService, I18N, EventAggregator)
+@inject(ItemStore, MessageService, ToolEndpointChecker, DialogService, I18N, EventAggregator, TaskQueue)
 export class Editor {
 
-  constructor(itemStore, messageService, dialogService, i18n, eventAggregator) {
+  constructor(itemStore, messageService, toolEndpointChecker, dialogService, i18n, eventAggregator, taskQueue) {
     this.itemStore = itemStore;
     this.messageService = messageService;
+    this.toolEndpointChecker = toolEndpointChecker;
     this.dialogService = dialogService;
     this.i18n = i18n;
     this.eventAggregator = eventAggregator;
+    this.taskQueue = taskQueue;
   }
 
-  activate(routeParams) {
+  async activate(routeParams) {
+    this.toolName = routeParams.tool;
+
     let showMessageTimeout;
     let timeoutPromise = new Promise((resolve, reject) => {
       showMessageTimeout = setTimeout(() => {
@@ -67,10 +73,9 @@ export class Editor {
         reject(new Error('activating editor takes too long'));
       }, 5000);
     });
-    let allLoaded = qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/tools/${routeParams.tool}/schema.json`);
-      })
+
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    let allLoaded = fetch(`${QServerBaseUrl}/tools/${this.toolName}/schema.json`)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -79,11 +84,11 @@ export class Editor {
       })
       .then(schema => {
         this.fullSchema = schema;
-        this.setTranslatedEditorAndOptionsSchema(this.fullSchema, routeParams.tool);
+        this.setTranslatedEditorAndOptionsSchema(this.fullSchema, this.toolName);
 
         // whenever there is a language change, we calculate the schema and translate all title properties
         this.eventAggregator.subscribe('i18n:locale:changed', () => {
-          this.setTranslatedEditorAndOptionsSchema(this.fullSchema, routeParams.tool);
+          this.setTranslatedEditorAndOptionsSchema(this.fullSchema, this.toolName);
         });
       })
       .then(() => {
@@ -93,13 +98,17 @@ export class Editor {
 
         let item = this.itemStore.getNewItem();
         item.conf = generateFromSchema(this.fullSchema);
-        item.conf.tool = routeParams.tool;
+        item.conf.tool = this.toolName;
         return item;
       })
       .then(item => {
         if (item) {
+          // set the toolName and the current item to toolEndpointChecker
+          // whenever we activate the editor. The toolEndpointChecker is used
+          // in the SchemaEditorInputAvailabilityChecker to send requests to the current tool
+          this.toolEndpointChecker.setCurrentToolName(this.toolName);
+          this.toolEndpointChecker.setCurrentItem(item);
           this.item = item;
-          this.optionsData = this.item.options;
         }
       });
 
@@ -169,8 +178,15 @@ export class Editor {
   }
 
   handleChange() {
-    this.item.changed();
-    this.previewData = JSON.parse(JSON.stringify(this.item.conf));
+    this.taskQueue.queueMicroTask(() => {
+      this.item.changed();
+
+      // whenever we have a change in data, we need to reevaluate all the checks
+      // that used the toolEndpoint as the result could be different after data
+      // changes occured.
+      this.toolEndpointChecker.triggerReevaluation();
+      this.previewData = JSON.parse(JSON.stringify(this.item.conf));
+    });
   }
 
   save() {

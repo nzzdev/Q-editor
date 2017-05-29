@@ -122,11 +122,18 @@ class AuthorizeStep {
       return this.user.loaded
         .then(() => {
           if (!this.user.isLoggedIn) {
+            this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
             return next.cancel(new Redirect('login'));
+          }
+          if (this.redirectBackAfterLoginRoute) {
+            let route = this.redirectBackAfterLoginRoute;
+            delete this.redirectBackAfterLoginRoute;
+            return next.cancel(new Redirect(route));
           }
           return next();
         })
         .catch((e) => {
+          this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
           return next.cancel(new Redirect('login'));
         });
     }
