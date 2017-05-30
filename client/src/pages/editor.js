@@ -139,14 +139,16 @@ export class Editor {
     }
 
     this.deactivationConfirmed = false;
-    let dialogResponse = await this.dialogService.open({
+
+    const openDialogResult = await this.dialogService.open({
       viewModel: ConfirmDialog,
       model: {
         confirmQuestion: this.i18n.tr('editor.questionLeaveWithUnsavedChanges')
       }
     });
+    const closeResult = await openDialogResult.closeResult;
 
-    if (dialogResponse.wasCancelled) {
+    if (closeResult.wasCancelled) {
       return false;
     }
 
