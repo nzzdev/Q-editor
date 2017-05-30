@@ -46,24 +46,6 @@ export class ToolStatusBar {
         showId: false,
         item: this.item
       }
-    }).then(response => {
-      if (!response.wasCancelled) {
-        switch (response.output) {
-          case 'edit':
-            this.router.navigate('/' + this.item.conf.tool + '/edit/' + this.item.conf._id);
-            break;
-          case 'blueprint':
-            this.item.blueprint()
-              .then(() => {
-                this.router.navigate('/' + this.item.conf.tool + '/edit/' + this.item.conf._id);
-              });
-            break;
-          default:
-            break;
-        }
-      } else {
-        // do nothing probably
-      }
     });
   }
 

@@ -41,7 +41,12 @@ export async function configure(aurelia) {
     .feature('icons')
     .feature('binding-behaviors')
     .feature('value-converters')
-    .plugin('aurelia-dialog')
+    .plugin('aurelia-dialog', config => {
+      config.useDefaults();
+      config.settings.lock = false;
+      config.settings.centerHorizontalOnly = true;
+      config.settings.overlayDismiss = true;
+    })
     .plugin('aurelia-i18n', async (instance) => {
       // register backend plugin
       instance.i18next.use(Backend);

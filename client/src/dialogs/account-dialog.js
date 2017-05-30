@@ -21,9 +21,6 @@ export class AccountDialog {
     this.auth = auth;
     this.qConfig = qConfig;
 
-    controller.settings.lock = false;
-    controller.settings.centerHorizontalOnly = true;
-
     this.loadDepartments();
   }
 
