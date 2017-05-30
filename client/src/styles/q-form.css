@@ -120,7 +120,7 @@
 */
 .q-form select {
   height: 2.4375rem;
-  margin: 0 0 var(--q-space-base) 0;
+  margin: 0;
   padding: calc(var(--q-space-base) / 2);
   appearance: none;
   -webkit-appearance: none;

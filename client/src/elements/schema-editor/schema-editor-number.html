@@ -1,4 +1,4 @@
-<template class="schema-editor-input" >
+<template class="schema-editor-input">
   <label>
     ${schema["title"]}
     <input type="number" required.bind="required" value.bind="data | forceNumber" step.bind="options.step" keyup.delegate="change() & debounce:800">

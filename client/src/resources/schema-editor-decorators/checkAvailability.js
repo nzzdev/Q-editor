@@ -57,12 +57,14 @@ export function checkAvailability() {
         let isAvailable = await this.__schemaEditorInputAvailabilityChecker__.isAvailable(this.schema);
         if (isAvailable) {
           this.__element__.style.display = 'block';
+          this.__element__.closest('schema-editor-wrapper').style.display = 'block';
           this.__element__.classList.remove('disabled');
           for (let inputElement of this.__inputElements__) {
             inputElement.disabled = false;
           }
         } else {
           this.__element__.style.display = 'none';
+          this.__element__.closest('schema-editor-wrapper').style.display = 'none';
         }
       }
     };

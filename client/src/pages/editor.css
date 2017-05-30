@@ -47,14 +47,40 @@
   --q-h6-size: 13px;
 }
 
+.editor__options .schema-editor-input {
+  margin-bottom: calc(var(--q-space-base) / 2);
+}
+
 .editor__options legend {
-  border-bottom: 1px solid var(--q-color-gray-4);
+  width: 100%;
+  margin-top: var(--q-space-base);
+
+  /* the following properties are copied from h6 style */
+  font-size: var(--q-h6-size);
+  font-weight: var(--q-h6-weight);
   color: var(--q-text-light-color);
-  margin-bottom: calc(var(--q-space-base) / 4);
+  margin-bottom: calc(var(--q-space-base) / 2);
+
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--q-color-gray-4);
 }
 
 
 /* make the options more compact by removing the margin around fieldsets */
 .editor__options fieldset > schema-editor-wrapper {
   margin: 0 !important;
+}
+
+.editor__options schema-editor-wrapper {
+  margin-bottom: 0;
+}
+
+.editor__options schema-editor-wrapper schema-editor-wrapper {
+  /*border-bottom: 1px solid var(--q-color-gray-4);
+  margin-bottom: 20px;*/
+  /*margin-bottom: var(--q-space-base);*/
+}
+
+.editor__options schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper {
+  margin-bottom: 0;
 }

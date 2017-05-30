@@ -49,5 +49,5 @@ schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper schema-editor-
 
 .schema-editor-input {
   display: block;
-  margin-bottom: calc(var(--q-space-base) / 2);
+  margin-bottom: var(--q-space-base);
 }
