@@ -115,7 +115,7 @@ export class ItemPreview {
     return qEnv.QServerBaseUrl
       .then(QServerBaseUrl => {
         if (this.id) {
-          return fetch(`${QServerBaseUrl}/rendering-info/${this.id}/${this.targetProxy.target.key}?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`);
+          return fetch(`${QServerBaseUrl}/rendering-info/${this.id}/${this.targetProxy.target.key}?ignoreInactive=true&noCache=true&toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`);
         } else if (this.data) {
           this.data.tool = this.data.tool.replace(new RegExp('-', 'g'), '_');
           const body = {
