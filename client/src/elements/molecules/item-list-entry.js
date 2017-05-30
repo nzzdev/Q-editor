@@ -3,30 +3,16 @@ import { Router } from 'aurelia-router';
 import User from 'resources/User';
 import ToolsInfo from 'resources/ToolsInfo';
 
-import DragDataGenerator from 'resources/DragDataGenerator';
-
-
-@inject(Element, ToolsInfo, User, DragDataGenerator, Router)
+@inject(Element, ToolsInfo, User, Router)
 export class ItemListEntry {
 
   @bindable item
 
-  constructor(element, toolsInfo, user, dragDataGenerator, router) {
+  constructor(element, toolsInfo, user, router) {
     this.element           = element;
     this.toolsInfo         = toolsInfo;
     this.user              = user;
-    this.dragDataGenerator = dragDataGenerator;
     this.router            = router;
-  }
-
-  attached() {
-    this.setupDragHandlers();
-  }
-
-  setupDragHandlers() {
-    this.element.addEventListener('dragstart', event => {
-      this.dragDataGenerator.addDragDataToDataTransfer(event.dataTransfer, this.item);
-    });
   }
 
   itemChanged() {

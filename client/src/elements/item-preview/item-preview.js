@@ -9,7 +9,6 @@ export class ItemPreview {
   @bindable data
   @bindable id
   @bindable target
-  @bindable onDrag
 
   sizeOptions = [
     {
@@ -67,33 +66,8 @@ export class ItemPreview {
     this.loadPreview();
   }
 
-  onDragChanged(onDrag, oldOnDrag) {
-    if (this.onDrag && this.previewContainer) {
-      this.ensureDragHandling();
-    } else if (oldOnDrag && this.previewContainer) {
-      this.previewContainer.removeAttribute('draggable');
-      this.previewContainer.removeEventListener('dragstart', oldOnDrag);
-    }
-  }
-
   attached() {
-    if (this.onDrag) {
-      this.ensureDragHandling();
-    }
     this.loadPreview();
-  }
-
-  ensureDragHandling() {
-    if (this.onDrag) {
-      this.previewContainer.setAttribute('draggable', true);
-    }
-    if (!this.dragEventListener) {
-      this.dragEventListener = this.previewContainer.addEventListener('dragstart', this.onDrag);
-    }
-  }
-
-  detached() {
-    this.previewContainer.removeEventListener('dragstart', this.onDrag);
   }
 
   handleSizeChange() {

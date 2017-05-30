@@ -1,4 +1,4 @@
-<template containerless class="${item.conf.active ? 'active' : 'inactive'}" click.delegate="redirectToItemView()" draggable="true">
+<template containerless class="${item.conf.active ? 'active' : 'inactive'}" click.delegate="redirectToItemView()">
   <require from="./item-list-entry.css"></require>
   <require from="../molecules/delete-button.html"></require>
   <box-icon if.bind="iconSvg" code.bind="iconSvg" size="medium" class="tool-icon"></box-icon>

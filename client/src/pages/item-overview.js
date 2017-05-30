@@ -5,24 +5,18 @@ import { I18N } from 'aurelia-i18n';
 
 import ItemStore from 'resources/ItemStore.js';
 import MessageService from 'resources/MessageService.js';
-import DragDataGenerator from 'resources/DragDataGenerator.js';
 
-@inject(Router, RelativeTime, I18N, ItemStore, MessageService, DragDataGenerator)
+@inject(Router, RelativeTime, I18N, ItemStore, MessageService)
 export class ItemOverview {
 
   currentTarget;
 
-  constructor(router, relativeTime, i18n, itemStore, messageService, dragDataGenerator) {
+  constructor(router, relativeTime, i18n, itemStore, messageService) {
     this.router = router;
     this.relativeTime = relativeTime;
     this.i18n = i18n;
     this.itemStore = itemStore;
     this.messageService = messageService;
-    this.dragDataGenerator = dragDataGenerator;
-
-    this.handleDrag = function(event) {
-      this.dragDataGenerator.addDragDataToDataTransfer(event.dataTransfer, this.item, this.currentTarget);
-    }.bind(this);
   }
 
   async activate(routeParams) {
