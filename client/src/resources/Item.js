@@ -8,8 +8,9 @@ export default class Item {
 
   isSaved = true;
 
-  constructor(user) {
+  constructor(user, httpClient) {
     this.user = user;
+    this.httpClient = httpClient;
   }
 
   get id() {
@@ -37,7 +38,7 @@ export default class Item {
   async load(id) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
-    const response = await fetch(`${QServerBaseUrl}/item/${id}`);
+    const response = await this.httpClient.fetch(`${QServerBaseUrl}/item/${id}`);
 
     if (!response.ok) {
       throw response;
@@ -85,7 +86,7 @@ export default class Item {
     }
 
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const response = await fetch(`${QServerBaseUrl}/item`, {
+    const response = await this.httpClient.fetch(`${QServerBaseUrl}/item`, {
       method: method,
       credentials: 'include',
       body: JSON.stringify(this.conf)

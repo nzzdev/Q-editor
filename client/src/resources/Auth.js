@@ -1,50 +1,74 @@
-import { inject } from 'aurelia-framework';
+import { inject, Loader } from 'aurelia-framework';
+import { Container } from 'aurelia-dependency-injection';
 import qEnv from 'resources/qEnv.js';
+import QConfig from 'resources/QConfig.js';
 import User from 'resources/User.js';
 
-@inject(User)
+@inject(User, QConfig, Loader, Container)
 export default class Auth {
 
   loginError = null;
 
   loginCallbacks = [];
 
-  constructor(user) {
+  constructor(user, qConfig, loader, diContainer, authService) {
     this.user = user;
+    this.qConfig = qConfig;
+    this.loader = loader;
+    this.diContainer = diContainer;
+    this.authService = authService;
+  }
+
+  async getAuthService() {
+    const AureliaAuthentication = await this.loader.loadModule('aurelia-authentication');
+    const AuthService = AureliaAuthentication.AuthService;
+    return this.diContainer.get(AuthService);
   }
 
   async login(username, password) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const response = await fetch(`${QServerBaseUrl}/authenticate`, {
-      credentials: 'include',
-      method: 'POST',
-      body: JSON.stringify({
+    const authConfig = await this.qConfig.get('auth');
+
+    if (authConfig && authConfig.type === 'token') {
+      const authService = await this.getAuthService();
+      await authService.login({
         username: username,
         password: password
-      })
-    });
+      });
+    } else {
+      const QServerBaseUrl = await qEnv.QServerBaseUrl;
+      const response = await fetch(`${QServerBaseUrl}/authenticate`, {
+        credentials: 'include',
+        method: 'POST',
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
+      });
 
-    if (!response.ok) {
-      throw response;
+      if (!response.ok) {
+        throw response;
+      }
     }
 
     return this.user.load();
   }
 
   async logout() {
-    try {
+    const authConfig = await this.qConfig.get('auth');
+
+    if (authConfig && authConfig.type === 'token') {
+      const authService = await this.getAuthService();
+      authService.logout();
+    } else {
+      // cookie logout
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
-      const response = await fetch(`${QServerBaseUrl}/logout`, {
+      await fetch(`${QServerBaseUrl}/logout`, {
         credentials: 'include',
         method: 'POST'
       });
-
-      if (!response.ok) {
-        throw response;
-      }
-    } finally {
-      return this.user.load();
     }
+
+    return this.user.load();
   }
 
 }
