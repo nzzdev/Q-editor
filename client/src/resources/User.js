@@ -37,6 +37,9 @@ export default class User {
   }
 
   setUserConfig(key, value) {
+    if (!this.data.hasOwnProperty('config')) {
+      this.data.config = {};
+    }
     this.data.config[key] = value;
     this.save();
   }
@@ -58,7 +61,7 @@ export default class User {
   async save() {
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
-      const response = await fetch(`${QServerBaseUrl}/user`, {
+      const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
         credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(this.data)
