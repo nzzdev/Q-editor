@@ -10,11 +10,15 @@
         <label for="department">Ressort</label>
         <div class="q-select">
           <select value.bind="user.data.department">
+            <option value="default"></option>
             <option repeat.for="department of departments" value.bind="department">${department}</option>
           </select>
         </div>
         <label for="acronym">Kürzel
           <input type="text" id="acronym" value.bind="user.data.acronym">
+        </label>
+        <label for="initials">Initialen
+          <input type="text" id="initials" value.bind="user.data.initials">
         </label>
         <button-primary
           click.delegate="saveUser()"

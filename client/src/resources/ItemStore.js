@@ -1,19 +1,21 @@
 import { inject } from 'aurelia-framework';
 import { BindingEngine } from 'aurelia-binding';
+import { HttpClient } from 'aurelia-fetch-client';
 import qEnv from 'resources/qEnv.js';
 import User from 'resources/User.js';
 import Item from 'resources/Item.js';
 import ToolsInfo from 'resources/ToolsInfo.js';
 
-@inject(User, ToolsInfo, BindingEngine)
+@inject(User, ToolsInfo, BindingEngine, HttpClient)
 export default class ItemStore {
 
   items = {};
 
-  constructor(user, toolsInfo, bindingEngine) {
+  constructor(user, toolsInfo, bindingEngine, httpClient) {
     this.user = user;
     this.toolsInfo = toolsInfo;
     this.bindingEngine = bindingEngine;
+    this.httpClient = httpClient;
 
     this.initFilters();
   }
@@ -85,7 +87,7 @@ export default class ItemStore {
   }
 
   getNewItem() {
-    let item = new Item(this.user);
+    let item = new Item(this.user, this.httpClient);
     item.setDepartmentToUserDepartment();
     this.bindingEngine
       .propertyObserver(item, 'isSaved')
@@ -165,7 +167,7 @@ export default class ItemStore {
 
   async loadItems(searchRequestBody) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const response = await fetch(`${QServerBaseUrl}/search`, {
+    const response = await this.httpClient.fetch(`${QServerBaseUrl}/search`, {
       method: 'POST',
       body: JSON.stringify(searchRequestBody)
     });
@@ -181,7 +183,7 @@ export default class ItemStore {
 
     const items = data.rows
       .map(row => {
-        let item = new Item(this.user);
+        let item = new Item(this.user, this.httpClient);
         item.addConf(row.doc);
         this.items[row.doc._id];
         return item;
