@@ -1,7 +1,7 @@
 // clear the load error timeout
 window.clearTimeout(window.QLoadErrorTimeout);
 
-import { LogManager } from 'aurelia-framework';
+import { LogManager, Loader } from 'aurelia-framework';
 import { ConsoleAppender } from 'aurelia-logging-console';
 
 import QConfig from 'resources/QConfig.js';
@@ -33,6 +33,8 @@ export async function configure(aurelia) {
   aurelia.use.singleton(SchemaEditorInputAvailabilityChecker);
   aurelia.use.singleton(User);
 
+  const QServerBaseUrl = await qEnv.QServerBaseUrl;
+
   aurelia.use
     .standardConfiguration()
     .feature('elements/atoms')
@@ -62,7 +64,6 @@ export async function configure(aurelia) {
       }
 
       // we need these for the calculation of the path to the locales files
-      const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const configuredTools = await aurelia.container.get(ToolsInfo).getAvailableTools();
       const toolNames = configuredTools.map(tool => tool.name);
 
@@ -95,8 +96,28 @@ export async function configure(aurelia) {
         load: 'languageOnly',
         debug: false
       });
-    })
-  ;
+    });
+
+  // if we have token based auth configured, load and configure aurelia-authentication plugin
+  const qConfig = aurelia.container.get(QConfig);
+  const authConfig = await qConfig.get('auth');
+  if (authConfig && authConfig.type === 'token') {
+    // configure the aurelia-fetch-client interceptor to add the auth token to every request
+    const loader = aurelia.container.get(Loader);
+    const AureliaAuthentication = await loader.loadModule('aurelia-authentication');
+    const FetchConfig = AureliaAuthentication.FetchConfig;
+    const fetchConfig = aurelia.container.get(FetchConfig);
+    fetchConfig.configure();
+
+    aurelia.use
+      .plugin('aurelia-authentication', baseConfig => {
+        baseConfig.configure({
+          baseUrl: QServerBaseUrl,
+          loginUrl: '/authenticate',
+          logoutRedirect: false
+        });
+      });
+  }
 
   const devLogging = await qEnv.devLogging;
   let logLevel = LogManager.logLevel.info;
