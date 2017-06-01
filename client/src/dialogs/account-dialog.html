@@ -16,6 +16,9 @@
         <label for="acronym">Kürzel
           <input type="text" id="acronym" value.bind="user.data.acronym">
         </label>
+        <label for="initials">Initialen
+          <input type="text" id="initials" value.bind="user.data.initials">
+        </label>
         <button-primary
           click.delegate="saveUser()"
           icon="proceed"><span t="general.saveChanges"></span></button-primary>
