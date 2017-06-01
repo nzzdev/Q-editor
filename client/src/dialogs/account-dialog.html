@@ -10,6 +10,7 @@
         <label for="department">Ressort</label>
         <div class="q-select">
           <select value.bind="user.data.department">
+            <option value="default"></option>
             <option repeat.for="department of departments" value.bind="department">${department}</option>
           </select>
         </div>
