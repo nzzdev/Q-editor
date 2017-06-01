@@ -109,6 +109,7 @@ export async function configure(aurelia) {
         baseConfig.configure({
           baseUrl: QServerBaseUrl,
           loginUrl: '/authenticate',
+          loginRedirect: false,
           logoutRedirect: false
         });
       });
