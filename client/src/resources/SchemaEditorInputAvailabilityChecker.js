@@ -1,11 +1,15 @@
-import { inject } from 'aurelia-framework';
+import { inject, LogManager } from 'aurelia-framework';
 import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
+import User from 'resources/User.js';
 
-@inject(ToolEndpointChecker)
+const log = LogManager.getLogger('Q');
+
+@inject(ToolEndpointChecker, User)
 export default class SchemaEditorInputAvailabilityChecker {
 
-  constructor(toolEndpointChecker) {
+  constructor(toolEndpointChecker, user) {
     this.toolEndpointChecker = toolEndpointChecker;
+    this.user = user;
   }
 
   registerReevaluateCallback(cb) {
@@ -42,6 +46,9 @@ export default class SchemaEditorInputAvailabilityChecker {
         if (availabilityCheck.type === 'toolEndpoint') {
           checkPromises.push(this.checkToolEndpoint(availabilityCheck));
         }
+        if (availabilityCheck.type === 'userHasRole') {
+          checkPromises.push(this.checkUserHasRole(availabilityCheck));
+        }
       }
       return await Promise.all(checkPromises);
     } catch (e) {
@@ -50,6 +57,10 @@ export default class SchemaEditorInputAvailabilityChecker {
   }
 
   async checkToolEndpoint(availabilityCheck) {
+    if (!availabilityCheck.endpoint) {
+      log.error('no endpoint defined for availabilityCheck checkToolEndpoint:', availabilityCheck);
+      return false;
+    }
     if (!availabilityCheck.withData) {
       const availability = await this.toolEndpointChecker.fetch(availabilityCheck.endpoint);
       if (availability.available === false) {
@@ -62,5 +73,13 @@ export default class SchemaEditorInputAvailabilityChecker {
       }
     }
     return true;
+  }
+
+  async checkUserHasRole(availabilityCheck) {
+    if (!availabilityCheck.role) {
+      log.error('no role defined for availabilityCheck userHasRole:', availabilityCheck);
+      return false;
+    }
+    return this.user.roles.includes(availabilityCheck.role);
   }
 }
