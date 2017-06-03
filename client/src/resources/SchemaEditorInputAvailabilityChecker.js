@@ -1,15 +1,13 @@
-import { inject, LogManager } from 'aurelia-framework';
+import { inject } from 'aurelia-framework';
+import { Container } from 'aurelia-dependency-injection';
 import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
-import User from 'resources/User.js';
 
-const log = LogManager.getLogger('Q');
-
-@inject(ToolEndpointChecker, User)
+@inject(ToolEndpointChecker, Container)
 export default class SchemaEditorInputAvailabilityChecker {
 
-  constructor(toolEndpointChecker, user) {
+  constructor(toolEndpointChecker, diContainer) {
     this.toolEndpointChecker = toolEndpointChecker;
-    this.user = user;
+    this.diContainer = diContainer;
   }
 
   registerReevaluateCallback(cb) {
@@ -42,14 +40,8 @@ export default class SchemaEditorInputAvailabilityChecker {
         return true;
       }
       for (let availabilityCheck of schema['Q:options'].availabilityChecks) {
-        let available;
-        if (availabilityCheck.type === 'toolEndpoint') {
-          available = await this.checkToolEndpoint(availabilityCheck);
-        }
-        if (availabilityCheck.type === 'userHasRole') {
-          available = await this.checkUserHasRole(availabilityCheck);
-        }
-        // return immediately if check failed
+        let checker = this.diContainer.get(availabilityCheck.type + 'AvailabilityCheck');
+        const available = await checker.isAvailable(availabilityCheck);
         if (!available) {
           return false;
         }
@@ -61,26 +53,5 @@ export default class SchemaEditorInputAvailabilityChecker {
 
     // if no check failed here, it is available
     return true;
-  }
-
-  async checkToolEndpoint(availabilityCheck) {
-    if (!availabilityCheck.endpoint) {
-      log.error('no endpoint defined for availabilityCheck checkToolEndpoint:', availabilityCheck);
-      return false;
-    }
-    if (!availabilityCheck.withData) {
-      const availability = await this.toolEndpointChecker.fetch(availabilityCheck.endpoint);
-      return availability.available;
-    }
-    const availability = await this.toolEndpointChecker.fetchWithItem(availabilityCheck.endpoint);
-    return availability.available;
-  }
-
-  async checkUserHasRole(availabilityCheck) {
-    if (!availabilityCheck.role) {
-      log.error('no role defined for availabilityCheck userHasRole:', availabilityCheck);
-      return false;
-    }
-    return this.user.roles.includes(availabilityCheck.role);
   }
 }
