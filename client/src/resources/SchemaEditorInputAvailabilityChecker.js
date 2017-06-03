@@ -41,19 +41,26 @@ export default class SchemaEditorInputAvailabilityChecker {
       if (!this.hasAvailabilityCheck(schema)) {
         return true;
       }
-      let checkPromises = [];
       for (let availabilityCheck of schema['Q:options'].availabilityChecks) {
+        let available;
         if (availabilityCheck.type === 'toolEndpoint') {
-          checkPromises.push(this.checkToolEndpoint(availabilityCheck));
+          available = await this.checkToolEndpoint(availabilityCheck);
         }
         if (availabilityCheck.type === 'userHasRole') {
-          checkPromises.push(this.checkUserHasRole(availabilityCheck));
+          available = await this.checkUserHasRole(availabilityCheck);
+        }
+        // return immediately if check failed
+        if (!available) {
+          return false;
         }
       }
-      return await Promise.all(checkPromises);
     } catch (e) {
+      // if some check went wrong, we go with unavailable
       return false;
     }
+
+    // if no check failed here, it is available
+    return true;
   }
 
   async checkToolEndpoint(availabilityCheck) {
@@ -63,16 +70,10 @@ export default class SchemaEditorInputAvailabilityChecker {
     }
     if (!availabilityCheck.withData) {
       const availability = await this.toolEndpointChecker.fetch(availabilityCheck.endpoint);
-      if (availability.available === false) {
-        return Promise.reject('not available: ' + JSON.stringify(availabilityCheck));
-      }
-    } else {
-      const availability = await this.toolEndpointChecker.fetchWithItem(availabilityCheck.endpoint);
-      if (availability.available === false) {
-        return Promise.reject('not available: ' + JSON.stringify(availabilityCheck));
-      }
+      return availability.available;
     }
-    return true;
+    const availability = await this.toolEndpointChecker.fetchWithItem(availabilityCheck.endpoint);
+    return availability.available;
   }
 
   async checkUserHasRole(availabilityCheck) {

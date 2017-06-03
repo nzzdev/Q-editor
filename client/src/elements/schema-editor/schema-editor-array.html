@@ -6,31 +6,31 @@
     ${schema.title}
   </legend>
   <div if.bind="data" repeat.for="entry of data" class="schema-editor-array__entry">
-    <div class="schema-editor-array__collapsecontrol" if.bind="options.expandable">
-      <button-secondary icon="expand" size="small" if.bind="collapsedStates[$index] !== 'expanded'" click.delegate="expand($index)"></button-secondary>
-      <button-secondary icon="collapse" size="small" if.bind="collapsedStates[$index] === 'expanded'" click.delegate="collapse($index)"></button-secondary>
+      <div class="schema-editor-array__collapsecontrol" if.bind="options.expandable && isEntryAvailable(entry) & async">
+        <button-secondary icon="expand" size="small" if.bind="collapsedStates[$index] !== 'expanded'" click.delegate="expand($index)"></button-secondary>
+        <button-secondary icon="collapse" size="small" if.bind="collapsedStates[$index] === 'expanded'" click.delegate="collapse($index)"></button-secondary>
 
-      <span class="q-text" if.bind="options.expandable.itemLabelProperty && entryLabels[$index]" innerhtml.bind="entryLabels[$index]"></span>
-      <span class="q-text" if.bind="!options.expandable.itemLabelProperty || !entryLabels[$index]">${$index + 1}</span>
+        <span class="q-text" if.bind="options.expandable.itemLabelProperty && entryLabels[$index]" innerhtml.bind="entryLabels[$index]"></span>
+        <span class="q-text" if.bind="!options.expandable.itemLabelProperty || !entryLabels[$index]">${$index + 1}</span>
 
-      <div class="schema-editor-array__entry-actions">
+        <div class="schema-editor-array__entry-actions">
+          <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
+          <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-tertiary>
+          <delete-button action.call="deleteElement(data, $index)" size="small" button-type="tertiary"></delete-button>
+        </div>
+      </div>
+      <schema-editor-wrapper
+          if.bind="(collapsedStates[$index] === 'expanded' || !options.expandable) && isEntryAvailable(entry) & async"
+          schema.bind="$parent.getSchemaForArrayEntry(data[$index])"
+          data.two-way="data[$index]"
+          change.bind="$parent.handleChange"
+          no-object-title="true">
+      </schema-editor-wrapper>
+      <div class="schema-editor-array__entry-actions" if.bind="!options.expandable">
         <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
         <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-tertiary>
         <delete-button action.call="deleteElement(data, $index)" size="small" button-type="tertiary"></delete-button>
       </div>
-    </div>
-    <schema-editor-wrapper
-        if.bind="collapsedStates[$index] === 'expanded' || !options.expandable"
-        schema.bind="$parent.getSchemaForArrayEntry(data[$index])"
-        data.two-way="data[$index]"
-        change.bind="$parent.handleChange"
-        no-object-title="true">
-    </schema-editor-wrapper>
-    <div class="schema-editor-array__entry-actions" if.bind="!options.expandable">
-      <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
-      <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-tertiary>
-      <delete-button action.call="deleteElement(data, $index)" size="small" button-type="tertiary"></delete-button>
-    </div>
   </div>
 
   <button-secondary class="schema-editor-array__add-item-button"
