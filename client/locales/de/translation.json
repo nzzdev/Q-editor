@@ -69,6 +69,7 @@
     "failedLoadingEditorConfig": "Die Editorkonfiguration konnte nicht geladen werden",
     "graphicNeedsATitle": "Grafik braucht einen Titel",
     "failedLoadingItems": "Grafiken konnten nicht geladen werden",
-    "failedToLoadItem": "Die Grafik konnte nicht geladen werden."
+    "failedToLoadItem": "Die Grafik konnte nicht geladen werden.",
+    "toolNotAvailable": "Dieses Tool steht nicht zur Verfügung"
   }
 }

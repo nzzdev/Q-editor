@@ -12,6 +12,7 @@ import { ConfirmDialog } from 'dialogs/confirm-dialog.js';
 import qEnv from 'resources/qEnv.js';
 import ItemStore from 'resources/ItemStore.js';
 import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
+import ToolsInfo from 'resources/ToolsInfo.js';
 import IdGenerator from 'resources/IdGenerator.js';
 import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
 
@@ -50,15 +51,14 @@ function getTranslatedSchema(schema, toolName, i18n) {
   return schema;
 }
 
-@inject(ItemStore, Notification, ToolEndpointChecker, IdGenerator, ObjectFromSchemaGenerator, DialogService, I18N, EventAggregator, TaskQueue)
+@inject(ItemStore, Notification, ToolEndpointChecker, ToolsInfo, IdGenerator, ObjectFromSchemaGenerator, DialogService, I18N, EventAggregator, TaskQueue)
 export class Editor {
 
-  constructor(itemStore, notification, toolEndpointChecker, idGenerator, objectFromSchemaGenerator, dialogService, i18n, eventAggregator, taskQueue) {
+  constructor(itemStore, notification, toolEndpointChecker, toolsInfo, idGenerator, objectFromSchemaGenerator, dialogService, i18n, eventAggregator, taskQueue) {
     this.itemStore = itemStore;
     this.notification = notification;
     this.toolEndpointChecker = toolEndpointChecker;
-    this.idGenerator = idGenerator;
-    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
+    this.toolsInfo = toolsInfo;
     this.dialogService = dialogService;
     this.i18n = i18n;
     this.eventAggregator = eventAggregator;
@@ -67,6 +67,12 @@ export class Editor {
 
   async activate(routeParams) {
     this.toolName = routeParams.tool;
+
+    const isToolAvailable = await this.toolsInfo.isToolWithNameAvailable(this.toolName);
+    if (!isToolAvailable) {
+      this.notification.error('editor.toolNotAvailable');
+      return false;
+    }
 
     let showMessageTimeout;
     let timeoutPromise = new Promise((resolve, reject) => {
@@ -137,7 +143,7 @@ export class Editor {
   }
 
   async canDeactivate() {
-    if (this.item.isSaved || this.deactivationConfirmed) {
+    if (!this.item || this.item.isSaved || this.deactivationConfirmed) {
       return true;
     }
 
