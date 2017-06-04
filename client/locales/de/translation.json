@@ -65,6 +65,7 @@
     "searchLabel": "Ein Q Element suchen"
   },
   "notifications": {
+    "previewBadRequest": "Es fehlen einige Daten um die Vorschau anzuzeigen",
     "failedLoadingEditorConfig": "Die Editorkonfiguration konnte nicht geladen werden",
     "graphicNeedsATitle": "Grafik braucht einen Titel",
     "failedLoadingItems": "Grafiken konnten nicht geladen werden",

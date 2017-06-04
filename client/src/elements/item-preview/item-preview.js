@@ -1,8 +1,9 @@
 import { bindable, inject } from 'aurelia-framework';
+import { I18N } from 'aurelia-i18n';
 import qEnv from 'resources/qEnv.js';
 import QTargets from 'resources/QTargets.js';
 
-@inject(QTargets)
+@inject(QTargets, I18N)
 export class ItemPreview {
 
   @bindable data
@@ -24,9 +25,9 @@ export class ItemPreview {
     }
   ]
 
-  constructor(qTargets, notification) {
+  constructor(qTargets, i18n) {
     this.qTargets = qTargets;
-    this.notification = notification;
+    this.i18n = i18n;
 
     // we use this proxy to catch any changes to the target and then load the preview after we have it
     this.targetProxy = new Proxy({}, {
@@ -108,7 +109,7 @@ export class ItemPreview {
         if (res.ok && res.status >= 200 && res.status < 400) {
           return res.json();
         }
-        throw res.statusText;
+        throw res;
       })
       .then(renderingInfo => {
         // add stylesheets for target preview if any
@@ -148,8 +149,12 @@ export class ItemPreview {
         this.errorMessage = undefined;
         this.renderingInfo = renderingInfo;
       })
-      .catch(errorMessage => {
-        this.errorMessage = errorMessage;
+      .catch(response => {
+        if (response.status === 400) {
+          this.errorMessage = this.i18n.tr('notifications.previewBadRequest');
+        } else {
+          this.errorMessage = response.statusText;
+        }
         this.renderingInfo = {};
       });
   }
