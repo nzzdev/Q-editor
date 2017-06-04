@@ -1,9 +1,8 @@
 import { bindable, inject } from 'aurelia-framework';
 import qEnv from 'resources/qEnv.js';
 import QTargets from 'resources/QTargets.js';
-import MessageService from 'resources/MessageService.js';
 
-@inject(QTargets, MessageService)
+@inject(QTargets)
 export class ItemPreview {
 
   @bindable data
@@ -25,9 +24,9 @@ export class ItemPreview {
     }
   ]
 
-  constructor(qTargets, messageService) {
+  constructor(qTargets, notification) {
     this.qTargets = qTargets;
-    this.messageService = messageService;
+    this.notification = notification;
 
     // we use this proxy to catch any changes to the target and then load the preview after we have it
     this.targetProxy = new Proxy({}, {

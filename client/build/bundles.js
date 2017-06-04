@@ -50,7 +50,8 @@ const aureliaBundle = [
   "aurelia-templating-binding",
   "aurelia-templating-resources",
   "aurelia-templating-router",
-  "i18next-fetch-backend"
+  "i18next-fetch-backend",
+  "aurelia-notification"
 ]
 
 module.exports = {
