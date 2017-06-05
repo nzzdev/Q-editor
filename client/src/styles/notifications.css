@@ -1,7 +1,3 @@
-html,
-body {
-  min-height: 100%;
-}
 .humane, .humane-libnotify {
   position: fixed;
   transition: all 0.3s ease-out;
