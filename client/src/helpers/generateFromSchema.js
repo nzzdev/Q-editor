@@ -23,6 +23,11 @@ export default function generateFromSchema(schema) {
       }
       return schema.default;
     }
+    if (schema.hasOwnProperty('Q:default')) {
+      if (schema['Q:default'] === 'generatedId') {
+        // return 
+      }
+    }
     if (!schema.hasOwnProperty('properties')) {
       return undefined;
     }

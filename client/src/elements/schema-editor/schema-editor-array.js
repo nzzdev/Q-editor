@@ -1,12 +1,13 @@
-import { bindable, computedFrom, LogManager } from 'aurelia-framework';
+import { bindable, computedFrom, LogManager, inject } from 'aurelia-framework';
 import { checkAvailability } from 'resources/schemaEditorDecorators.js';
 import Ajv from 'ajv';
-import generateFromSchema from 'helpers/generateFromSchema.js';
+import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
 
 const log = LogManager.getLogger('Q');
 const ajv = new Ajv();
 
 @checkAvailability()
+@inject(ObjectFromSchemaGenerator)
 export class SchemaEditorArray {
 
   @bindable schema;
@@ -19,7 +20,8 @@ export class SchemaEditorArray {
 
   collapsedStates = {};
 
-  constructor() {
+  constructor(objectFromSchemaGenerator) {
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.handleChange = () => {
       this.calculateEntryLabels();
       if (this.change) {
@@ -52,7 +54,8 @@ export class SchemaEditorArray {
   }
 
   addElement(data, schema) {
-    let entry = generateFromSchema(schema);
+    let entry = this.objectFromSchemaGenerator.generateFromSchema(schema);
+    console.log(entry, schema);
     data.push(entry);
     this.expand(data.indexOf(entry));
     this.calculateEntryLabels();

@@ -14,6 +14,8 @@ import Statistics from 'resources/Statistics.js';
 import ToolsInfo from 'resources/ToolsInfo.js';
 import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
 import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
+import IdGenerator from 'resources/IdGenerator.js';
+import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
 import qEnv from 'resources/qEnv.js';
 import { registerEastereggs } from 'eastereggs.js';
 
@@ -27,8 +29,10 @@ export async function configure(aurelia) {
   aurelia.use.singleton(ItemStore);
   aurelia.use.singleton(QTargets);
   aurelia.use.singleton(ToolsInfo);
-  aurelia.use.singleton(ToolEndpointChecker);
   aurelia.use.singleton(SchemaEditorInputAvailabilityChecker);
+  aurelia.use.singleton(ToolEndpointChecker);
+  aurelia.use.singleton(IdGenerator);
+  aurelia.use.singleton(ObjectFromSchemaGenerator);
   aurelia.use.singleton(User);
 
   const QServerBaseUrl = await qEnv.QServerBaseUrl;

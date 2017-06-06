@@ -12,8 +12,8 @@ import { ConfirmDialog } from 'dialogs/confirm-dialog.js';
 import qEnv from 'resources/qEnv.js';
 import ItemStore from 'resources/ItemStore.js';
 import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
-
-import generateFromSchema from 'helpers/generateFromSchema.js';
+import IdGenerator from 'resources/IdGenerator.js';
+import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
 
 function getSchemaForSchemaEditor(schema) {
   if (schema.properties.hasOwnProperty('options')) {
@@ -50,13 +50,15 @@ function getTranslatedSchema(schema, toolName, i18n) {
   return schema;
 }
 
-@inject(ItemStore, Notification, ToolEndpointChecker, DialogService, I18N, EventAggregator, TaskQueue)
+@inject(ItemStore, Notification, ToolEndpointChecker, IdGenerator, ObjectFromSchemaGenerator, DialogService, I18N, EventAggregator, TaskQueue)
 export class Editor {
 
-  constructor(itemStore, notification, toolEndpointChecker, dialogService, i18n, eventAggregator, taskQueue) {
+  constructor(itemStore, notification, toolEndpointChecker, idGenerator, objectFromSchemaGenerator, dialogService, i18n, eventAggregator, taskQueue) {
     this.itemStore = itemStore;
     this.notification = notification;
     this.toolEndpointChecker = toolEndpointChecker;
+    this.idGenerator = idGenerator;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.dialogService = dialogService;
     this.i18n = i18n;
     this.eventAggregator = eventAggregator;
@@ -97,7 +99,7 @@ export class Editor {
         }
 
         let item = this.itemStore.getNewItem();
-        item.conf = generateFromSchema(this.fullSchema);
+        item.conf = this.objectFromSchemaGenerator.generateFromSchema(this.fullSchema);
         item.conf.tool = this.toolName;
         return item;
       })
@@ -108,6 +110,7 @@ export class Editor {
           // in the SchemaEditorInputAvailabilityChecker to send requests to the current tool
           this.toolEndpointChecker.setCurrentToolName(this.toolName);
           this.toolEndpointChecker.setCurrentItem(item);
+          this.idGenerator.setCurrentItem(item);
           this.item = item;
         }
       });
