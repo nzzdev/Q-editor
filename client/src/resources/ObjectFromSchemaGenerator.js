@@ -67,5 +67,4 @@ export default class ObjectFromSchemaGenerator {
     }
     return undefined;
   }
-
 }
