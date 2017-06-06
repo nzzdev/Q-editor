@@ -2,6 +2,7 @@ import { inject, TaskQueue } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
 import { I18N } from 'aurelia-i18n';
+import { Notification } from 'aurelia-notification';
 
 import { LogManager } from 'aurelia-framework';
 const log = LogManager.getLogger('Q');
@@ -9,7 +10,6 @@ const log = LogManager.getLogger('Q');
 import { ConfirmDialog } from 'dialogs/confirm-dialog.js';
 
 import qEnv from 'resources/qEnv.js';
-import MessageService from 'resources/MessageService.js';
 import ItemStore from 'resources/ItemStore.js';
 import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
 
@@ -50,12 +50,12 @@ function getTranslatedSchema(schema, toolName, i18n) {
   return schema;
 }
 
-@inject(ItemStore, MessageService, ToolEndpointChecker, DialogService, I18N, EventAggregator, TaskQueue)
+@inject(ItemStore, Notification, ToolEndpointChecker, DialogService, I18N, EventAggregator, TaskQueue)
 export class Editor {
 
-  constructor(itemStore, messageService, toolEndpointChecker, dialogService, i18n, eventAggregator, taskQueue) {
+  constructor(itemStore, notification, toolEndpointChecker, dialogService, i18n, eventAggregator, taskQueue) {
     this.itemStore = itemStore;
-    this.messageService = messageService;
+    this.notification = notification;
     this.toolEndpointChecker = toolEndpointChecker;
     this.dialogService = dialogService;
     this.i18n = i18n;
@@ -69,7 +69,7 @@ export class Editor {
     let showMessageTimeout;
     let timeoutPromise = new Promise((resolve, reject) => {
       showMessageTimeout = setTimeout(() => {
-        this.messageService.pushMessage('error', this.i18n.tr('editor.activatingEditorTakesTooLong'));
+        this.notification.error('editor.activatingEditorTakesTooLong');
         reject(new Error('activating editor takes too long'));
       }, 5000);
     });
@@ -198,7 +198,11 @@ export class Editor {
       })
       .catch(error => {
         log.error(error);
-        this.messageService.pushMessage('error', this.i18n.tr('editor.failedToSave', { reason: error.message }));
+        if (error.status === 409) {
+          this.notification.warning('editor.conflictOnSave');
+        } else {
+          this.notification.warning('editor.failedToSave');
+        }
       });
   }
 

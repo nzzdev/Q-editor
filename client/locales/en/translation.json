@@ -35,7 +35,8 @@
     "questionLeaveWithUnsavedChanges": "Not all changes are saved, close anyway?",
     "arrayEntryAdd": "add {{ arrayEntryLabel }}",
     "activatingEditorTakesTooLong": "It takes too long to load the editor, something is wrong.",
-    "failedToSave": "Failed to save: {{reason}}.",
+    "failedToSave": "Failed to save",
+    "conflictOnSave": "Failed to save due to a conflict",
     "failedToLoadEditorPart": "failed to load the editor for this element"
   },
   "item": {
@@ -63,5 +64,12 @@
     "titleLabel": "title Q element: ",
     "selectGraphic": "please select a Q element from the list",
     "searchLabel": "Search for a Q element"
+  },
+  "notifications": {
+    "previewBadRequest": "There is data missing to show the preview",
+    "failedLoadingEditorConfig": "Failed to load editor configuration",
+    "graphicNeedsATitle": "Graphic needs a title",
+    "failedLoadingItems": "Failed loading graphics",
+    "failedToLoadItem": "Failed to load the graphic."
   }
 }

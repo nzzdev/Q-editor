@@ -1,0 +1,53 @@
+.humane, .humane-libnotify {
+  position: fixed;
+  transition: all 0.3s ease-out;
+  z-index: 100000;
+}
+.humane, .humane-libnotify {
+  top: 10px;
+  right: 10px;
+  opacity: 0;
+  width: 250px;
+  padding: 10px;
+  box-shadow: 0 4px 4px -4px #000;
+  transform: translateY(-40px);
+  border-width: 1px;
+  border-style: solid;
+}
+.humane p, .humane ul {
+  margin: 0;
+  padding: 0;
+}
+.humane ul, {
+  list-style: none;
+}
+.humane-info, {
+  border-color: var(--q-color-info);
+  background: var(--q-color-info-light);
+}
+.humane-success {
+  border-color: var(--q-color-success);
+  background: var(--q-color-success-light);
+}
+.humane-warning {
+  border-color: var(--q-color-warning);
+  background: var(--q-color-warning-light);
+}
+.humane-error {
+  border-color: var(--q-color-error);
+  background: var(--q-color-error-light);
+}
+.humane-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+.humane-animate:hover {
+  opacity: 0.2;
+}
+.humane-js-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+.humane-js-animate:hover {
+  opacity: 0.2;
+}

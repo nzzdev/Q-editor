@@ -8,7 +8,6 @@ import QConfig from 'resources/QConfig.js';
 import QTargets from 'resources/QTargets.js';
 import Auth from 'resources/Auth.js';
 import User from 'resources/User.js';
-import MessageService from 'resources/MessageService.js';
 import EmbedCodeGenerator from 'resources/EmbedCodeGenerator.js';
 import ItemStore from 'resources/ItemStore.js';
 import Statistics from 'resources/Statistics.js';
@@ -26,7 +25,6 @@ export async function configure(aurelia) {
   aurelia.use.singleton(EmbedCodeGenerator);
   aurelia.use.singleton(Statistics);
   aurelia.use.singleton(ItemStore);
-  aurelia.use.singleton(MessageService);
   aurelia.use.singleton(QTargets);
   aurelia.use.singleton(ToolsInfo);
   aurelia.use.singleton(ToolEndpointChecker);
@@ -95,6 +93,31 @@ export async function configure(aurelia) {
         defaultNS: 'translation',
         load: 'languageOnly',
         debug: false
+      });
+    })
+    .plugin('aurelia-notification', config => {
+      config.configure({
+        translate: true,  // 'true' needs aurelia-i18n to be configured
+        notifications: {
+          'info': {
+            addnCls: 'humane-info'
+          },
+          'success': {
+            addnCls: 'humane-success'
+          },
+          'warning': {
+            addnCls: 'humane-warning'
+          },
+          'error': {
+            addnCls: 'humane-error',
+            timeout: 0,
+            clickToClose: true
+          }
+        },
+        defaults: {
+          timeout: 3000,
+          addnCls: 'q-text'
+        }
       });
     });
 
