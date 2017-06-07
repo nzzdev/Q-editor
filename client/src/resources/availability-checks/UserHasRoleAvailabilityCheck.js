@@ -16,7 +16,7 @@ export default class UserHasRoleAvailabilityCheck {
       return false;
     }
     await this.user.loaded;
-    return this.user.roles.includes(availabilityCheck.role);
+    return Array.isArray(this.user.roles) && this.user.roles.includes(availabilityCheck.role);
   }
 
 }
