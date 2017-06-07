@@ -24,11 +24,11 @@
 
         <embed-code item.bind="item" target.bind="currentTarget"></embed-code>
 
-        <button-secondary click.delegate="blueprint()" icon="blueprint">
+        <button-secondary if.bind="isToolAvailable" click.delegate="blueprint()" icon="blueprint">
           <span t="item.blueprint"></span>
         </button-secondary>
 
-        <button-secondary click.delegate="edit()" icon="edit">
+        <button-secondary if.bind="isToolAvailable" click.delegate="edit()" icon="edit">
           <span t="item.edit"></span>
         </button-secondary>
 

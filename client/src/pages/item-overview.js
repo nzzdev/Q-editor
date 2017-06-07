@@ -5,17 +5,19 @@ import { I18N } from 'aurelia-i18n';
 import { Notification } from 'aurelia-notification';
 
 import ItemStore from 'resources/ItemStore.js';
+import ToolsInfo from 'resources/ToolsInfo.js';
 
-@inject(Router, RelativeTime, I18N, ItemStore, Notification)
+@inject(Router, RelativeTime, I18N, ItemStore, ToolsInfo, Notification)
 export class ItemOverview {
 
   currentTarget;
 
-  constructor(router, relativeTime, i18n, itemStore, notification) {
+  constructor(router, relativeTime, i18n, itemStore, toolsInfo, notification) {
     this.router = router;
     this.relativeTime = relativeTime;
     this.i18n = i18n;
     this.itemStore = itemStore;
+    this.toolsInfo = toolsInfo;
     this.notification = notification;
   }
 
@@ -26,6 +28,10 @@ export class ItemOverview {
     } catch (e) {
       this.notification.error('notification.failedToLoadItem');
     }
+  }
+
+  async attached() {
+    this.isToolAvailable = await this.toolsInfo.isToolWithNameAvailable(this.item.conf.tool);
   }
 
   edit() {
