@@ -3,20 +3,20 @@ import { bindingBehavior } from 'aurelia-binding';
 @bindingBehavior('async')
 export class AsyncBindingBehavior {
   bind(binding, source) {
-    binding.originalupdateTarget = binding.updateTarget;
+    binding.originalUpdateTarget = binding.updateTarget;
     binding.updateTarget = (value) => {
       if (typeof value.then === 'function') {
         value
           .then(resolvedValue => {
-            binding.originalupdateTarget(resolvedValue);
+            binding.originalUpdateTarget(resolvedValue);
           });
       } else {
-        binding.originalupdateTarget(value);
+        binding.originalUpdateTarget(value);
       }
     };
   }
   unbind(binding) {
-    binding.updateTarget = binding.originalupdateTarget;
-    binding.originalupdateTarget = null;
+    binding.updateTarget = binding.originalUpdateTarget;
+    binding.originalUpdateTarget = null;
   }
 }
