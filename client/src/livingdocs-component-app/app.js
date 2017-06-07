@@ -3,7 +3,7 @@ import { I18N } from 'aurelia-i18n';
 import ItemStore from 'resources/ItemStore.js';
 import QTargets from 'resources/QTargets.js';
 import qEnv from 'resources/qEnv.js';
-import generateFromSchema from 'helpers/generateFromSchema.js';
+import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
 
 let loadedItems = [];
 
@@ -27,12 +27,13 @@ async function getItem(id) {
 }
 
 @singleton()
-@inject(ItemStore, QTargets, I18N)
+@inject(ItemStore, QTargets, ObjectFromSchemaGenerator, I18N)
 export class App {
 
-  constructor(itemStore, qTargets, i18n) {
+  constructor(itemStore, qTargets, objectFromSchemaGenerator, i18n) {
     this.itemStore = itemStore;
     this.qTargets = qTargets;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.i18n = i18n;
     this.previewWidth = 290;
   }
@@ -301,7 +302,7 @@ export class App {
           }
 
           if (!selectedItem.toolRuntimeConfig.displayOptions) {
-            selectedItem.toolRuntimeConfig.displayOptions = generateFromSchema(schema);
+            selectedItem.toolRuntimeConfig.displayOptions = this.objectFromSchemaGenerator.generateFromSchema(schema);
           }
         })
         .catch(err => {
