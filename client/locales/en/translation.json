@@ -70,6 +70,7 @@
     "failedLoadingEditorConfig": "Failed to load editor configuration",
     "graphicNeedsATitle": "Graphic needs a title",
     "failedLoadingItems": "Failed loading graphics",
-    "failedToLoadItem": "Failed to load the graphic."
+    "failedToLoadItem": "Failed to load the graphic.",
+    "toolNotAvailable": "This tool is not available"
   }
 }

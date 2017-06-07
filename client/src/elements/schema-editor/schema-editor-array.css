@@ -11,6 +11,10 @@ schema-editor-array {
   margin-top: var(--q-space-base);
 }
 
+.schema-editor-array__entry:empty {
+  display: none;
+}
+
 .schema-editor-array__entry:last-of-type {
   padding-bottom: var(--q-space-base);
   border-bottom: 1px solid var(--q-color-gray-4);

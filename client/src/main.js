@@ -43,6 +43,7 @@ export async function configure(aurelia) {
     .feature('elements/molecules')
     .feature('elements/organisms')
     .feature('icons')
+    .feature('resources/availability-checks')
     .feature('binding-behaviors')
     .feature('value-converters')
     .plugin('aurelia-dialog', config => {

@@ -16,7 +16,7 @@ export function resolveDynamicEnum() {
     }
 
     async function getDynamicEnum(schema) {
-      if (schema['Q:options'].dynamicEnum.type !== 'toolEndpoint') {
+      if (schema['Q:options'].dynamicEnum.type !== 'ToolEndpoint') {
         throw new Error(`${schema['Q:options'].dynamicEnum.type} is not implemented as dynamicEnum type`);
       }
       if (schema['Q:options'].dynamicEnum.withData) {

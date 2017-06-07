@@ -12,9 +12,14 @@ import { ConfirmDialog } from 'dialogs/confirm-dialog.js';
 import qEnv from 'resources/qEnv.js';
 import ItemStore from 'resources/ItemStore.js';
 import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
-import ToolsInfo from 'resources/ToolsInfo.js';
+<<<<<<< HEAD
 import IdGenerator from 'resources/IdGenerator.js';
 import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
+=======
+import ToolsInfo from 'resources/ToolsInfo.js';
+
+import generateFromSchema from 'helpers/generateFromSchema.js';
+>>>>>>> feat: run configured availabilityChecks on tools
 
 function getSchemaForSchemaEditor(schema) {
   if (schema.properties.hasOwnProperty('options')) {
@@ -51,14 +56,23 @@ function getTranslatedSchema(schema, toolName, i18n) {
   return schema;
 }
 
-@inject(ItemStore, Notification, ToolEndpointChecker, ToolsInfo, IdGenerator, ObjectFromSchemaGenerator, DialogService, I18N, EventAggregator, TaskQueue)
+<<<<<<< HEAD
+@inject(ItemStore, Notification, ToolEndpointChecker, IdGenerator, ObjectFromSchemaGenerator, DialogService, I18N, EventAggregator, TaskQueue)
+=======
+@inject(ItemStore, Notification, ToolEndpointChecker, ToolsInfo, DialogService, I18N, EventAggregator, TaskQueue)
+>>>>>>> feat: run configured availabilityChecks on tools
 export class Editor {
 
-  constructor(itemStore, notification, toolEndpointChecker, toolsInfo, idGenerator, objectFromSchemaGenerator, dialogService, i18n, eventAggregator, taskQueue) {
+  constructor(itemStore, notification, toolEndpointChecker, idGenerator, objectFromSchemaGenerator, dialogService, i18n, eventAggregator, taskQueue) {
     this.itemStore = itemStore;
     this.notification = notification;
     this.toolEndpointChecker = toolEndpointChecker;
+<<<<<<< HEAD
+    this.idGenerator = idGenerator;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
+=======
     this.toolsInfo = toolsInfo;
+>>>>>>> feat: run configured availabilityChecks on tools
     this.dialogService = dialogService;
     this.i18n = i18n;
     this.eventAggregator = eventAggregator;

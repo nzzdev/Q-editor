@@ -1,11 +1,13 @@
 import { inject } from 'aurelia-framework';
+import { Container } from 'aurelia-dependency-injection';
 import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
 
-@inject(ToolEndpointChecker)
+@inject(ToolEndpointChecker, Container)
 export default class SchemaEditorInputAvailabilityChecker {
 
-  constructor(toolEndpointChecker) {
+  constructor(toolEndpointChecker, diContainer) {
     this.toolEndpointChecker = toolEndpointChecker;
+    this.diContainer = diContainer;
   }
 
   registerReevaluateCallback(cb) {
@@ -37,30 +39,19 @@ export default class SchemaEditorInputAvailabilityChecker {
       if (!this.hasAvailabilityCheck(schema)) {
         return true;
       }
-      let checkPromises = [];
       for (let availabilityCheck of schema['Q:options'].availabilityChecks) {
-        if (availabilityCheck.type === 'toolEndpoint') {
-          checkPromises.push(this.checkToolEndpoint(availabilityCheck));
+        let checker = this.diContainer.get(availabilityCheck.type + 'AvailabilityCheck');
+        const available = await checker.isAvailable(availabilityCheck);
+        if (!available) {
+          return false;
         }
       }
-      return await Promise.all(checkPromises);
     } catch (e) {
+      // if some check went wrong, we go with unavailable
       return false;
     }
-  }
 
-  async checkToolEndpoint(availabilityCheck) {
-    if (!availabilityCheck.withData) {
-      const availability = await this.toolEndpointChecker.fetch(availabilityCheck.endpoint);
-      if (availability.available === false) {
-        return Promise.reject('not available: ' + JSON.stringify(availabilityCheck));
-      }
-    } else {
-      const availability = await this.toolEndpointChecker.fetchWithItem(availabilityCheck.endpoint);
-      if (availability.available === false) {
-        return Promise.reject('not available: ' + JSON.stringify(availabilityCheck));
-      }
-    }
+    // if no check failed here, it is available
     return true;
   }
 }

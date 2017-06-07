@@ -1,18 +1,20 @@
-import { bindable, computedFrom, LogManager, inject } from 'aurelia-framework';
+import { inject, bindable } from 'aurelia-framework';
 import { checkAvailability } from 'resources/schemaEditorDecorators.js';
+import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
 import Ajv from 'ajv';
 import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
 
-const log = LogManager.getLogger('Q');
 const ajv = new Ajv();
 
 @checkAvailability()
-@inject(ObjectFromSchemaGenerator)
+@inject(SchemaEditorInputAvailabilityChecker, ObjectFromSchemaGenerator)
 export class SchemaEditorArray {
 
   @bindable schema;
   @bindable data;
   @bindable change;
+
+  arrayEntryOptions = [];
 
   options = {
     expandable: false
@@ -20,7 +22,8 @@ export class SchemaEditorArray {
 
   collapsedStates = {};
 
-  constructor(objectFromSchemaGenerator) {
+  constructor(schemaEditorInputAvailabilityChecker, objectFromSchemaGenerator) {
+    this.schemaEditorInputAvailabilityChecker = schemaEditorInputAvailabilityChecker;
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.handleChange = () => {
       this.calculateEntryLabels();
@@ -44,6 +47,7 @@ export class SchemaEditorArray {
 
   schemaChanged() {
     this.applyOptions();
+    this.calculateArrayEntryOptions();
     this.calculateEntryLabels();
   }
 
@@ -87,21 +91,52 @@ export class SchemaEditorArray {
     }
   }
 
-  getSchemaForArrayEntry(data) {
+  getSchemaForArrayEntry(entry) {
     if (this.schema.items.type) {
       return this.schema.items;
     }
     if (this.schema.items.oneOf) {
       for (const schema of this.schema.items.oneOf) {
         const validate = ajv.compile(schema);
-        if (validate(data)) {
+        if (validate(entry)) {
           return schema;
         }
-        log.info('schema-editor-array: no schema match for data');
-        log.info('schema-editor-array data:', JSON.stringify(data));
-        log.info('schema-editor-array schema:', JSON.stringify(schema));
       }
       return null;
+    }
+  }
+
+  async isEntryAvailable(entry) {
+    const schema = this.getSchemaForArrayEntry(entry);
+    return await this.schemaEditorInputAvailabilityChecker.isAvailable(schema);
+  }
+
+  async calculateArrayEntryOptions() {
+    // reset options
+    this.arrayEntryOptions = [];
+
+    // if we have a type in the schema in items, we use this as a schema directly
+    if (this.schema.items && this.schema.items.type) {
+      let arrayEntryLabel = '';
+      if (this.schema.items.title) {
+        arrayEntryLabel = this.schema.items.title;
+      } else if (this.schema.title) {
+        arrayEntryLabel = this.schema.title;
+      }
+      this.arrayEntryOptions.push({
+        schema: this.schema.items,
+        arrayEntryLabel: arrayEntryLabel
+      });
+    } else if (this.schema.items && this.schema.items.oneOf) {
+      for (let schema of this.schema.items.oneOf) {
+        const isAvailable = await this.schemaEditorInputAvailabilityChecker.isAvailable(schema);
+        if (isAvailable) {
+          this.arrayEntryOptions.push({
+            schema: schema,
+            arrayEntryLabel: schema.title
+          });
+        }
+      }
     }
   }
 
@@ -113,39 +148,13 @@ export class SchemaEditorArray {
       .map(entry => {
         try {
           if (this.options.expandable.itemLabelProperty) {
-            return this.options.expandable.itemLabelProperty.split('.').reduce((o, i) => o[i], entry);
+            return this.options.expandable.itemLabelProperty
+              .split('.')
+              .reduce((o, i) => o[i], entry);
           }
         } catch (e) {
           return undefined;
         }
       });
   }
-
-  @computedFrom('schema')
-  get arrayEntryOptions() {
-    let arrayEntryOptions = [];
-
-    // if we have a type in the schema in items, we use this as a schema directly
-    if (this.schema.items && this.schema.items.type) {
-      let arrayEntryLabel = '';
-      if (this.schema.items.title) {
-        arrayEntryLabel = this.schema.items.title;
-      } else if (this.schema.title) {
-        arrayEntryLabel = this.schema.title;
-      }
-      arrayEntryOptions.push({
-        schema: this.schema.items,
-        arrayEntryLabel: arrayEntryLabel
-      });
-    } else if (this.schema.items && this.schema.items.oneOf) {
-      for (let schema of this.schema.items.oneOf) {
-        arrayEntryOptions.push({
-          schema: schema,
-          arrayEntryLabel: schema.title
-        });
-      }
-    }
-    return arrayEntryOptions;
-  }
-
 }

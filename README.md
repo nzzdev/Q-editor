@@ -90,6 +90,23 @@ const editorConfig = {
   }
 ```
 
+Q Editor uses the tools configuration from the Q Server to search for items of the configured tools in the database and check their availability using availabilityChecks to e.g. make a tool available only for specific roles like configured below. This is what you can configure in the `editor` property of any tool configured in `config.tools` of your Q Server config:
+```js
+  {
+    label_locales: {
+      de: 'Label de',
+      en: 'Label en',
+    },
+    availabilityChecks: [
+      {
+        type: 'UserHasRole',
+        role: 'any-role-the-user-needs'
+      }
+    ],
+    icon: 'svg string used as the tool icon'
+  }
+```
+
 ## Development
 
 Q editor consists of two parts:
