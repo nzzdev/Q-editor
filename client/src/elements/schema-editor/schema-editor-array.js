@@ -1,4 +1,4 @@
-import { inject, bindable, computedFrom, LogManager } from 'aurelia-framework';
+import { inject, bindable } from 'aurelia-framework';
 import { checkAvailability } from 'resources/schemaEditorDecorators.js';
 import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
 import Ajv from 'ajv';
