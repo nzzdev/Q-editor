@@ -5,17 +5,29 @@ import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
 @inject(ToolEndpointChecker, Container)
 export default class SchemaEditorInputAvailabilityChecker {
 
+  reevaluateCallbacks = [];
+
   constructor(toolEndpointChecker, diContainer) {
     this.toolEndpointChecker = toolEndpointChecker;
     this.diContainer = diContainer;
   }
 
+  triggerReevaluation() {
+    for (let cb of this.reevaluateCallbacks) {
+      cb();
+    }
+  }
+
   registerReevaluateCallback(cb) {
-    return this.toolEndpointChecker.registerReevaluateCallback(cb);
+    this.reevaluateCallbacks.push(cb);
+    return cb;
   }
 
   unregisterReevaluateCallback(id) {
-    return this.toolEndpointChecker.unregisterReevaluateCallback(id);
+    const index = this.reevaluateCallbacks.indexOf(id);
+    if (index > -1) {
+      this.reevaluateCallbacks.splice(index, 1);
+    }
   }
 
   hasAvailabilityCheck(schema) {

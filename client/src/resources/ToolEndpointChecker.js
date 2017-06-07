@@ -2,32 +2,12 @@ import qEnv from 'resources/qEnv.js';
 
 export default class ToolEndpointChecker {
 
-  reevaluateCallbacks = [];
-
   setCurrentToolName(toolName) {
     this.toolName = toolName;
   }
 
   setCurrentItem(item) {
     this.item = item;
-  }
-
-  triggerReevaluation() {
-    for (let cb of this.reevaluateCallbacks) {
-      cb();
-    }
-  }
-
-  registerReevaluateCallback(cb) {
-    this.reevaluateCallbacks.push(cb);
-    return cb;
-  }
-
-  unregisterReevaluateCallback(id) {
-    const index = this.reevaluateCallbacks.indexOf(id);
-    if (index > -1) {
-      this.reevaluateCallbacks.splice(index, 1);
-    }
   }
 
   async fetch(endpoint) {
