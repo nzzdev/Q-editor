@@ -10,7 +10,7 @@ export class SchemaEditorNumber {
   @bindable required
 
   options = {
-    step: 1
+    step: 'any'
   }
 
   schemaChanged() {
