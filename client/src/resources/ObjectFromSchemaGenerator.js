@@ -28,13 +28,7 @@ export default class ObjectFromSchemaGenerator {
   }
 
   generateFromSchema(schema) {
-    if (schema.type === 'string' || schema.type === 'boolean') {
-      const defaultValue = this.getDefaultOrNull(schema);
-      if (defaultValue !== null) {
-        return defaultValue;
-      }
-      return undefined;
-    } else if (schema.type === 'array') {
+    if (schema.type === 'array') {
       let array = [];
       if (schema.minItems !== undefined) {
         for (let i = 0; i < schema.minItems; i++) {
@@ -64,6 +58,12 @@ export default class ObjectFromSchemaGenerator {
         }
       });
       return object;
+    }
+
+    // if this is not an array or object, we just get the default if any
+    const defaultValue = this.getDefaultOrNull(schema);
+    if (defaultValue !== null) {
+      return defaultValue;
     }
     return undefined;
   }
