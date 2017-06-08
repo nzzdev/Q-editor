@@ -14,6 +14,10 @@ export class SchemaEditorGeojsonPoint {
   @bindable data;
   @bindable change;
 
+  options = {
+    bbox: false
+  }
+
   constructor(qConfig, loader) {
     this.qConfig = qConfig;
     this.loader = loader;
@@ -25,6 +29,22 @@ export class SchemaEditorGeojsonPoint {
   async dataChanged() {
     await this.mapInit;
     this.updateMarker();
+    await this.updateBbox();
+  }
+
+  async schemaChanged() {
+    this.applyOptions();
+    await this.handleOptions();
+    await this.updateBbox();
+  }
+
+  applyOptions() {
+    if (!this.schema) {
+      return;
+    }
+    if (this.schema.hasOwnProperty('Q:options')) {
+      this.options = Object.assign(this.options, this.schema['Q:options']);
+    }
   }
 
   async attached() {
@@ -145,7 +165,7 @@ export class SchemaEditorGeojsonPoint {
 
   // set the pin to the map if we already have Point data
   async updateMarker(setMapView = false) {
-    if (isNaN(this.data.geometry.coordinates[0]) || isNaN(this.data.geometry.coordinates[1])) {
+    if (!Array.isArray(this.data.geometry.coordinates) || isNaN(this.data.geometry.coordinates[0]) || isNaN(this.data.geometry.coordinates[1])) {
       if (this.pin) {
         this.map.removeLayer(this.pin);
         delete this.pin;
@@ -157,7 +177,7 @@ export class SchemaEditorGeojsonPoint {
     if (this.pin) {
       if (this.pin && this.pin.setLatLng) {
         this.pin.setLatLng(this.data.geometry.coordinates.slice().reverse());
-        if (setMapView) {
+        if (setMapView && this.options.bbox !== 'manual') {
           this.map.panTo(this.pin.getLatLng());
         }
       }
@@ -187,7 +207,83 @@ export class SchemaEditorGeojsonPoint {
 
       await this.mapInit;
       this.pin.addTo(this.map);
-      this.map.panTo(this.pin.getLatLng());
+
+      // if we have manual bounding box option
+      // we do not pan to the center of the point to not mess with the bounding box select position
+      if (this.options.bbox !== 'manual') {
+        this.map.panTo(this.pin.getLatLng());
+      }
+    }
+  }
+
+  async handleOptions() {
+    if (this.options.bbox === 'manual') {
+      await this.mapInit;
+      // if we do not have a Leaflet.areaSelect yet, we load the module async using the aurelia loader
+      // this failed in some tests because of weird module format. But it worked always, so we ignore any loading error here...
+      if (!window.L) { // areaSelect expects window.L to be defined as Leaflet;
+        window.L = window.Leaflet;
+      }
+      if (!window.Leaflet.areaSelect) {
+        try {
+          // this.loader.loadModule('github:heyman/leaflet-areaselect@master/src/leaflet-areaselect.css!');
+          await this.loader.loadModule('github:heyman/leaflet-areaselect@master/src/leaflet-areaselect.js');
+        } catch (e) {
+          // leaflet-areaselect is probably loaded, nevermind the error here
+        }
+      }
+      // ... test again if it's here
+      if (!window.Leaflet.areaSelect || !L.AreaSelect) {
+        log.error('window.Leaflet.areaSelect is not defined after loading leaflet-areaselect');
+        this.showLoadingError = true;
+        return;
+      }
+
+      if (this.areaSelect) {
+        return;
+      }
+
+      this.areaSelect = window.Leaflet.areaSelect(
+        {
+          width: this.map.getSize().x * 0.8,
+          height: this.map.getSize().y * 0.8,
+          keepAspectRatio: true
+        }
+      );
+
+      this.areaSelect.addTo(this.map);
+      this.areaSelect.on('change', () => {
+        this.data.bbox = [
+          this.areaSelect.getBounds().getWest(),
+          this.areaSelect.getBounds().getSouth(),
+          this.areaSelect.getBounds().getEast(),
+          this.areaSelect.getBounds().getNorth()
+        ];
+        if (this.change) {
+          this.change();
+        }
+      });
+    }
+  }
+
+  async updateBbox() {
+    if (this.options.bbox !== 'manual') {
+      return;
+    }
+    if (!this.areaSelect) {
+      return;
+    }
+    if (this.data.bbox) {
+      await this.mapInit;
+      const sw = Leaflet.latLng(this.data.bbox[1], this.data.bbox[0]);
+      const ne = Leaflet.latLng(this.data.bbox[3], this.data.bbox[2]);
+      const bounds = new L.LatLngBounds([sw, ne]);
+      this.map.setView(bounds.getCenter());
+      this.map.fitBounds(bounds);
+      const mapSize = this.map.getSize();
+      const containerPointSW = this.map.latLngToContainerPoint(sw);
+      const width = mapSize.x - (containerPointSW.x * 2);
+      this.areaSelect.setDimensions({width: width, height: (width / 16) * 9});
     }
   }
 }
