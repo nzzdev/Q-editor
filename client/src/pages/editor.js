@@ -198,6 +198,7 @@ export class Editor {
 
       // whenever we have a change in data, we need to reevaluate all the checks
       this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
+      this.toolEndpointChecker.triggerReevaluation();
       this.previewData = JSON.parse(JSON.stringify(this.item.conf));
     });
   }
@@ -208,6 +209,7 @@ export class Editor {
         log.info('item saved', this.item);
         // whenever we save the item, we need to reevaluate all the checks
         this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
+        this.toolEndpointChecker.triggerReevaluation();
       })
       .catch(error => {
         log.error(error);
