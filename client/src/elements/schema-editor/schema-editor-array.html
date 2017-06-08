@@ -5,7 +5,7 @@
   <legend>
     ${schema.title}
   </legend>
-  <div if.bind="data" repeat.for="entry of data" class="schema-editor-array__entry">
+  <div if.bind="data" repeat.for="entry of data" class="schema-editor-array__entry" style="z-index: ${data.length - $index}">
       <div class="schema-editor-array__collapsecontrol" if.bind="options.expandable && isEntryAvailable(entry) & async">
         <button-secondary icon="expand" size="small" if.bind="collapsedStates[$index] !== 'expanded'" click.delegate="expand($index)"></button-secondary>
         <button-secondary icon="collapse" size="small" if.bind="collapsedStates[$index] === 'expanded'" click.delegate="collapse($index)"></button-secondary>

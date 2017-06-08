@@ -9,6 +9,7 @@ schema-editor-array {
   border-top: 1px solid var(--q-color-gray-4);
   padding-top: var(--q-space-base);
   margin-top: var(--q-space-base);
+  position: relative;
 }
 
 .schema-editor-array__entry:empty {
