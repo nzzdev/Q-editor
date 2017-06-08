@@ -12,8 +12,9 @@ import { ConfirmDialog } from 'dialogs/confirm-dialog.js';
 import qEnv from 'resources/qEnv.js';
 import ItemStore from 'resources/ItemStore.js';
 import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
+import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
 import ToolsInfo from 'resources/ToolsInfo.js';
-import IdGenerator from 'resources/IdGenerator.js';
+import CurrentItemProvider from 'resources/CurrentItemProvider.js';
 import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
 
 function getSchemaForSchemaEditor(schema) {
@@ -51,14 +52,17 @@ function getTranslatedSchema(schema, toolName, i18n) {
   return schema;
 }
 
-@inject(ItemStore, Notification, ToolEndpointChecker, ToolsInfo, IdGenerator, ObjectFromSchemaGenerator, DialogService, I18N, EventAggregator, TaskQueue)
+@inject(ItemStore, Notification, ToolEndpointChecker, SchemaEditorInputAvailabilityChecker, ToolsInfo, CurrentItemProvider, ObjectFromSchemaGenerator, DialogService, I18N, EventAggregator, TaskQueue)
 export class Editor {
 
-  constructor(itemStore, notification, toolEndpointChecker, toolsInfo, idGenerator, objectFromSchemaGenerator, dialogService, i18n, eventAggregator, taskQueue) {
+  constructor(itemStore, notification, toolEndpointChecker, schemaEditorInputAvailabilityChecker, toolsInfo, currentItemProvider, objectFromSchemaGenerator, dialogService, i18n, eventAggregator, taskQueue) {
     this.itemStore = itemStore;
     this.notification = notification;
     this.toolEndpointChecker = toolEndpointChecker;
+    this.schemaEditorInputAvailabilityChecker = schemaEditorInputAvailabilityChecker;
     this.toolsInfo = toolsInfo;
+    this.currentItemProvider = currentItemProvider;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.dialogService = dialogService;
     this.i18n = i18n;
     this.eventAggregator = eventAggregator;
@@ -116,7 +120,7 @@ export class Editor {
           // in the SchemaEditorInputAvailabilityChecker to send requests to the current tool
           this.toolEndpointChecker.setCurrentToolName(this.toolName);
           this.toolEndpointChecker.setCurrentItem(item);
-          this.idGenerator.setCurrentItem(item);
+          this.currentItemProvider.setCurrentItem(item);
           this.item = item;
         }
       });
@@ -193,9 +197,7 @@ export class Editor {
       this.item.changed();
 
       // whenever we have a change in data, we need to reevaluate all the checks
-      // that used the toolEndpoint as the result could be different after data
-      // changes occured.
-      this.toolEndpointChecker.triggerReevaluation();
+      this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
       this.previewData = JSON.parse(JSON.stringify(this.item.conf));
     });
   }
@@ -204,6 +206,8 @@ export class Editor {
     this.item.save()
       .then(() => {
         log.info('item saved', this.item);
+        // whenever we save the item, we need to reevaluate all the checks
+        this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
       })
       .catch(error => {
         log.error(error);

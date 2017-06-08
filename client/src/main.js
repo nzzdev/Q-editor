@@ -15,6 +15,7 @@ import ToolsInfo from 'resources/ToolsInfo.js';
 import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
 import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
 import IdGenerator from 'resources/IdGenerator.js';
+import CurrentItemProvider from 'resources/CurrentItemProvider.js';
 import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
 import qEnv from 'resources/qEnv.js';
 import { registerEastereggs } from 'eastereggs.js';
@@ -32,6 +33,7 @@ export async function configure(aurelia) {
   aurelia.use.singleton(SchemaEditorInputAvailabilityChecker);
   aurelia.use.singleton(ToolEndpointChecker);
   aurelia.use.singleton(IdGenerator);
+  aurelia.use.singleton(CurrentItemProvider);
   aurelia.use.singleton(ObjectFromSchemaGenerator);
   aurelia.use.singleton(User);
 

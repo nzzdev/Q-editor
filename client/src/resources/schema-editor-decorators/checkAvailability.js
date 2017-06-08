@@ -35,7 +35,7 @@ export function checkAvailability() {
           }
         }
 
-        this.__reevaluateCallbackId__ = this.__schemaEditorInputAvailabilityChecker__.registerReevaluateCallback(async () => {
+        this.__reevaluateAvailabilityCallbackId__ = this.__schemaEditorInputAvailabilityChecker__.registerReevaluateCallback(async () => {
           this.__checkAvailability__();
         });
 
@@ -46,7 +46,7 @@ export function checkAvailability() {
         if (super.unbind) {
           super.unbind();
         }
-        this.__schemaEditorInputAvailabilityChecker__.unregisterReevaluateCallback(this.__reevaluateCallbackId__);
+        this.__schemaEditorInputAvailabilityChecker__.unregisterReevaluateCallback(this.__reevaluateAvailabilityCallbackId__);
       }
 
       async __checkAvailability__() {
