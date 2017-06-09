@@ -83,7 +83,8 @@ export class ItemPreview {
             comparison: '='
           }
         ]
-      }
+      },
+      isPure: true
     };
 
     return qEnv.QServerBaseUrl
