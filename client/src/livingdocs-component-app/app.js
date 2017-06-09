@@ -216,7 +216,8 @@ export class App {
           }
         ]
       },
-      displayOptions: this.selectedItems[this.selectedItemIndex].toolRuntimeConfig.displayOptions
+      displayOptions: this.selectedItems[this.selectedItemIndex].toolRuntimeConfig.displayOptions,
+      isPure: true
     };
 
     return qEnv.QServerBaseUrl

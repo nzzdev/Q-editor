@@ -6,7 +6,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-
   map: {
     "ajv": "npm:ajv@4.11.8",
     "array2d": "npm:array2d@0.0.5",
