@@ -97,8 +97,13 @@ export class SchemaEditorArray {
     }
     if (this.schema.items.oneOf) {
       for (const schema of this.schema.items.oneOf) {
-        const validate = ajv.compile(schema);
+        // ignore any required properties here to allow for required properties without default value
+        // clone the schema first to not mess with original
+        const validateSchema = JSON.parse(JSON.stringify(schema));
+        delete validateSchema.required;
+        const validate = ajv.compile(validateSchema);
         if (validate(entry)) {
+          // return the original schema with required in case of a match
           return schema;
         }
       }
