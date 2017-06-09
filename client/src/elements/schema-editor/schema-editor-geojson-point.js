@@ -226,7 +226,6 @@ export class SchemaEditorGeojsonPoint {
       }
       if (!window.Leaflet.areaSelect) {
         try {
-          // this.loader.loadModule('github:heyman/leaflet-areaselect@master/src/leaflet-areaselect.css!');
           await this.loader.loadModule('github:heyman/leaflet-areaselect@master/src/leaflet-areaselect.js');
         } catch (e) {
           // leaflet-areaselect is probably loaded, nevermind the error here
