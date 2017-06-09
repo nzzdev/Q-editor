@@ -21,3 +21,25 @@ schema-editor-geojson-point .leaflet-pelias-expanded .leaflet-pelias-input {
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+schema-editor-geojson-point .leaflet-areaselect-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 900;
+  pointer-events: none;
+}
+
+schema-editor-geojson-point .leaflet-areaselect-shade {
+  position: absolute !important;
+  background: rgba(0,0,0, 0.4);
+}
+schema-editor-geojson-point .leaflet-areaselect-handle {
+  position: absolute !important;
+  background: #fff;
+  border: 1px solid #666;
+  box-shadow: 1px 1px rgba(0,0,0, 0.2);
+  width: 14px;
+  height: 14px;
+  cursor: move;
+}
