@@ -42,6 +42,7 @@ System.config({
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.33",
     "handsontable": "npm:handsontable@0.32.0-beta1",
+    "heyman/leaflet-areaselect": "github:heyman/leaflet-areaselect@master",
     "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
     "leaflet": "npm:leaflet@1.0.3",
     "leaflet-geocoder-mapzen": "npm:leaflet-geocoder-mapzen@1.8.0",

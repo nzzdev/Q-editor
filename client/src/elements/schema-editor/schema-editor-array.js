@@ -113,7 +113,8 @@ export class SchemaEditorArray {
 
   async isEntryAvailable(entry) {
     const schema = this.getSchemaForArrayEntry(entry);
-    return await this.schemaEditorInputAvailabilityChecker.isAvailable(schema);
+    const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(schema);
+    return await availabilityInfo.isAvailable;
   }
 
   async calculateArrayEntryOptions() {
@@ -134,8 +135,8 @@ export class SchemaEditorArray {
       });
     } else if (this.schema.items && this.schema.items.oneOf) {
       for (let schema of this.schema.items.oneOf) {
-        const isAvailable = await this.schemaEditorInputAvailabilityChecker.isAvailable(schema);
-        if (isAvailable) {
+        const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(schema);
+        if (availabilityInfo.isAvailable) {
           this.arrayEntryOptions.push({
             schema: schema,
             arrayEntryLabel: schema.title
