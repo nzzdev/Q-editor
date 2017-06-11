@@ -46,24 +46,36 @@ export default class SchemaEditorInputAvailabilityChecker {
     return true;
   }
 
-  async isAvailable(schema) {
+  async getAvailabilityInfo(schema) {
     try {
       if (!this.hasAvailabilityCheck(schema)) {
-        return true;
+        return {
+          isAvailable: true
+        };
       }
       for (let availabilityCheck of schema['Q:options'].availabilityChecks) {
         let checker = this.diContainer.get(availabilityCheck.type + 'AvailabilityCheck');
         const available = await checker.isAvailable(availabilityCheck);
         if (!available) {
-          return false;
+          const availabilityInfo = {
+            isAvailable: false
+          };
+          if (availabilityCheck.hasOwnProperty('unavailableMessage')) {
+            availabilityInfo.unavailableMessage = availabilityCheck.unavailableMessage;
+          }
+          return availabilityInfo;
         }
       }
     } catch (e) {
       // if some check went wrong, we go with unavailable
-      return false;
+      return {
+        isAvailable: false
+      };
     }
 
     // if no check failed here, it is available
-    return true;
+    return {
+      isAvailable: true
+    };
   }
 }
