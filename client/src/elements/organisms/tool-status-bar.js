@@ -21,14 +21,7 @@ export class ToolStatusBar {
     if (!this.item || this.item.conf.title === undefined || this.item.conf.title.length === 0) {
       this.notification.warning('notifications.graphicNeedsATitle');
     } else {
-      if (!this.item.isSaved) {
-        this.item.save()
-          .then(() => {
-            this.openItemModal();
-          });
-      } else {
-        this.openItemModal();
-      }
+      this.openItemModal();
     }
   }
 

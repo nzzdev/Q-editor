@@ -1,3 +1,15 @@
+# 1.2.0 (9.6.2017)
+- feat: livingdocs-component app (view to select/configure/embed item within Livingdocs Editor)
+- feat: dynamicEnum option (asking remote endpoint for enums based on current data)
+- feat: availabilityChecks to show/hide properties in schema-editor (ItemHasId, UserHasRole, ToolEndpoint)
+- feat: handle token based authentication
+- feat: schema-editor-color (input type color)
+- feat: schema-editor-table (using handsontable)
+- feat: schema-editor-select option to show radio buttons instead of dropdown
+- feat: renderingInfo.isPure set to true for previews to tell tool not to save anything happening in the preview (used by quiz)
+- fix: redirect to correct url after login
+- several other fixes and small improvements
+
 # 1.1.1 (29.3.2017)
 - fix: items filter translations
 - fix: schema-editor visual spacing
