@@ -140,8 +140,10 @@ export class Editor {
   }
 
   attached() {
-    if (this.item && !this.item.active) {
+    if (this.item && !this.item.conf.active) {
       this.startAutosave();
+    } else {
+      this.notification.warning('editor.noAutosaveBecauseActive');
     }
     this.previewData = JSON.parse(JSON.stringify(this.item.conf));
   }
