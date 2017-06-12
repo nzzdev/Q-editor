@@ -53,10 +53,10 @@
     "byAll": "von allen",
     "byMe": "von mir",
     "allDepartments": "alle Ressorts",
-    "myDepartment": "nur mein Ressorts",
+    "myDepartment": "nur mein Ressort",
     "allStates": "alle Zustände",
-    "onlyActive": "nur Aktive",
-    "onlyInactive": "nur Inaktive"
+    "onlyActive": "nur aktive",
+    "onlyInactive": "nur inaktive"
   },
   "livingdocsComponent": {
     "insert": "Q Element verwenden",
