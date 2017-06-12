@@ -140,7 +140,7 @@ export class Editor {
   }
 
   attached() {
-    if (this.item && !this.item.isActive) {
+    if (this.item && !this.item.active) {
       this.startAutosave();
     }
     this.previewData = JSON.parse(JSON.stringify(this.item.conf));
