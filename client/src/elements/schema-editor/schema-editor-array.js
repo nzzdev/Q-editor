@@ -152,15 +152,29 @@ export class SchemaEditorArray {
     }
     this.entryLabels = this.data
       .map(entry => {
-        try {
-          if (this.options.expandable.itemLabelProperty) {
-            return this.options.expandable.itemLabelProperty
-              .split('.')
-              .reduce((o, i) => o[i], entry);
+        // if options.expandable.itemLabelProperty is an Array we try to get the property in order of the array
+        // and return with the first option that works.
+        if (Array.isArray(this.options.expandable.itemLabelProperty)) {
+          for (let itemLabelProperty of this.options.expandable.itemLabelProperty) {
+            let label = this.getEntryLabel(entry, itemLabelProperty);
+            if (label) {
+              return label;
+            }
           }
-        } catch (e) {
-          return undefined;
+        } else if (typeof this.options.expandable.itemLabelProperty === 'string') {
+          return this.getEntryLabel(entry, this.options.expandable.itemLabelProperty);
         }
+        return undefined;
       });
+  }
+
+  getEntryLabel(entry, itemLabelProperty) {
+    try {
+      return itemLabelProperty
+        .split('.')
+        .reduce((o, i) => o[i], entry);
+    } catch (e) {
+      return undefined;
+    }
   }
 }
