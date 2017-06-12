@@ -10,9 +10,9 @@ export function checkAvailability() {
 
     return class extends target {
       static inject = [Element, SchemaEditorInputAvailabilityChecker].concat(inject);
-      constructor(elem, schemaEditorInputAvailabilityChecker, ...rest) {
+      constructor(element, schemaEditorInputAvailabilityChecker, ...rest) {
         super(...rest);
-        this.__element__ = elem;
+        this.__element__ = element;
         this.__schemaEditorInputAvailabilityChecker__ = schemaEditorInputAvailabilityChecker;
         this.__inputElements__ = this.__element__.querySelectorAll('input, textarea, select, button');
       }
@@ -54,18 +54,37 @@ export function checkAvailability() {
         for (let inputElement of this.__inputElements__) {
           inputElement.disabled = true;
         }
-        let isAvailable = await this.__schemaEditorInputAvailabilityChecker__.isAvailable(this.schema);
-        if (isAvailable) {
+        const availabilityInfo = await this.__schemaEditorInputAvailabilityChecker__.getAvailabilityInfo(this.schema);
+        if (availabilityInfo.isAvailable) {
           this.__element__.style.display = 'block';
           this.__element__.closest('schema-editor-wrapper').style.display = 'block';
           this.__element__.classList.remove('disabled');
+          const messageElement = this.__getMessageElement__();
+          if (messageElement) {
+            messageElement.remove();
+          }
           for (let inputElement of this.__inputElements__) {
             inputElement.disabled = false;
           }
         } else {
           this.__element__.style.display = 'none';
-          this.__element__.closest('schema-editor-wrapper').style.display = 'none';
+          if (availabilityInfo.hasOwnProperty('unavailableMessage')) {
+            const messageElement = this.__getMessageElement__();
+            messageElement.innerHTML = availabilityInfo.unavailableMessage;
+            this.__element__.parentNode.appendChild(messageElement);
+          } else {
+            this.__element__.closest('schema-editor-wrapper').style.display = 'none';
+          }
         }
+      }
+
+      __getMessageElement__() {
+        if (this.__messageElement__) {
+          return this.__messageElement__;
+        }
+        this.__messageElement__ = this.__element__.ownerDocument.createElement('div');
+        this.__messageElement__.classList.add('unavailability-message-block');
+        return this.__messageElement__;
       }
     };
   };
