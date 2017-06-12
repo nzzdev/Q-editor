@@ -51,9 +51,3 @@ schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper schema-editor-
   display: block;
   margin-bottom: var(--q-space-base);
 }
-
-schema-editor-wrapper .unavailability-message-block {
-  border: 1px solid var(--q-color-warning-light);
-  padding: calc(var(--q-space-base) / 2);
-  color: var(--q-color-warning);
-}

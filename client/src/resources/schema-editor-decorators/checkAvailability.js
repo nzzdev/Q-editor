@@ -83,7 +83,7 @@ export function checkAvailability() {
           return this.__messageElement__;
         }
         this.__messageElement__ = this.__element__.ownerDocument.createElement('div');
-        this.__messageElement__.classList.add('unavailability-message-block');
+        this.__messageElement__.classList.add('q-text');
         return this.__messageElement__;
       }
     };
