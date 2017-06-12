@@ -1,0 +1,28 @@
+.feed {
+  height: 100%;
+  display: flex;
+}
+
+.feed main {
+  padding: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 3);
+  flex-grow: 1;
+}
+
+.feed main section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.feed main::-webkit-scrollbar {
+  background: transparent;
+  width: 2px;
+}
+
+.feed main::-webkit-scrollbar-thumb {
+  background: var(--q-color-gray-5);
+}
+
+.feed .feed-preview-block {
+  margin: 10px;
+}

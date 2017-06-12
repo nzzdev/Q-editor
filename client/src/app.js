@@ -54,6 +54,12 @@ export class App {
         auth: true
       },
       {
+        route: ['feed'],
+        name: 'feed',
+        moduleId: 'pages/feed',
+        auth: true
+      },
+      {
         route: ['server-unavailable'],
         name: 'server-unavailable',
         moduleId: 'pages/server-unavailable',
