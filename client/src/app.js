@@ -20,7 +20,7 @@ export class App {
   }
 
   async activate() {
-    this.isPlayground = await qEnv.PLAYGROUND;
+    this.isPlayground = await qEnv.playground;
   }
 
   configureRouter(config, router) {
