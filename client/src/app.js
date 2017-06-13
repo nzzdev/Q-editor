@@ -19,6 +19,10 @@ export class App {
     return this.user.loaded;
   }
 
+  async activate() {
+    this.isPlayground = await qEnv.PLAYGROUND;
+  }
+
   configureRouter(config, router) {
     this.router = router;
     config.title = 'NZZ Q';
