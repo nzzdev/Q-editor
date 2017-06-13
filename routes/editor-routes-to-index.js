@@ -22,6 +22,13 @@ module.exports = [
   },
   {
     method: 'GET',
+    path: '/feed',
+    handler: {
+      file: './client/export/index.html'
+    }
+  },
+  {
+    method: 'GET',
     path: '/index/{path*}',
     handler: {
       file: './client/export/index.html'

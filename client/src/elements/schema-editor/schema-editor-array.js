@@ -113,7 +113,8 @@ export class SchemaEditorArray {
 
   async isEntryAvailable(entry) {
     const schema = this.getSchemaForArrayEntry(entry);
-    return await this.schemaEditorInputAvailabilityChecker.isAvailable(schema);
+    const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(schema);
+    return await availabilityInfo.isAvailable;
   }
 
   async calculateArrayEntryOptions() {
@@ -134,8 +135,8 @@ export class SchemaEditorArray {
       });
     } else if (this.schema.items && this.schema.items.oneOf) {
       for (let schema of this.schema.items.oneOf) {
-        const isAvailable = await this.schemaEditorInputAvailabilityChecker.isAvailable(schema);
-        if (isAvailable) {
+        const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(schema);
+        if (availabilityInfo.isAvailable) {
           this.arrayEntryOptions.push({
             schema: schema,
             arrayEntryLabel: schema.title
@@ -151,15 +152,29 @@ export class SchemaEditorArray {
     }
     this.entryLabels = this.data
       .map(entry => {
-        try {
-          if (this.options.expandable.itemLabelProperty) {
-            return this.options.expandable.itemLabelProperty
-              .split('.')
-              .reduce((o, i) => o[i], entry);
+        // if options.expandable.itemLabelProperty is an Array we try to get the property in order of the array
+        // and return with the first option that works.
+        if (Array.isArray(this.options.expandable.itemLabelProperty)) {
+          for (let itemLabelProperty of this.options.expandable.itemLabelProperty) {
+            let label = this.getEntryLabel(entry, itemLabelProperty);
+            if (label) {
+              return label;
+            }
           }
-        } catch (e) {
-          return undefined;
+        } else if (typeof this.options.expandable.itemLabelProperty === 'string') {
+          return this.getEntryLabel(entry, this.options.expandable.itemLabelProperty);
         }
+        return undefined;
       });
+  }
+
+  getEntryLabel(entry, itemLabelProperty) {
+    try {
+      return itemLabelProperty
+        .split('.')
+        .reduce((o, i) => o[i], entry);
+    } catch (e) {
+      return undefined;
+    }
   }
 }

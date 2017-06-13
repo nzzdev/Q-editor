@@ -37,7 +37,8 @@
     "activatingEditorTakesTooLong": "It takes too long to load the editor, something is wrong.",
     "failedToSave": "Failed to save",
     "conflictOnSave": "Failed to save due to a conflict",
-    "failedToLoadEditorPart": "failed to load the editor for this element"
+    "failedToLoadEditorPart": "failed to load the editor for this element",
+    "noAutosaveBecauseActive": "Automatic saving is deactivated because the graphic is already active"
   },
   "item": {
     "activate": "activate",

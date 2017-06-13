@@ -7,6 +7,7 @@
 - feat: schema-editor-table (using handsontable)
 - feat: schema-editor-select option to show radio buttons instead of dropdown
 - feat: renderingInfo.isPure set to true for previews to tell tool not to save anything happening in the preview (used by quiz)
+- feat: hidden /feed page showing all graphics sorted by last edit
 - fix: redirect to correct url after login
 - several other fixes and small improvements
 

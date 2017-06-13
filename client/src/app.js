@@ -19,6 +19,10 @@ export class App {
     return this.user.loaded;
   }
 
+  async activate() {
+    this.isPlayground = await qEnv.playground;
+  }
+
   configureRouter(config, router) {
     this.router = router;
     config.title = 'NZZ Q';
@@ -51,6 +55,12 @@ export class App {
         route: ['editor/:tool/:id?'],
         name: 'editor',
         moduleId: 'pages/editor',
+        auth: true
+      },
+      {
+        route: ['feed'],
+        name: 'feed',
+        moduleId: 'pages/feed',
         auth: true
       },
       {
