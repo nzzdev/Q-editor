@@ -5,8 +5,9 @@
   <require from="./styles/fonts.css"></require>
   <require from="./styles/q-form.css"></require>
   <require from="./styles/app.css"></require>
+  <require from="./styles/notifications.css"></require>
 
-  <div class="q-container ${env.PLAYGROUND ? 'q-container--playground' : ''}">
+  <div class="q-container ${isPlayground ? 'q-container--playground' : ''}">
     <q-bar if.bind="user.isLoggedIn" router.bind="router"></q-bar>
     <q-screen class="${router.isNavigating ? 'is-navigating' : ''}">
       <router-view containerless name="default"></router-view>

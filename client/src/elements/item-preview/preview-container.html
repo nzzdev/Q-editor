@@ -3,8 +3,18 @@
   <style>
     .container {
       overflow-x: auto;
+      overflow-y: var(--preview-container-overflow-y, auto);
+      height: 100%;
+    }
+    .preview-note {
+      font-size: var(--q-text-size);
+      color: var(--q-text-ultralight-color);
+      text-align: center;
+      max-width: 300px;
+      margin: 0 auto;
     }
   </style>
+  <div class="preview-note" if.bind="!renderingInfo && noRenderingInfoText">${noRenderingInfoText}</div>    
   <div class="container" css="width: ${width}px; max-width: 100%;">
     <div css="width: ${width}px;">
       <div ref="previewElement"></div>

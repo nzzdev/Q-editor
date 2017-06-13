@@ -1,0 +1,7 @@
+<template class="schema-editor-input">
+  <require from="./schema-editor-color.css"></require>
+  <label>
+    ${schema["title"]}
+    <input type="color" value.bind="data" required.bind="required" keyup.delegate="change() & debounce:800">
+  </label>
+</template>

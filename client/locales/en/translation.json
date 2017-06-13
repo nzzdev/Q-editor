@@ -22,20 +22,23 @@
     "changesSaved": "Changes saved.",
     "failedToSaveChanges": "Failed to save changes.",
     "loginFailed": "Your username or password is not correct.",
-    "serverConnectionFailed": "Failed to connect to server."
+    "serverConnectionFailed": "Failed to connect to server.",
+    "preview": "Preview",
+    "previewTargetLabel": "Publication",
+    "previewSizeLabel": "Size"
   },
   "statistics": {
-    "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",    
+    "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",
     "enoughNewGraphics": "{{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active."
   },
   "editor": {
     "questionLeaveWithUnsavedChanges": "Not all changes are saved, close anyway?",
-    "previewTargetLabel": "Publication",
-    "previewSizeLabel": "Size",
     "arrayEntryAdd": "add {{ arrayEntryLabel }}",
     "activatingEditorTakesTooLong": "It takes too long to load the editor, something is wrong.",
-    "failedToSave": "Failed to save: {{reason}}.",
-    "failedToLoadEditorPart": "failed to load the editor for this element"
+    "failedToSave": "Failed to save",
+    "conflictOnSave": "Failed to save due to a conflict",
+    "failedToLoadEditorPart": "failed to load the editor for this element",
+    "noAutosaveBecauseActive": "Automatic saving is deactivated because the graphic is already active"
   },
   "item": {
     "activate": "activate",
@@ -55,5 +58,20 @@
     "allStates": "all states",
     "onlyActive": "active only",
     "onlyInactive": "inactive only"
+  },
+  "livingdocsComponent": {
+    "insert": "use Q element",
+    "edit": "edit in Q",
+    "titleLabel": "title Q element: ",
+    "selectGraphic": "please select a Q element from the list",
+    "searchLabel": "Search for a Q element"
+  },
+  "notifications": {
+    "previewBadRequest": "There is data missing to show the preview",
+    "failedLoadingEditorConfig": "Failed to load editor configuration",
+    "graphicNeedsATitle": "Graphic needs a title",
+    "failedLoadingItems": "Failed loading graphics",
+    "failedToLoadItem": "Failed to load the graphic.",
+    "toolNotAvailable": "This tool is not available"
   }
 }

@@ -1,27 +1,27 @@
 import { inject, singleton } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
+import { Notification } from 'aurelia-notification';
 import User from 'resources/User.js';
 import ItemStore from 'resources/ItemStore.js';
 import ToolsInfo from 'resources/ToolsInfo.js';
 import Statistics from 'resources/Statistics.js';
 import QConfig from 'resources/QConfig.js';
-import MessageService from 'resources/MessageService.js';
 
 @singleton()
-@inject(ItemStore, User, ToolsInfo, Router, QConfig, Statistics, MessageService)
+@inject(ItemStore, User, ToolsInfo, Router, QConfig, Statistics, Notification)
 export class Index {
 
   enoughNewItems = true;
   initialised = false;
 
-  constructor(itemStore, user, toolsInfo, router, qConfig, statistics, messageService) {
+  constructor(itemStore, user, toolsInfo, router, qConfig, statistics, notification) {
     this.itemStore = itemStore;
     this.user = user;
     this.toolsInfo = toolsInfo;
     this.router = router;
     this.qConfig = qConfig;
     this.statistics = statistics;
-    this.messageService = messageService;
+    this.notification = notification;
   }
 
   canActivate() {
@@ -83,7 +83,7 @@ export class Index {
       this.itemsLoading = false;
       return result;
     } catch (e) {
-      this.messageService.push('error', 'failedLoadingItems');
+      this.notification.error('notifications.failedLoadingItems');
     }
   }
 

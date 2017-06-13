@@ -1,7 +1,8 @@
-import { inject } from 'aurelia-framework';
+import { inject, TaskQueue } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
 import { I18N } from 'aurelia-i18n';
+import { Notification } from 'aurelia-notification';
 
 import { LogManager } from 'aurelia-framework';
 const log = LogManager.getLogger('Q');
@@ -9,9 +10,12 @@ const log = LogManager.getLogger('Q');
 import { ConfirmDialog } from 'dialogs/confirm-dialog.js';
 
 import qEnv from 'resources/qEnv.js';
-import MessageService from 'resources/MessageService.js';
 import ItemStore from 'resources/ItemStore.js';
-import generateFromSchema from 'helpers/generateFromSchema.js';
+import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
+import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
+import ToolsInfo from 'resources/ToolsInfo.js';
+import CurrentItemProvider from 'resources/CurrentItemProvider.js';
+import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
 
 function getSchemaForSchemaEditor(schema) {
   if (schema.properties.hasOwnProperty('options')) {
@@ -48,29 +52,42 @@ function getTranslatedSchema(schema, toolName, i18n) {
   return schema;
 }
 
-@inject(ItemStore, MessageService, DialogService, I18N, EventAggregator)
+@inject(ItemStore, Notification, ToolEndpointChecker, SchemaEditorInputAvailabilityChecker, ToolsInfo, CurrentItemProvider, ObjectFromSchemaGenerator, DialogService, I18N, EventAggregator, TaskQueue)
 export class Editor {
 
-  constructor(itemStore, messageService, dialogService, i18n, eventAggregator) {
+  constructor(itemStore, notification, toolEndpointChecker, schemaEditorInputAvailabilityChecker, toolsInfo, currentItemProvider, objectFromSchemaGenerator, dialogService, i18n, eventAggregator, taskQueue) {
     this.itemStore = itemStore;
-    this.messageService = messageService;
+    this.notification = notification;
+    this.toolEndpointChecker = toolEndpointChecker;
+    this.schemaEditorInputAvailabilityChecker = schemaEditorInputAvailabilityChecker;
+    this.toolsInfo = toolsInfo;
+    this.currentItemProvider = currentItemProvider;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.dialogService = dialogService;
     this.i18n = i18n;
     this.eventAggregator = eventAggregator;
+    this.taskQueue = taskQueue;
   }
 
-  activate(routeParams) {
+  async activate(routeParams) {
+    this.toolName = routeParams.tool;
+
+    const isToolAvailable = await this.toolsInfo.isToolWithNameAvailable(this.toolName);
+    if (!isToolAvailable) {
+      this.notification.error('editor.toolNotAvailable');
+      return false;
+    }
+
     let showMessageTimeout;
     let timeoutPromise = new Promise((resolve, reject) => {
       showMessageTimeout = setTimeout(() => {
-        this.messageService.pushMessage('error', this.i18n.tr('editor.activatingEditorTakesTooLong'));
+        this.notification.error('editor.activatingEditorTakesTooLong');
         reject(new Error('activating editor takes too long'));
       }, 5000);
     });
-    let allLoaded = qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        return fetch(`${QServerBaseUrl}/tools/${routeParams.tool}/schema.json`);
-      })
+
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    let allLoaded = fetch(`${QServerBaseUrl}/tools/${this.toolName}/schema.json`)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -79,11 +96,11 @@ export class Editor {
       })
       .then(schema => {
         this.fullSchema = schema;
-        this.setTranslatedEditorAndOptionsSchema(this.fullSchema, routeParams.tool);
+        this.setTranslatedEditorAndOptionsSchema(this.fullSchema, this.toolName);
 
         // whenever there is a language change, we calculate the schema and translate all title properties
         this.eventAggregator.subscribe('i18n:locale:changed', () => {
-          this.setTranslatedEditorAndOptionsSchema(this.fullSchema, routeParams.tool);
+          this.setTranslatedEditorAndOptionsSchema(this.fullSchema, this.toolName);
         });
       })
       .then(() => {
@@ -92,14 +109,19 @@ export class Editor {
         }
 
         let item = this.itemStore.getNewItem();
-        item.conf = generateFromSchema(this.fullSchema);
-        item.conf.tool = routeParams.tool;
+        item.conf = this.objectFromSchemaGenerator.generateFromSchema(this.fullSchema);
+        item.conf.tool = this.toolName;
         return item;
       })
       .then(item => {
         if (item) {
+          // set the toolName and the current item to toolEndpointChecker
+          // whenever we activate the editor. The toolEndpointChecker is used
+          // in the SchemaEditorInputAvailabilityChecker to send requests to the current tool
+          this.toolEndpointChecker.setCurrentToolName(this.toolName);
+          this.toolEndpointChecker.setCurrentItem(item);
+          this.currentItemProvider.setCurrentItem(item);
           this.item = item;
-          this.optionsData = this.item.options;
         }
       });
 
@@ -118,26 +140,30 @@ export class Editor {
   }
 
   attached() {
-    if (this.item && !this.item.isActive) {
+    if (this.item && !this.item.conf.active) {
       this.startAutosave();
+    } else {
+      this.notification.warning('editor.noAutosaveBecauseActive');
     }
     this.previewData = JSON.parse(JSON.stringify(this.item.conf));
   }
 
   async canDeactivate() {
-    if (this.item.isSaved || this.deactivationConfirmed) {
+    if (!this.item || this.item.isSaved || this.deactivationConfirmed) {
       return true;
     }
 
     this.deactivationConfirmed = false;
-    let dialogResponse = await this.dialogService.open({
+
+    const openDialogResult = await this.dialogService.open({
       viewModel: ConfirmDialog,
       model: {
         confirmQuestion: this.i18n.tr('editor.questionLeaveWithUnsavedChanges')
       }
     });
+    const closeResult = await openDialogResult.closeResult;
 
-    if (dialogResponse.wasCancelled) {
+    if (closeResult.wasCancelled) {
       return false;
     }
 
@@ -169,18 +195,31 @@ export class Editor {
   }
 
   handleChange() {
-    this.item.changed();
-    this.previewData = JSON.parse(JSON.stringify(this.item.conf));
+    this.taskQueue.queueMicroTask(() => {
+      this.item.changed();
+
+      // whenever we have a change in data, we need to reevaluate all the checks
+      this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
+      this.toolEndpointChecker.triggerReevaluation();
+      this.previewData = JSON.parse(JSON.stringify(this.item.conf));
+    });
   }
 
   save() {
     this.item.save()
       .then(() => {
         log.info('item saved', this.item);
+        // whenever we save the item, we need to reevaluate all the checks
+        this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
+        this.toolEndpointChecker.triggerReevaluation();
       })
       .catch(error => {
         log.error(error);
-        this.messageService.pushMessage('error', this.i18n.tr('editor.failedToSave', { reason: error.message }));
+        if (error.status === 409) {
+          this.notification.warning('editor.conflictOnSave');
+        } else {
+          this.notification.warning('editor.failedToSave');
+        }
       });
   }
 

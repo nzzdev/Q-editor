@@ -9,11 +9,7 @@ export class HelpDialog {
 
   constructor(controller, qConfig) {
     this.qConfig = qConfig;
-
     this.controller = controller;
-
-    this.controller.settings.lock = false;
-    this.controller.settings.centerHorizontalOnly = true;
   }
 
   getOrdererFaq(faq) {

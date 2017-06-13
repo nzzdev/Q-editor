@@ -2,27 +2,23 @@ import { inject } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { RelativeTime } from 'aurelia-i18n';
 import { I18N } from 'aurelia-i18n';
+import { Notification } from 'aurelia-notification';
 
 import ItemStore from 'resources/ItemStore.js';
-import MessageService from 'resources/MessageService.js';
-import DragDataGenerator from 'resources/DragDataGenerator.js';
+import ToolsInfo from 'resources/ToolsInfo.js';
 
-@inject(Router, RelativeTime, I18N, ItemStore, MessageService, DragDataGenerator)
+@inject(Router, RelativeTime, I18N, ItemStore, ToolsInfo, Notification)
 export class ItemOverview {
 
   currentTarget;
 
-  constructor(router, relativeTime, i18n, itemStore, messageService, dragDataGenerator) {
+  constructor(router, relativeTime, i18n, itemStore, toolsInfo, notification) {
     this.router = router;
     this.relativeTime = relativeTime;
     this.i18n = i18n;
     this.itemStore = itemStore;
-    this.messageService = messageService;
-    this.dragDataGenerator = dragDataGenerator;
-
-    this.handleDrag = function(event) {
-      this.dragDataGenerator.addDragDataToDataTransfer(event.dataTransfer, this.item, this.currentTarget);
-    }.bind(this);
+    this.toolsInfo = toolsInfo;
+    this.notification = notification;
   }
 
   async activate(routeParams) {
@@ -30,8 +26,12 @@ export class ItemOverview {
       this.itemId = routeParams.id;
       this.item = await this.itemStore.getItem(routeParams.id);
     } catch (e) {
-      this.messageService.pushMessage('error', this.i18n.tr('item.failedToLoadItem'));
+      this.notification.error('notification.failedToLoadItem');
     }
+  }
+
+  async attached() {
+    this.isToolAvailable = await this.toolsInfo.isToolWithNameAvailable(this.item.conf.tool);
   }
 
   edit() {
@@ -47,7 +47,7 @@ export class ItemOverview {
       let tool = this.item.conf.tool.replace(new RegExp('-', 'g'), '_');
       this.router.navigate(`/editor/${tool}/${this.item.conf._id}`);
     } catch (e) {
-      this.messageService.pushMessage('error', this.i18n.tr('item.failedToLoadItem'));
+      this.notification.error('notification.failedToLoadItem');
     }
   }
 

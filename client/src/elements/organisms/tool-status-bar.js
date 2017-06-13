@@ -1,11 +1,9 @@
 import { bindable, inject } from 'aurelia-framework';
+import { Notification } from 'aurelia-notification';
 import { DialogService } from 'aurelia-dialog';
-
 import { ItemDialog } from 'dialogs/item-dialog.js';
 
-import MessageService from 'resources/MessageService.js';
-
-@inject(MessageService, DialogService)
+@inject(Notification, DialogService)
 export class ToolStatusBar {
 
   @bindable item;
@@ -14,26 +12,16 @@ export class ToolStatusBar {
 
   message;
 
-  constructor(messageService, dialogService) {
-    this.messageService = messageService;
+  constructor(notification, dialogService) {
+    this.notification = notification;
     this.dialogService = dialogService;
   }
 
   onActivateClick() {
-    if (this.message) {
-      this.messageService.removeMessage(this.message);
-    }
     if (!this.item || this.item.conf.title === undefined || this.item.conf.title.length === 0) {
-      this.message = this.messageService.pushMessage('error', 'Grafik braucht einen Titel');
+      this.notification.warning('notifications.graphicNeedsATitle');
     } else {
-      if (!this.item.isSaved) {
-        this.item.save()
-          .then(() => {
-            this.openItemModal();
-          });
-      } else {
-        this.openItemModal();
-      }
+      this.openItemModal();
     }
   }
 
@@ -45,24 +33,6 @@ export class ToolStatusBar {
         showEmbedCode: true,
         showId: false,
         item: this.item
-      }
-    }).then(response => {
-      if (!response.wasCancelled) {
-        switch (response.output) {
-          case 'edit':
-            this.router.navigate('/' + this.item.conf.tool + '/edit/' + this.item.conf._id);
-            break;
-          case 'blueprint':
-            this.item.blueprint()
-              .then(() => {
-                this.router.navigate('/' + this.item.conf.tool + '/edit/' + this.item.conf._id);
-              });
-            break;
-          default:
-            break;
-        }
-      } else {
-        // do nothing probably
       }
     });
   }

@@ -1,0 +1,15 @@
+<template>
+  <require from="./feed.css"></require>
+  <require from="../elements/item-preview/preview-container"></require>
+  <section class="feed">
+    <main>
+      <section>
+        <div class="feed-preview-block" repeat.for="item of items">
+          <div class="q-text">ID: ${item.id} Tool: ${item.conf.tool} </div>
+          <preview-container width="320" id="preview-container" rendering-info.bind="renderingInfos[item.id]"></preview-container>
+        </div>
+      </section>
+      <button-secondary style="width: 100%;" click.delegate="loadMore()"><span t="general.loadMore"></span></button-secondary>
+    </main>
+  </section>
+</template>

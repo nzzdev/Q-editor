@@ -1,17 +1,20 @@
-import { bindable, computedFrom, LogManager } from 'aurelia-framework';
-const log = LogManager.getLogger('Q');
-
+import { inject, bindable } from 'aurelia-framework';
+import { checkAvailability } from 'resources/schemaEditorDecorators.js';
+import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
 import Ajv from 'ajv';
-import generateFromSchema from 'helpers/generateFromSchema.js';
-
+import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
 
 const ajv = new Ajv();
 
+@checkAvailability()
+@inject(SchemaEditorInputAvailabilityChecker, ObjectFromSchemaGenerator)
 export class SchemaEditorArray {
 
   @bindable schema;
   @bindable data;
   @bindable change;
+
+  arrayEntryOptions = [];
 
   options = {
     expandable: false
@@ -19,7 +22,9 @@ export class SchemaEditorArray {
 
   collapsedStates = {};
 
-  constructor() {
+  constructor(schemaEditorInputAvailabilityChecker, objectFromSchemaGenerator) {
+    this.schemaEditorInputAvailabilityChecker = schemaEditorInputAvailabilityChecker;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.handleChange = () => {
       this.calculateEntryLabels();
       if (this.change) {
@@ -42,6 +47,7 @@ export class SchemaEditorArray {
 
   schemaChanged() {
     this.applyOptions();
+    this.calculateArrayEntryOptions();
     this.calculateEntryLabels();
   }
 
@@ -52,7 +58,7 @@ export class SchemaEditorArray {
   }
 
   addElement(data, schema) {
-    let entry = generateFromSchema(schema);
+    let entry = this.objectFromSchemaGenerator.generateFromSchema(schema);
     data.push(entry);
     this.expand(data.indexOf(entry));
     this.calculateEntryLabels();
@@ -85,43 +91,35 @@ export class SchemaEditorArray {
     }
   }
 
-  getSchemaForArrayEntry(data) {
+  getSchemaForArrayEntry(entry) {
     if (this.schema.items.type) {
       return this.schema.items;
     }
     if (this.schema.items.oneOf) {
       for (const schema of this.schema.items.oneOf) {
-        const validate = ajv.compile(schema);
-        if (validate(data)) {
+        // ignore any required properties here to allow for required properties without default value
+        // clone the schema first to not mess with original
+        const validateSchema = JSON.parse(JSON.stringify(schema));
+        delete validateSchema.required;
+        const validate = ajv.compile(validateSchema);
+        if (validate(entry)) {
+          // return the original schema with required in case of a match
           return schema;
         }
-        log.info('schema-editor-array: no schema match for data');
-        log.info('schema-editor-array data:', JSON.stringify(data));
-        log.info('schema-editor-array schema:', JSON.stringify(schema));
       }
       return null;
     }
   }
 
-  calculateEntryLabels() {
-    if (!this.data || !this.options) {
-      return;
-    }
-    this.entryLabels = this.data
-      .map(entry => {
-        try {
-          if (this.options.expandable.itemLabelProperty) {
-            return this.options.expandable.itemLabelProperty.split('.').reduce((o, i) => o[i], entry);
-          }
-        } catch (e) {
-          return undefined;
-        }
-      });
+  async isEntryAvailable(entry) {
+    const schema = this.getSchemaForArrayEntry(entry);
+    const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(schema);
+    return await availabilityInfo.isAvailable;
   }
 
-  @computedFrom('schema')
-  get arrayEntryOptions() {
-    let arrayEntryOptions = [];
+  async calculateArrayEntryOptions() {
+    // reset options
+    this.arrayEntryOptions = [];
 
     // if we have a type in the schema in items, we use this as a schema directly
     if (this.schema.items && this.schema.items.type) {
@@ -131,19 +129,52 @@ export class SchemaEditorArray {
       } else if (this.schema.title) {
         arrayEntryLabel = this.schema.title;
       }
-      arrayEntryOptions.push({
+      this.arrayEntryOptions.push({
         schema: this.schema.items,
         arrayEntryLabel: arrayEntryLabel
       });
     } else if (this.schema.items && this.schema.items.oneOf) {
       for (let schema of this.schema.items.oneOf) {
-        arrayEntryOptions.push({
-          schema: schema,
-          arrayEntryLabel: schema.title
-        });
+        const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(schema);
+        if (availabilityInfo.isAvailable) {
+          this.arrayEntryOptions.push({
+            schema: schema,
+            arrayEntryLabel: schema.title
+          });
+        }
       }
     }
-    return arrayEntryOptions;
   }
 
+  calculateEntryLabels() {
+    if (!this.data || !this.options) {
+      return;
+    }
+    this.entryLabels = this.data
+      .map(entry => {
+        // if options.expandable.itemLabelProperty is an Array we try to get the property in order of the array
+        // and return with the first option that works.
+        if (Array.isArray(this.options.expandable.itemLabelProperty)) {
+          for (let itemLabelProperty of this.options.expandable.itemLabelProperty) {
+            let label = this.getEntryLabel(entry, itemLabelProperty);
+            if (label) {
+              return label;
+            }
+          }
+        } else if (typeof this.options.expandable.itemLabelProperty === 'string') {
+          return this.getEntryLabel(entry, this.options.expandable.itemLabelProperty);
+        }
+        return undefined;
+      });
+  }
+
+  getEntryLabel(entry, itemLabelProperty) {
+    try {
+      return itemLabelProperty
+        .split('.')
+        .reduce((o, i) => o[i], entry);
+    } catch (e) {
+      return undefined;
+    }
+  }
 }

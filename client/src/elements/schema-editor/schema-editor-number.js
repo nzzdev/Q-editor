@@ -1,5 +1,7 @@
 import { bindable } from 'aurelia-framework';
+import { checkAvailability } from 'resources/schemaEditorDecorators.js';
 
+@checkAvailability()
 export class SchemaEditorNumber {
 
   @bindable data
@@ -8,7 +10,7 @@ export class SchemaEditorNumber {
   @bindable required
 
   options = {
-    step: 1
+    step: 'any'
   }
 
   schemaChanged() {

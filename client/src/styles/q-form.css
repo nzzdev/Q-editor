@@ -36,6 +36,12 @@
   box-shadow: 0px 0px 5px 1px var(--q-color-gray-4);
 }
 
+.q-form .disabled,
+.q-form input:disabled,
+.q-form textarea:disabled,
+.q-form select:disabled {
+  opacity: 0.5;
+}
 
 .q-form input[type="text"], 
 .q-form input[type="url"] {
@@ -114,7 +120,7 @@
 */
 .q-form select {
   height: 2.4375rem;
-  margin: 0 0 var(--q-space-base) 0;
+  margin: 0;
   padding: calc(var(--q-space-base) / 2);
   appearance: none;
   -webkit-appearance: none;
@@ -128,4 +134,55 @@
   transition: border-color 0.25s ease-in-out;
   transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
   transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
+}
+
+/*
+
+  radio
+
+*/
+.q-form input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  width: 0px;
+  height: 2em;
+}
+
+.q-form input[type="radio"] + label {
+  line-height: 2em;
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  transition: color 0.2s ease-out;
+  align-items: center;
+  cursor: pointer;
+}
+
+.q-form input[type="radio"] + label::before {
+  content: '';
+  width: 1.4em;
+  height: 1.4em;
+  margin-right: 5px;
+  position: relative;
+  background-color: var(--q-color-gray-2);
+  border: 1px solid var(--q-color-gray-5);
+  border-radius: 50%;
+  transition: background-color 0.2s ease-out;
+  cursor: pointer;
+}
+
+.q-form input[type="radio"] + label:hover::before {
+  border-color: var(--q-color-primary-5);
+  background-color: var(--q-color-primary-1);
+}
+
+.q-form input[type="radio"]:checked + label::before {
+  background-color: var(--q-color-primary-5);
+  border-color: var(--q-color-primary-5);
+}
+
+.q-form input[type="radio"]:active + label::before, .q-form input[type="radio"]:focus + label::before {
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
 }

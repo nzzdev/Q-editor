@@ -15,7 +15,7 @@
           </form>
         </section>
         <section>
-          <h2>Vorschau</h2>
+          <h2 t="general.preview"></h2>
           <item-preview data.bind="previewData"></item-preview>
         </section>
         <section>
@@ -30,6 +30,6 @@
         <button ref="optionsFormSubmitButton" type="submit" style="display: none;"></button>
       </form>
     </div>
-    <tool-status-bar item.bind="item" save-action.call="userSave()" activate-action.call="openItemModal()"></tool-status-bar>
+    <tool-status-bar item.bind="item" save-action.call="userSave()"></tool-status-bar>
   </section>
 </template>

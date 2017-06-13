@@ -19,6 +19,10 @@ export class App {
     return this.user.loaded;
   }
 
+  async activate() {
+    this.isPlayground = await qEnv.playground;
+  }
+
   configureRouter(config, router) {
     this.router = router;
     config.title = 'NZZ Q';
@@ -51,6 +55,12 @@ export class App {
         route: ['editor/:tool/:id?'],
         name: 'editor',
         moduleId: 'pages/editor',
+        auth: true
+      },
+      {
+        route: ['feed'],
+        name: 'feed',
+        moduleId: 'pages/feed',
         auth: true
       },
       {
@@ -122,11 +132,18 @@ class AuthorizeStep {
       return this.user.loaded
         .then(() => {
           if (!this.user.isLoggedIn) {
+            this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
             return next.cancel(new Redirect('login'));
+          }
+          if (this.redirectBackAfterLoginRoute) {
+            let route = this.redirectBackAfterLoginRoute;
+            delete this.redirectBackAfterLoginRoute;
+            return next.cancel(new Redirect(route));
           }
           return next();
         })
         .catch((e) => {
+          this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
           return next.cancel(new Redirect('login'));
         });
     }

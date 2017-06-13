@@ -1,10 +1,14 @@
+import { inject } from 'aurelia-framework';
+import { Notification } from 'aurelia-notification';
 import qEnv from 'resources/qEnv.js';
 
+@inject(Notification)
 export default class QTargets {
 
   data = {}
 
-  constructor() {
+  constructor(notification) {
+    this.notification = notification;
     this.loaded = qEnv.QServerBaseUrl
       .then(QServerBaseUrl => {
         return fetch(`${QServerBaseUrl}/editor/targets`);
@@ -19,7 +23,7 @@ export default class QTargets {
         this.data.availableTargets = targets;
       })
       .catch(err => {
-        this.messageService.pushMessage('error', 'failedLoadingTargets');
+        this.notification.error('failedLoadingEditorConfig');
       });
   }
 

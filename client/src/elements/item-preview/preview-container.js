@@ -7,11 +7,14 @@ export class PreviewContainer {
 
   @bindable width
   @bindable renderingInfo
+  @bindable noRenderingInfoText
 
   insertedElements = [];
 
   constructor(element) {
     this.element = element;
+    this.id = `preview-container-${Math.floor(Math.random() * 10 ** 9)}`;
+    this.element.setAttribute('id', this.id);
   }
 
   attached() {
@@ -105,7 +108,7 @@ export class PreviewContainer {
         this.insertedElements.push(scriptElement);
         this.element.shadowRoot.appendChild(scriptElement);
       } else if (script.content) {
-        script.content = script.content.replace(new RegExp('document.querySelector', 'g'), "document.querySelector('#preview-container').shadowRoot.querySelector");
+        script.content = script.content.replace(new RegExp('document.querySelector', 'g'), `document.querySelector('#${this.id}').shadowRoot.querySelector`);
 
         scriptElement.innerHTML = script.content;
         this.insertedElements.push(scriptElement);

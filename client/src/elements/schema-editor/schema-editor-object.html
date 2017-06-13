@@ -1,13 +1,10 @@
 <template>
     <require from="./schema-editor-wrapper"></require>
-
+    <legend if.bind="!noObjectTitle">
+      ${schema.title}
+    </legend>
     <div if.bind="schema.properties" repeat.for="propertyName of schema.properties | keys">
-
-      <fieldset if.bind="getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'" class="${isCompact($parent.schema.properties[propertyName]) ? 'compact' : ''}">
-        <legend>
-          ${$parent.schema.properties[propertyName]['title']}
-        </legend>
-
+      <fieldset if.bind="noFieldsets || getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'" class="${isCompact($parent.schema.properties[propertyName]) ? 'compact' : ''}">
         <schema-editor-wrapper
             if.bind="!$parent.schema.properties[propertyName]['Q:options'] || !$parent.schema.properties[propertyName]['Q:options'].hideInEditor"
             schema.bind="$parent.schema.properties[propertyName]"

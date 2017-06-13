@@ -22,20 +22,23 @@
     "changesSaved": "Die Änderungen wurden gespeichert.",
     "failedToSaveChanges": "Die Änderung konnten nicht gespeichert werden.",
     "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt.",
-    "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen."
+    "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen.",
+    "preview": "Vorschau",
+    "previewTargetLabel": "Publikation",
+    "previewSizeLabel": "Angezeigte Grösse"
   },
   "statistics": {
-    "tooFewNewGraphics": "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",    
+    "tooFewNewGraphics": "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",
     "enoughNewGraphics": "{{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive."
   },
   "editor": {
     "questionLeaveWithUnsavedChanges": "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
-    "previewTargetLabel": "Publikation",
-    "previewSizeLabel": "Angezeigte Grösse",
     "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",
     "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
-    "failedToSave": "Speichern ist fehlgeschlagen: {{reason}}.",
-    "failedToLoadEditorPart": "Der Editor für dieses Element konnte nicht geladen werden"
+    "failedToSave": "Speichern ist fehlgeschlagen",
+    "conflictOnSave": "Speichern ist fehlgeschlagen weil ein Konflikt besteht",
+    "failedToLoadEditorPart": "Der Editor für dieses Element konnte nicht geladen werden",
+    "noAutosaveBecauseActive": "Automatisches speichern ist deaktiviert da die Grafik bereits aktiv ist"
   },
   "item": {
     "activate": "aktivieren",
@@ -43,7 +46,6 @@
     "blueprint": "als Vorlage benutzen",
     "blueprintTitlePrefix": "Kopie von ",
     "edit": "bearbeiten",
-    "failedToLoadItem": "Die Grafik konnte nicht geladen werden.",
     "failedToBlueprintItem": "Die Grafik konnte nicht als Vorlage verwendet werden."
   },
   "itemsFilter": {
@@ -51,9 +53,24 @@
     "byAll": "von allen",
     "byMe": "von mir",
     "allDepartments": "alle Ressorts",
-    "myDepartment": "nur mein Ressorts",
+    "myDepartment": "nur mein Ressort",
     "allStates": "alle Zustände",
-    "onlyActive": "nur Aktive",
-    "onlyInactive": "nur Inaktive"
+    "onlyActive": "nur aktive",
+    "onlyInactive": "nur inaktive"
+  },
+  "livingdocsComponent": {
+    "insert": "Q Element verwenden",
+    "edit": "in Q bearbeiten",
+    "titleLabel": "Titel des Q Elements: ",
+    "selectGraphic": "bitte ein Q Element aus der Liste auswählen",
+    "searchLabel": "Ein Q Element suchen"
+  },
+  "notifications": {
+    "previewBadRequest": "Es fehlen einige Daten um die Vorschau anzuzeigen",
+    "failedLoadingEditorConfig": "Die Editorkonfiguration konnte nicht geladen werden",
+    "graphicNeedsATitle": "Grafik braucht einen Titel",
+    "failedLoadingItems": "Grafiken konnten nicht geladen werden",
+    "failedToLoadItem": "Die Grafik konnte nicht geladen werden.",
+    "toolNotAvailable": "Dieses Tool steht nicht zur Verfügung"
   }
 }

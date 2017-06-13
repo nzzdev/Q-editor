@@ -1,0 +1,43 @@
+schema-editor-table {
+  display: block;
+  margin-bottom: var(--q-space-base);
+}
+
+schema-editor-table .handsontable {
+  margin-bottom: calc(var(--q-space-base) / 2);
+}
+
+schema-editor-table .wtHolder {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+schema-editor-table .rowHeader {
+  color: var(--q-text-ultralight-color);
+}
+
+schema-editor-table .wtHolder th {
+  background-color: var(--q-color-gray-3);
+  border-color: var(--q-color-gray-4);
+  text-align: center;
+  width: 30px;
+}
+
+schema-editor-table .wtHolder td {
+  border-color: var(--q-color-gray-2);
+  width: 200px;
+}
+
+schema-editor-table .wtHolder td:last-child {
+  border-right-style: dotted;
+}
+
+schema-editor-table .wtHolder tr:first-child td {
+  background-color: var(--q-color-gray-3);
+  border-color: var(--q-color-gray-4);
+}
+
+schema-editor-table .wtHolder tr:last-child td {
+  border-bottom-style: dotted;
+}
