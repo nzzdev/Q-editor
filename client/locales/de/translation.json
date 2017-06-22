@@ -25,7 +25,8 @@
     "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen.",
     "preview": "Vorschau",
     "previewTargetLabel": "Publikation",
-    "previewSizeLabel": "Angezeigte Grösse"
+    "previewSizeLabel": "Angezeigte Grösse",
+    "articlesWithThisGraphic": "Artikel mit dieser Grafik"
   },
   "statistics": {
     "tooFewNewGraphics": "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",
