@@ -6,6 +6,14 @@
     <div class="item-overview-container">
       <div class="item-overview__content">
         <item-preview if.bind="itemId" id.bind="itemId" target.two-way="currentTarget"></item-preview>
+        <div class="item-overview__meta" if.bind="articlesWithItem && articlesWithItem.length > 0">
+          <label class="q-text-small q-text--light">${ 'general.articlesWithThisGraphic' & t }</label>
+          <ul>
+            <li repeat.for="article of articlesWithItem">
+              <a class="q-text" href="${article.url}">${article.title} (${article.publicationLastUpdated | timeAgo})</a>
+            </li>
+          </ul>
+        </div>
       </div>
       <aside class="item-overview__controls">
         <div class="item-overview__status q-text-small q-text--light">

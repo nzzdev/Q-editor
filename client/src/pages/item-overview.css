@@ -33,3 +33,12 @@
 .item-overview__status icon-active-state {
   float: right;
 }
+
+.item-overview__meta {
+  margin-top: calc(var(--q-space-base) * 3);
+}
+
+.item-overview__meta ul {
+  list-style-type: none;
+  padding-left: 0;
+}
