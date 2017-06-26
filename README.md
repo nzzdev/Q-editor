@@ -81,6 +81,9 @@ const editorConfig = {
       url: ''
     },
   ],
+  uiBehavior: {
+    useItemDialogToActivate: true // if false, item is directly activatable from tool-status-bar (default: true)
+  },
   eastereggs: { // there are some eastereggs in Q. provide the urls to the soundfiles here. We do not distribute them because we do not have the copyright for the tunes we use at NZZ.
     sounds: {
       m: '', // played if M is visible and user hovers her
