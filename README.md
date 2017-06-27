@@ -81,6 +81,22 @@ const editorConfig = {
       url: ''
     },
   ],
+  metaInformation: {
+    // if articlesWithItem is given Q-editor makes a GET request to the endpoint on Q-server (if path, you can provide url instead) and expects a json array like this
+    // [
+    //  {
+    //    title: '', // this string will be the text of the link to the url
+    //    url: '', // url to the article
+    //    publicationDate: '', // something Date.parse() understands
+    //    publicationLastUpdated: '' // something Date.parse() understands
+    //  }
+    // ]
+    articlesWithItem: { 
+      endpoint: {
+        path: 'meta/articles-with-item/{id}'
+      }
+    }
+  },
   uiBehavior: {
     useItemDialogToActivate: true // if false, item is directly activatable from tool-status-bar (default: true)
   },
