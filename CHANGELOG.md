@@ -1,3 +1,6 @@
+# 1.3.1 (27.6.2017)
+- fix: schema-editor-array makes data an array if undefined before trying to push
+
 # 1.3.0 (27.6.2017)
 - feat: show articles with item in item-overview if configured in server (new `editorConfig.metaInformation.articlesWithItem`)
 - feat: do not show item-dialog on activate but activate directly from tool-status-bar (new `editorConfig.uiBehavior.useItemDialogToActivate`)
