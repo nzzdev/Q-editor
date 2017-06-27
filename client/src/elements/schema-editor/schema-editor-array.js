@@ -59,6 +59,9 @@ export class SchemaEditorArray {
 
   addElement(data, schema) {
     let entry = this.objectFromSchemaGenerator.generateFromSchema(schema);
+    if (data === undefined) {
+      data = [];
+    }
     data.push(entry);
     this.expand(data.indexOf(entry));
     this.calculateEntryLabels();
