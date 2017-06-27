@@ -1,13 +1,13 @@
 icon-active-state {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 20px;
+  height: 20px;
 }
 
 icon-active-state svg.state-active {
-  fill: var(--q-color-primary-5);
+  fill: var(--q-color-yes-5);
 }
 
 icon-active-state svg.state-inactive {
-  fill: var(--q-color-no-3);
+  fill: var(--q-color-no-5);
 }

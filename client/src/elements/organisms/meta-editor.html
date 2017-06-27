@@ -2,6 +2,7 @@
   <form class="q-form">
     <label class="q-text-small q-text--light">Ressort
       <select value.bind="data.department">
+        <option value="default"></option>
         <option repeat.for="department of departments" value.bind="department">${department}</option>
       </select>
     </label>

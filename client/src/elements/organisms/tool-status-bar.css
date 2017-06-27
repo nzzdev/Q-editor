@@ -9,6 +9,17 @@ tool-status-bar {
   border-left: 1px solid var(--q-color-gray-5);
 }
 
+.tool-status-bar__group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tool-status-bar__group:not(:last-child) {
+  margin-bottom: calc(var(--q-space-base) / 2);
+  border-bottom: 1px solid var(--q-color-gray-4);
+}
+
 .tool-status-bar__item {
   margin-bottom: calc(var(--q-space-base) / 2);
 }

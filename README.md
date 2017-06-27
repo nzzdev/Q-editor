@@ -81,6 +81,25 @@ const editorConfig = {
       url: ''
     },
   ],
+  metaInformation: {
+    // if articlesWithItem is given Q-editor makes a GET request to the endpoint on Q-server (if path, you can provide url instead) and expects a json array like this
+    // [
+    //  {
+    //    title: '', // this string will be the text of the link to the url
+    //    url: '', // url to the article
+    //    publicationDate: '', // something Date.parse() understands
+    //    publicationLastUpdated: '' // something Date.parse() understands
+    //  }
+    // ]
+    articlesWithItem: { 
+      endpoint: {
+        path: 'meta/articles-with-item/{id}'
+      }
+    }
+  },
+  uiBehavior: {
+    useItemDialogToActivate: true // if false, item is directly activatable from tool-status-bar (default: true)
+  },
   eastereggs: { // there are some eastereggs in Q. provide the urls to the soundfiles here. We do not distribute them because we do not have the copyright for the tunes we use at NZZ.
     sounds: {
       m: '', // played if M is visible and user hovers her

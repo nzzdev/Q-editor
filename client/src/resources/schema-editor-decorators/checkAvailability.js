@@ -1,5 +1,46 @@
 import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
 
+async function check(context) {
+  context.element.classList.add('disabled');
+  for (let inputElement of context.inputElements) {
+    inputElement.disabled = true;
+  }
+  const availabilityInfo = await context.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(context.getSchema());
+  if (availabilityInfo.isAvailable) {
+    context.element.style.display = 'block';
+    context.element.closest('schema-editor-wrapper').style.display = 'block';
+    context.element.classList.remove('disabled');
+    const messageElement = getMessageElement(context);
+    if (messageElement) {
+      messageElement.remove();
+    }
+    for (let inputElement of context.inputElements) {
+      inputElement.disabled = false;
+    }
+  } else {
+    context.element.style.display = 'none';
+    if (availabilityInfo.hasOwnProperty('unavailableMessage')) {
+      const messageElement = getMessageElement(context);
+      messageElement.innerHTML = availabilityInfo.unavailableMessage;
+      context.element.parentNode.appendChild(messageElement);
+    } else {
+      context.element.closest('schema-editor-wrapper').style.display = 'none';
+    }
+  }
+}
+
+function getMessageElement(context) {
+  if (context.messageElement) {
+    return context.messageElement;
+  }
+  context.messageElement = context.element.ownerDocument.createElement('div');
+  context.messageElement.classList.add('q-text');
+  return context.messageElement;
+}
+
+// we store all the context for the decorated class in this WeakMap
+const contextMap = new WeakMap();
+
 export function checkAvailability() {
   return function(target) {
     // store any already existing inject property to concat it with the Element we want injected
@@ -12,9 +53,13 @@ export function checkAvailability() {
       static inject = [Element, SchemaEditorInputAvailabilityChecker].concat(inject);
       constructor(element, schemaEditorInputAvailabilityChecker, ...rest) {
         super(...rest);
-        this.__element__ = element;
-        this.__schemaEditorInputAvailabilityChecker__ = schemaEditorInputAvailabilityChecker;
-        this.__inputElements__ = this.__element__.querySelectorAll('input, textarea, select, button');
+        contextMap.set(this, {
+          getSchema: () => this.schema,
+          element: element,
+          schemaEditorInputAvailabilityChecker: schemaEditorInputAvailabilityChecker,
+          inputElements: element.querySelectorAll('input, textarea, select, button'),
+          reevaluateAvailabilityCallbackId: null
+        });
       }
 
       bind(bindingContext, overrideContext) {
@@ -35,56 +80,18 @@ export function checkAvailability() {
           }
         }
 
-        this.__reevaluateAvailabilityCallbackId__ = this.__schemaEditorInputAvailabilityChecker__.registerReevaluateCallback(async () => {
-          this.__checkAvailability__();
+        contextMap.get(this).reevaluateAvailabilityCallbackId = contextMap.get(this).schemaEditorInputAvailabilityChecker.registerReevaluateCallback(async () => {
+          check(contextMap.get(this));
         });
 
-        this.__checkAvailability__();
+        check(contextMap.get(this));
       }
 
       unbind() {
         if (super.unbind) {
           super.unbind();
         }
-        this.__schemaEditorInputAvailabilityChecker__.unregisterReevaluateCallback(this.__reevaluateAvailabilityCallbackId__);
-      }
-
-      async __checkAvailability__() {
-        this.__element__.classList.add('disabled');
-        for (let inputElement of this.__inputElements__) {
-          inputElement.disabled = true;
-        }
-        const availabilityInfo = await this.__schemaEditorInputAvailabilityChecker__.getAvailabilityInfo(this.schema);
-        if (availabilityInfo.isAvailable) {
-          this.__element__.style.display = 'block';
-          this.__element__.closest('schema-editor-wrapper').style.display = 'block';
-          this.__element__.classList.remove('disabled');
-          const messageElement = this.__getMessageElement__();
-          if (messageElement) {
-            messageElement.remove();
-          }
-          for (let inputElement of this.__inputElements__) {
-            inputElement.disabled = false;
-          }
-        } else {
-          this.__element__.style.display = 'none';
-          if (availabilityInfo.hasOwnProperty('unavailableMessage')) {
-            const messageElement = this.__getMessageElement__();
-            messageElement.innerHTML = availabilityInfo.unavailableMessage;
-            this.__element__.parentNode.appendChild(messageElement);
-          } else {
-            this.__element__.closest('schema-editor-wrapper').style.display = 'none';
-          }
-        }
-      }
-
-      __getMessageElement__() {
-        if (this.__messageElement__) {
-          return this.__messageElement__;
-        }
-        this.__messageElement__ = this.__element__.ownerDocument.createElement('div');
-        this.__messageElement__.classList.add('q-text');
-        return this.__messageElement__;
+        contextMap.get(this).schemaEditorInputAvailabilityChecker.unregisterReevaluateCallback(contextMap.get(this).reevaluateAvailabilityCallbackId);
       }
     };
   };

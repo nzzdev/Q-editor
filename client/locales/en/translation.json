@@ -25,7 +25,8 @@
     "serverConnectionFailed": "Failed to connect to server.",
     "preview": "Preview",
     "previewTargetLabel": "Publication",
-    "previewSizeLabel": "Size"
+    "previewSizeLabel": "Size",
+    "articlesWithThisGraphic": "Articles with this graphic"
   },
   "statistics": {
     "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",

@@ -1,9 +1,15 @@
 <template>
   <require from="./tool-status-bar.css"></require>
 
-  <icon-save-state class="tool-status-bar__item" is-saved.bind="item.isSaved"></icon-save-state>
+  <div class="tool-status-bar__group">
+    <icon-save-state class="tool-status-bar__item" is-saved.bind="item.isSaved"></icon-save-state>
+    <button-secondary class="tool-status-bar__item" icon="save" if.bind="saveAction" click.delegate="saveAction()"></button-secondary>
+  </div>
 
-  <button-secondary class="tool-status-bar__item" icon="save" if.bind="saveAction" click.delegate="saveAction()"></button-secondary>
-  <button-secondary class="tool-status-bar__item" icon="activate" click.delegate="onActivateClick()"></button-secondary>
-  
+  <div class="tool-status-bar__group">
+    <icon-active-state is-active.bind="item.conf.active" class="tool-status-bar__item" ></icon-active-state>
+    <button-secondary if.bind="item.conf.active" class="tool-status-bar__item" icon="deactivate" click.delegate="onDeactivateClick()"></button-secondary>
+    <button-secondary if.bind="!item.conf.active" class="tool-status-bar__item" icon="activate" click.delegate="onActivateClick()"></button-secondary>
+  </div>
+    
 </template>

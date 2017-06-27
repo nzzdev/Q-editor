@@ -1,3 +1,11 @@
+# 1.3.0 (27.6.2017)
+- feat: show articles with item in item-overview if configured in server (new `editorConfig.metaInformation.articlesWithItem`)
+- feat: do not show item-dialog on activate but activate directly from tool-status-bar (new `editorConfig.uiBehavior.useItemDialogToActivate`)
+- fix: change in schema-editor-color triggers reload of preview
+- fix: options pane in editor is scrollable if it is higher than viewport
+- fix: item gets assigned department "default" if user has no department in her meta information
+- checkAvailability decorator uses WeakMap instead of obfuscated properties on the schema-editor-x element
+
 # 1.2.0 (9.6.2017)
 - feat: livingdocs-component app (view to select/configure/embed item within Livingdocs Editor)
 - feat: dynamicEnum option (asking remote endpoint for enums based on current data)
