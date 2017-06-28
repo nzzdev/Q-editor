@@ -14,9 +14,9 @@
         <span class="q-text" if.bind="!options.expandable.itemLabelProperty || !entryLabels[$index]">${$index + 1}</span>
 
         <div class="schema-editor-array__entry-actions">
-          <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
-          <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-tertiary>
-          <delete-button action.call="deleteElement(data, $index)" size="small" button-type="tertiary"></delete-button>
+          <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp($index)" size="small"></button-tertiary>
+          <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown($index)" size="small"></button-tertiary>
+          <delete-button action.call="deleteElement($index)" size="small" button-type="tertiary"></delete-button>
         </div>
       </div>
       <schema-editor-wrapper
@@ -27,15 +27,15 @@
           no-object-title="true">
       </schema-editor-wrapper>
       <div class="schema-editor-array__entry-actions" if.bind="!options.expandable">
-        <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp(data, $index)" size="small"></button-tertiary>
-        <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown(data, $index)" size="small"></button-tertiary>
-        <delete-button action.call="deleteElement(data, $index)" size="small" button-type="tertiary"></delete-button>
+        <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp($index)" size="small"></button-tertiary>
+        <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown($index)" size="small"></button-tertiary>
+        <delete-button action.call="deleteElement($index)" size="small" button-type="tertiary"></delete-button>
       </div>
   </div>
 
   <button-secondary class="schema-editor-array__add-item-button"
     repeat.for="arrayEntryOption of arrayEntryOptions"
-    click.delegate="addElement(data, arrayEntryOption.schema)">
+    click.delegate="addElement(arrayEntryOption.schema)">
       <span t="editor.arrayEntryAdd" t-params.bind="arrayEntryOption"></span>
   </button-secondary>
 </template>
