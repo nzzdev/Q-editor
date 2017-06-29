@@ -39,7 +39,8 @@
     "failedToSave": "Failed to save",
     "conflictOnSave": "Failed to save due to a conflict",
     "failedToLoadEditorPart": "failed to load the editor for this element",
-    "noAutosaveBecauseActive": "Automatic saving is deactivated because the graphic is already active"
+    "noAutosaveBecauseActive": "Automatic saving is deactivated because the graphic is already active",
+    "toolNotAvailable": "This tool is not available"
   },
   "item": {
     "activate": "activate",
@@ -72,7 +73,6 @@
     "failedLoadingEditorConfig": "Failed to load editor configuration",
     "graphicNeedsATitle": "Graphic needs a title",
     "failedLoadingItems": "Failed loading graphics",
-    "failedToLoadItem": "Failed to load the graphic.",
-    "toolNotAvailable": "This tool is not available"
+    "failedToLoadItem": "Failed to load the graphic."
   }
 }
