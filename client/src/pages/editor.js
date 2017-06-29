@@ -74,7 +74,7 @@ export class Editor {
 
     const isToolAvailable = await this.toolsInfo.isToolWithNameAvailable(this.toolName);
     if (!isToolAvailable) {
-      this.notification.error('editor.toolNotAvailable');
+      this.notification.error('notifications.toolNotAvailable');
       return false;
     }
 
