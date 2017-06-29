@@ -57,37 +57,37 @@ export class SchemaEditorArray {
     }
   }
 
-  addElement(data, schema) {
-    let entry = this.objectFromSchemaGenerator.generateFromSchema(schema);
-    if (data === undefined) {
-      data = [];
+  addElement(schema) {
+    if (this.data === undefined) {
+      this.data = [];
     }
-    data.push(entry);
-    this.expand(data.indexOf(entry));
+    const entry = this.objectFromSchemaGenerator.generateFromSchema(schema);
+    this.data.push(entry);
+    this.expand(this.data.indexOf(entry));
     this.calculateEntryLabels();
     if (this.change) {
       this.change();
     }
   }
 
-  moveElementUp(data, index) {
-    data.splice(index - 1, 0, data.splice(index, 1)[0]);
+  moveElementUp(index) {
+    this.data.splice(index - 1, 0, this.data.splice(index, 1)[0]);
     this.calculateEntryLabels();
     if (this.change) {
       this.change();
     }
   }
 
-  moveElementDown(data, index) {
-    data.splice(index + 1, 0, data.splice(index, 1)[0]);
+  moveElementDown(index) {
+    this.data.splice(index + 1, 0, this.data.splice(index, 1)[0]);
     this.calculateEntryLabels();
     if (this.change) {
       this.change();
     }
   }
 
-  deleteElement(data, index) {
-    data.splice(index, 1);
+  deleteElement(index) {
+    this.data.splice(index, 1);
     this.calculateEntryLabels();
     if (this.change) {
       this.change();

@@ -1,3 +1,6 @@
+# 1.3.2 (29.6.2017)
+- fix: schema-editor-array makes data an array if undefined before trying to push (now really fixed)
+
 # 1.3.1 (27.6.2017)
 - fix: schema-editor-array makes data an array if undefined before trying to push
 
