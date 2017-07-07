@@ -130,7 +130,7 @@ export default class ItemStore {
     }
 
     if (searchString) {
-      queries.push(`(title:${searchString}* OR subtitle:${searchString}* OR annotations:${searchString}*)`);
+      queries.push(`(id:${searchString} OR title:${searchString}* OR subtitle:${searchString}* OR annotations:${searchString}*)`);
     }
 
     if (onlyTools) {
