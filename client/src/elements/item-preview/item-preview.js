@@ -2,8 +2,10 @@ import { bindable, inject } from 'aurelia-framework';
 import { I18N } from 'aurelia-i18n';
 import qEnv from 'resources/qEnv.js';
 import QTargets from 'resources/QTargets.js';
+import QConfig from 'resources/QConfig.js';
+import User from 'resources/User.js';
 
-@inject(QTargets, I18N)
+@inject(QTargets, QConfig, User, I18N)
 export class ItemPreview {
 
   @bindable data
@@ -25,8 +27,10 @@ export class ItemPreview {
     }
   ]
 
-  constructor(qTargets, i18n) {
+  constructor(qTargets, qConfig, user, i18n) {
     this.qTargets = qTargets;
+    this.qConfig = qConfig;
+    this.user = user;
     this.i18n = i18n;
 
     // we use this proxy to catch any changes to the target and then load the preview after we have it
@@ -56,6 +60,36 @@ export class ItemPreview {
     this.previewWidthProxy.width = this.sizeOptions[0].value;
 
     this.availableTargets = await this.qTargets.get('availableTargets');
+
+    // wait for user loaded
+    // then load all available publications
+    // if any get the users default publication
+    // if any get the default target of the users publication
+    // then use this as the default preview target
+    await this.user.loaded;
+    if (this.user.data.publication) {
+      const publications = await this.qConfig.get('publications');
+      if (publications) {
+        let userDefaultPublication;
+        for (let publication of publications) {
+          if (publication.key === this.user.data.publication) {
+            userDefaultPublication = publication;
+          }
+        }
+        if (userDefaultPublication) {
+          let userDefaultTarget;
+          for (let target of this.availableTargets) {
+            if (target.key === userDefaultPublication.target) {
+              userDefaultTarget = target;
+            }
+          }
+          if (userDefaultTarget) {
+            this.targetProxy.target = userDefaultTarget;
+          }
+        }
+      }
+    }
+    this.initialised = true;
   }
 
   dataChanged() {

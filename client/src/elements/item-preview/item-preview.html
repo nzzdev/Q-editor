@@ -3,7 +3,7 @@
   <require from="./item-preview.css"></require>
   <require from="../molecules/radio-button-group"></require>
 
-  <form class="item-preview__settings">
+  <form class="item-preview__settings" if.bind="initialised">
     <div class="q-form">
       <label class="q-text-small q-text--light"><span t="general.previewTargetLabel"></span>
         <select value.bind="targetProxy.target">
