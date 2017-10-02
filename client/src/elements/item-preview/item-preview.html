@@ -7,7 +7,7 @@
     <div class="q-form">
       <label class="q-text-small q-text--light"><span t="general.previewTargetLabel"></span>
         <select value.bind="targetProxy.target">
-          <option repeat.for="target of availableTargets" model.bind="target">${target.label}</option>
+          <option repeat.for="publication of publications" model.bind="getTargetForKey(publication.previewTarget)">${publication.label}</option>
         </select>
       </label>
     </div>

@@ -1,9 +1,11 @@
-import { bindable, inject } from 'aurelia-framework';
+import { bindable, inject, LogManager } from 'aurelia-framework';
 import { I18N } from 'aurelia-i18n';
 import qEnv from 'resources/qEnv.js';
 import QTargets from 'resources/QTargets.js';
 import QConfig from 'resources/QConfig.js';
 import User from 'resources/User.js';
+
+const log = LogManager.getLogger('Q');
 
 @inject(QTargets, QConfig, User, I18N)
 export class ItemPreview {
@@ -56,40 +58,61 @@ export class ItemPreview {
   }
 
   async init() {
-    // set the default preview width to the most narrow variant
-    this.previewWidthProxy.width = this.sizeOptions[0].value;
+    try {
+      // set the default preview width to the most narrow variant
+      this.previewWidthProxy.width = this.sizeOptions[0].value;
 
-    this.availableTargets = await this.qTargets.get('availableTargets');
+      this.availableTargets = await this.qTargets.get('availableTargets');
 
-    // wait for user loaded
-    // then load all available publications
-    // if any get the users default publication
-    // if any get the default target of the users publication
-    // then use this as the default preview target
-    await this.user.loaded;
-    if (this.user.data.publication) {
-      const publications = await this.qConfig.get('publications');
-      if (publications) {
+      // compile the list of publication filters
+      // to have this BC compatible, we use targets if no publications are given
+      this.publications = await this.qConfig.get('publications');
+      if (!this.publications) {
+        log.info('DEPRECATION NOTICE: Q editor will require publications to be defined in editorConfig and will not use targets if no publications are defined');
+        this.publications = this.availableTargets
+          .map(target => {
+            return {
+              key: target.key,
+              label: target.label,
+              previewTarget: target.key
+            };
+          });
+      }
+
+      // wait for user loaded
+      // get the users default publication
+      // if given, test if the users publication is configured
+      // if so, get the default target of the users publication
+      // then use this as the default preview target
+      await this.user.loaded;
+      if (this.user.data.publication) {
         let userDefaultPublication;
-        for (let publication of publications) {
+        // only use the users publication key if it is configured in the publications
+        for (let publication of this.publications) {
           if (publication.key === this.user.data.publication) {
             userDefaultPublication = publication;
           }
         }
         if (userDefaultPublication) {
+          // only use the users default target if there is a target
+          // available with the previewTarget key in the publication config
           let userDefaultTarget;
           for (let target of this.availableTargets) {
-            if (target.key === userDefaultPublication.target) {
+            if (target.key === userDefaultPublication.previewTarget) {
               userDefaultTarget = target;
             }
           }
+          // final test if userDefaultTarget is available and valid, then set it to the proxy
+          // to trigger reload of the preview
           if (userDefaultTarget) {
             this.targetProxy.target = userDefaultTarget;
           }
         }
       }
+      this.initialised = true;
+    } catch (e) {
+      log.error(e);
     }
-    this.initialised = true;
   }
 
   dataChanged() {
@@ -192,5 +215,14 @@ export class ItemPreview {
         }
         this.renderingInfo = {};
       });
+  }
+
+  getTargetForKey(targetKey) {
+    for (let target of this.availableTargets) {
+      if (targetKey === target.key) {
+        return target;
+      }
+    }
+    return undefined;
   }
 }
