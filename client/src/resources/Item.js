@@ -60,6 +60,7 @@ export default class Item {
     this.conf._rev = undefined;
     this.conf.active = false;
     await this.setDepartmentToUserDepartment();
+    await this.setPublicationToUserPublication();
     return this.save();
   }
 
