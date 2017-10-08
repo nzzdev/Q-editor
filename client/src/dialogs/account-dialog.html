@@ -7,6 +7,13 @@
         Username: ${user.data.username}<br>
       </p>
       <form class="q-form" ref="userForm">
+        <label for="publication" if.bind="publications.length > 0">Publikation</label>
+        <div class="q-select" if.bind="publications.length > 0">
+          <select value.bind="user.data.publication">
+            <option value="default"></option>
+            <option repeat.for="publication of publications" value.bind="publication.key">${publication.label}</option>
+          </select>
+        </div>
         <label for="department">Ressort</label>
         <div class="q-select">
           <select value.bind="user.data.department">

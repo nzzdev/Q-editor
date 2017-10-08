@@ -1,11 +1,19 @@
 <template>
   <form class="q-form">
-    <label class="q-text-small q-text--light">Ressort
-      <select value.bind="data.department">
+    <label for="publication" if.bind="publications.length > 0">Publikation</label>
+    <div class="q-select" if.bind="publications.length > 0">
+      <select name="publication" value.bind="data.publication">
+        <option value="default"></option>
+        <option repeat.for="publication of publications" value.bind="publication.key">${publication.label}</option>
+      </select>
+    </div>
+    <label for="department">Ressort</label>
+    <div class="q-select">
+      <select name="department" value.bind="data.department">
         <option value="default"></option>
         <option repeat.for="department of departments" value.bind="department">${department}</option>
       </select>
-    </label>
+    </div>
     <label class="q-text-small q-text--light">Annotationen
       <textarea value.bind="data.annotations" style="height: 150px;"></textarea>
     </label>

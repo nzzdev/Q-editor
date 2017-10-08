@@ -35,6 +35,13 @@ export default class Item {
     this.conf.department = this.user.data.department;
   }
 
+  async setPublicationToUserPublication() {
+    await this.user.loaded;
+    if (this.user.data.publication) {
+      this.conf.publication = this.user.data.publication;
+    }
+  }
+
   async load(id) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
@@ -53,6 +60,7 @@ export default class Item {
     this.conf._rev = undefined;
     this.conf.active = false;
     await this.setDepartmentToUserDepartment();
+    await this.setPublicationToUserPublication();
     return this.save();
   }
 

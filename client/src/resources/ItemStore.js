@@ -5,15 +5,17 @@ import qEnv from 'resources/qEnv.js';
 import User from 'resources/User.js';
 import Item from 'resources/Item.js';
 import ToolsInfo from 'resources/ToolsInfo.js';
+import QConfig from 'resources/QConfig.js';
 
-@inject(User, ToolsInfo, BindingEngine, HttpClient)
+@inject(User, ToolsInfo, QConfig, BindingEngine, HttpClient)
 export default class ItemStore {
 
   items = {};
 
-  constructor(user, toolsInfo, bindingEngine, httpClient) {
+  constructor(user, toolsInfo, qConfig, bindingEngine, httpClient) {
     this.user = user;
     this.toolsInfo = toolsInfo;
+    this.qConfig = qConfig;
     this.bindingEngine = bindingEngine;
     this.httpClient = httpClient;
 
@@ -59,28 +61,52 @@ export default class ItemStore {
           }
         ],
         selected: 'all'
-      },
-      {
-        name: 'active',
-        options: [
-          {
-            name: 'all',
-            label_i18n_key: 'itemsFilter.allStates'
-          },
-          {
-            name: 'onlyActive',
-            label_i18n_key: 'itemsFilter.onlyActive'
-          },
-          {
-            name: 'onlyInactive',
-            label_i18n_key: 'itemsFilter.onlyInactive'
-          }
-        ],
-        selected: 'all'
       }
     ];
 
-    let tools = await this.toolsInfo.getAvailableTools();
+    // add a publication filter if there are any publications configured in the targets config
+    const publications = await this.qConfig.get('publications');
+    if (publications) {
+      const publicationsFilter = {
+        name: 'publication',
+        options: [
+          {
+            name: 'all',
+            label_i18n_key: 'itemsFilter.allPublications'
+          }
+        ],
+        selected: 'all'
+      };
+      for (let publication of publications) {
+        publicationsFilter.options.push({
+          name: publication.key,
+          label: publication.label
+        });
+      }
+      this.filters.push(publicationsFilter);
+    }
+
+    // add the last filter to filter by state
+    this.filters.push({
+      name: 'active',
+      options: [
+        {
+          name: 'all',
+          label_i18n_key: 'itemsFilter.allStates'
+        },
+        {
+          name: 'onlyActive',
+          label_i18n_key: 'itemsFilter.onlyActive'
+        },
+        {
+          name: 'onlyInactive',
+          label_i18n_key: 'itemsFilter.onlyInactive'
+        }
+      ],
+      selected: 'all'
+    });
+
+    const tools = await this.toolsInfo.getAvailableTools();
     tools.map(tool => {
       this.filters[0].options.push(tool);
     });
@@ -89,6 +115,7 @@ export default class ItemStore {
   getNewItem() {
     let item = new Item(this.user, this.httpClient);
     item.setDepartmentToUserDepartment();
+    item.setPublicationToUserPublication();
     this.bindingEngine
       .propertyObserver(item, 'isSaved')
       .subscribe(() => {
@@ -123,6 +150,9 @@ export default class ItemStore {
       }
       if (filter.name === 'department' && filter.selected === 'myDepartment') {
         queries.push(`department:"${this.user.data.department}"`);
+      }
+      if (filter.name === 'publication' && filter.selected !== 'all') {
+        queries.push(`publication:"${filter.selected}"`);
       }
       if (filter.name === 'active' && filter.selected !== 'all') {
         queries.push(`active:${filter.selected === 'onlyActive' ? 'true' : 'false'}`);

@@ -21,12 +21,13 @@ export class AccountDialog {
     this.auth = auth;
     this.qConfig = qConfig;
 
-    this.loadDepartments();
+    this.loadData();
   }
 
-  async loadDepartments() {
+  async loadData() {
     let departments = await this.qConfig.get('departments');
     this.departments = departments.sort();
+    this.publications = await this.qConfig.get('publications');
   }
 
   async activate(config) {
