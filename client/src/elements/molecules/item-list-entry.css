@@ -25,11 +25,22 @@ item-list-entry .tool-icon {
   color: var(--q-color-gray-6);
 }
 
-item-list-entry span {
-  width: calc((100% - (2 * 26px)) / 3);
+item-list-entry > span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+item-list-entry > span:nth-of-type(1) {
+  width: calc((100% - (2 * 26px)) / 10 * 4);
+}
+
+item-list-entry > span:nth-of-type(2) {
+  width: calc((100% - (2 * 26px)) / 10 * 2);
+}
+
+item-list-entry > span:nth-of-type(3) {
+  width: calc((100% - (2 * 26px)) / 10 * 4);
 }
 
 item-list-entry delete-button {
