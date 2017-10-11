@@ -38,7 +38,6 @@ export class SchemaEditorGeojsonPoint {
     this.applyOptions();
     await this.handleOptions();
     await this.updateBbox();
-    console.log(this.schema);
   }
 
   applyOptions() {
