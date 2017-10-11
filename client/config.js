@@ -172,19 +172,6 @@ System.config({
       "aurelia-history": "npm:aurelia-history@1.1.0",
       "aurelia-pal": "npm:aurelia-pal@1.4.0"
     },
-    "npm:aurelia-i18n@1.6.2": {
-      "aurelia-binding": "npm:aurelia-binding@1.3.0",
-      "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.3.2",
-      "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.1",
-      "aurelia-loader": "npm:aurelia-loader@1.0.0",
-      "aurelia-logging": "npm:aurelia-logging@1.3.1",
-      "aurelia-metadata": "npm:aurelia-metadata@1.0.3",
-      "aurelia-pal": "npm:aurelia-pal@1.4.0",
-      "aurelia-templating": "npm:aurelia-templating@1.5.0",
-      "aurelia-templating-resources": "npm:aurelia-templating-resources@1.5.1",
-      "i18next": "npm:i18next@9.1.0",
-      "intl": "npm:intl@1.2.5"
-    },
     "npm:aurelia-i18n@2.0.0": {
       "aurelia-binding": "npm:aurelia-binding@1.3.0",
       "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.3.2",
@@ -305,9 +292,6 @@ System.config({
     },
     "npm:i18next-fetch-backend@0.0.1": {
       "i18next-xhr-backend": "npm:i18next-xhr-backend@1.4.3"
-    },
-    "npm:i18next@3.5.2": {
-      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:i18next@9.1.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
