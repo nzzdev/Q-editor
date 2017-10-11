@@ -2,6 +2,7 @@ import { bindable, inject, Loader, LogManager } from 'aurelia-framework';
 import { checkAvailability } from 'resources/schemaEditorDecorators.js';
 import qEnv from 'resources/qEnv';
 import QConfig from 'resources/QConfig';
+import { isRequired } from './helpers.js';
 
 const log = LogManager.getLogger('Q');
 const iconPinSvg = '<svg viewBox="0 0 52 52"><path d="M31.5,35.5 M20.5,16.5 M20.5,35.5 M31.5,16.5 M30,18c0-2.2-1.8-4-4-4s-4,1.8-4,4c0,1.9,1.3,3.4,3,3.9V38h1h1V21.9C28.7,21.4,30,19.9,30,18z"/></svg>';
@@ -21,6 +22,7 @@ export class SchemaEditorGeojsonPoint {
   constructor(qConfig, loader) {
     this.qConfig = qConfig;
     this.loader = loader;
+    this.isRequired = isRequired;
     this.mapInit = new Promise((resolve, reject) => {
       this.resolveMapInit = resolve;
     });
