@@ -4,6 +4,6 @@ module.exports =
   require('./locales'),
   require('./favicon')
 ]
-.concat(require('./systemjs'))
+.concat(require('./jspm_packages'))
 .concat(require('./editor-routes-to-index'))
 .concat([require('./default')])
