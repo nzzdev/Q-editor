@@ -26,6 +26,10 @@ export class PreviewContainer {
     this.showPreview(this.renderingInfo);
   }
 
+  detached() {
+    this.removePreviewBorderStyles();
+  }
+
   renderingInfoChanged(renderingInfo) {
     this.showPreview(this.renderingInfo);
   }
@@ -41,9 +45,7 @@ export class PreviewContainer {
   }
 
   addPreviewBorder(backgroundColor) {
-    while (this.stylesheetRules.length > 0) {
-      this.styleSheet.deleteRule(this.stylesheetRules.pop());
-    }
+    this.removePreviewBorderStyles();
     let beforeIndex = this.styleSheet.insertRule(`preview-container::before {
       background-image: url('data:image/svg+xml;utf-8,<svg width="14" height="9" viewBox="0 0 14 9" xmlns="http://www.w3.org/2000/svg"><path fill="#adadad" d="M14 9V7L7 0 0 7v2l7-7z"/><path fill="${backgroundColor}" d="M0 9h14L7 2z"/></svg>');
     }`);
@@ -52,6 +54,12 @@ export class PreviewContainer {
     }`);
     this.stylesheetRules.push(beforeIndex);
     this.stylesheetRules.push(afterIndex);
+  }
+
+  removePreviewBorderStyles() {
+    while (this.stylesheetRules.length > 0) {
+      this.styleSheet.deleteRule(this.stylesheetRules.pop());
+    }
   }
 
   async showPreview(renderingInfo) {
