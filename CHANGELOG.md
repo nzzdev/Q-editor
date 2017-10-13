@@ -1,5 +1,6 @@
 # 1.5.0 (12.10.2017)
 - feat: publication filter. If any publications are configured on the Q-server, the editor now provides a publication filter in the item list and allows for publication selection in the preview screen by using the target defined as the `previewTarget` in the config.
+- feat: preview background color defaults to white and can be configured by target
 - feat: item list and item overview now shows the user that created an item next to the one who last edited it
 - fix: geojson-point editor handles required attributes on coordinates correctly
 
