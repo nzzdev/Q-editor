@@ -33,7 +33,7 @@ export class SchemaEditorLatLng {
 
     if (!window.Leaflet) {
       window.Leaflet = window.L = await this.loader.loadModule('leaflet');
-      this.loader.loadModule('npm:leaflet@1.0.3/dist/leaflet.css!');
+      this.loader.loadModule('npm:leaflet@1.2.0/dist/leaflet.css!');
     }
 
     if (!Leaflet.control.geocoder) {

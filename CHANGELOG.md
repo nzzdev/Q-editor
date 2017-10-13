@@ -1,3 +1,13 @@
+# 1.5.0 (12.10.2017)
+- feat: publication filter. If any publications are configured on the Q-server, the editor now provides a publication filter in the item list and allows for publication selection in the preview screen by using the target defined as the `previewTarget` in the config.
+- feat: item list and item overview now shows the user that created an item next to the one who last edited it
+- fix: geojson-point editor handles required attributes on coordinates correctly
+
+# 1.4.0 (7.7.2017)
+- feat: search now looks in id and subtitle properties as well
+- fix: toolNotAvailable message is now correctly translated
+- fix: links to articles in item metadata list now open in new tab
+
 # 1.3.2 (29.6.2017)
 - fix: schema-editor-array makes data an array if undefined before trying to push (now really fixed)
 

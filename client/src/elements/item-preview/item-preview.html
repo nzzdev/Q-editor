@@ -3,11 +3,11 @@
   <require from="./item-preview.css"></require>
   <require from="../molecules/radio-button-group"></require>
 
-  <form class="item-preview__settings">
+  <form class="item-preview__settings" if.bind="initialised">
     <div class="q-form">
       <label class="q-text-small q-text--light"><span t="general.previewTargetLabel"></span>
         <select value.bind="targetProxy.target">
-          <option repeat.for="target of availableTargets" model.bind="target">${target.label}</option>
+          <option repeat.for="publication of publications" model.bind="getTargetForKey(publication.previewTarget)">${publication.label}</option>
         </select>
       </label>
     </div>
@@ -17,6 +17,6 @@
     </div>
   </form>
   <p class="q-text q-text--error" if.bind="errorMessage">${errorMessage}</p>
-  <preview-container ref="previewContainer" width.bind="previewWidthProxy.width" rendering-info.bind="renderingInfo"></preview-container>
+  <preview-container ref="previewContainer" width.one-way="previewWidthProxy.width" rendering-info.one-way="renderingInfo" target.one-way="targetProxy.target"></preview-container>
   
 </template>

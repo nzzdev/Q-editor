@@ -39,3 +39,7 @@ export function getType(schema) {
 
   return type;
 }
+
+export function isRequired(schema, propertyName) {
+  return schema.hasOwnProperty('required') && schema.required.includes(propertyName);
+}

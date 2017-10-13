@@ -14,6 +14,7 @@
     "close": "schliessen",
     "goToOverview": "zur Übersicht",
     "created": "erstellt",
+    "edited": "bearbeitet",
     "by": "von",
     "only": "nur",
     "graphic": "Grafik",
@@ -55,6 +56,7 @@
     "byMe": "von mir",
     "allDepartments": "alle Ressorts",
     "myDepartment": "nur mein Ressort",
+    "allPublications": "alle Publikationen",
     "allStates": "alle Zustände",
     "onlyActive": "nur aktive",
     "onlyInactive": "nur inaktive"

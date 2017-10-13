@@ -1,5 +1,5 @@
 import { bindable } from 'aurelia-framework';
-import { getType } from './helpers.js';
+import { getType, isRequired } from './helpers.js';
 import { checkAvailability } from 'resources/schemaEditorDecorators.js';
 
 @checkAvailability()
@@ -12,10 +12,7 @@ export class SchemaEditorObject {
 
   constructor() {
     this.getType = getType;
-  }
-
-  isRequired(schema, propertyName) {
-    return schema.hasOwnProperty('required') && schema.required.includes(propertyName);
+    this.isRequired = isRequired;
   }
 
   isCompact(schema) {
