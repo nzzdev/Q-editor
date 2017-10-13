@@ -35,13 +35,16 @@ export class PreviewContainer {
   }
 
   targetChanged() {
+    let color = 'white';
     try {
       if (this.target.preview.background.color) {
-        this.addPreviewBorder(this.target.preview.background.color);
+        color = this.target.preview.background.color;
       }
     } catch (e) {
-      this.addPreviewBorder('white');
+      // nevermind, default color already set to white
     }
+    this.addPreviewBorder(color);
+    this.previewColor = color;
   }
 
   addPreviewBorder(backgroundColor) {

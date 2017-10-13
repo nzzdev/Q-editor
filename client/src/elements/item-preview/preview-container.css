@@ -1,7 +1,6 @@
 preview-container {
   position: relative;
   display: block;
-  color: var(--q-color-gray-2);
   margin-top: calc(var(--q-space-base) + 9px);
   margin-bottom: calc(var(--q-space-base) + 9px);
 
