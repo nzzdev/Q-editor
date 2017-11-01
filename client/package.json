@@ -39,7 +39,7 @@
   },
   "jspm": {
     "dependencies": {
-      "ajv": "npm:ajv@^4.11.5",
+      "ajv": "npm:ajv@^5.3.0",
       "array2d": "npm:array2d@^0.0.5",
       "aurelia-animator-css": "npm:aurelia-animator-css@^1.0.0",
       "aurelia-authentication": "npm:aurelia-authentication@^3.6.0",
