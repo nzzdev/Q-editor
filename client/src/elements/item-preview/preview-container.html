@@ -1,7 +1,7 @@
 <template css="background-color: ${previewColor}; color: ${previewColor};">
   <require from="./preview-container.css"></require>
   <style>
-    .container {
+    .preview-element-container {
       overflow-x: auto;
       overflow-y: var(--preview-container-overflow-y, auto);
       height: 100%;
@@ -15,7 +15,7 @@
     }
   </style>
   <div class="preview-note" if.bind="!renderingInfo && noRenderingInfoText">${noRenderingInfoText}</div>
-  <div class="container" css="width: ${width}px; max-width: 100%;">
+  <div class="preview-element-container" css="width: ${width}px; max-width: 100%;">
     <div css="width: ${width}px;">
       <div ref="previewElement"></div>
     </div>
