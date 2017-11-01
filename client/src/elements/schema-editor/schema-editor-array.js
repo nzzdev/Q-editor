@@ -34,6 +34,16 @@ export class SchemaEditorArray {
   }
 
   dataChanged() {
+    // create a new dataItemsSchema array
+    // this array will hold the schema per data array item
+    // and will mirror any changes to the array
+    // this way, we do not need to calculate the schemas for the data
+    // on all changes. For addElement we already know the schema beforehand e.g.
+    this.dataItemsSchemas = this.data
+      .map(item => {
+        return this.getSchemaForData(item);
+      });
+
     this.calculateEntryLabels();
   }
 
@@ -62,7 +72,10 @@ export class SchemaEditorArray {
       this.data = [];
     }
     const entry = this.objectFromSchemaGenerator.generateFromSchema(schema);
+
+    this.dataItemsSchemas.push(schema);
     this.data.push(entry);
+
     this.expand(this.data.indexOf(entry));
     this.calculateEntryLabels();
     if (this.change) {
@@ -71,6 +84,7 @@ export class SchemaEditorArray {
   }
 
   moveElementUp(index) {
+    this.dataItemsSchemas.splice(index - 1, 0, this.dataItemsSchemas.splice(index, 1)[0]);
     this.data.splice(index - 1, 0, this.data.splice(index, 1)[0]);
     this.calculateEntryLabels();
     if (this.change) {
@@ -79,6 +93,7 @@ export class SchemaEditorArray {
   }
 
   moveElementDown(index) {
+    this.dataItemsSchemas.splice(index + 1, 0, this.dataItemsSchemas.splice(index, 1)[0]);
     this.data.splice(index + 1, 0, this.data.splice(index, 1)[0]);
     this.calculateEntryLabels();
     if (this.change) {
@@ -87,6 +102,7 @@ export class SchemaEditorArray {
   }
 
   deleteElement(index) {
+    this.dataItemsSchemas.splice(index, 1);
     this.data.splice(index, 1);
     this.calculateEntryLabels();
     if (this.change) {
@@ -94,28 +110,12 @@ export class SchemaEditorArray {
     }
   }
 
-  getSchemaForArrayEntry(entry) {
-    if (this.schema.items.type) {
-      return this.schema.items;
-    }
-    if (this.schema.items.oneOf) {
-      for (const schema of this.schema.items.oneOf) {
-        // ignore any required properties here to allow for required properties without default value
-        // clone the schema first to not mess with original
-        const validateSchema = JSON.parse(JSON.stringify(schema));
-        delete validateSchema.required;
-        const validate = ajv.compile(validateSchema);
-        if (validate(entry)) {
-          // return the original schema with required in case of a match
-          return schema;
-        }
-      }
-      return null;
-    }
+  getSchemaForArrayEntryIndex(index) {
+    return this.dataItemsSchemas[index];
   }
 
-  async isEntryAvailable(entry) {
-    const schema = this.getSchemaForArrayEntry(entry);
+  async isEntryAvailable(index) {
+    const schema = this.getSchemaForArrayEntryIndex(index);
     const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(schema);
     return await availabilityInfo.isAvailable;
   }
@@ -178,6 +178,21 @@ export class SchemaEditorArray {
         .reduce((o, i) => o[i], entry);
     } catch (e) {
       return undefined;
+    }
+  }
+
+  getSchemaForData(data) {
+    if (this.schema.items.type) {
+      return this.schema.items;
+    }
+    if (this.schema.items.oneOf) {
+      for (const schema of this.schema.items.oneOf) {
+        const validate = ajv.compile(schema);
+        if (validate(data)) {
+          return schema;
+        }
+      }
+      return null;
     }
   }
 }
