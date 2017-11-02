@@ -1,3 +1,6 @@
+# 1.5.2 (2.11.2017)
+- fix: schema-editor-array does not fail if given data is not an Array
+
 # 1.5.1 (2.11.2017)
 - fix: meta-editor now uses translation files for ui strings
 - fix: schema-editor-array uses correct schema for array entry editor in case default value objects validate against multiple schemas
