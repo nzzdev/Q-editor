@@ -7,7 +7,7 @@ System.config({
     "npm:*": "jspm_packages/npm/*"
   },
   map: {
-    "ajv": "npm:ajv@4.11.8",
+    "ajv": "npm:ajv@5.3.0",
     "array2d": "npm:array2d@0.0.5",
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.3",
     "aurelia-authentication": "npm:aurelia-authentication@3.7.0",
@@ -74,11 +74,13 @@ System.config({
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
     },
-    "npm:ajv@4.11.8": {
+    "npm:ajv@5.3.0": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
       "co": "npm:co@4.6.0",
+      "fast-deep-equal": "npm:fast-deep-equal@1.0.0",
+      "fast-json-stable-stringify": "npm:fast-json-stable-stringify@2.0.0",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "json-stable-stringify": "npm:json-stable-stringify@1.0.1",
+      "json-schema-traverse": "npm:json-schema-traverse@0.3.1",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "punycode": "github:jspm/nodelibs-punycode@0.1.0",
@@ -283,6 +285,12 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
+    "npm:fast-deep-equal@1.0.0": {
+      "assert": "github:jspm/nodelibs-assert@0.1.0"
+    },
+    "npm:fast-json-stable-stringify@2.0.0": {
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
     "npm:handsontable@0.32.0": {
       "moment": "npm:moment@2.13.0",
       "numbro": "npm:numbro@1.11.0",
@@ -302,8 +310,8 @@ System.config({
     "npm:intl@1.2.5": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:json-stable-stringify@1.0.1": {
-      "jsonify": "npm:jsonify@0.0.0"
+    "npm:json-schema-traverse@0.3.1": {
+      "assert": "github:jspm/nodelibs-assert@0.1.0"
     },
     "npm:jwt-decode@2.2.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",

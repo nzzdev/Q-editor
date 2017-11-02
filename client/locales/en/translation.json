@@ -42,6 +42,10 @@
     "failedToLoadEditorPart": "failed to load the editor for this element",
     "noAutosaveBecauseActive": "Automatic saving is deactivated because the graphic is already active"
   },
+  "metaEditor": {
+    "annotations": "Annotations",
+    "publication": "Publication"
+  },
   "item": {
     "activate": "activate",
     "deactivate": "deactivate",

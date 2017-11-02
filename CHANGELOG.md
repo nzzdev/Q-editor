@@ -1,3 +1,8 @@
+# 1.5.1 (2.11.2017)
+- fix: meta-editor now uses translation files for ui strings
+- fix: schema-editor-array uses correct schema for array entry editor in case default value objects validate against multiple schemas
+- fix: preview container element gets more unique name to not clash with styles applied from target context
+
 # 1.5.0 (12.10.2017)
 - feat: publication filter. If any publications are configured on the Q-server, the editor now provides a publication filter in the item list and allows for publication selection in the preview screen by using the target defined as the `previewTarget` in the config.
 - feat: preview background color defaults to white and can be configured by target
