@@ -39,10 +39,12 @@ export class SchemaEditorArray {
     // and will mirror any changes to the array
     // this way, we do not need to calculate the schemas for the data
     // on all changes. For addElement we already know the schema beforehand e.g.
-    this.dataItemsSchemas = this.data
-      .map(item => {
-        return this.getSchemaForData(item);
-      });
+    if (Array.isArray(this.data)) {
+      this.dataItemsSchemas = this.data
+        .map(item => {
+          return this.getSchemaForData(item);
+        });
+    }
 
     this.calculateEntryLabels();
   }
