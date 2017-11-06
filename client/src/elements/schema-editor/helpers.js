@@ -10,8 +10,15 @@ function hasEnum(schema) {
 
 function hasType(schema, type) {
   if (schema.hasOwnProperty('anyOf')) {
-    for (let anyOfType of schema.anyOf) {
-      if (anyOfType === type) {
+    for (let anyOfSchema of schema.anyOf) {
+      if (anyOfSchema.type === type) {
+        return true;
+      }
+    }
+  }
+  if (schema.hasOwnProperty('oneOf')) {
+    for (let oneOfSchema of schema.oneOf) {
+      if (oneOfSchema.type === type) {
         return true;
       }
     }
