@@ -138,8 +138,8 @@ export class SchemaEditorArray {
         schema: this.schema.items,
         arrayEntryLabel: arrayEntryLabel
       });
-    } else if (this.schema.items && this.schema.items.oneOf) {
-      for (let schema of this.schema.items.oneOf) {
+    } else if (this.schema.items && Array.isArray(this.getPossibleItemSchemas())) {
+      for (let schema of this.getPossibleItemSchemas()) {
         const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(schema);
         if (availabilityInfo.isAvailable) {
           this.arrayEntryOptions.push({
@@ -187,8 +187,9 @@ export class SchemaEditorArray {
     if (this.schema.items.type) {
       return this.schema.items;
     }
-    if (this.schema.items.oneOf) {
-      for (const schema of this.schema.items.oneOf) {
+    const possibleSchemas = this.getPossibleItemSchemas();
+    if (possibleSchemas) {
+      for (const schema of possibleSchemas) {
         const validate = ajv.compile(schema);
         if (validate(data)) {
           return schema;
@@ -196,5 +197,17 @@ export class SchemaEditorArray {
       }
       return null;
     }
+  }
+
+  getPossibleItemSchemas() {
+    let possibleSchemas;
+    if (this.schema.items.oneOf) {
+      possibleSchemas = this.schema.items.oneOf;
+    } else if (this.schema.items.anyOf) {
+      possibleSchemas = this.schema.items.anyOf;
+    } else if (this.schema.items.allOf) {
+      possibleSchemas = this.schema.items.allOf;
+    }
+    return possibleSchemas;
   }
 }
