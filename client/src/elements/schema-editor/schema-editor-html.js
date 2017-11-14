@@ -25,13 +25,15 @@ export class SchemaEditorHtml {
   }
 
   async attached() {
-    this.contentElement.innerHTML = this.data;
+    if (typeof this.data === 'string') {
+      this.contentElement.innerHTML = this.data;
+    }
 
     const Quill = await this.loader.loadModule('quill');
     await this.loader.loadModule('npm:quill@1.3.4/dist/quill.core.css!');
     await this.loader.loadModule('npm:quill@1.3.4/dist/quill.snow.css!');
 
-    var Link = Quill.import('formats/link');
+    const Link = Quill.import('formats/link');
 
     // extend Quill Link class to set noopener noreferrer rel on the link with target blank
     // because: https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/
