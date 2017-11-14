@@ -38,6 +38,9 @@
   --q-color-error-light: #f3d1cd;
 
   /* fonts */
+  --q-font-family-ui: 'Inconsolata', monospace;
+  --q-font-family-content: Roboto, sans-serif;
+
   --q-h1-size: 22px;
   --q-h2-size: 20px;
   --q-h3-size: 18px;

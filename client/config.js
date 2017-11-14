@@ -41,11 +41,13 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.36",
+    "debounce": "npm:debounce@1.1.0",
     "handsontable": "npm:handsontable@0.32.0",
     "heyman/leaflet-areaselect": "github:heyman/leaflet-areaselect@master",
     "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
     "leaflet": "npm:leaflet@1.2.0",
     "leaflet-geocoder-mapzen": "npm:leaflet-geocoder-mapzen@1.8.0",
+    "quill": "npm:quill@1.3.4",
     "text": "github:systemjs/plugin-text@0.0.8",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
@@ -277,7 +279,11 @@ System.config({
     },
     "npm:buffer@5.0.8": {
       "base64-js": "npm:base64-js@1.2.1",
-      "ieee754": "npm:ieee754@1.1.8"
+      "ieee754": "npm:ieee754@1.1.8",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
+    "npm:clone@2.1.1": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1"
     },
     "npm:core-js@1.2.7": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
@@ -287,6 +293,9 @@ System.config({
     },
     "npm:fast-deep-equal@1.0.0": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
+    },
+    "npm:fast-diff@1.1.2": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:fast-json-stable-stringify@2.0.0": {
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
@@ -338,6 +347,21 @@ System.config({
     },
     "npm:punycode@1.3.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:quill-delta@3.6.2": {
+      "deep-equal": "npm:deep-equal@1.0.1",
+      "extend": "npm:extend@3.0.1",
+      "fast-diff": "npm:fast-diff@1.1.2"
+    },
+    "npm:quill@1.3.4": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
+      "clone": "npm:clone@2.1.1",
+      "deep-equal": "npm:deep-equal@1.0.1",
+      "eventemitter3": "npm:eventemitter3@2.0.3",
+      "extend": "npm:extend@3.0.1",
+      "parchment": "npm:parchment@1.1.1",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "quill-delta": "npm:quill-delta@3.6.2"
     },
     "npm:url@0.10.3": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",

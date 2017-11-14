@@ -17,6 +17,15 @@
       required.bind="required"></schema-editor-string>
   </div>
 
+  <div if.bind="getType(schema) === 'html'" class="schema-editor-block">
+    <require from="./schema-editor-html"></require>
+    <schema-editor-html
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-html>
+  </div>
+
   <div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
     <require from="./schema-editor-textarea"></require>
     <schema-editor-textarea
