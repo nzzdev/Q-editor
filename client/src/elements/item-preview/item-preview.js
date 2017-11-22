@@ -20,11 +20,11 @@ export class ItemPreview {
       icon: 'mobile'
     },
     {
-      value: 540,
+      value: 560,
       icon: 'tablet'
     },
     {
-      value: 800,
+      value: 980,
       icon: 'widescreen'
     }
   ]
