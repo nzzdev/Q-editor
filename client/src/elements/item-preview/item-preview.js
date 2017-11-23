@@ -24,7 +24,7 @@ export class ItemPreview {
       icon: 'tablet'
     },
     {
-      value: 980,
+      value: 800,
       icon: 'widescreen'
     }
   ]
