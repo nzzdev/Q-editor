@@ -20,7 +20,7 @@ export class ItemPreview {
       icon: 'mobile'
     },
     {
-      value: 540,
+      value: 560,
       icon: 'tablet'
     },
     {
