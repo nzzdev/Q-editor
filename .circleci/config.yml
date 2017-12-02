@@ -42,7 +42,7 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
       - run: npm install
       - run: npm run test
-      - run: docker build -t nzzdev/q-editor:$CIRCLE_BRANCH
+      - run: docker build -t nzzdev/q-editor:$CIRCLE_BRANCH .
       - run: docker push nzzdev/q-editor:$CIRCLE_BRANCH
 
 workflows:
