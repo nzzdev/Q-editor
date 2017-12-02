@@ -1,6 +1,6 @@
 version: 2
 
-references: 
+references:
   container_config: &container_config
     docker:
       - image: circleci/node:8
@@ -13,14 +13,11 @@ jobs:
 
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
-
       - run: npm install
-
       - save_cache:
           paths:
             - node_modules
@@ -29,18 +26,24 @@ jobs:
   test:
     <<: *container_config
     steps:
-      - npm run test
-  
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+      - run: npm install
+      - run: npm run test
+
   build-docker:
     <<: *container_config
     steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+      - run: npm install
+      - run: npm run test
       - run: docker build -t nzzdev/q-editor:$CIRCLE_BRANCH
-
-  push-docker:
-    <<: *container_config
-    steps:
       - run: docker push nzzdev/q-editor:$CIRCLE_BRANCH
-
 
 workflows:
   version: 2
