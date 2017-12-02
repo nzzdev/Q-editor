@@ -42,7 +42,10 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
       - run: npm install
       - run: npm run test
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run: docker build -t nzzdev/q-editor:$CIRCLE_BRANCH .
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker push nzzdev/q-editor:$CIRCLE_BRANCH
 
 workflows:
