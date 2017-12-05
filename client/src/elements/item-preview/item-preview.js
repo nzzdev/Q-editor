@@ -136,7 +136,7 @@ export class ItemPreview {
       size: {
         width: [
           {
-            value: this.previewContainer.getBoundingClientRect().width,
+            value: this.previewWidthProxy.width,
             comparison: '='
           }
         ]
