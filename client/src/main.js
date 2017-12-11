@@ -107,13 +107,16 @@ export async function configure(aurelia) {
         translate: true,  // 'true' needs aurelia-i18n to be configured
         notifications: {
           'info': {
-            addnCls: 'humane-info'
+            addnCls: 'humane-info',
+            clickToClose: true
           },
           'success': {
-            addnCls: 'humane-success'
+            addnCls: 'humane-success',
+            clickToClose: true
           },
           'warning': {
-            addnCls: 'humane-warning'
+            addnCls: 'humane-warning',
+            clickToClose: true
           },
           'error': {
             addnCls: 'humane-error',
