@@ -149,6 +149,7 @@ export class PreviewContainer {
         this.element.shadowRoot.appendChild(scriptElement);
       } else if (script.content) {
         script.content = script.content.replace(new RegExp('document.querySelector', 'g'), `document.querySelector('#${this.id}').shadowRoot.querySelector`);
+        script.content = script.content.replace(new RegExp('document.getElementById', 'g'), `document.querySelector('#${this.id}').shadowRoot.getElementById`);
 
         scriptElement.innerHTML = script.content;
         this.insertedElements.push(scriptElement);
