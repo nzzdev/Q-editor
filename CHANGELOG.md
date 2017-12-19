@@ -1,3 +1,12 @@
+# 1.6.0 (19.12.2017)
+- feat: item ID in /feed links to editor for this item
+- fix: scripts with document.getElementById work now in preview
+- fix: username input is focused on login page load
+- fix: all notifications are closable by click
+
+# 1.5.3 (6.11.2017)
+- fixes for json schema handling
+
 # 1.5.2 (2.11.2017)
 - fix: schema-editor-array does not fail if given data is not an Array
 

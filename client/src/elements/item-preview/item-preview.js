@@ -20,7 +20,7 @@ export class ItemPreview {
       icon: 'mobile'
     },
     {
-      value: 540,
+      value: 560,
       icon: 'tablet'
     },
     {
@@ -136,7 +136,7 @@ export class ItemPreview {
       size: {
         width: [
           {
-            value: this.previewContainer.getBoundingClientRect().width,
+            value: this.previewWidthProxy.width,
             comparison: '='
           }
         ]

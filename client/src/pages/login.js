@@ -38,7 +38,12 @@ export class Login {
     this.loginMessage = await qEnv.loginMessage;
   }
 
+  attached() {
+    this.usernameInput.focus();
+  }
+
   async tryLogin() {
+    this.loginError = null;
     try {
       await this.auth.login(this.username, this.password);
       this.router.navigateToRoute('index');

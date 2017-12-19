@@ -51,6 +51,8 @@ q-screen {
   flex-grow: 1;
   flex-shrink: 1;
   transition: opacity 0.2s ease-out;
+  min-width: calc(700px - 52px);
+  max-width: calc(100% - 52px);
 }
 
 q-screen.is-navigating {

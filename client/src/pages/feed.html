@@ -5,7 +5,7 @@
     <main>
       <section>
         <div class="feed-preview-block" repeat.for="item of items">
-          <div class="q-text">ID: ${item.id} Tool: ${item.conf.tool} </div>
+          <div class="q-text">ID: <a route-href="route: editor; params.bind: {tool: item.conf.tool, id: item.id}">${item.id}</a> Tool: ${item.conf.tool} </div>
           <preview-container width="320" id="preview-container" rendering-info.bind="renderingInfos[item.id]"></preview-container>
         </div>
       </section>
