@@ -72,7 +72,7 @@ export class SchemaEditorFiles {
 
     const dropzoneOptions = Object.assign({
       addRemoveLinks: true,
-      url: `${QServerBaseUrl}/file/upload`,
+      url: `${QServerBaseUrl}/file`,
       headers: {
         "Authorization": `${this.authService.config.authTokenType} ${this.authService.getAccessToken()}`
       }
