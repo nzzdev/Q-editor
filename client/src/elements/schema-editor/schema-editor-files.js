@@ -83,11 +83,13 @@ export class SchemaEditorFiles {
     this.dropzone.on('success', (file, response) => {
       if (this.options.maxFiles && this.options.maxFiles === 1) {
         this.data = response.url;
+        this.change();
       } else {
         if (!Array.isArray(this.data)) {
           this.data = [];
         }
         this.data.push(response.url);
+        this.change();
       }
       // the originalUrl property is used when deleting a file to delete it as well from the data
       file.originalUrl = response.url;
@@ -96,8 +98,10 @@ export class SchemaEditorFiles {
     this.dropzone.on('removedfile', (file) => {
       if (Array.isArray(this.data)) {
         this.data.splice(this.data.indexOf(file.originalUrl), 1);
+        this.change();
       } else {
         this.data = undefined;
+        this.change();
       }
     });
 
