@@ -58,23 +58,23 @@ export class SchemaEditorFiles {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
     const translations = {
-      "dictDefaultMessage": this.i18n.tr('dropzone.dictDefaultMessage'),
-      "dictFallbackMessage": this.i18n.tr('dropzone.dictFallbackMessage'),
-      "dictFallbackText": this.i18n.tr('dropzone.dictFallbackText'),
-      "dictFileTooBig": this.i18n.tr('dropzone.dictFileTooBig'),
-      "dictInvalidFileType": this.i18n.tr('dropzone.dictInvalidFileType'),
-      "dictResponseError": this.i18n.tr('dropzone.dictResponseError'),
-      "dictCancelUpload": this.i18n.tr('dropzone.dictCancelUpload'),
-      "dictCancelUploadConfirmation": this.i18n.tr('dropzone.dictCancelUploadConfirmation'),
-      "dictRemoveFile": this.i18n.tr('dropzone.dictRemoveFile'),
-      "dictMaxFilesExceeded": this.i18n.tr('dropzone.dictMaxFilesExceeded')
-    }
+      'dictDefaultMessage': this.i18n.tr('dropzone.dictDefaultMessage'),
+      'dictFallbackMessage': this.i18n.tr('dropzone.dictFallbackMessage'),
+      'dictFallbackText': this.i18n.tr('dropzone.dictFallbackText'),
+      'dictFileTooBig': this.i18n.tr('dropzone.dictFileTooBig'),
+      'dictInvalidFileType': this.i18n.tr('dropzone.dictInvalidFileType'),
+      'dictResponseError': this.i18n.tr('dropzone.dictResponseError'),
+      'dictCancelUpload': this.i18n.tr('dropzone.dictCancelUpload'),
+      'dictCancelUploadConfirmation': this.i18n.tr('dropzone.dictCancelUploadConfirmation'),
+      'dictRemoveFile': this.i18n.tr('dropzone.dictRemoveFile'),
+      'dictMaxFilesExceeded': this.i18n.tr('dropzone.dictMaxFilesExceeded')
+    };
 
     const dropzoneOptions = Object.assign({
       addRemoveLinks: true,
       url: `${QServerBaseUrl}/file`,
       headers: {
-        "Authorization": `${this.authService.config.authTokenType} ${this.authService.getAccessToken()}`
+        'Authorization': `${this.authService.config.authTokenType} ${this.authService.getAccessToken()}`
       }
     }, this.options, translations);
 
@@ -129,13 +129,13 @@ export class SchemaEditorFiles {
         originalUrl: fileUrl, // the originalUrl property is used when deleting a file to delete it as well from the data
         size: 0,
         accepted: true
-      }
+      };
       this.dropzone.files.push(mockFile);
       this.dropzone.emit('addedfile', mockFile);
       this.dropzone.createThumbnailFromUrl(mockFile, 120, 120, 'crop', false, thumbnail => {
-        this.dropzone.emit("thumbnail", mockFile, thumbnail);
-        this.dropzone.emit("complete", mockFile);
-        this.dropzone.emit("accepted", mockFile);
+        this.dropzone.emit('thumbnail', mockFile, thumbnail);
+        this.dropzone.emit('complete', mockFile);
+        this.dropzone.emit('accepted', mockFile);
         this.dropzone._updateMaxFilesReachedClass();
       }, 'anonymous');
     }
