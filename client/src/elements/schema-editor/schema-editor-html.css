@@ -1,0 +1,7 @@
+schema-editor-html .ql-container {
+  font-family: var(--q-font-family-content);
+}
+
+schema-editor-html .ql-editor {
+  background-color: var(--q-color-white);
+}

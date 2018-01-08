@@ -70,11 +70,13 @@
       "aurelia-templating-router": "npm:aurelia-templating-router@^1.1.0",
       "aurelia-testing": "npm:aurelia-testing@^1.0.0-beta.2.0.1",
       "css": "github:systemjs/plugin-css@^0.1.32",
+      "debounce": "npm:debounce@^1.1.0",
       "handsontable": "npm:handsontable@^0.32.0-beta1",
       "heyman/leaflet-areaselect": "github:heyman/leaflet-areaselect@master",
       "i18next-fetch-backend": "npm:i18next-fetch-backend@^0.0.1",
       "leaflet": "npm:leaflet@1.2.0",
       "leaflet-geocoder-mapzen": "npm:leaflet-geocoder-mapzen@1.8.0",
+      "quill": "npm:quill@^1.3.4",
       "text": "github:systemjs/plugin-text@^0.0.8"
     },
     "devDependencies": {}

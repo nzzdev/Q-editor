@@ -1,5 +1,5 @@
 body {
-  font-family: 'Inconsolata', monospace;
+  font-family: var(--q-font-family-ui);
   line-height: 1.2;
   color: var(--q-text-color);
 }
