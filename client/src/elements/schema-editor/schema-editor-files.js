@@ -81,10 +81,17 @@ export class SchemaEditorFiles {
     this.dropzone = new window.Dropzone(this.dropzoneElement, dropzoneOptions);
 
     this.dropzone.on('success', (file, response) => {
-      const newFile = {
-        url: response.url,
-        key: response.key
-      };
+      const newFile = {};
+      const fileProperties = Object.assign(file, response);
+      for (let prop in this.options.fileProperties) {
+        // fileProperties option is a mapping like this
+        // {
+        //   "url": "imageUrl"
+        // }
+        // where url is the prop returned in the response and imageUrl is the prop of the data object to hold that value;
+        // prop would be url in that example
+        newFile[this.options.fileProperties[prop]] = fileProperties[prop];
+      }
       if (this.options.maxFiles && this.options.maxFiles === 1) {
         this.data = newFile;
         this.change();
@@ -95,7 +102,7 @@ export class SchemaEditorFiles {
         this.data.push(newFile);
         this.change();
 
-        // the originalUrl property is used when deleting a file to delete it as well from the data
+        // the dataArrayIndex property is used when deleting a file to delete it as well from the data
         file.dataArrayIndex = this.data.indexOf(newFile);
       }
     });
