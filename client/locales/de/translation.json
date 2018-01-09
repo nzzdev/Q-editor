@@ -82,7 +82,7 @@
     "maxNumberOfFilesExceed": "Es können keine weiteren Dateien hochgeladen werden"
   },
   "dropzone": {
-    "dictDefaultMessage": "Legen Sie Dateien hier ab um Sie hochzuladen",
+    "dictDefaultMessage": "Anklicken oder Bilder hierhin ziehen, um sie hochzuladen",
     "dictFallbackMessage": "Ihr Browser unterstützt Drag&Drop Dateiuploads nicht",
     "dictFallbackText": "Benutzen Sie das Formular um Ihre Dateien hochzuladen",
     "dictFileTooBig": "Die Datei ist zu groß. Die maximale Dateigröße beträgt {{maxFileSize}}MB",
