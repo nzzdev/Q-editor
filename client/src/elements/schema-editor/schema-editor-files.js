@@ -81,26 +81,32 @@ export class SchemaEditorFiles {
     this.dropzone = new window.Dropzone(this.dropzoneElement, dropzoneOptions);
 
     this.dropzone.on('success', (file, response) => {
+      const newFile = {
+        url: response.url,
+        key: response.key
+      };
       if (this.options.maxFiles && this.options.maxFiles === 1) {
-        this.data = response.url;
+        this.data = newFile;
         this.change();
       } else {
         if (!Array.isArray(this.data)) {
           this.data = [];
         }
-        this.data.push(response.url);
+        this.data.push(newFile);
         this.change();
+
+        // the originalUrl property is used when deleting a file to delete it as well from the data
+        file.dataArrayIndex = this.data.indexOf(newFile);
       }
-      // the originalUrl property is used when deleting a file to delete it as well from the data
-      file.originalUrl = response.url;
     });
 
     this.dropzone.on('removedfile', (file) => {
       if (Array.isArray(this.data)) {
-        this.data.splice(this.data.indexOf(file.originalUrl), 1);
+        // find the removed one in our data by
+        this.data.splice(file.dataArrayIndex, 1);
         this.change();
       } else {
-        this.data = undefined;
+        this.data = {};
         this.change();
       }
     });
@@ -114,31 +120,33 @@ export class SchemaEditorFiles {
   }
 
   preloadExistingFiles() {
-    const fileUrls = [];
-    if (this.data && this.schema.type === 'string') {
-      fileUrls.push(this.data);
+    const files = [];
+    if (this.data && this.schema.type === 'object') {
+      files.push(this.data);
     }
     if (this.data && this.schema.type === 'array' && this.data.length > 0) {
-      fileUrls.push(...this.data);
+      files.push(...this.data);
     }
     // preload images already uploaded
-    for (let fileUrl of fileUrls) {
-      const mockFile = {
-        name: fileUrl,
-        dataURL: fileUrl, // needed for dropzone to create the thumbnail in a canvas
-        originalUrl: fileUrl, // the originalUrl property is used when deleting a file to delete it as well from the data
-        size: 0,
-        accepted: true
-      };
-      this.dropzone.files.push(mockFile);
-      this.dropzone.emit('addedfile', mockFile);
-      this.dropzone.createThumbnailFromUrl(mockFile, 120, 120, 'crop', false, thumbnail => {
-        this.dropzone.emit('thumbnail', mockFile, thumbnail);
-        this.dropzone.emit('complete', mockFile);
-        this.dropzone.emit('accepted', mockFile);
-        this.dropzone._updateMaxFilesReachedClass();
-      }, 'anonymous');
-    }
+    files.forEach((file, index) => {
+      if (file && file.url) {
+        const mockFile = {
+          name: file.url,
+          dataURL: file.url, // needed for dropzone to create the thumbnail in a canvas
+          dataArrayIndex: index, // the dataArrayIndex property is used when deleting a file to delete it as well from the data
+          size: 0,
+          accepted: true
+        };
+        this.dropzone.files.push(mockFile);
+        this.dropzone.emit('addedfile', mockFile);
+        this.dropzone.createThumbnailFromUrl(mockFile, 120, 120, 'crop', false, thumbnail => {
+          this.dropzone.emit('thumbnail', mockFile, thumbnail);
+          this.dropzone.emit('complete', mockFile);
+          this.dropzone.emit('accepted', mockFile);
+          this.dropzone._updateMaxFilesReachedClass();
+        }, 'anonymous');
+      }
+    });
   }
 
 }
