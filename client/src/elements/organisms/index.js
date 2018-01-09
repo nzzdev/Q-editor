@@ -5,5 +5,5 @@ export function configure(frameworkConfiguration) {
     .globalResources('./meta-editor')
     .globalResources('./q-bar')
     .globalResources('./tool-selection');
-    // do not include ./tool-status-bar as it is only used in editor, we do not want to load it upfront
+  // do not include ./tool-status-bar as it is only used in editor, we do not want to load it upfront
 }
