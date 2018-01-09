@@ -39,6 +39,7 @@ jobs:
           TAG=$CIRCLE_BRANCH
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker build -t nzzdev/q-editor:$TAG .
+          docker tag nzzdev/q-editor:$TAG
           docker push nzzdev/q-editor:$TAG
 
 workflows:
