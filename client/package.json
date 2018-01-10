@@ -75,6 +75,7 @@
       "i18next-fetch-backend": "npm:i18next-fetch-backend@^0.0.1",
       "leaflet": "npm:leaflet@1.2.0",
       "leaflet-geocoder-mapzen": "npm:leaflet-geocoder-mapzen@1.8.0",
+      "leaflet-search": "npm:leaflet-search@^2.3.7",
       "text": "github:systemjs/plugin-text@^0.0.8"
     },
     "devDependencies": {}

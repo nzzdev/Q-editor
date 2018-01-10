@@ -10,16 +10,67 @@ schema-editor-geojson-point .lat-lng-input label {
   flex-grow: 1;
 }
 
-schema-editor-geojson-point .leaflet-pelias-input {
-  padding: 0 0 0 26px;
+schema-editor-geojson-point .leaflet-top.leaflet-left {
+  width: 100%;
 }
 
-schema-editor-geojson-point .leaflet-pelias-expanded .leaflet-pelias-input {
-  padding-right: 30px; /* Space for close button */
+schema-editor-geojson-point .leaflet-control-search {
+  width: 100%;
+  margin: 0 !important;
+  padding: 10px;
+}
 
-  /* The properties below should be tweaked if height of .leaflet-pelias-expanded is changed */
-  padding-top: 5px;
-  padding-bottom: 5px;
+schema-editor-geojson-point .leaflet-control-search .search-input {
+  width: 90%;
+  padding-right: 60px;
+}
+
+schema-editor-geojson-point .leaflet-control-search .search-cancel {
+  position: absolute;
+  top: 14px;
+  right: 60px;
+  font-size: 20px;
+  color: black;
+  text-decoration: none;
+}
+
+schema-editor-geojson-point .leaflet-control-search .search-button {
+  width: 37px;
+  height: 37px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  text-align: center;
+  text-decoration: none;
+  background: var(--q-color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-radius: 2px;
+}
+
+schema-editor-geojson-point .leaflet-control-search .search-button::before {
+  content: '🔍';
+  display: block;
+  font-size: 20px;
+}
+
+schema-editor-geojson-point .leaflet-control-search ul.search-tooltip {
+  margin: 5px 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+schema-editor-geojson-point .leaflet-control-search .search-tip {
+  padding: 10px;
+  background: var(--q-color-white);
+  cursor: pointer;
+}
+
+schema-editor-geojson-point .leaflet-control-search .search-tip-select,
+schema-editor-geojson-point .leaflet-control-search .search-tip:hover {
+  background: var(--q-color-primary-1);
 }
 
 schema-editor-geojson-point .leaflet-areaselect-container {

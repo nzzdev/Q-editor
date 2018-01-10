@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   map: {
     "ajv": "npm:ajv@5.3.0",
     "array2d": "npm:array2d@0.0.5",
@@ -46,6 +47,7 @@ System.config({
     "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
     "leaflet": "npm:leaflet@1.2.0",
     "leaflet-geocoder-mapzen": "npm:leaflet-geocoder-mapzen@1.8.0",
+    "leaflet-search": "npm:leaflet-search@2.3.7",
     "text": "github:systemjs/plugin-text@0.0.8",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
@@ -321,6 +323,9 @@ System.config({
       "leaflet": "npm:leaflet@1.2.0",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:leaflet-search@2.3.7": {
+      "leaflet": "npm:leaflet@1.2.0"
     },
     "npm:numbro@1.11.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
