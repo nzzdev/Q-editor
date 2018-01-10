@@ -113,7 +113,6 @@ export class SchemaEditorGeojsonPoint {
           return records; // do not filter the results
         },
         formatData: (data) => {
-          console.log(data);
           return data.features
             .filter(result => {
               return result.geometry.type === 'Point';
@@ -122,12 +121,12 @@ export class SchemaEditorGeojsonPoint {
               return {
                 label: result.properties.formatted,
                 location: [result.geometry.coordinates[1], result.geometry.coordinates[0]]
-              }
+              };
             })
             .reduce((allResults, result) => {
               allResults[result.label] = result.location;
               return allResults;
-            }, {})
+            }, {});
         },
         minLength: 3,
         autoCollapse: true,
@@ -138,7 +137,7 @@ export class SchemaEditorGeojsonPoint {
       this.geocoder.on('search:locationfound', (selectedSearchResult) => {
         this.data.geometry = {
           coordinates: [selectedSearchResult.latlng[1], selectedSearchResult.latlng[0]]
-        }
+        };
         this.data.properties.label = selectedSearchResult.text;
         if (this.change) {
           this.change();
@@ -307,10 +306,7 @@ export class SchemaEditorGeojsonPoint {
 
 
 function geocode(searchTerm, apiKey, language) {
-  const query = {
-    q: searchTerm
-  }
-  const api = `https://api.opencagedata.com/geocode/v1/geojson?q=${searchTerm}&key=${apiKey}&language=${language}`
+  const api = `https://api.opencagedata.com/geocode/v1/geojson?q=${searchTerm}&key=${apiKey}&language=${language}`;
   return fetch(api)
     .then(res => {
       if (!res.ok) {
