@@ -91,7 +91,7 @@ const editorConfig = {
     //    publicationLastUpdated: '' // something Date.parse() understands
     //  }
     // ]
-    articlesWithItem: { 
+    articlesWithItem: {
       endpoint: {
         path: 'meta/articles-with-item/{id}'
       }
@@ -157,8 +157,7 @@ See the file `client/env`. This is loaded for development only and "fakes" the e
   "QServerBaseUrl": "http://localhost:3001",
   "loginMessage": "some text to be shown on the login screen",
   "devLogging": true,
-  "pushState": false,
-  "mapzenApiKey": "your mapzen api key, get it from https://mapzen.com. Only needed for geocoders in schema-editor-geojson-point"
+  "pushState": false
 }
 ```
 where `QServerBaseUrl` is a url to a running [Q server](https://github.com/nzzdev/Q-server).
