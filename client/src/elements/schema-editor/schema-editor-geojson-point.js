@@ -135,7 +135,9 @@ export class SchemaEditorGeojsonPoint {
       });
 
       this.geocoder.on('search:locationfound', (selectedSearchResult) => {
+        console.log(selectedSearchResult);
         this.data.geometry = {
+          type: 'Point',
           coordinates: [selectedSearchResult.latlng[1], selectedSearchResult.latlng[0]]
         };
         this.data.properties.label = selectedSearchResult.text;
