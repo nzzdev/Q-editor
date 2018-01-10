@@ -41,6 +41,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.36",
+    "dropzone": "npm:dropzone@5.2.0",
     "handsontable": "npm:handsontable@0.32.0",
     "heyman/leaflet-areaselect": "github:heyman/leaflet-areaselect@master",
     "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
@@ -277,13 +278,17 @@ System.config({
     },
     "npm:buffer@5.0.8": {
       "base64-js": "npm:base64-js@1.2.1",
-      "ieee754": "npm:ieee754@1.1.8"
+      "ieee754": "npm:ieee754@1.1.8",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
     "npm:core-js@1.2.7": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
+    "npm:dropzone@5.2.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:fast-deep-equal@1.0.0": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
