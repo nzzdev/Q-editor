@@ -156,7 +156,11 @@ export class SchemaEditorGeojsonPoint {
 
         if (selected && selected.properties) {
           try {
-            this.data.properties.label = selected.properties.components[selected.properties.components._type];
+            if (selected.properties.components[selected.properties.components._type]) {
+              this.data.properties.label = selected.properties.components[selected.properties.components._type];
+            } else {
+              throw new Error('property not available');
+            }
           } catch (e) {
             this.data.properties.label = selected.properties.formatted;
           }
