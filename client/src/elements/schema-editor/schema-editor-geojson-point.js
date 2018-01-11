@@ -101,6 +101,9 @@ export class SchemaEditorGeojsonPoint {
       scrollWheelZoom: 'center'
     }).setView([47.36521171867246, 8.547435700893404], 13);
 
+    // we need to keep the current search results to use the label after selection
+    let currentSearchResults = [];
+
     if (!schemaEditorConfig.geojson.opencagedata.apiKey) {
       log.info('no opencageApiKey given, will not load geocoder for geojson-point editor');
     } else {
@@ -109,15 +112,16 @@ export class SchemaEditorGeojsonPoint {
           const data = await geocode(text, schemaEditorConfig.geojson.opencagedata.apiKey, schemaEditorConfig.geojson.opencagedata.language);
           next(data);
         },
-        filterData: (value, records) => {
-          return records; // do not filter the results
-        },
         formatData: (data) => {
+          // reset
+          currentSearchResults = [];
+
           return data.features
             .filter(result => {
               return result.geometry.type === 'Point';
             })
             .map(result => {
+              currentSearchResults.push(result);
               return {
                 label: result.properties.formatted,
                 location: [result.geometry.coordinates[1], result.geometry.coordinates[0]]
@@ -128,6 +132,9 @@ export class SchemaEditorGeojsonPoint {
               return allResults;
             }, {});
         },
+        filterData: (value, records) => {
+          return records; // do not filter the results
+        },
         minLength: 3,
         autoCollapse: true,
         marker: false,
@@ -135,12 +142,25 @@ export class SchemaEditorGeojsonPoint {
       });
 
       this.geocoder.on('search:locationfound', (selectedSearchResult) => {
-        console.log(selectedSearchResult);
         this.data.geometry = {
           type: 'Point',
           coordinates: [selectedSearchResult.latlng[1], selectedSearchResult.latlng[0]]
         };
-        this.data.properties.label = selectedSearchResult.text;
+
+        // try to find the selected result by latlng
+        let selected = currentSearchResults
+          .filter(result => {
+            return result.geometry.coordinates[0] === selectedSearchResult.latlng[1]  // yes it needs to be 1st vs. 2nd
+              && result.geometry.coordinates[1] === selectedSearchResult.latlng[0];   // lat lng / lng lat mixup is a major fuckup
+          })[0];
+
+        if (selected && selected.properties) {
+          try {
+            this.data.properties.label = selected.properties.components[selected.properties.components._type];
+          } catch (e) {
+            this.data.properties.label = selected.properties.formatted;
+          }
+        }
         if (this.change) {
           this.change();
         }
