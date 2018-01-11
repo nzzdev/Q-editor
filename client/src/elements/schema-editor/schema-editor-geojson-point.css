@@ -28,7 +28,7 @@ schema-editor-geojson-point .leaflet-control-search .search-input {
 schema-editor-geojson-point .leaflet-control-search .search-cancel {
   position: absolute;
   top: 14px;
-  right: 60px;
+  right: 70px;
   font-size: 20px;
   color: black;
   text-decoration: none;
