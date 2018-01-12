@@ -1,5 +1,4 @@
 const Hapi = require("hapi");
-const Hoek = require("hoek");
 const Boom = require("boom");
 const routes = require("./routes/routes.js");
 
