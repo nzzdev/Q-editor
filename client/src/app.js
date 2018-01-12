@@ -1,12 +1,11 @@
-import { inject } from 'aurelia-framework';
-import { Redirect, Router } from 'aurelia-router';
-import User from 'resources/User.js';
-import QConfig from 'resources/QConfig.js';
-import qEnv from 'resources/qEnv.js';
+import { inject } from "aurelia-framework";
+import { Redirect, Router } from "aurelia-router";
+import User from "resources/User.js";
+import QConfig from "resources/QConfig.js";
+import qEnv from "resources/qEnv.js";
 
 @inject(QConfig, User, Router)
 export class App {
-
   routerMap;
 
   constructor(qConfig, user, router) {
@@ -25,70 +24,69 @@ export class App {
 
   configureRouter(config, router) {
     this.router = router;
-    config.title = 'NZZ Q';
+    config.title = "NZZ Q";
     config.addPreActivateStep(ConfigAvailableCheckStep);
     config.addAuthorizeStep(AuthorizeStep); // Add a route filter to the authorize extensibility point.
 
     let routerMap = [
       {
-        route: ['login'],
-        name: 'login',
-        moduleId: 'pages/login',
-        title: 'Login'
+        route: ["login"],
+        name: "login",
+        moduleId: "pages/login",
+        title: "Login"
       },
       {
-        route: ['', 'index'],
-        name: 'index',
-        moduleId: 'pages/index',
-        title: 'Q',
+        route: ["", "index"],
+        name: "index",
+        moduleId: "pages/index",
+        title: "Q",
         auth: true,
-        desc: 'Übersicht',
-        iconName: 'icon-logo'
+        desc: "Übersicht",
+        iconName: "icon-logo"
       },
       {
-        route: ['item/:id'],
-        name: 'item',
-        moduleId: 'pages/item-overview',
+        route: ["item/:id"],
+        name: "item",
+        moduleId: "pages/item-overview",
         auth: true
       },
       {
-        route: ['editor/:tool/:id?'],
-        name: 'editor',
-        moduleId: 'pages/editor',
+        route: ["editor/:tool/:id?"],
+        name: "editor",
+        moduleId: "pages/editor",
         auth: true
       },
       {
-        route: ['feed'],
-        name: 'feed',
-        moduleId: 'pages/feed',
+        route: ["feed"],
+        name: "feed",
+        moduleId: "pages/feed",
         auth: true
       },
       {
-        route: ['server-unavailable'],
-        name: 'server-unavailable',
-        moduleId: 'pages/server-unavailable',
-        title: 'Error'
+        route: ["server-unavailable"],
+        name: "server-unavailable",
+        moduleId: "pages/server-unavailable",
+        title: "Error"
       }
     ];
 
     config.map(routerMap);
 
-    config.fallbackRoute('index');
+    config.fallbackRoute("index");
 
-    return qEnv.pushState
-      .then(pushState => {
-        if (!pushState) {
-          return;
-        }
-        config.options.pushState = true;
-        config.options.root = '/';
-      });
+    return qEnv.pushState.then(pushState => {
+      if (!pushState) {
+        return;
+      }
+      config.options.pushState = true;
+      config.options.root = "/";
+    });
   }
 
   async attached() {
     // load any additional stylesheets defined for themeing or font-face loading as @font-face doesn't work within ShadowRoot (used for the preview)
     try {
-      const stylesheets = await this.qConfig.get('stylesheets');
+      const stylesheets = await this.qConfig.get("stylesheets");
       if (stylesheets && stylesheets.length) {
         stylesheets
           .map(stylesheet => {
@@ -99,14 +97,14 @@ export class App {
           })
           .map(stylesheet => {
             if (stylesheet.url) {
-              let link = document.createElement('link');
-              link.type = 'text/css';
-              link.rel = 'stylesheet';
+              let link = document.createElement("link");
+              link.type = "text/css";
+              link.rel = "stylesheet";
               link.href = stylesheet.url;
               document.head.appendChild(link);
             } else if (stylesheet.content) {
-              let style = document.createElement('style');
-              style.type = 'text/css';
+              let style = document.createElement("style");
+              style.type = "text/css";
               style.appendChild(document.createTextNode(stylesheet.content));
               document.head.appendChild(style);
             }
@@ -120,7 +118,6 @@ export class App {
 
 @inject(User, QConfig)
 class AuthorizeStep {
-
   constructor(user, qConfig) {
     this.user = user;
     this.qConfig = qConfig;
@@ -133,7 +130,7 @@ class AuthorizeStep {
         .then(() => {
           if (!this.user.isLoggedIn) {
             this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
-            return next.cancel(new Redirect('login'));
+            return next.cancel(new Redirect("login"));
           }
           if (this.redirectBackAfterLoginRoute) {
             let route = this.redirectBackAfterLoginRoute;
@@ -142,9 +139,9 @@ class AuthorizeStep {
           }
           return next();
         })
-        .catch((e) => {
+        .catch(e => {
           this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
-          return next.cancel(new Redirect('login'));
+          return next.cancel(new Redirect("login"));
         });
     }
 
@@ -154,19 +151,22 @@ class AuthorizeStep {
 
 @inject(QConfig)
 class ConfigAvailableCheckStep {
-
   constructor(qConfig) {
     this.qConfig = qConfig;
   }
 
   async run(navigationInstruction, next) {
-    if (navigationInstruction.getAllInstructions().some(i => i.config.name === 'server-unavailable')) {
+    if (
+      navigationInstruction
+        .getAllInstructions()
+        .some(i => i.config.name === "server-unavailable")
+    ) {
       try {
         await this.qConfig.configLoaded;
         if (!this.qConfig.config) {
           return next();
         }
-        return next.cancel(new Redirect('index'));
+        return next.cancel(new Redirect("index"));
       } catch (e) {
         return next();
       }
@@ -174,12 +174,11 @@ class ConfigAvailableCheckStep {
     try {
       await this.qConfig.configLoaded;
       if (!this.qConfig.config) {
-        return next.cancel(new Redirect('server-unavailable'));
+        return next.cancel(new Redirect("server-unavailable"));
       }
       return next();
     } catch (e) {
-      return next.cancel(new Redirect('server-unavailable'));
+      return next.cancel(new Redirect("server-unavailable"));
     }
   }
-
 }

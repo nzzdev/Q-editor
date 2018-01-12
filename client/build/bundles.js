@@ -3,12 +3,10 @@ const defaultBundle = [
   "**/*.html!text",
   "**/*.css!text",
   "text",
-  "css",
-]
+  "css"
+];
 
-const resourcesBundle = [
-  "resources/*.js"
-]
+const resourcesBundle = ["resources/*.js"];
 
 const editorBundle = [
   "pages/editor.js",
@@ -22,7 +20,7 @@ const editorBundle = [
   "elements/organisms/tool-status-bar.js",
   "elements/organisms/tool-status-bar.html!text",
   "elements/organisms/tool-status-bar.css!text"
-]
+];
 
 const aureliaBundle = [
   "aurelia-animator-css",
@@ -42,6 +40,7 @@ const aureliaBundle = [
   "aurelia-logging-console",
   "aurelia-metadata",
   "aurelia-pal",
+  "aurelia-pal-browser",
   "aurelia-path",
   "aurelia-polyfills",
   "aurelia-router",
@@ -53,51 +52,48 @@ const aureliaBundle = [
   "i18next-fetch-backend",
   "aurelia-notification",
   "aurelia-authentication"
-]
+];
 
 module.exports = {
-  "bundles": {
+  bundles: {
     "dist/aurelia": {
-      "includes": aureliaBundle,
-      "options": {
-        "inject": true,
-        "minify": false,
-        "depCache": false,
-        "rev": true
+      includes: aureliaBundle,
+      options: {
+        inject: true,
+        minify: false,
+        depCache: false,
+        rev: true
       }
     },
     "dist/resources": {
-      "includes": resourcesBundle,
-      "excludes": aureliaBundle,
-      "options": {
-        "inject": true,
-        "minify": false,
-        "depCache": false,
-        "rev": true
+      includes: resourcesBundle,
+      excludes: aureliaBundle,
+      options: {
+        inject: true,
+        minify: false,
+        depCache: false,
+        rev: true
       }
     },
     "dist/q-bundle": {
-      "includes": defaultBundle,
-      "excludes": editorBundle
-                  .concat(aureliaBundle)
-                  .concat(resourcesBundle),
-      "options": {
-        "inject": true,
-        "minify": false,
-        "depCache": true,
-        "rev": true
+      includes: defaultBundle,
+      excludes: editorBundle.concat(aureliaBundle).concat(resourcesBundle),
+      options: {
+        inject: true,
+        minify: false,
+        depCache: true,
+        rev: true
       }
     },
     "dist/q-editor-bundle": {
-      "includes": editorBundle,
-      "excludes": aureliaBundle
-                  .concat(resourcesBundle),
-      "options": {
-        "inject": true,
-        "minify": false,
-        "depCache": true,
-        "rev": true
+      includes: editorBundle,
+      excludes: aureliaBundle.concat(resourcesBundle),
+      options: {
+        inject: true,
+        minify: false,
+        depCache: true,
+        rev: true
       }
-    },
+    }
   }
 };
