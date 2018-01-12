@@ -1,5 +1,5 @@
 # Use latest version of Node as the base image
-FROM node:8.6
+FROM node:9.4
 
 # Set work directory for run/cmd
 WORKDIR /app
