@@ -10,7 +10,6 @@ COPY ./node_modules /app/node_modules
 COPY ./LICENSE /app
 
 COPY ./index.js /app
-COPY ./server.js /app
 COPY ./routes /app/routes
 
 COPY ./client/favicon.png /app/client/favicon.png
