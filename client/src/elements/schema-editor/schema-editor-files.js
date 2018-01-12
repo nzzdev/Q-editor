@@ -1,15 +1,14 @@
-import { bindable, inject, Loader, LogManager } from 'aurelia-framework';
-import { Notification } from 'aurelia-notification';
-import { I18N } from 'aurelia-i18n';
-import { checkAvailability } from 'resources/schemaEditorDecorators.js';
-import qEnv from 'resources/qEnv.js';
-import { AuthService } from 'aurelia-authentication';
-const log = LogManager.getLogger('Q');
+import { bindable, inject, Loader, LogManager } from "aurelia-framework";
+import { Notification } from "aurelia-notification";
+import { I18N } from "aurelia-i18n";
+import { checkAvailability } from "resources/schemaEditorDecorators.js";
+import qEnv from "resources/qEnv.js";
+import { AuthService } from "aurelia-authentication";
+const log = LogManager.getLogger("Q");
 
 @checkAvailability()
 @inject(Loader, AuthService, Notification, I18N)
 export class SchemaEditorFiles {
-
   @bindable schema;
   @bindable data;
   @bindable change;
@@ -17,7 +16,7 @@ export class SchemaEditorFiles {
 
   options = {
     maxFiles: null
-  }
+  };
 
   constructor(loader, authService, notification, i18n) {
     this.loader = loader;
@@ -34,8 +33,8 @@ export class SchemaEditorFiles {
     if (!this.schema) {
       return;
     }
-    if (this.schema.hasOwnProperty('Q:options')) {
-      this.options = Object.assign(this.options, this.schema['Q:options']);
+    if (this.schema.hasOwnProperty("Q:options")) {
+      this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
   }
 
@@ -44,43 +43,60 @@ export class SchemaEditorFiles {
     // as we need Dropzone later, we need to await the loading
     if (!window.Dropzone) {
       try {
-        window.Dropzone = await this.loader.loadModule('dropzone');
-        this.loader.loadModule('npm:dropzone@5.2.0/dist/min/dropzone.min.css!');
+        window.Dropzone = await this.loader.loadModule("dropzone");
+        this.loader.loadModule("npm:dropzone@5.2.0/dist/min/dropzone.min.css!");
       } catch (e) {
         log.error(e);
       }
     }
     if (!window.Dropzone) {
-      log.error('window.Dropzone is not defined after loading dropzone');
+      log.error("window.Dropzone is not defined after loading dropzone");
       return;
     }
 
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
     const translations = {
-      'dictDefaultMessage': this.i18n.tr('dropzone.dictDefaultMessage'),
-      'dictFallbackMessage': this.i18n.tr('dropzone.dictFallbackMessage'),
-      'dictFallbackText': this.i18n.tr('dropzone.dictFallbackText'),
-      'dictFileTooBig': this.i18n.tr('dropzone.dictFileTooBig'),
-      'dictInvalidFileType': this.i18n.tr('dropzone.dictInvalidFileType'),
-      'dictResponseError': this.i18n.tr('dropzone.dictResponseError'),
-      'dictCancelUpload': this.i18n.tr('dropzone.dictCancelUpload'),
-      'dictCancelUploadConfirmation': this.i18n.tr('dropzone.dictCancelUploadConfirmation'),
-      'dictRemoveFile': this.i18n.tr('dropzone.dictRemoveFile'),
-      'dictMaxFilesExceeded': this.i18n.tr('dropzone.dictMaxFilesExceeded')
+      dictDefaultMessage: this.i18n.tr("dropzone.dictDefaultMessage"),
+      dictFallbackMessage: this.i18n.tr("dropzone.dictFallbackMessage"),
+      dictFallbackText: this.i18n.tr("dropzone.dictFallbackText"),
+      dictFileTooBig: this.i18n.tr("dropzone.dictFileTooBig"),
+      dictInvalidFileType: this.i18n.tr("dropzone.dictInvalidFileType"),
+      dictResponseError: this.i18n.tr("dropzone.dictResponseError"),
+      dictCancelUpload: this.i18n.tr("dropzone.dictCancelUpload"),
+      dictCancelUploadConfirmation: this.i18n.tr(
+        "dropzone.dictCancelUploadConfirmation"
+      ),
+      dictRemoveFile: this.i18n.tr("dropzone.dictRemoveFile"),
+      dictMaxFilesExceeded: this.i18n.tr("dropzone.dictMaxFilesExceeded")
     };
 
-    const dropzoneOptions = Object.assign({
-      addRemoveLinks: true,
-      url: `${QServerBaseUrl}/file`,
-      headers: {
-        'Authorization': `${this.authService.config.authTokenType} ${this.authService.getAccessToken()}`
-      }
-    }, this.options, translations);
+    const authorizationToken = [
+      this.authService.config.authTokenType,
+      this.authService.getAccessToken()
+    ].join(" ");
 
-    this.dropzone = new window.Dropzone(this.dropzoneElement, dropzoneOptions);
+    this.dropzoneOptions = Object.assign(
+      {
+        addRemoveLinks: true,
+        url: `${QServerBaseUrl}/file`,
+        headers: {
+          Authorization: authorizationToken
+        },
+        thumbnailWidth: 120, // should keep aspect ratio,
+        thumbnailHeight: null,
+        thumbnailMethod: "contain"
+      },
+      this.options,
+      translations
+    );
 
-    this.dropzone.on('success', (file, response) => {
+    this.dropzone = new window.Dropzone(
+      this.dropzoneElement,
+      this.dropzoneOptions
+    );
+
+    this.dropzone.on("success", (file, response) => {
       const newFile = {};
       const fileProperties = Object.assign(file, response);
       for (let prop in this.options.fileProperties) {
@@ -107,7 +123,7 @@ export class SchemaEditorFiles {
       }
     });
 
-    this.dropzone.on('removedfile', (file) => {
+    this.dropzone.on("removedfile", file => {
       if (Array.isArray(this.data)) {
         // find the removed one in our data by
         this.data.splice(file.dataArrayIndex, 1);
@@ -118,9 +134,9 @@ export class SchemaEditorFiles {
       }
     });
 
-    this.dropzone.on('maxfilesexceeded', (file) => {
+    this.dropzone.on("maxfilesexceeded", file => {
       this.dropzone.removeFile(file);
-      this.notification.error('notifications.maxNumberOfFilesExceed');
+      this.notification.error("notifications.maxNumberOfFilesExceed");
     });
 
     this.preloadExistingFiles();
@@ -128,10 +144,10 @@ export class SchemaEditorFiles {
 
   preloadExistingFiles() {
     const files = [];
-    if (this.data && this.schema.type === 'object') {
+    if (this.data && this.schema.type === "object") {
       files.push(this.data);
     }
-    if (this.data && this.schema.type === 'array' && this.data.length > 0) {
+    if (this.data && this.schema.type === "array" && this.data.length > 0) {
       files.push(...this.data);
     }
     // preload images already uploaded
@@ -145,15 +161,22 @@ export class SchemaEditorFiles {
           accepted: true
         };
         this.dropzone.files.push(mockFile);
-        this.dropzone.emit('addedfile', mockFile);
-        this.dropzone.createThumbnailFromUrl(mockFile, 120, 120, 'crop', false, thumbnail => {
-          this.dropzone.emit('thumbnail', mockFile, thumbnail);
-          this.dropzone.emit('complete', mockFile);
-          this.dropzone.emit('accepted', mockFile);
-          this.dropzone._updateMaxFilesReachedClass();
-        }, 'anonymous');
+        this.dropzone.emit("addedfile", mockFile);
+        this.dropzone.createThumbnailFromUrl(
+          mockFile,
+          this.dropzoneOptions.thumbnailWidth,
+          this.dropzoneOptions.thumbnailHeight,
+          this.dropzoneOptions.thumbnailMethod,
+          false,
+          thumbnail => {
+            this.dropzone.emit("thumbnail", mockFile, thumbnail);
+            this.dropzone.emit("complete", mockFile);
+            this.dropzone.emit("accepted", mockFile);
+            this.dropzone._updateMaxFilesReachedClass();
+          },
+          "anonymous"
+        );
       }
     });
   }
-
 }
