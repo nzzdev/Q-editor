@@ -1,6 +1,6 @@
 <template class="schema-editor-input">
   <label>
     ${schema["title"]}
-    <textare value.bind="data" required.bind="required" input.delegate="change() & debounce:800"></textare>
+    <textare value.bind="data" placeholder.to-view="options.placeholder || ''" required.bind="required" input.delegate="change() & debounce:800"></textare>
   </label>
 </template>
