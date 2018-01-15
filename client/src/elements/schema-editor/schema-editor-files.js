@@ -124,7 +124,11 @@ export class SchemaEditorFiles {
     });
 
     this.dropzone.on("removedfile", file => {
-      if (Array.isArray(this.data)) {
+      // if the file was never accepted (coming from maxfilesexceeded) we do not have to remove it from our datastructure
+      if (!file.accepted) {
+        return;
+      }
+      if (Array.isArray(this.data) && file.dataArrayIndex !== undefined) {
         // find the removed one in our data by
         this.data.splice(file.dataArrayIndex, 1);
         this.change();
@@ -156,10 +160,14 @@ export class SchemaEditorFiles {
         const mockFile = {
           name: file.url,
           dataURL: file.url, // needed for dropzone to create the thumbnail in a canvas
-          dataArrayIndex: index, // the dataArrayIndex property is used when deleting a file to delete it as well from the data
           size: 0,
           accepted: true
         };
+
+        if (this.schema.type === "array") {
+          mockFile.dataArrayIndex = index; // the dataArrayIndex property is used when deleting a file to delete it as well from the data
+        }
+
         this.dropzone.files.push(mockFile);
         this.dropzone.emit("addedfile", mockFile);
         this.dropzone.createThumbnailFromUrl(
