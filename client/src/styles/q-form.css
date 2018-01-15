@@ -2,6 +2,10 @@
   margin-top: calc(var(--q-space-base) * 2);
 }
 
+.q-form ::placeholder {
+  color: var(--q-text-ultralight-color)
+}
+
 .q-form label {
   font-size: var(--q-text-small-size);
   line-height: 1.33;
@@ -43,7 +47,7 @@
   opacity: 0.5;
 }
 
-.q-form input[type="text"], 
+.q-form input[type="text"],
 .q-form input[type="url"] {
   font-size: 14px;
   line-height: 1.3;

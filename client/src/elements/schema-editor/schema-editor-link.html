@@ -1,6 +1,6 @@
 <template>
   <label>
     ${schema.properties.url["title"] || ''}
-    <input type="url" required.bind="required" value.bind="data.url" ref="urlInput" keyup.delegate="handleUrlChange() & debounce:800">
+    <input type="url" placeholder.to-view="options.placeholder || ''" required.bind="required" value.bind="data.url" ref="urlInput" keyup.delegate="handleUrlChange() & debounce:800">
   <label>
 </template>
