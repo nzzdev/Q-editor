@@ -41,6 +41,11 @@ export default class Item {
     }
   }
 
+  async setAcronymToUserAcronym() {
+    await this.user.loaded;
+    this.conf.acronym = this.user.data.acronym;
+  }
+
   async load(id) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
@@ -62,6 +67,7 @@ export default class Item {
     this.conf.active = false;
     await this.setDepartmentToUserDepartment();
     await this.setPublicationToUserPublication();
+    await this.setAcronymToUserAcronym();
     return this.save();
   }
 

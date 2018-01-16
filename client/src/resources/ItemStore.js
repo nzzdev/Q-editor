@@ -115,6 +115,7 @@ export default class ItemStore {
     let item = new Item(this.user, this.httpClient);
     item.setDepartmentToUserDepartment();
     item.setPublicationToUserPublication();
+    item.setAcronymToUserAcronym();
     this.bindingEngine.propertyObserver(item, "isSaved").subscribe(() => {
       if (item.conf.id) {
         this.items[id] = item;
