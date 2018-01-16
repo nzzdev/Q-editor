@@ -14,6 +14,8 @@
         <option repeat.for="department of departments" value.bind="department">${department}</option>
       </select>
     </div>
+    <label for="acronym">Kürzel</label>
+    <input type="text" value.bind="data.acronym">
     <label class="q-text-small q-text--light">${ 'metaEditor.annotations' & t }
       <textarea value.bind="data.annotations" style="height: 150px;"></textarea>
     </label>

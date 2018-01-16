@@ -1,7 +1,6 @@
-import qEnv from 'resources/qEnv.js';
+import qEnv from "resources/qEnv.js";
 
 export default class Item {
-
   conf = {};
 
   changeCallbacks = [];
@@ -23,7 +22,7 @@ export default class Item {
 
   getToolName() {
     // this is used because we have legacy tool names with - which is not supported in Q server config
-    return this.conf.tool.replace(new RegExp('-', 'g'), '_');
+    return this.conf.tool.replace(new RegExp("-", "g"), "_");
   }
 
   changed() {
@@ -42,10 +41,17 @@ export default class Item {
     }
   }
 
+  async setAcronymToUserAcronym() {
+    await this.user.loaded;
+    this.conf.acronym = this.user.data.acronym;
+  }
+
   async load(id) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
-    const response = await this.httpClient.fetch(`${QServerBaseUrl}/item/${id}`);
+    const response = await this.httpClient.fetch(
+      `${QServerBaseUrl}/item/${id}`
+    );
 
     if (!response.ok) {
       throw response;
@@ -61,6 +67,7 @@ export default class Item {
     this.conf.active = false;
     await this.setDepartmentToUserDepartment();
     await this.setPublicationToUserPublication();
+    await this.setAcronymToUserAcronym();
     return this.save();
   }
 
@@ -86,17 +93,17 @@ export default class Item {
 
   async save() {
     // per default we use POST to store a new item
-    let method = 'POST';
+    let method = "POST";
 
     // if we already have an id, we use PUT to update the item
     if (this.id) {
-      method = 'PUT';
+      method = "PUT";
     }
 
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
     const response = await this.httpClient.fetch(`${QServerBaseUrl}/item`, {
       method: method,
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify(this.conf)
     });
 
@@ -122,5 +129,4 @@ export default class Item {
 
     return true;
   }
-
 }
