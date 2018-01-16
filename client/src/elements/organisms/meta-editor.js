@@ -1,21 +1,18 @@
-import { inject, bindable } from 'aurelia-framework';
-import QConfig from 'resources/QConfig';
+import { inject, bindable } from "aurelia-framework";
+import QConfig from "resources/QConfig";
 
 @inject(QConfig)
 export class MetaEditor {
-
-  @bindable data
+  @bindable data;
+  @bindable change;
 
   constructor(qConfig, qTargets) {
-    qConfig.get('departments')
-      .then(departments => {
-        this.departments = departments.sort();
-      });
+    qConfig.get("departments").then(departments => {
+      this.departments = departments.sort();
+    });
 
-    qConfig.get('publications')
-      .then(publications => {
-        this.publications = publications;
-      });
+    qConfig.get("publications").then(publications => {
+      this.publications = publications;
+    });
   }
-
 }

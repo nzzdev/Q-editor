@@ -19,7 +19,7 @@
           <item-preview data.bind="previewData"></item-preview>
         </section>
         <section>
-          <meta-editor data.bind="item.conf"></meta-editor>
+          <meta-editor data.bind="item.conf" change.call="handleChange()"></meta-editor>
         </section>
     </main>
     <div class="editor__options" if.bind="optionsSchema">

@@ -7,6 +7,7 @@
 - fix: preview background is correctly applied when configured in publication context config
 - fix: use correct target in preview container in livingdocs-component
 - fix: buttons have the correct type attribute
+- fix: meta-editor changes trigger saved state update and fetch of rendering-info
 - updates: aurelia, hapi, node updated to latest versions
 
 # 1.6.0 (19.12.2017)
