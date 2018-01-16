@@ -1,3 +1,14 @@
+# 1.7.0 (17.01.2017)
+- feat: schema-editor new type `files` using Q-server files plugin to upload files and store file information on item
+- feat: schema-editor input fields allow placeholder to be defined via Q:options in schema.json
+- feat: schema-editor-table allows to hide transpose button via Q:options configuration
+- feat: schema-editor-geojson-point uses opencagedata as a geocoding provider for the map search (because mapzen is shutting down)
+- feat: users acronym is stored with every new item (editable in meta-editor) to be displayed by tools in the footer
+- fix: preview background is correctly applied when configured in publication context config
+- fix: use correct target in preview container in livingdocs-component
+- fix: buttons have the correct type attribute
+- updates: aurelia, hapi, node updated to latest versions
+
 # 1.6.0 (19.12.2017)
 - feat: item ID in /feed links to editor for this item
 - fix: scripts with document.getElementById work now in preview
