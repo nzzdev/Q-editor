@@ -139,4 +139,13 @@
       change.bind="change"
       required.bind="required"></schema-editor-table>
   </div>
+
+  <div if.bind="getType(schema) === 'files'" class="schema-editor-block">
+    <require from="./schema-editor-files"></require>
+    <schema-editor-files
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"></schema-editor-files>
+  </div>
 </template>

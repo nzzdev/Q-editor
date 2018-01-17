@@ -1,6 +1,6 @@
-<template bindable="icon, code, size, iconSize, tabindex" class="size-${size}">
+<template class="size-${size}">
   <require from="./icon-button.css"></require>
-  <button tabindex.bind="tabindex">
+  <button tabindex.bind="tabindex" type.bind="type">
     <span class="icon-button__icon">
       <box-icon if.bind="code || icon" code.bind="code" icon.bind="icon" size="${iconSize || size}"></box-icon>
     </span>

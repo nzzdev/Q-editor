@@ -1,15 +1,14 @@
-import { inject } from 'aurelia-framework';
-import { BindingEngine } from 'aurelia-binding';
-import { HttpClient } from 'aurelia-fetch-client';
-import qEnv from 'resources/qEnv.js';
-import User from 'resources/User.js';
-import Item from 'resources/Item.js';
-import ToolsInfo from 'resources/ToolsInfo.js';
-import QConfig from 'resources/QConfig.js';
+import { inject } from "aurelia-framework";
+import { BindingEngine } from "aurelia-binding";
+import { HttpClient } from "aurelia-fetch-client";
+import qEnv from "resources/qEnv.js";
+import User from "resources/User.js";
+import Item from "resources/Item.js";
+import ToolsInfo from "resources/ToolsInfo.js";
+import QConfig from "resources/QConfig.js";
 
 @inject(User, ToolsInfo, QConfig, BindingEngine, HttpClient)
 export default class ItemStore {
-
   items = {};
 
   constructor(user, toolsInfo, qConfig, bindingEngine, httpClient) {
@@ -25,57 +24,57 @@ export default class ItemStore {
   async initFilters() {
     this.filters = [
       {
-        name: 'tool',
+        name: "tool",
         options: [
           {
-            name: 'all',
-            label_i18n_key: 'itemsFilter.allGraphics'
+            name: "all",
+            label_i18n_key: "itemsFilter.allGraphics"
           }
         ],
-        selected: 'all'
+        selected: "all"
       },
       {
-        name: 'createdBy',
+        name: "createdBy",
         options: [
           {
-            name: 'all',
-            label_i18n_key: 'itemsFilter.byAll'
+            name: "all",
+            label_i18n_key: "itemsFilter.byAll"
           },
           {
-            name: 'byMe',
-            label_i18n_key: 'itemsFilter.byMe'
+            name: "byMe",
+            label_i18n_key: "itemsFilter.byMe"
           }
         ],
-        selected: 'all'
+        selected: "all"
       },
       {
-        name: 'department',
+        name: "department",
         options: [
           {
-            name: 'all',
-            label_i18n_key: 'itemsFilter.allDepartments'
+            name: "all",
+            label_i18n_key: "itemsFilter.allDepartments"
           },
           {
-            name: 'myDepartment',
-            label_i18n_key: 'itemsFilter.myDepartment'
+            name: "myDepartment",
+            label_i18n_key: "itemsFilter.myDepartment"
           }
         ],
-        selected: 'all'
+        selected: "all"
       }
     ];
 
     // add a publication filter if there are any publications configured in the targets config
-    const publications = await this.qConfig.get('publications');
+    const publications = await this.qConfig.get("publications");
     if (publications) {
       const publicationsFilter = {
-        name: 'publication',
+        name: "publication",
         options: [
           {
-            name: 'all',
-            label_i18n_key: 'itemsFilter.allPublications'
+            name: "all",
+            label_i18n_key: "itemsFilter.allPublications"
           }
         ],
-        selected: 'all'
+        selected: "all"
       };
       for (let publication of publications) {
         publicationsFilter.options.push({
@@ -88,22 +87,22 @@ export default class ItemStore {
 
     // add the last filter to filter by state
     this.filters.push({
-      name: 'active',
+      name: "active",
       options: [
         {
-          name: 'all',
-          label_i18n_key: 'itemsFilter.allStates'
+          name: "all",
+          label_i18n_key: "itemsFilter.allStates"
         },
         {
-          name: 'onlyActive',
-          label_i18n_key: 'itemsFilter.onlyActive'
+          name: "onlyActive",
+          label_i18n_key: "itemsFilter.onlyActive"
         },
         {
-          name: 'onlyInactive',
-          label_i18n_key: 'itemsFilter.onlyInactive'
+          name: "onlyInactive",
+          label_i18n_key: "itemsFilter.onlyInactive"
         }
       ],
-      selected: 'all'
+      selected: "all"
     });
 
     const tools = await this.toolsInfo.getAvailableTools();
@@ -116,13 +115,12 @@ export default class ItemStore {
     let item = new Item(this.user, this.httpClient);
     item.setDepartmentToUserDepartment();
     item.setPublicationToUserPublication();
-    this.bindingEngine
-      .propertyObserver(item, 'isSaved')
-      .subscribe(() => {
-        if (item.conf.id) {
-          this.items[id] = item;
-        }
-      });
+    item.setAcronymToUserAcronym();
+    this.bindingEngine.propertyObserver(item, "isSaved").subscribe(() => {
+      if (item.conf.id) {
+        this.items[id] = item;
+      }
+    });
     return item;
   }
 
@@ -138,37 +136,49 @@ export default class ItemStore {
   async getSearchRequestBody(searchString, limit, onlyTools) {
     let queries = [];
     for (let filter of this.filters) {
-      if (filter.name === 'tool' && filter.selected !== 'all') {
-        queries.push(`(tool:"${filter.selected}" OR tool:${filter.selected.replace(new RegExp('_', 'g'), '-')})`);
+      if (filter.name === "tool" && filter.selected !== "all") {
+        queries.push(
+          `(tool:"${filter.selected}" OR tool:${filter.selected.replace(
+            new RegExp("_", "g"),
+            "-"
+          )})`
+        );
 
         // we do have a specific tool filter, so we do not want to have the onlyTools processed
         onlyTools = null;
       }
       await this.user.loaded;
-      if (filter.name === 'createdBy' && filter.selected === 'byMe') {
+      if (filter.name === "createdBy" && filter.selected === "byMe") {
         queries.push(`createdBy:"${this.user.data.username}"`);
       }
-      if (filter.name === 'department' && filter.selected === 'myDepartment') {
+      if (filter.name === "department" && filter.selected === "myDepartment") {
         queries.push(`department:"${this.user.data.department}"`);
       }
-      if (filter.name === 'publication' && filter.selected !== 'all') {
+      if (filter.name === "publication" && filter.selected !== "all") {
         queries.push(`publication:"${filter.selected}"`);
       }
-      if (filter.name === 'active' && filter.selected !== 'all') {
-        queries.push(`active:${filter.selected === 'onlyActive' ? 'true' : 'false'}`);
+      if (filter.name === "active" && filter.selected !== "all") {
+        queries.push(
+          `active:${filter.selected === "onlyActive" ? "true" : "false"}`
+        );
       }
     }
 
     if (searchString) {
-      queries.push(`(id:${searchString}* OR title:${searchString}* OR subtitle:${searchString}* OR annotations:${searchString}*)`);
+      queries.push(
+        `(id:${searchString}* OR title:${searchString}* OR subtitle:${searchString}* OR annotations:${searchString}*)`
+      );
     }
 
     if (onlyTools) {
       let onlyToolsQuery = onlyTools
         .map(tool => {
-          return `tool:"${tool}" OR tool:${tool.replace(new RegExp('_', 'g'), '-')}`;
+          return `tool:"${tool}" OR tool:${tool.replace(
+            new RegExp("_", "g"),
+            "-"
+          )}`;
         })
-        .join(' OR ');
+        .join(" OR ");
 
       queries.push(`(${onlyToolsQuery})`);
     }
@@ -176,19 +186,28 @@ export default class ItemStore {
     let body = {
       include_docs: true,
       limit: limit || 18,
-      sort: '-orderDate'
+      sort: "-orderDate"
     };
 
     if (queries.length > 0) {
-      body.query = queries.join(' AND ');
+      body.query = queries.join(" AND ");
     } else {
-      body.query = '*:*';
+      body.query = "*:*";
     }
     return body;
   }
 
-  async getItems(searchString = undefined, limit, onlyTools = undefined, bookmark = undefined) {
-    let searchRequestBody = await this.getSearchRequestBody(searchString, limit, onlyTools);
+  async getItems(
+    searchString = undefined,
+    limit,
+    onlyTools = undefined,
+    bookmark = undefined
+  ) {
+    let searchRequestBody = await this.getSearchRequestBody(
+      searchString,
+      limit,
+      onlyTools
+    );
     if (bookmark) {
       searchRequestBody.bookmark = bookmark;
     }
@@ -198,7 +217,7 @@ export default class ItemStore {
   async loadItems(searchRequestBody) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
     const response = await this.httpClient.fetch(`${QServerBaseUrl}/search`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(searchRequestBody)
     });
 
@@ -211,13 +230,12 @@ export default class ItemStore {
       data.rows = [];
     }
 
-    const items = data.rows
-      .map(row => {
-        let item = new Item(this.user, this.httpClient);
-        item.addConf(row.doc);
-        this.items[row.doc._id];
-        return item;
-      });
+    const items = data.rows.map(row => {
+      let item = new Item(this.user, this.httpClient);
+      item.addConf(row.doc);
+      this.items[row.doc._id];
+      return item;
+    });
 
     return {
       items: items,
@@ -229,5 +247,4 @@ export default class ItemStore {
   getFilters() {
     return this.filters;
   }
-
 }

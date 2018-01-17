@@ -1,6 +1,5 @@
 import { bindable, inject, Loader, LogManager } from 'aurelia-framework';
 import { checkAvailability } from 'resources/schemaEditorDecorators.js';
-import qEnv from 'resources/qEnv';
 import QConfig from 'resources/QConfig';
 import { isRequired } from './helpers.js';
 
@@ -50,6 +49,8 @@ export class SchemaEditorGeojsonPoint {
   }
 
   async attached() {
+    const schemaEditorConfig = await this.qConfig.get('schemaEditor');
+
     this.showLoadingError = false;
 
     // if we already have a map, return here
@@ -74,19 +75,13 @@ export class SchemaEditorGeojsonPoint {
       return;
     }
 
-    // if we do not have a Leaflet.control.geocoder yet, we load the module async using the aurelia loader
-    // this failed in some tests because of weird module format. But it worked always, so we ignore any loading error here...
-    if (!window.Leaflet.control.geocoder) {
-      try {
-        this.loader.loadModule('npm:leaflet-geocoder-mapzen@1.8.0/dist/leaflet-geocoder-mapzen.css!');
-        await this.loader.loadModule('leaflet-geocoder-mapzen');
-      } catch (e) {
-        // leaflet-geocoder-mapzen is probably loaded, nevermind the error here
-      }
+    // if we do not have a Leaflet.Control.Search yet, we load the module async using the aurelia loader
+    if (!window.Leaflet.Control.Search) {
+      await this.loader.loadModule('leaflet-search');
     }
-    // ... test again if it's here
-    if (!window.Leaflet.control.geocoder) {
-      log.error('window.Leaflet.control.geocoder is not defined after loading leaflet-geocoder-mapzen');
+
+    if (!window.Leaflet.Control.Search) {
+      log.error('window.Leaflet.Control.Search is not defined after loading leaflet-search');
       this.showLoadingError = true;
       return;
     }
@@ -106,23 +101,70 @@ export class SchemaEditorGeojsonPoint {
       scrollWheelZoom: 'center'
     }).setView([47.36521171867246, 8.547435700893404], 13);
 
-    // we need a mapzen key for the geocoder, this has to be defined in ENV
-    // if it's not here, we do not add a geocoder
-    const mapzenApiKey = await qEnv.mapzenApiKey;
-    if (mapzenApiKey === undefined) {
-      log.info('no mapzenApiKey defined, will not load geocoder for geojson-point editor');
+    // we need to keep the current search results to use the label after selection
+    let currentSearchResults = [];
+
+    if (!schemaEditorConfig.geojson.opencagedata.apiKey) {
+      log.info('no opencageApiKey given, will not load geocoder for geojson-point editor');
     } else {
-      this.geocoder = window.Leaflet.control.geocoder(mapzenApiKey, {
-        attribution: null,
-        fullWidth: true,
-        markers: false,
-        focus: false
+      this.geocoder = new window.Leaflet.Control.Search({
+        sourceData: async (text, next) => {
+          const data = await geocode(text, schemaEditorConfig.geojson.opencagedata.apiKey, schemaEditorConfig.geojson.opencagedata.language);
+          next(data);
+        },
+        formatData: (data) => {
+          // reset
+          currentSearchResults = [];
+
+          return data.features
+            .filter(result => {
+              return result.geometry.type === 'Point';
+            })
+            .map(result => {
+              currentSearchResults.push(result);
+              return {
+                label: result.properties.formatted,
+                location: [result.geometry.coordinates[1], result.geometry.coordinates[0]]
+              };
+            })
+            .reduce((allResults, result) => {
+              allResults[result.label] = result.location;
+              return allResults;
+            }, {});
+        },
+        filterData: (value, records) => {
+          return records; // do not filter the results
+        },
+        minLength: 3,
+        autoCollapse: true,
+        marker: false,
+        textPlaceholder: ''
       });
 
-      this.geocoder.on('select', e => {
-        this.geocoder.collapse();
-        this.data.geometry = e.feature.geometry;
-        this.data.properties.label = e.feature.properties.name;
+      this.geocoder.on('search:locationfound', (selectedSearchResult) => {
+        this.data.geometry = {
+          type: 'Point',
+          coordinates: [selectedSearchResult.latlng[1], selectedSearchResult.latlng[0]]
+        };
+
+        // try to find the selected result by latlng
+        let selected = currentSearchResults
+          .filter(result => {
+            return result.geometry.coordinates[0] === selectedSearchResult.latlng[1]  // yes it needs to be 1st vs. 2nd
+              && result.geometry.coordinates[1] === selectedSearchResult.latlng[0];   // lat lng / lng lat mixup is a major fuckup
+          })[0];
+
+        if (selected && selected.properties) {
+          try {
+            if (selected.properties.components[selected.properties.components._type]) {
+              this.data.properties.label = selected.properties.components[selected.properties.components._type];
+            } else {
+              throw new Error('property not available');
+            }
+          } catch (e) {
+            this.data.properties.label = selected.properties.formatted;
+          }
+        }
         if (this.change) {
           this.change();
         }
@@ -145,7 +187,6 @@ export class SchemaEditorGeojsonPoint {
       }
     });
 
-    const schemaEditorConfig = await this.qConfig.get('schemaEditor');
     const layerConfig = schemaEditorConfig.geojson.layer;
 
     if (this.map) {
@@ -287,4 +328,22 @@ export class SchemaEditorGeojsonPoint {
       this.areaSelect.setDimensions({width: width, height: (width / 16) * 9});
     }
   }
+}
+
+
+function geocode(searchTerm, apiKey, language) {
+  const api = `https://api.opencagedata.com/geocode/v1/geojson?q=${searchTerm}&key=${apiKey}&language=${language}`;
+  return fetch(api)
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(res);
+      }
+      return res.json();
+    })
+    .then(data => {
+      return data;
+    })
+    .catch(e => {
+      // fail silent
+    });
 }

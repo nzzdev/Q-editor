@@ -1,14 +1,13 @@
-import { bindable, useShadowDOM, inject } from 'aurelia-framework';
-import qEnv from 'resources/qEnv.js';
+import { bindable, useShadowDOM, inject } from "aurelia-framework";
+import qEnv from "resources/qEnv.js";
 
 @useShadowDOM()
 @inject(Element)
 export class PreviewContainer {
-
-  @bindable width
-  @bindable renderingInfo
-  @bindable noRenderingInfoText
-  @bindable target
+  @bindable width;
+  @bindable renderingInfo;
+  @bindable noRenderingInfoText;
+  @bindable target;
 
   insertedElements = [];
 
@@ -17,7 +16,7 @@ export class PreviewContainer {
   constructor(element) {
     this.element = element;
     this.id = `preview-container-${Math.floor(Math.random() * 10 ** 9)}`;
-    this.element.setAttribute('id', this.id);
+    this.element.setAttribute("id", this.id);
 
     this.styleSheet = this.element.ownerDocument.styleSheets[0];
   }
@@ -35,7 +34,14 @@ export class PreviewContainer {
   }
 
   targetChanged() {
-    let color = 'white';
+    let color = "white";
+    try {
+      if (this.target.context.background.color) {
+        color = this.target.context.background.color;
+      }
+    } catch (e) {
+      // nevermind, default color already set to white
+    }
     try {
       if (this.target.preview.background.color) {
         color = this.target.preview.background.color;
@@ -43,6 +49,7 @@ export class PreviewContainer {
     } catch (e) {
       // nevermind, default color already set to white
     }
+
     this.addPreviewBorder(color);
     this.previewColor = color;
   }
@@ -71,7 +78,7 @@ export class PreviewContainer {
     }
 
     if (!renderingInfo) {
-      this.previewElement.innerHTML = '';
+      this.previewElement.innerHTML = "";
       return;
     }
 
@@ -94,15 +101,15 @@ export class PreviewContainer {
         })
         .map(stylesheet => {
           if (stylesheet.url) {
-            let link = document.createElement('link');
-            link.type = 'text/css';
-            link.rel = 'stylesheet';
+            let link = document.createElement("link");
+            link.type = "text/css";
+            link.rel = "stylesheet";
             link.href = stylesheet.url;
             this.insertedElements.push(link);
             this.element.shadowRoot.appendChild(link);
           } else if (stylesheet.content) {
-            let style = document.createElement('style');
-            style.type = 'text/css';
+            let style = document.createElement("style");
+            style.type = "text/css";
             style.appendChild(document.createTextNode(stylesheet.content));
             this.insertedElements.push(style);
             this.element.shadowRoot.appendChild(style);
@@ -114,7 +121,7 @@ export class PreviewContainer {
     if (renderingInfo.markup) {
       this.previewElement.innerHTML = renderingInfo.markup;
     } else {
-      this.previewElement.innerHTML = '';
+      this.previewElement.innerHTML = "";
     }
 
     // load the scripts one after the other
@@ -133,9 +140,13 @@ export class PreviewContainer {
   }
 
   loadAllScripts(scripts, callback = null, index = 0) {
-    if (scripts && scripts[index] && (scripts[index].url || scripts[index].content)) {
+    if (
+      scripts &&
+      scripts[index] &&
+      (scripts[index].url || scripts[index].content)
+    ) {
       let script = scripts[index];
-      let scriptElement = document.createElement('script');
+      let scriptElement = document.createElement("script");
 
       if (script.url) {
         scriptElement.src = script.url;
@@ -148,15 +159,21 @@ export class PreviewContainer {
         this.insertedElements.push(scriptElement);
         this.element.shadowRoot.appendChild(scriptElement);
       } else if (script.content) {
-        script.content = script.content.replace(new RegExp('document.querySelector', 'g'), `document.querySelector('#${this.id}').shadowRoot.querySelector`);
-        script.content = script.content.replace(new RegExp('document.getElementById', 'g'), `document.querySelector('#${this.id}').shadowRoot.getElementById`);
+        script.content = script.content.replace(
+          new RegExp("document.querySelector", "g"),
+          `document.querySelector('#${this.id}').shadowRoot.querySelector`
+        );
+        script.content = script.content.replace(
+          new RegExp("document.getElementById", "g"),
+          `document.querySelector('#${this.id}').shadowRoot.getElementById`
+        );
 
         scriptElement.innerHTML = script.content;
         this.insertedElements.push(scriptElement);
         this.element.shadowRoot.appendChild(scriptElement);
         this.loadAllScripts(scripts, callback, index + 1);
       }
-    } else if (typeof callback === 'function') {
+    } else if (typeof callback === "function") {
       callback();
     }
   }

@@ -6,6 +6,6 @@ export function configure(frameworkConfiguration) {
     .globalResources('./button-secondary.html')
     .globalResources('./button-tertiary.html')
     .globalResources('./button-yes.html')
-    .globalResources('./icon-button.html')
+    .globalResources('./icon-button.js')
     .globalResources('./q-loader.html');
 }

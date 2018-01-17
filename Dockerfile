@@ -1,5 +1,5 @@
 # Use latest version of Node as the base image
-FROM node:8.6
+FROM node:9.4
 
 # Set work directory for run/cmd
 WORKDIR /app
@@ -10,7 +10,6 @@ COPY ./node_modules /app/node_modules
 COPY ./LICENSE /app
 
 COPY ./index.js /app
-COPY ./server.js /app
 COPY ./routes /app/routes
 
 COPY ./client/favicon.png /app/client/favicon.png

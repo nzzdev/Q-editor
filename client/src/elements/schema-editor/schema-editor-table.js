@@ -46,12 +46,29 @@ export class SchemaEditorTable {
   @bindable data;
   @bindable change;
 
+  options = {
+    allowTranspose: true
+  }
+
   constructor(loader) {
     this.loader = loader;
   }
 
   dataChanged() {
     this.hotData = JSON.parse(JSON.stringify(this.data));
+  }
+
+  async schemaChanged() {
+    this.applyOptions();
+  }
+
+  applyOptions() {
+    if (!this.schema) {
+      return;
+    }
+    if (this.schema.hasOwnProperty('Q:options')) {
+      this.options = Object.assign(this.options, this.schema['Q:options']);
+    }
   }
 
   async attached() {

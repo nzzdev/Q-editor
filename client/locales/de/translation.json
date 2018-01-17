@@ -78,6 +78,18 @@
     "graphicNeedsATitle": "Grafik braucht einen Titel",
     "failedLoadingItems": "Grafiken konnten nicht geladen werden",
     "failedToLoadItem": "Die Grafik konnte nicht geladen werden.",
-    "toolNotAvailable": "Dieses Tool steht nicht zur Verfügung"
+    "toolNotAvailable": "Dieses Tool steht nicht zur Verfügung",
+    "maxNumberOfFilesExceed": "Es können keine weiteren Dateien hochgeladen werden"
+  },
+  "dropzone": {
+    "dictDefaultMessage": "Anklicken oder Bilder hierhin ziehen, um sie hochzuladen",
+    "dictFallbackMessage": "Ihr Browser unterstützt Drag&Drop Dateiuploads nicht",
+    "dictFallbackText": "Benutzen Sie das Formular um Ihre Dateien hochzuladen",
+    "dictFileTooBig": "Die Datei ist zu gross. Die maximale Dateigrösse beträgt {{maxFileSize}}MB",
+    "dictInvalidFileType": "Eine Datei dieses Typs kann nicht hochgeladen werden",
+    "dictResponseError": "Der Server hat ihre Anfrage mit Status {{statusCode}} abgelehnt",
+    "dictCancelUpload": "Hochladen abbrechen",
+    "dictRemoveFile": "Datei entfernen",
+    "dictMaxFilesExceeded": "Sie können keine weiteren Dateien mehr hochladen"
   }
 }

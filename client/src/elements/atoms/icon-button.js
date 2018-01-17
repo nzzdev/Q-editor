@@ -5,14 +5,8 @@ export class IconButton {
   @bindable icon
   @bindable code
   @bindable size
+  @bindable iconSize
+  @bindable tabindex
+  @bindable type = 'button'
 
-  created(owningView, myView) {
-    this.view = myView;
-  }
-
-  attached() {
-    if (this.view.slots['__au-default-slot-key__'].children.length > 0) {
-      this.hasText = true;
-    }
-  }
 }
