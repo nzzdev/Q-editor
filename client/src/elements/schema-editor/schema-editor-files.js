@@ -56,8 +56,19 @@ export class SchemaEditorFiles {
 
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
+    let dictDefaultMessageTranslation = this.i18n.tr(
+      "dropzone.dictDefaultMessage"
+    );
+    if (this.options.maxFiles) {
+      if (this.options.maxFiles === 1) {
+        dictDefaultMessageTranslation = this.i18n.tr(
+          "dropzone.dictDefaultMessageSingleFile"
+        );
+      }
+    }
+
     const translations = {
-      dictDefaultMessage: this.i18n.tr("dropzone.dictDefaultMessage"),
+      dictDefaultMessage: dictDefaultMessageTranslation,
       dictFallbackMessage: this.i18n.tr("dropzone.dictFallbackMessage"),
       dictFallbackText: this.i18n.tr("dropzone.dictFallbackText"),
       dictFileTooBig: this.i18n.tr("dropzone.dictFileTooBig"),
