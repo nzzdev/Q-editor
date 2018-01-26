@@ -83,6 +83,7 @@
   },
   "dropzone": {
     "dictDefaultMessage": "Anklicken oder Bilder hierhin ziehen, um sie hochzuladen",
+    "dictDefaultMessageSingleFile": "Anklicken oder Bild hierhin ziehen, um es hochzuladen",
     "dictFallbackMessage": "Ihr Browser unterstützt Drag&Drop Dateiuploads nicht",
     "dictFallbackText": "Benutzen Sie das Formular um Ihre Dateien hochzuladen",
     "dictFileTooBig": "Die Datei ist zu gross. Die maximale Dateigrösse beträgt {{maxFileSize}}MB",
