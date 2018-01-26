@@ -59,12 +59,10 @@ export class SchemaEditorFiles {
     let dictDefaultMessageTranslation = this.i18n.tr(
       "dropzone.dictDefaultMessage"
     );
-    if (this.options.maxFiles) {
-      if (this.options.maxFiles === 1) {
-        dictDefaultMessageTranslation = this.i18n.tr(
-          "dropzone.dictDefaultMessageSingleFile"
-        );
-      }
+    if (this.options && this.options.maxFiles === 1) {
+      dictDefaultMessageTranslation = this.i18n.tr(
+        "dropzone.dictDefaultMessageSingleFile"
+      );
     }
 
     const translations = {
