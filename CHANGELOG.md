@@ -1,4 +1,7 @@
-# 1.7.0 (17.01.2017)
+# 1.7.1 (30.01.2018)
+- fix: display dropzone message in singular form if only one image is allowed
+
+# 1.7.0 (17.01.2018)
 - feat: schema-editor new type `files` using Q-server files plugin to upload files and store file information on item
 - feat: schema-editor input fields allow placeholder to be defined via Q:options in schema.json
 - feat: schema-editor-table allows to hide transpose button via Q:options configuration
