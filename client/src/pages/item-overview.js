@@ -73,7 +73,7 @@ export class ItemOverview {
     // ask the user if she really wants to edit this item
 
     // if the item is not active, go to the editor
-    if (this.item.conf.active === false) {
+    if (this.item.conf.active !== true) {
       this.router.navigate(editorRoute);
       return;
     }
