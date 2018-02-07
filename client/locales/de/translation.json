@@ -36,8 +36,8 @@
   "editor": {
     "questionLeaveWithUnsavedChanges": "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
     "questionReallyEditBecauseActive": "Diese Grafik ist bereits aktiv. Änderungen werden in allen Artikel übernommen. Willst du diese Grafik wirklich editieren?",
-    "confirmProceedToEditor": "Ja, ich möchte diese Grafik editieren",
-    "cancelProceedToEditor": "Nein, das möchte ich nicht",
+    "confirmProceedToEditor": "Ja, weiter zum Editor",
+    "cancelProceedToEditor": "Nein, abbrechen",
     "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",
     "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
     "failedToSave": "Speichern ist fehlgeschlagen",
