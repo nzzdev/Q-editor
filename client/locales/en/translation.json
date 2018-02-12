@@ -35,6 +35,9 @@
   },
   "editor": {
     "questionLeaveWithUnsavedChanges": "Not all changes are saved, close anyway?",
+    "questionReallyEditBecauseActive": "This graphic is already activ. Changes will be applied in all articles. Do you really want to edit this graphic?",
+    "confirmProceedToEditor": "Yes, proceed to editor",
+    "cancelProceedToEditor": "No, cancel",
     "arrayEntryAdd": "add {{ arrayEntryLabel }}",
     "activatingEditorTakesTooLong": "It takes too long to load the editor, something is wrong.",
     "failedToSave": "Failed to save",
