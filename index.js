@@ -10,7 +10,8 @@ async function start() {
   try {
     const hapiOptions = {
       port: process.env.PORT || 8080,
-      load: { sampleInterval: 1000 }
+      load: { sampleInterval: 1000 },
+      state: { parse: false, failAction: "log" }
     };
 
     server = Hapi.server(hapiOptions);
