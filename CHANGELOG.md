@@ -1,3 +1,6 @@
+# 1.7.2 (14.02.2018)
+- fix: do not try to parse the cookie to not fail on broken one as no cookie is needed
+
 # 1.7.1 (30.01.2018)
 - fix: display dropzone message in singular form if only one image is allowed
 
