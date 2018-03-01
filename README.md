@@ -99,6 +99,9 @@ const editorConfig = {
   },
   uiBehavior: {
     useItemDialogToActivate: true // if false, item is directly activatable from tool-status-bar (default: true)
+    askBeforeEditIfActive: { // if given the editor will ask users before editing an active item that was last editor longer than lastEditSecondsThreshold before
+      lastEditSecondsThreshold: 60 * 60 * 6 // 6 hours
+    }
   },
   eastereggs: { // there are some eastereggs in Q. provide the urls to the soundfiles here. We do not distribute them because we do not have the copyright for the tunes we use at NZZ.
     sounds: {
