@@ -6,7 +6,9 @@ WORKDIR /app
 
 # Copy everything else to work directory
 COPY ./package.json /app
-COPY ./node_modules /app/node_modules
+COPY ./package-lock.json /app
+RUN npm install --production
+
 COPY ./LICENSE /app
 
 COPY ./index.js /app

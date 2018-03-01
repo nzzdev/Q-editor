@@ -1,3 +1,6 @@
+# 1.8.1 (01.03.2018)
+- fix: install node modules within Docker to not fail if built on another platform
+
 # 1.8.0 (01.03.2018)
 - update hapi to 17.2.1 and node to 9.6
 - feature: show a confirm dialog before editing if item is active (configurable in editorconfig delivered from server)
