@@ -28,6 +28,7 @@
   "license": "MIT",
   "dependencies": {
     "boom": "^7.1.1",
+    "brok": "^2.0.0",
     "hapi": "^17.2.1",
     "inert": "^5.1.0"
   }

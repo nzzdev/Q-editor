@@ -31,13 +31,6 @@ async function start() {
           }
         }
       });
-      // change order of compression algorithms
-      // this is a hack to prefer brotli over gzip
-      // see the discussion here: https://github.com/hapijs/discuss/issues/589
-      const brEncoding = server._core.compression.encodings.pop();
-      server._core.compression.encodings.unshift(brEncoding);
-      server._core.compression._updateCommons();
-      // end hack
     }
 
     await server.start();
