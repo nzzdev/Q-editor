@@ -1,3 +1,6 @@
+# 1.7.3 (01.03.2018)
+- update hapi to 17.2.1 and node to 9.7
+
 # 1.7.2 (14.02.2018)
 - fix: do not try to parse the cookie to not fail on broken one as no cookie is needed
 
