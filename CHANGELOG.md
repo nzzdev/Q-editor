@@ -1,5 +1,5 @@
 # 1.7.3 (01.03.2018)
-- update hapi to 17.2.1 and node to 9.7
+- update hapi to 17.2.1 and node to 9.6
 - fix: make brotli compression work by depending on brok plugin
 
 # 1.7.2 (14.02.2018)
