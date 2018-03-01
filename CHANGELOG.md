@@ -1,3 +1,8 @@
+# 1.8.0 (01.03.2018)
+- update hapi to 17.2.1 and node to 9.6
+- feature: show a confirm dialog before editing if item is active (configurable in editorconfig delivered from server)
+- fix: make brotli compression work by depending on brok plugin
+
 # 1.7.2 (14.02.2018)
 - fix: do not try to parse the cookie to not fail on broken one as no cookie is needed
 
