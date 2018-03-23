@@ -134,39 +134,40 @@ export default class ItemStore {
   }
 
   async getSearchUrl(searchString, limit, bookmark) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    let searchUrl = `${QServerBaseUrl}/search?`;
+    const searchParams = new URLSearchParams();
     for (let filter of this.filters) {
       if (filter.name === "tool" && filter.selected !== "all") {
-        searchUrl = searchUrl + "tool=" + filter.selected + "&";
+        searchParams.append("tool", filter.selected);
       }
       await this.user.loaded;
       if (filter.name === "createdBy" && filter.selected === "byMe") {
-        searchUrl = searchUrl + "createdBy=" + this.user.data.username + "&";
+        searchParams.append("createdBy", this.user.data.username);
       }
       if (filter.name === "department" && filter.selected === "myDepartment") {
-        searchUrl = searchUrl + "department=" + this.user.data.department + "&";
+        searchParams.append("department", this.user.data.department);
       }
       if (filter.name === "publication" && filter.selected !== "all") {
-        searchUrl = searchUrl + "publication=" + filter.selected + "&";
+        searchParams.append("publication", filter.selected);
       }
       if (filter.name === "active" && filter.selected !== "all") {
-        searchUrl =
-          searchUrl + "active=" + filter.selected === "onlyActive"
-            ? "true"
-            : "false" + "&";
+        if (filter.selected === "onlyActive") {
+          searchParams.append("active", "true");
+        } else {
+          searchParams.append("active", "false");
+        }
       }
     }
     if (searchString) {
-      searchUrl = searchUrl + "searchString=" + searchString + "&";
+      searchParams.append("searchString", searchString);
     }
     if (limit) {
-      searchUrl = searchUrl + "limit=" + limit + "&";
+      searchParams.append("limit", limit);
     }
     if (bookmark) {
-      searchUrl = searchUrl + "bookmark=" + bookmark + "&";
+      searchParams.append("bookmark", bookmark);
     }
-    return searchUrl;
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    return `${QServerBaseUrl}/search?${searchParams.toString()}`;
   }
 
   async getItems(
