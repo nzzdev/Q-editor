@@ -202,8 +202,6 @@ export default class ItemStore {
     };
   }
 
-  async loadItems(searchRequestBody) {}
-
   getFilters() {
     return this.filters;
   }
