@@ -1,9 +1,9 @@
-import { inject, singleton } from 'aurelia-framework';
-import { I18N } from 'aurelia-i18n';
-import ItemStore from 'resources/ItemStore.js';
-import QTargets from 'resources/QTargets.js';
-import qEnv from 'resources/qEnv.js';
-import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
+import { inject, singleton } from "aurelia-framework";
+import { I18N } from "aurelia-i18n";
+import ItemStore from "resources/ItemStore.js";
+import QTargets from "resources/QTargets.js";
+import qEnv from "resources/qEnv.js";
+import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 
 let loadedItems = [];
 
@@ -29,7 +29,6 @@ async function getItem(id) {
 @singleton()
 @inject(ItemStore, QTargets, ObjectFromSchemaGenerator, I18N)
 export class App {
-
   constructor(itemStore, qTargets, objectFromSchemaGenerator, i18n) {
     this.itemStore = itemStore;
     this.qTargets = qTargets;
@@ -67,7 +66,7 @@ export class App {
 
   async loadTarget() {
     try {
-      const targets = await this.qTargets.get('availableTargets');
+      const targets = await this.qTargets.get("availableTargets");
       this.target = targets.filter(target => {
         return target.key === this.targetKey;
       })[0];
@@ -95,10 +94,9 @@ export class App {
 
   loadSelectedItem(item) {
     this.title = item.conf.title;
-    const index = this.selectedItems
-      .findIndex(selectedItem => {
-        return selectedItem.id === item.conf._id;
-      });
+    const index = this.selectedItems.findIndex(selectedItem => {
+      return selectedItem.id === item.conf._id;
+    });
     if (index > -1) {
       this.selectedItemIndex = index;
     } else {
@@ -114,7 +112,8 @@ export class App {
 
   insertItem() {
     // delete all displayOptions set to false
-    let displayOptions = this.selectedItems[this.selectedItemIndex].toolRuntimeConfig.displayOptions;
+    let displayOptions = this.selectedItems[this.selectedItemIndex]
+      .toolRuntimeConfig.displayOptions;
     Object.keys(displayOptions).forEach(displayOption => {
       if (!displayOptions[displayOption]) {
         delete displayOptions[displayOption];
@@ -122,10 +121,10 @@ export class App {
     });
 
     const message = {
-      action: 'update',
+      action: "update",
       params: this.selectedItems[this.selectedItemIndex]
     };
-    window.parent.postMessage(message, '*');
+    window.parent.postMessage(message, "*");
   }
 
   async reloadItems() {
@@ -133,11 +132,10 @@ export class App {
     try {
       const result = await this.loadItems(this.currentSearchString);
 
-      this.items =  result.items.map(item => {
-        let itemTool = this.tools
-          .filter(tool => {
-            return tool.name === item.getToolName();
-          })[0];
+      this.items = result.items.map(item => {
+        let itemTool = this.tools.filter(tool => {
+          return tool.name === item.getToolName();
+        })[0];
 
         if (itemTool) {
           item.conf.icon = itemTool.icon;
@@ -160,21 +158,28 @@ export class App {
     const numberOfItemsToLoadPerStep = 9;
 
     const availableToolNames = this.tools.map(tool => tool.name);
-    const result = await this.itemStore.getItems(searchString, numberOfItemsToLoadPerStep, availableToolNames, bookmark);
+    const result = await this.itemStore.getItems(
+      searchString,
+      numberOfItemsToLoadPerStep,
+      availableToolNames,
+      bookmark
+    );
     this.itemsLoading = false;
     return result;
   }
 
   async loadMore() {
     try {
-      const result = await this.loadItems(this.currentSearchString, this.bookmark);
+      const result = await this.loadItems(
+        this.currentSearchString,
+        this.bookmark
+      );
 
       this.items = this.items.concat(result.items);
-      this.items =  this.items.map(item => {
-        let itemTool = this.tools
-          .filter(tool => {
-            return tool.name === item.getToolName();
-          })[0];
+      this.items = this.items.map(item => {
+        let itemTool = this.tools.filter(tool => {
+          return tool.name === item.getToolName();
+        })[0];
 
         if (itemTool) {
           item.conf.icon = itemTool.icon;
@@ -197,7 +202,6 @@ export class App {
     return toolResponse.json();
   }
 
-
   updateMoreItemsAvailableState(result) {
     if (result.total_rows > this.items.length) {
       this.moreItemsAvailable = true;
@@ -212,21 +216,27 @@ export class App {
         width: [
           {
             value: this.previewContainer.getBoundingClientRect().width,
-            comparison: '='
+            comparison: "="
           }
         ]
       },
-      displayOptions: this.selectedItems[this.selectedItemIndex].toolRuntimeConfig.displayOptions,
+      displayOptions: this.selectedItems[this.selectedItemIndex]
+        .toolRuntimeConfig.displayOptions,
       isPure: true
     };
 
-    return qEnv.QServerBaseUrl
-      .then(QServerBaseUrl => {
-        if (this.selectedItemIndex !== undefined) {
-          return fetch(`${QServerBaseUrl}/rendering-info/${this.selectedItems[this.selectedItemIndex].id}/${this.target.key}?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`);
-        }
-        return {};
-      })
+    return qEnv.QServerBaseUrl.then(QServerBaseUrl => {
+      if (this.selectedItemIndex !== undefined) {
+        return fetch(
+          `${QServerBaseUrl}/rendering-info/${
+            this.selectedItems[this.selectedItemIndex].id
+          }/${this.target.key}?toolRuntimeConfig=${encodeURI(
+            JSON.stringify(toolRuntimeConfig)
+          )}`
+        );
+      }
+      return {};
+    })
       .then(res => {
         if (res.ok && res.status >= 200 && res.status < 400) {
           return res.json();
@@ -271,15 +281,16 @@ export class App {
 
   async loadDisplayOptions() {
     try {
-      const item =  await getItem(this.selectedItems[this.selectedItemIndex].id);
+      const item = await getItem(this.selectedItems[this.selectedItemIndex].id);
       this.tool = item.conf.tool;
 
       let selectedItem = this.selectedItems[this.selectedItemIndex];
 
-      qEnv.QServerBaseUrl
-        .then(QServerBaseUrl => {
-          return fetch(`${QServerBaseUrl}/tools/${this.tool}/display-options-schema.json`);
-        })
+      qEnv.QServerBaseUrl.then(QServerBaseUrl => {
+        return fetch(
+          `${QServerBaseUrl}/tools/${this.tool}/display-options-schema.json`
+        );
+      })
         .then(response => {
           if (response.ok) {
             return response.json();
@@ -287,13 +298,15 @@ export class App {
           throw response;
         })
         .then(schema => {
-          if (schema.hasOwnProperty('properties')) {
+          if (schema.hasOwnProperty("properties")) {
             // we just accept one object containing simple boolean type properties
             Object.keys(schema.properties).forEach(propertyName => {
               // maybe delete all non boolean properties here??
               let displayOption = schema.properties[propertyName];
               if (displayOption.title) {
-                schema.properties[propertyName].title = this.i18n.tr(`${this.tool}:${displayOption.title}`);
+                schema.properties[propertyName].title = this.i18n.tr(
+                  `${this.tool}:${displayOption.title}`
+                );
               }
             });
           }
@@ -303,7 +316,9 @@ export class App {
           }
 
           if (!selectedItem.toolRuntimeConfig.displayOptions) {
-            selectedItem.toolRuntimeConfig.displayOptions = this.objectFromSchemaGenerator.generateFromSchema(schema);
+            selectedItem.toolRuntimeConfig.displayOptions = this.objectFromSchemaGenerator.generateFromSchema(
+              schema
+            );
           }
         })
         .catch(err => {
@@ -317,7 +332,7 @@ export class App {
           }
         });
     } catch (e) {
-      throw new Error('no tool defined');
+      throw new Error("no tool defined");
     }
   }
 }
