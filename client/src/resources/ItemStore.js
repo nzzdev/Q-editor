@@ -133,68 +133,40 @@ export default class ItemStore {
     return this.items[id];
   }
 
-  async getSearchRequestBody(searchString, limit, onlyTools) {
-    let queries = [];
+  async getSearchUrl(searchString, limit, bookmark) {
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    let searchUrl = `${QServerBaseUrl}/search?`;
     for (let filter of this.filters) {
       if (filter.name === "tool" && filter.selected !== "all") {
-        queries.push(
-          `(tool:"${filter.selected}" OR tool:${filter.selected.replace(
-            new RegExp("_", "g"),
-            "-"
-          )})`
-        );
-
-        // we do have a specific tool filter, so we do not want to have the onlyTools processed
-        onlyTools = null;
+        searchUrl = searchUrl + "tool=" + filter.selected + "&";
       }
       await this.user.loaded;
       if (filter.name === "createdBy" && filter.selected === "byMe") {
-        queries.push(`createdBy:"${this.user.data.username}"`);
+        searchUrl = searchUrl + "createdBy=" + this.user.data.username + "&";
       }
       if (filter.name === "department" && filter.selected === "myDepartment") {
-        queries.push(`department:"${this.user.data.department}"`);
+        searchUrl = searchUrl + "department=" + this.user.data.department + "&";
       }
       if (filter.name === "publication" && filter.selected !== "all") {
-        queries.push(`publication:"${filter.selected}"`);
+        searchUrl = searchUrl + "publication=" + filter.selected + "&";
       }
       if (filter.name === "active" && filter.selected !== "all") {
-        queries.push(
-          `active:${filter.selected === "onlyActive" ? "true" : "false"}`
-        );
+        searchUrl =
+          searchUrl + "active=" + filter.selected === "onlyActive"
+            ? "true"
+            : "false" + "&";
       }
     }
-
     if (searchString) {
-      queries.push(
-        `(id:${searchString}* OR title:${searchString}* OR subtitle:${searchString}* OR annotations:${searchString}*)`
-      );
+      searchUrl = searchUrl + "searchString=" + searchString + "&";
     }
-
-    if (onlyTools) {
-      let onlyToolsQuery = onlyTools
-        .map(tool => {
-          return `tool:"${tool}" OR tool:${tool.replace(
-            new RegExp("_", "g"),
-            "-"
-          )}`;
-        })
-        .join(" OR ");
-
-      queries.push(`(${onlyToolsQuery})`);
+    if (limit) {
+      searchUrl = searchUrl + "limit=" + limit + "&";
     }
-
-    let body = {
-      include_docs: true,
-      limit: limit || 18,
-      sort: "-orderDate"
-    };
-
-    if (queries.length > 0) {
-      body.query = queries.join(" AND ");
-    } else {
-      body.query = "*:*";
+    if (bookmark) {
+      searchUrl = searchUrl + "bookmark=" + bookmark + "&";
     }
-    return body;
+    return searchUrl;
   }
 
   async getItems(
@@ -203,22 +175,9 @@ export default class ItemStore {
     onlyTools = undefined,
     bookmark = undefined
   ) {
-    let searchRequestBody = await this.getSearchRequestBody(
-      searchString,
-      limit,
-      onlyTools
-    );
-    if (bookmark) {
-      searchRequestBody.bookmark = bookmark;
-    }
-    return this.loadItems(searchRequestBody);
-  }
-
-  async loadItems(searchRequestBody) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const response = await this.httpClient.fetch(`${QServerBaseUrl}/search`, {
-      method: "POST",
-      body: JSON.stringify(searchRequestBody)
+    const searchUrl = await this.getSearchUrl(searchString, limit, bookmark);
+    const response = await this.httpClient.fetch(searchUrl, {
+      method: "GET"
     });
 
     if (!response.ok) {
@@ -226,23 +185,24 @@ export default class ItemStore {
     }
 
     const data = await response.json();
-    if (!data.rows) {
-      data.rows = [];
+    if (!data.docs) {
+      data.docs = [];
     }
 
-    const items = data.rows.map(row => {
+    const items = data.docs.map(doc => {
       let item = new Item(this.user, this.httpClient);
-      item.addConf(row.doc);
-      this.items[row.doc._id];
+      item.addConf(doc);
+      this.items[doc._id];
       return item;
     });
-
     return {
       items: items,
-      total_rows: data.total_rows,
+      total_rows: data.docs.length,
       bookmark: data.bookmark
     };
   }
+
+  async loadItems(searchRequestBody) {}
 
   getFilters() {
     return this.filters;
