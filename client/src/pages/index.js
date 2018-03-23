@@ -121,7 +121,7 @@ export class Index {
   }
 
   updateMoreItemsAvailableState(result) {
-    if (result.total_rows > this.items.length) {
+    if (result.total_rows >= this.items.length) {
       this.moreItemsAvailable = true;
     } else {
       this.moreItemsAvailable = false;
