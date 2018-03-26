@@ -172,7 +172,7 @@ export default class ItemStore {
 
   async getItems(
     searchString = undefined,
-    limit,
+    limit = 18,
     onlyTools = undefined,
     bookmark = undefined
   ) {
@@ -198,7 +198,7 @@ export default class ItemStore {
     });
     return {
       items: items,
-      total_rows: data.docs.length,
+      moreItemsAvailable: data.docs.length === limit,
       bookmark: data.bookmark
     };
   }
