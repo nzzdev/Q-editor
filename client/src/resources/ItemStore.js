@@ -160,7 +160,7 @@ export default class ItemStore {
       }
     }
     if (onlyTools) {
-      searchParams.append("tool", onlyTools);
+      searchParams.append("tool", JSON.stringify(onlyTools));
     }
     if (searchString) {
       searchParams.append("searchString", searchString);
