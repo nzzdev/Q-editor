@@ -133,11 +133,13 @@ export default class ItemStore {
     return this.items[id];
   }
 
-  async getSearchUrl(searchString, limit, bookmark) {
+  async getSearchUrl(searchString, limit, bookmark, onlyTools) {
     const searchParams = new URLSearchParams();
     for (let filter of this.filters) {
       if (filter.name === "tool" && filter.selected !== "all") {
         searchParams.append("tool", filter.selected);
+        // we do have a specific tool filter, so we do not want to have the onlyTools processed
+        onlyTools = undefined;
       }
       await this.user.loaded;
       if (filter.name === "createdBy" && filter.selected === "byMe") {
@@ -156,6 +158,9 @@ export default class ItemStore {
           searchParams.append("active", "false");
         }
       }
+    }
+    if (onlyTools) {
+      searchParams.append("tool", onlyTools);
     }
     if (searchString) {
       searchParams.append("searchString", searchString);
@@ -176,7 +181,12 @@ export default class ItemStore {
     onlyTools = undefined,
     bookmark = undefined
   ) {
-    const searchUrl = await this.getSearchUrl(searchString, limit, bookmark);
+    const searchUrl = await this.getSearchUrl(
+      searchString,
+      limit,
+      bookmark,
+      onlyTools
+    );
     const response = await this.httpClient.fetch(searchUrl, {
       method: "GET"
     });
