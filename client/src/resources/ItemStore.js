@@ -206,6 +206,9 @@ export default class ItemStore {
       this.items[doc._id];
       return item;
     });
+
+    // moreItemsAvailable: As long as the returned amount of items are the same as the limit there are more items available
+    // See pagination section in http://docs.couchdb.org/en/2.1.1/api/database/find.html
     return {
       items: items,
       moreItemsAvailable: data.docs.length === limit,
