@@ -133,92 +133,62 @@ export default class ItemStore {
     return this.items[id];
   }
 
-  async getSearchRequestBody(searchString, limit, onlyTools) {
-    let queries = [];
+  async getSearchUrl(searchString, limit, bookmark, onlyTools) {
+    const searchParams = new URLSearchParams();
     for (let filter of this.filters) {
       if (filter.name === "tool" && filter.selected !== "all") {
-        queries.push(
-          `(tool:"${filter.selected}" OR tool:${filter.selected.replace(
-            new RegExp("_", "g"),
-            "-"
-          )})`
-        );
-
+        searchParams.append("tool", filter.selected);
         // we do have a specific tool filter, so we do not want to have the onlyTools processed
-        onlyTools = null;
+        onlyTools = undefined;
       }
       await this.user.loaded;
       if (filter.name === "createdBy" && filter.selected === "byMe") {
-        queries.push(`createdBy:"${this.user.data.username}"`);
+        searchParams.append("createdBy", this.user.data.username);
       }
       if (filter.name === "department" && filter.selected === "myDepartment") {
-        queries.push(`department:"${this.user.data.department}"`);
+        searchParams.append("department", this.user.data.department);
       }
       if (filter.name === "publication" && filter.selected !== "all") {
-        queries.push(`publication:"${filter.selected}"`);
+        searchParams.append("publication", filter.selected);
       }
       if (filter.name === "active" && filter.selected !== "all") {
-        queries.push(
-          `active:${filter.selected === "onlyActive" ? "true" : "false"}`
-        );
+        if (filter.selected === "onlyActive") {
+          searchParams.append("active", "true");
+        } else {
+          searchParams.append("active", "false");
+        }
       }
     }
-
-    if (searchString) {
-      queries.push(
-        `(id:${searchString}* OR title:${searchString}* OR subtitle:${searchString}* OR annotations:${searchString}*)`
-      );
-    }
-
     if (onlyTools) {
-      let onlyToolsQuery = onlyTools
-        .map(tool => {
-          return `tool:"${tool}" OR tool:${tool.replace(
-            new RegExp("_", "g"),
-            "-"
-          )}`;
-        })
-        .join(" OR ");
-
-      queries.push(`(${onlyToolsQuery})`);
+      searchParams.append("tool", JSON.stringify(onlyTools));
     }
-
-    let body = {
-      include_docs: true,
-      limit: limit || 18,
-      sort: "-orderDate"
-    };
-
-    if (queries.length > 0) {
-      body.query = queries.join(" AND ");
-    } else {
-      body.query = "*:*";
+    if (searchString) {
+      searchParams.append("searchString", searchString);
     }
-    return body;
+    if (limit) {
+      searchParams.append("limit", limit);
+    }
+    if (bookmark) {
+      searchParams.append("bookmark", bookmark);
+    }
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    return `${QServerBaseUrl}/search?${searchParams.toString()}`;
   }
 
   async getItems(
     searchString = undefined,
-    limit,
+    limit = 18,
     onlyTools = undefined,
     bookmark = undefined
   ) {
-    let searchRequestBody = await this.getSearchRequestBody(
+    const searchUrl = await this.getSearchUrl(
       searchString,
       limit,
+      bookmark,
       onlyTools
     );
-    if (bookmark) {
-      searchRequestBody.bookmark = bookmark;
-    }
-    return this.loadItems(searchRequestBody);
-  }
-
-  async loadItems(searchRequestBody) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const response = await this.httpClient.fetch(`${QServerBaseUrl}/search`, {
-      method: "POST",
-      body: JSON.stringify(searchRequestBody)
+    const response = await this.httpClient.fetch(searchUrl, {
+      method: "GET"
     });
 
     if (!response.ok) {
@@ -226,20 +196,22 @@ export default class ItemStore {
     }
 
     const data = await response.json();
-    if (!data.rows) {
-      data.rows = [];
+    if (!data.docs) {
+      data.docs = [];
     }
 
-    const items = data.rows.map(row => {
+    const items = data.docs.map(doc => {
       let item = new Item(this.user, this.httpClient);
-      item.addConf(row.doc);
-      this.items[row.doc._id];
+      item.addConf(doc);
+      this.items[doc._id];
       return item;
     });
 
+    // moreItemsAvailable: As long as the returned amount of items are the same as the limit there are more items available
+    // See pagination section in http://docs.couchdb.org/en/2.1.1/api/database/find.html
     return {
       items: items,
-      total_rows: data.total_rows,
+      moreItemsAvailable: data.docs.length === limit,
       bookmark: data.bookmark
     };
   }
