@@ -1,3 +1,9 @@
+# 2.0.0 (xx.04.2018)
+- feature: use new /search endpoint of Q-server instead of building lucene query in the editor (needs Q-server >= 5.0.0)
+- deprecated feature removed: schema-editor-lat-lng (use schema-editor-geojson-point)
+- deprecated feature removed: onlyRoles config in tool is removed (use availabilityChecks)
+- deprecated feature removed: publications need to be configured for the publication filter to work, publication filter is not built from configured targets anymore
+
 # 1.8.1 (01.03.2018)
 - fix: install node modules within Docker to not fail if built on another platform
 
