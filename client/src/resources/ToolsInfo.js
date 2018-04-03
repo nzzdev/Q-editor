@@ -1,13 +1,12 @@
-import { inject, LogManager } from 'aurelia-framework';
-import { Container } from 'aurelia-dependency-injection';
-import User from 'resources/User.js';
-import qEnv from 'resources/qEnv.js';
+import { inject, LogManager } from "aurelia-framework";
+import { Container } from "aurelia-dependency-injection";
+import User from "resources/User.js";
+import qEnv from "resources/qEnv.js";
 
-const log = LogManager.getLogger('Q');
+const log = LogManager.getLogger("Q");
 
 @inject(User, Container)
 export default class ToolsInfo {
-
   constructor(user, diContainer) {
     this.user = user;
     this.diContainer = diContainer;
@@ -37,20 +36,11 @@ export default class ToolsInfo {
 
   async isToolAvailable(tool) {
     let isAvailable = true;
-    if (tool.onlyRoles) {
-      log.info('DEPRECATION NOTICE: tool.onlyRoles handling will be removed in Q editor 2.0. Use tool.availabilityChecks instead.');
-      isAvailable = false;
-      if (this.user && this.user.roles) {
-        for (let role of tool.onlyRoles) {
-          if (this.user.roles.indexOf(role) >= 0) {
-            isAvailable = true;
-          }
-        }
-      }
-    }
     if (Array.isArray(tool.availabilityChecks)) {
       for (let availabilityCheck of tool.availabilityChecks) {
-        let checker = this.diContainer.get(availabilityCheck.type + 'AvailabilityCheck');
+        let checker = this.diContainer.get(
+          availabilityCheck.type + "AvailabilityCheck"
+        );
         const available = await checker.isAvailable(availabilityCheck);
         if (!available) {
           return false;
@@ -71,7 +61,6 @@ export default class ToolsInfo {
 
   async getAvailableToolsNames() {
     const tools = await this.getAvailableTools();
-    return tools
-      .map(tool => tool.name);
+    return tools.map(tool => tool.name);
   }
 }
