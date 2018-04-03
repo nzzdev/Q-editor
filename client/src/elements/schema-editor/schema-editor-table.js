@@ -1,6 +1,6 @@
-import { bindable, inject, Loader } from 'aurelia-framework';
-import { checkAvailability } from 'resources/schemaEditorDecorators.js';
-import array2d from 'array2d';
+import { bindable, inject, Loader } from "aurelia-framework";
+import { checkAvailability } from "resources/schemaEditorDecorators.js";
+import array2d from "array2d";
 
 function hasNonNullInArray(arr) {
   for (let val of arr) {
@@ -26,12 +26,18 @@ function trimNull(data) {
     }
   });
 
-  return array2d.crop(data, 0, 0, lastColumnWithValues + 1, lastRowWithValues + 1);
+  return array2d.crop(
+    data,
+    0,
+    0,
+    lastColumnWithValues + 1,
+    lastRowWithValues + 1
+  );
 }
 
 function emptyToNull(data) {
   array2d.eachCell(data, (cell, i, j) => {
-    if (cell === '' || cell === undefined) {
+    if (cell === "" || cell === undefined) {
       data[i][j] = null;
     }
   });
@@ -41,14 +47,13 @@ function emptyToNull(data) {
 @checkAvailability()
 @inject(Loader)
 export class SchemaEditorTable {
-
   @bindable schema;
   @bindable data;
   @bindable change;
 
   options = {
     allowTranspose: true
-  }
+  };
 
   constructor(loader) {
     this.loader = loader;
@@ -66,14 +71,16 @@ export class SchemaEditorTable {
     if (!this.schema) {
       return;
     }
-    if (this.schema.hasOwnProperty('Q:options')) {
-      this.options = Object.assign(this.options, this.schema['Q:options']);
+    if (this.schema.hasOwnProperty("Q:options")) {
+      this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
   }
 
   async attached() {
-    this.loader.loadModule('handsontable/dist/handsontable.full.css!');
-    const Handsontable = await this.loader.loadModule('handsontable/dist/handsontable.full.js');
+    this.loader.loadModule("handsontable/dist/handsontable.full.css!");
+    const Handsontable = await this.loader.loadModule(
+      "handsontable/dist/handsontable.full.js"
+    );
 
     this.hot = new Handsontable(this.tableContainerElement, {
       dataSchema: [],
@@ -94,7 +101,7 @@ export class SchemaEditorTable {
             height: this.getGridHeight()
           });
         }
-        if (source !== 'loadData') {
+        if (source !== "loadData") {
           this.data = trimNull(emptyToNull(this.hot.getData()));
           this.change();
         }
@@ -112,8 +119,8 @@ export class SchemaEditorTable {
   replaceCommaWithPointIfDecimal() {
     let changed = false;
     try {
-      const newData = this.hot.getData()
-        .map((row, rowIndex) => row.map((cell, colIndex) => {
+      const newData = this.hot.getData().map((row, rowIndex) =>
+        row.map((cell, colIndex) => {
           // do not change the first row or column
           if (rowIndex === 0 || colIndex === 0) {
             return cell;
@@ -123,15 +130,15 @@ export class SchemaEditorTable {
             return cell;
           }
 
-          if (cell.indexOf(',') === -1) {
+          if (cell.indexOf(",") === -1) {
             return cell;
           }
 
           // replace first , with .
-          let str = cell.replace(',', '.');
+          let str = cell.replace(",", ".");
 
           // only one comma, if more, we dont change it
-          if (str.indexOf(',') > -1) {
+          if (str.indexOf(",") > -1) {
             return cell;
           }
 
@@ -142,7 +149,8 @@ export class SchemaEditorTable {
 
           changed = true;
           return str;
-        }));
+        })
+      );
 
       if (changed) {
         this.hot.loadData(newData);

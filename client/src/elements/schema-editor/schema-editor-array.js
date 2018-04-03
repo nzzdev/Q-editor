@@ -1,15 +1,14 @@
-import { inject, bindable } from 'aurelia-framework';
-import { checkAvailability } from 'resources/schemaEditorDecorators.js';
-import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
-import Ajv from 'ajv';
-import ObjectFromSchemaGenerator from 'resources/ObjectFromSchemaGenerator.js';
+import { inject, bindable } from "aurelia-framework";
+import { checkAvailability } from "resources/schemaEditorDecorators.js";
+import SchemaEditorInputAvailabilityChecker from "resources/SchemaEditorInputAvailabilityChecker.js";
+import Ajv from "ajv";
+import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 
 const ajv = new Ajv();
 
 @checkAvailability()
 @inject(SchemaEditorInputAvailabilityChecker, ObjectFromSchemaGenerator)
 export class SchemaEditorArray {
-
   @bindable schema;
   @bindable data;
   @bindable change;
@@ -18,7 +17,7 @@ export class SchemaEditorArray {
 
   options = {
     expandable: false
-  }
+  };
 
   collapsedStates = {};
 
@@ -40,21 +39,20 @@ export class SchemaEditorArray {
     // this way, we do not need to calculate the schemas for the data
     // on all changes. For addElement we already know the schema beforehand e.g.
     if (Array.isArray(this.data)) {
-      this.dataItemsSchemas = this.data
-        .map(item => {
-          return this.getSchemaForData(item);
-        });
+      this.dataItemsSchemas = this.data.map(item => {
+        return this.getSchemaForData(item);
+      });
     }
 
     this.calculateEntryLabels();
   }
 
   expand(index) {
-    this.collapsedStates[index] = 'expanded';
+    this.collapsedStates[index] = "expanded";
   }
 
   collapse(index) {
-    this.collapsedStates[index] = 'collapsed';
+    this.collapsedStates[index] = "collapsed";
   }
 
   schemaChanged() {
@@ -64,8 +62,8 @@ export class SchemaEditorArray {
   }
 
   applyOptions() {
-    if (this.schema.hasOwnProperty('Q:options')) {
-      this.options = Object.assign(this.options, this.schema['Q:options']);
+    if (this.schema.hasOwnProperty("Q:options")) {
+      this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
   }
 
@@ -86,7 +84,11 @@ export class SchemaEditorArray {
   }
 
   moveElementUp(index) {
-    this.dataItemsSchemas.splice(index - 1, 0, this.dataItemsSchemas.splice(index, 1)[0]);
+    this.dataItemsSchemas.splice(
+      index - 1,
+      0,
+      this.dataItemsSchemas.splice(index, 1)[0]
+    );
     this.data.splice(index - 1, 0, this.data.splice(index, 1)[0]);
     this.calculateEntryLabels();
     if (this.change) {
@@ -95,7 +97,11 @@ export class SchemaEditorArray {
   }
 
   moveElementDown(index) {
-    this.dataItemsSchemas.splice(index + 1, 0, this.dataItemsSchemas.splice(index, 1)[0]);
+    this.dataItemsSchemas.splice(
+      index + 1,
+      0,
+      this.dataItemsSchemas.splice(index, 1)[0]
+    );
     this.data.splice(index + 1, 0, this.data.splice(index, 1)[0]);
     this.calculateEntryLabels();
     if (this.change) {
@@ -118,7 +124,9 @@ export class SchemaEditorArray {
 
   async isEntryAvailable(index) {
     const schema = this.getSchemaForArrayEntryIndex(index);
-    const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(schema);
+    const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(
+      schema
+    );
     return await availabilityInfo.isAvailable;
   }
 
@@ -128,7 +136,7 @@ export class SchemaEditorArray {
 
     // if we have a type in the schema in items, we use this as a schema directly
     if (this.schema.items && this.schema.items.type) {
-      let arrayEntryLabel = '';
+      let arrayEntryLabel = "";
       if (this.schema.items.title) {
         arrayEntryLabel = this.schema.items.title;
       } else if (this.schema.title) {
@@ -138,9 +146,14 @@ export class SchemaEditorArray {
         schema: this.schema.items,
         arrayEntryLabel: arrayEntryLabel
       });
-    } else if (this.schema.items && Array.isArray(this.getPossibleItemSchemas())) {
+    } else if (
+      this.schema.items &&
+      Array.isArray(this.getPossibleItemSchemas())
+    ) {
       for (let schema of this.getPossibleItemSchemas()) {
-        const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(schema);
+        const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(
+          schema
+        );
         if (availabilityInfo.isAvailable) {
           this.arrayEntryOptions.push({
             schema: schema,
@@ -155,29 +168,32 @@ export class SchemaEditorArray {
     if (!this.data || !this.options) {
       return;
     }
-    this.entryLabels = this.data
-      .map(entry => {
-        // if options.expandable.itemLabelProperty is an Array we try to get the property in order of the array
-        // and return with the first option that works.
-        if (Array.isArray(this.options.expandable.itemLabelProperty)) {
-          for (let itemLabelProperty of this.options.expandable.itemLabelProperty) {
-            let label = this.getEntryLabel(entry, itemLabelProperty);
-            if (label) {
-              return label;
-            }
+    this.entryLabels = this.data.map(entry => {
+      // if options.expandable.itemLabelProperty is an Array we try to get the property in order of the array
+      // and return with the first option that works.
+      if (Array.isArray(this.options.expandable.itemLabelProperty)) {
+        for (let itemLabelProperty of this.options.expandable
+          .itemLabelProperty) {
+          let label = this.getEntryLabel(entry, itemLabelProperty);
+          if (label) {
+            return label;
           }
-        } else if (typeof this.options.expandable.itemLabelProperty === 'string') {
-          return this.getEntryLabel(entry, this.options.expandable.itemLabelProperty);
         }
-        return undefined;
-      });
+      } else if (
+        typeof this.options.expandable.itemLabelProperty === "string"
+      ) {
+        return this.getEntryLabel(
+          entry,
+          this.options.expandable.itemLabelProperty
+        );
+      }
+      return undefined;
+    });
   }
 
   getEntryLabel(entry, itemLabelProperty) {
     try {
-      return itemLabelProperty
-        .split('.')
-        .reduce((o, i) => o[i], entry);
+      return itemLabelProperty.split(".").reduce((o, i) => o[i], entry);
     } catch (e) {
       return undefined;
     }

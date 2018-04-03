@@ -1,20 +1,19 @@
-import { bindable, inject } from 'aurelia-framework';
-import { DialogService } from 'aurelia-dialog';
-import { Router } from 'aurelia-router';
-import { HelpDialog } from 'dialogs/help-dialog';
-import { AccountDialog } from 'dialogs/account-dialog';
+import { bindable, inject } from "aurelia-framework";
+import { DialogService } from "aurelia-dialog";
+import { Router } from "aurelia-router";
+import { HelpDialog } from "dialogs/help-dialog";
+import { AccountDialog } from "dialogs/account-dialog";
 
-import User from 'resources/User.js';
-import Auth from 'resources/Auth.js';
+import User from "resources/User.js";
+import Auth from "resources/Auth.js";
 
 @inject(Element, User, Auth, Router, DialogService)
 export class QBar {
-
   @bindable router;
   @bindable size;
 
   constructor(element, user, auth, router, dialogService) {
-    this.element       = element;
+    this.element = element;
     this.user = user;
     this.auth = auth;
     this.router = router;
@@ -29,9 +28,7 @@ export class QBar {
   showHelp() {
     this.dialogService.open({
       viewModel: HelpDialog,
-      model: {
-
-      }
+      model: {}
     });
   }
 
@@ -43,5 +40,4 @@ export class QBar {
       }
     });
   }
-
 }

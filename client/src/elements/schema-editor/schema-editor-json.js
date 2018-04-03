@@ -1,12 +1,11 @@
-import { bindable } from 'aurelia-framework';
-import { checkAvailability } from 'resources/schemaEditorDecorators.js';
-import Ajv from 'ajv';
+import { bindable } from "aurelia-framework";
+import { checkAvailability } from "resources/schemaEditorDecorators.js";
+import Ajv from "ajv";
 
 const ajv = new Ajv();
 
 @checkAvailability()
 export class SchemaEditorJson {
-
   @bindable schema;
   @bindable data;
   @bindable change;
@@ -28,11 +27,10 @@ export class SchemaEditorJson {
 
   validate() {
     if (this.ajvValidate(this.data)) {
-      this.inputElement.setCustomValidity('');
+      this.inputElement.setCustomValidity("");
     } else {
       let errorMessages = this.ajvValidate.errors.map(error => error.message);
-      this.inputElement.setCustomValidity(`${errorMessages.join('<br>')}`);
+      this.inputElement.setCustomValidity(`${errorMessages.join("<br>")}`);
     }
   }
-
 }

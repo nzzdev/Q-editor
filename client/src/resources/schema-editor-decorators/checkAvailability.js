@@ -1,15 +1,17 @@
-import SchemaEditorInputAvailabilityChecker from 'resources/SchemaEditorInputAvailabilityChecker.js';
+import SchemaEditorInputAvailabilityChecker from "resources/SchemaEditorInputAvailabilityChecker.js";
 
 async function check(context) {
-  context.element.classList.add('disabled');
+  context.element.classList.add("disabled");
   for (let inputElement of context.inputElements) {
     inputElement.disabled = true;
   }
-  const availabilityInfo = await context.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(context.getSchema());
+  const availabilityInfo = await context.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(
+    context.getSchema()
+  );
   if (availabilityInfo.isAvailable) {
-    context.element.style.display = 'block';
-    context.element.closest('schema-editor-wrapper').style.display = 'block';
-    context.element.classList.remove('disabled');
+    context.element.style.display = "block";
+    context.element.closest("schema-editor-wrapper").style.display = "block";
+    context.element.classList.remove("disabled");
     const messageElement = getMessageElement(context);
     if (messageElement) {
       messageElement.remove();
@@ -18,13 +20,13 @@ async function check(context) {
       inputElement.disabled = false;
     }
   } else {
-    context.element.style.display = 'none';
-    if (availabilityInfo.hasOwnProperty('unavailableMessage')) {
+    context.element.style.display = "none";
+    if (availabilityInfo.hasOwnProperty("unavailableMessage")) {
       const messageElement = getMessageElement(context);
       messageElement.innerHTML = availabilityInfo.unavailableMessage;
       context.element.parentNode.appendChild(messageElement);
     } else {
-      context.element.closest('schema-editor-wrapper').style.display = 'none';
+      context.element.closest("schema-editor-wrapper").style.display = "none";
     }
   }
 }
@@ -33,8 +35,8 @@ function getMessageElement(context) {
   if (context.messageElement) {
     return context.messageElement;
   }
-  context.messageElement = context.element.ownerDocument.createElement('div');
-  context.messageElement.classList.add('q-text');
+  context.messageElement = context.element.ownerDocument.createElement("div");
+  context.messageElement.classList.add("q-text");
   return context.messageElement;
 }
 
@@ -50,14 +52,18 @@ export function checkAvailability() {
     }
 
     return class extends target {
-      static inject = [Element, SchemaEditorInputAvailabilityChecker].concat(inject);
+      static inject = [Element, SchemaEditorInputAvailabilityChecker].concat(
+        inject
+      );
       constructor(element, schemaEditorInputAvailabilityChecker, ...rest) {
         super(...rest);
         contextMap.set(this, {
           getSchema: () => this.schema,
           element: element,
           schemaEditorInputAvailabilityChecker: schemaEditorInputAvailabilityChecker,
-          inputElements: element.querySelectorAll('input, textarea, select, button'),
+          inputElements: element.querySelectorAll(
+            "input, textarea, select, button"
+          ),
           reevaluateAvailabilityCallbackId: null
         });
       }
@@ -68,21 +74,27 @@ export function checkAvailability() {
         } else {
           // if we do not have bind implemented in the decorated class, we should call
           // all the *Changed methods, as aurelia is not doing it for the first change if bind is implemented
-          let parentPrototype = Object.getPrototypeOf(Object.getPrototypeOf(this));
+          let parentPrototype = Object.getPrototypeOf(
+            Object.getPrototypeOf(this)
+          );
           if (!parentPrototype) {
             return;
           }
           for (let prop of Object.getOwnPropertyNames(parentPrototype)) {
-            if (prop.endsWith('Changed')) {
+            if (prop.endsWith("Changed")) {
               let dataprop = prop.slice(0, -7); // 'Changed' has length of 7
               this[prop](this[dataprop]);
             }
           }
         }
 
-        contextMap.get(this).reevaluateAvailabilityCallbackId = contextMap.get(this).schemaEditorInputAvailabilityChecker.registerReevaluateCallback(async () => {
-          check(contextMap.get(this));
-        });
+        contextMap.get(this).reevaluateAvailabilityCallbackId = contextMap
+          .get(this)
+          .schemaEditorInputAvailabilityChecker.registerReevaluateCallback(
+            async () => {
+              check(contextMap.get(this));
+            }
+          );
 
         check(contextMap.get(this));
       }
@@ -91,7 +103,11 @@ export function checkAvailability() {
         if (super.unbind) {
           super.unbind();
         }
-        contextMap.get(this).schemaEditorInputAvailabilityChecker.unregisterReevaluateCallback(contextMap.get(this).reevaluateAvailabilityCallbackId);
+        contextMap
+          .get(this)
+          .schemaEditorInputAvailabilityChecker.unregisterReevaluateCallback(
+            contextMap.get(this).reevaluateAvailabilityCallbackId
+          );
       }
     };
   };
