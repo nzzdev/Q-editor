@@ -1,9 +1,7 @@
-import { inject, LogManager } from "aurelia-framework";
+import { inject } from "aurelia-framework";
 import { Container } from "aurelia-dependency-injection";
 import User from "resources/User.js";
 import qEnv from "resources/qEnv.js";
-
-const log = LogManager.getLogger("Q");
 
 @inject(User, Container)
 export default class ToolsInfo {
