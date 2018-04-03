@@ -77,7 +77,9 @@ export class SchemaEditorGeojsonPoint {
 
     // if we do not have a Leaflet.Control.Search yet, we load the module async using the aurelia loader
     if (!window.Leaflet.Control.Search) {
-      await this.loader.loadModule("leaflet-search");
+      window.Leaflet.Control.Search = await this.loader.loadModule(
+        "leaflet-search"
+      );
     }
 
     if (!window.Leaflet.Control.Search) {
