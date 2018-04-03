@@ -1,10 +1,9 @@
-import { inject } from 'aurelia-framework';
-import { DialogController } from 'aurelia-dialog';
-import { DialogService } from 'aurelia-dialog';
+import { inject } from "aurelia-framework";
+import { DialogController } from "aurelia-dialog";
+import { DialogService } from "aurelia-dialog";
 
 @inject(DialogController, DialogService)
 export class ItemDialog {
-
   constructor(controller, dialogService) {
     this.controller = controller;
 

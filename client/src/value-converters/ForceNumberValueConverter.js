@@ -1,13 +1,11 @@
-import { valueConverter } from 'aurelia-framework';
+import { valueConverter } from "aurelia-framework";
 
-@valueConverter('forceNumber')
+@valueConverter("forceNumber")
 export class ForceNumberValueConverter {
-
   fromView(value) {
-    if (!value || value === '') {
+    if (!value || value === "") {
       return undefined;
     }
     return Number(value);
   }
-
 }

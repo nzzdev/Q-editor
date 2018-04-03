@@ -1,10 +1,9 @@
-import { inject } from 'aurelia-framework';
-import { DialogController } from 'aurelia-dialog';
-import QConfig from 'resources/QConfig.js';
+import { inject } from "aurelia-framework";
+import { DialogController } from "aurelia-dialog";
+import QConfig from "resources/QConfig.js";
 
 @inject(DialogController, QConfig)
 export class HelpDialog {
-
   faqSections = [];
 
   constructor(controller, qConfig) {
@@ -26,7 +25,7 @@ export class HelpDialog {
 
   async activate(config) {
     this.config = config;
-    const helpConfig = await this.qConfig.get('help');
+    const helpConfig = await this.qConfig.get("help");
     this.intro = helpConfig.intro;
     this.faq = helpConfig.faq;
   }

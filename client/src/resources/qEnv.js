@@ -5,7 +5,7 @@ class QEnv {
 
   async load() {
     try {
-      const response = await fetch('/env');
+      const response = await fetch("/env");
       if (!response.ok) {
         throw response;
       }
@@ -20,10 +20,9 @@ const qEnv = new QEnv();
 
 let proxy = new Proxy(qEnv, {
   get: function(target, name, receiver) {
-    return target.env
-      .then(env => {
-        return env[name];
-      });
+    return target.env.then(env => {
+      return env[name];
+    });
   }
 });
 

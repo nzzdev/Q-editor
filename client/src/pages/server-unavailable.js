@@ -1,3 +1,1 @@
-export class ServerUnavailable {
-
-}
+export class ServerUnavailable {}

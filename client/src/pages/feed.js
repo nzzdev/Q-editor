@@ -1,13 +1,12 @@
-import { inject } from 'aurelia-framework';
+import { inject } from "aurelia-framework";
 
-import ItemStore from 'resources/ItemStore.js';
-import ToolsInfo from 'resources/ToolsInfo.js';
-import QTargets from 'resources/QTargets.js';
-import qEnv from 'resources/qEnv.js';
+import ItemStore from "resources/ItemStore.js";
+import ToolsInfo from "resources/ToolsInfo.js";
+import QTargets from "resources/QTargets.js";
+import qEnv from "resources/qEnv.js";
 
 @inject(ItemStore, ToolsInfo, QTargets)
 export default class Feed {
-
   items = [];
   renderingInfos = {};
 
@@ -18,7 +17,7 @@ export default class Feed {
   }
 
   async activate() {
-    this.availableTargets = await this.qTargets.get('availableTargets');
+    this.availableTargets = await this.qTargets.get("availableTargets");
     this.currentTarget = this.availableTargets[0];
     this.loadMore();
   }
@@ -29,7 +28,7 @@ export default class Feed {
         width: [
           {
             value: 480,
-            comparison: '='
+            comparison: "="
           }
         ]
       },
@@ -41,7 +40,13 @@ export default class Feed {
         return;
       }
       try {
-        const response = await fetch(`${QServerBaseUrl}/rendering-info/${item.id}/${this.currentTarget.key}?ignoreInactive=true&noCache=true&toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`);
+        const response = await fetch(
+          `${QServerBaseUrl}/rendering-info/${item.id}/${
+            this.currentTarget.key
+          }?ignoreInactive=true&noCache=true&toolRuntimeConfig=${encodeURI(
+            JSON.stringify(toolRuntimeConfig)
+          )}`
+        );
         if (response.ok) {
           this.renderingInfos[item.id] = await response.json();
         } else {
@@ -59,7 +64,12 @@ export default class Feed {
 
   async loadMore() {
     const availableToolsNames = await this.toolsInfo.getAvailableToolsNames();
-    const result = await this.itemStore.getItems('', 10, availableToolsNames, this.bookmark);
+    const result = await this.itemStore.getItems(
+      "",
+      10,
+      availableToolsNames,
+      this.bookmark
+    );
     this.bookmark = result.bookmark;
 
     for (const item of result.items) {

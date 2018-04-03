@@ -1,7 +1,6 @@
-import qEnv from 'resources/qEnv.js';
+import qEnv from "resources/qEnv.js";
 
 export default class ToolEndpointChecker {
-
   reevaluateCallbacks = [];
 
   triggerReevaluation() {
@@ -44,7 +43,7 @@ export default class ToolEndpointChecker {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
     const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${this.toolName}`;
     const resp = await fetch(`${toolRequestBaseUrl}/${endpoint}`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(this.item.conf)
     });
     if (resp.status !== 200) {

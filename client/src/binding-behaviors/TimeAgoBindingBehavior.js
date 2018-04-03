@@ -1,12 +1,11 @@
-import { inject } from 'aurelia-framework';
-import { bindingBehavior, ValueConverter } from 'aurelia-binding';
-import { SignalBindingBehavior } from 'aurelia-templating-resources';
-import { RelativeTime, I18N } from 'aurelia-i18n';
+import { inject } from "aurelia-framework";
+import { bindingBehavior, ValueConverter } from "aurelia-binding";
+import { SignalBindingBehavior } from "aurelia-templating-resources";
+import { RelativeTime, I18N } from "aurelia-i18n";
 
-@bindingBehavior('timeAgo')
+@bindingBehavior("timeAgo")
 @inject(RelativeTime, I18N, SignalBindingBehavior)
 export class TimeAgoBindingBehavior {
-
   constructor(relativeTime, i18n, signalBindingBehavior) {
     this.relativeTime = relativeTime;
     this.i18n = i18n;
@@ -15,7 +14,11 @@ export class TimeAgoBindingBehavior {
 
   // source copied from https://github.com/aurelia/i18n/blob/master/src/t.js
   bind(binding, source) {
-    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+    this.signalBindingBehavior.bind(
+      binding,
+      source,
+      "aurelia-translation-signal"
+    );
 
     // rewrite the expression to use the TValueConverter.
     // pass through any args to the binding behavior to the TValueConverter
@@ -30,7 +33,7 @@ export class TimeAgoBindingBehavior {
     let expression = sourceExpression.expression;
     sourceExpression.expression = new ValueConverter(
       expression,
-      'timeAgo',
+      "timeAgo",
       sourceExpression.args,
       [expression, ...sourceExpression.args]
     );
@@ -40,5 +43,4 @@ export class TimeAgoBindingBehavior {
     // unbind the signal behavior
     this.signalBindingBehavior.unbind(binding, source);
   }
-
 }

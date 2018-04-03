@@ -1,5 +1,4 @@
 export default class CurrentItemProvider {
-
   setCurrentItem(item) {
     this.item = item;
   }

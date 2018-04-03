@@ -1,10 +1,9 @@
-import { valueConverter, inject } from 'aurelia-framework';
-import { RelativeTime, I18N } from 'aurelia-i18n';
+import { valueConverter, inject } from "aurelia-framework";
+import { RelativeTime, I18N } from "aurelia-i18n";
 
-@valueConverter('timeAgo')
+@valueConverter("timeAgo")
 @inject(RelativeTime, I18N)
 export class TimeAgoValueConverter {
-
   constructor(relativeTime, i18n) {
     this.relativeTime = relativeTime;
     this.i18n = i18n;
@@ -25,7 +24,7 @@ export class TimeAgoValueConverter {
 
     let timeDiff = (now.getTime() - date.getTime()) / 1000;
 
-    if (max && (max > timeDiff)) {
+    if (max && max > timeDiff) {
       return this.relativeTime.getRelativeTime(date);
     }
 

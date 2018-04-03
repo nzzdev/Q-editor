@@ -1,10 +1,9 @@
-import { inject } from 'aurelia-framework';
-import { HttpClient } from 'aurelia-fetch-client';
-import qEnv from 'resources/qEnv.js';
+import { inject } from "aurelia-framework";
+import { HttpClient } from "aurelia-fetch-client";
+import qEnv from "resources/qEnv.js";
 
 @inject(HttpClient)
 export default class User {
-
   constructor(httpClient) {
     this.httpClient = httpClient;
     this.isLoggedIn = false;
@@ -15,7 +14,7 @@ export default class User {
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
-        credentials: 'include'
+        credentials: "include"
       });
 
       if (!response.ok) {
@@ -37,7 +36,7 @@ export default class User {
   }
 
   setUserConfig(key, value) {
-    if (!this.data.hasOwnProperty('config')) {
+    if (!this.data.hasOwnProperty("config")) {
       this.data.config = {};
     }
     this.data.config[key] = value;
@@ -45,14 +44,14 @@ export default class User {
   }
 
   getUserConfig(key) {
-    if (!this.data || !this.data.hasOwnProperty('config')) {
+    if (!this.data || !this.data.hasOwnProperty("config")) {
       return null;
     }
     return this.data.config[key];
   }
 
   get roles() {
-    if (!this.data || !this.data.hasOwnProperty('roles')) {
+    if (!this.data || !this.data.hasOwnProperty("roles")) {
       return null;
     }
     return this.data.roles;
@@ -62,8 +61,8 @@ export default class User {
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
-        credentials: 'include',
-        method: 'PUT',
+        credentials: "include",
+        method: "PUT",
         body: JSON.stringify(this.data)
       });
 
@@ -75,5 +74,4 @@ export default class User {
       return false;
     }
   }
-
 }

@@ -1,6 +1,6 @@
-import { valueConverter } from 'aurelia-framework';
+import { valueConverter } from "aurelia-framework";
 
-@valueConverter('keys')
+@valueConverter("keys")
 export class KeysValueConverter {
   toView(obj) {
     return Reflect.ownKeys(obj);

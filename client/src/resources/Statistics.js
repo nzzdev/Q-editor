@@ -1,14 +1,13 @@
-import qEnv from 'resources/qEnv.js';
+import qEnv from "resources/qEnv.js";
 
 export default class Statistics {
-
   async getNumberOfActiveItems(inLastDaysCount = undefined) {
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
       let url = `${QServerBaseUrl}/statistics/number-of-items`;
       if (inLastDaysCount) {
-        url += `/${Date.now() - (inLastDaysCount * 24 * 60 * 60 * 1000)}`;
+        url += `/${Date.now() - inLastDaysCount * 24 * 60 * 60 * 1000}`;
       }
 
       const response = await fetch(url);
