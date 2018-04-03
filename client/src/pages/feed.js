@@ -27,7 +27,7 @@ export default class Feed {
       size: {
         width: [
           {
-            value: 480,
+            value: 320,
             comparison: "="
           }
         ]
