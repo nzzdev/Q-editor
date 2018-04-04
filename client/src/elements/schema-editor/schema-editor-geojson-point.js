@@ -297,10 +297,10 @@ export class SchemaEditorGeojsonPoint {
       await this.mapInit;
       // if we do not have a Leaflet.areaSelect yet, we load the module async using the aurelia loader
       // this failed in some tests because of weird module format. But it worked always, so we ignore any loading error here...
-      if (!window.L) {
-        // areaSelect expects window.L to be defined as Leaflet;
-        window.L = window.Leaflet;
-      }
+
+      // areaSelect expects window.L to be defined as Leaflet;
+      window.L = window.Leaflet;
+
       if (!window.Leaflet.areaSelect) {
         try {
           await this.loader.loadModule(
