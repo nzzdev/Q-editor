@@ -1,17 +1,16 @@
-import { inject } from 'aurelia-framework';
-import QTargets from 'resources/QTargets.js';
+import { inject } from "aurelia-framework";
+import QTargets from "resources/QTargets.js";
 
 @inject(QTargets)
 export default class EmbedCodeGenerator {
-
-  embedCodes = {}
+  embedCodes = {};
 
   constructor(qTargets) {
     this.qTargets = qTargets;
   }
 
   async getEmbedCodeForItem(item, target) {
-    const availableTargets = await this.qTargets.get('availableTargets');
+    const availableTargets = await this.qTargets.get("availableTargets");
     let embedCode = null;
 
     if (!target) {
@@ -21,12 +20,13 @@ export default class EmbedCodeGenerator {
     for (let availableTarget of availableTargets) {
       if (availableTarget.key === target.key) {
         if (availableTarget.browserLoaderUrl) {
-          embedCode = `<div class="q-item" id="q-${item.id}"></div><script src="${availableTarget.browserLoaderUrl}"></script>`;
+          embedCode = `<div class="q-item" id="q-${
+            item.id
+          }"></div><script src="${availableTarget.browserLoaderUrl}"></script>`;
         }
         break;
       }
     }
     return embedCode;
   }
-
 }

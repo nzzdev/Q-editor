@@ -2,25 +2,32 @@ let keypressSerie = undefined;
 let runningEggs = {};
 
 export function registerEastereggs(eastereggConfig) {
-  if (!eastereggConfig || !eastereggConfig.hasOwnProperty('sounds')) {
+  if (!eastereggConfig || !eastereggConfig.hasOwnProperty("sounds")) {
     return;
   }
 
-  if (!eastereggConfig.sounds.hasOwnProperty('bondTheme') && !eastereggConfig.sounds.hasOwnProperty('q')) {
+  if (
+    !eastereggConfig.sounds.hasOwnProperty("bondTheme") &&
+    !eastereggConfig.sounds.hasOwnProperty("q")
+  ) {
     return;
   }
 
-  document.addEventListener('keydown', (event) => {
+  document.addEventListener("keydown", event => {
     if (event.keyCode === 16) {
       keypressSerie = [];
     }
 
     if (keypressSerie !== undefined) {
-      if (event.keyCode === 48 || event.keyCode === 55 || event.keyCode === 81) {
+      if (
+        event.keyCode === 48 ||
+        event.keyCode === 55 ||
+        event.keyCode === 81
+      ) {
         keypressSerie.push(event.keyCode);
       }
-      if (eastereggConfig.sounds.hasOwnProperty('bondTheme')) {
-        if (keypressSerie.join('-') === '48-48-55') {
+      if (eastereggConfig.sounds.hasOwnProperty("bondTheme")) {
+        if (keypressSerie.join("-") === "48-48-55") {
           if (runningEggs.bond) {
             if (runningEggs.bond.paused) {
               runningEggs.bond.play();
@@ -34,8 +41,8 @@ export function registerEastereggs(eastereggConfig) {
           }
         }
       }
-      if (eastereggConfig.sounds.hasOwnProperty('q')) {
-        if (keypressSerie.join('-') === '81') {
+      if (eastereggConfig.sounds.hasOwnProperty("q")) {
+        if (keypressSerie.join("-") === "81") {
           if (runningEggs.q) {
             if (runningEggs.q.paused) {
               runningEggs.q.play();
@@ -52,7 +59,7 @@ export function registerEastereggs(eastereggConfig) {
     }
   });
 
-  document.addEventListener('keyup', (event) => {
+  document.addEventListener("keyup", event => {
     if (event.keyCode === 16) {
       keypressSerie = undefined;
     }

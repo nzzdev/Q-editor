@@ -1,20 +1,27 @@
-import { inject, singleton } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
-import { Notification } from 'aurelia-notification';
-import User from 'resources/User.js';
-import ItemStore from 'resources/ItemStore.js';
-import ToolsInfo from 'resources/ToolsInfo.js';
-import Statistics from 'resources/Statistics.js';
-import QConfig from 'resources/QConfig.js';
+import { inject, singleton } from "aurelia-framework";
+import { Router } from "aurelia-router";
+import { Notification } from "aurelia-notification";
+import User from "resources/User.js";
+import ItemStore from "resources/ItemStore.js";
+import ToolsInfo from "resources/ToolsInfo.js";
+import Statistics from "resources/Statistics.js";
+import QConfig from "resources/QConfig.js";
 
 @singleton()
 @inject(ItemStore, User, ToolsInfo, Router, QConfig, Statistics, Notification)
 export class Index {
-
   enoughNewItems = true;
   initialised = false;
 
-  constructor(itemStore, user, toolsInfo, router, qConfig, statistics, notification) {
+  constructor(
+    itemStore,
+    user,
+    toolsInfo,
+    router,
+    qConfig,
+    statistics,
+    notification
+  ) {
     this.itemStore = itemStore;
     this.user = user;
     this.toolsInfo = toolsInfo;
@@ -39,14 +46,13 @@ export class Index {
     this.availableFilters = this.itemStore.getFilters();
 
     // apply stored user filter selections
-    if (this.user.getUserConfig('q-filters')) {
-      for (let userFilterSelection of this.user.getUserConfig('q-filters')) {
-        this.availableFilters
-          .map(filter => {
-            if (filter.name === userFilterSelection.name) {
-              filter.selected = userFilterSelection.selected;
-            }
-          });
+    if (this.user.getUserConfig("q-filters")) {
+      for (let userFilterSelection of this.user.getUserConfig("q-filters")) {
+        this.availableFilters.map(filter => {
+          if (filter.name === userFilterSelection.name) {
+            filter.selected = userFilterSelection.selected;
+          }
+        });
       }
     }
 
@@ -60,8 +66,9 @@ export class Index {
 
     // store current filter selection on user object
     if (this.user) {
-      this.user.setUserConfig('q-filters', this.availableFilters
-        .map(filter => {
+      this.user.setUserConfig(
+        "q-filters",
+        this.availableFilters.map(filter => {
           return {
             name: filter.name,
             selected: filter.selected
@@ -74,16 +81,21 @@ export class Index {
   async loadItems(searchString, bookmark) {
     try {
       this.itemsLoading = true;
-      let itemListConfig = await this.qConfig.get('itemList');
+      let itemListConfig = await this.qConfig.get("itemList");
       let availableToolsNames = await this.toolsInfo.getAvailableToolsNames();
 
       let numberOfItemsToLoadPerStep = itemListConfig.itemsPerLoad || 18;
 
-      const result = await this.itemStore.getItems(searchString, numberOfItemsToLoadPerStep, availableToolsNames, bookmark);
+      const result = await this.itemStore.getItems(
+        searchString,
+        numberOfItemsToLoadPerStep,
+        availableToolsNames,
+        bookmark
+      );
       this.itemsLoading = false;
       return result;
     } catch (e) {
-      this.notification.error('notifications.failedLoadingItems');
+      this.notification.error("notifications.failedLoadingItems");
     }
   }
 
@@ -98,7 +110,10 @@ export class Index {
   }
 
   async loadMore() {
-    const result = await this.loadItems(this.currentSearchString, this.bookmark);
+    const result = await this.loadItems(
+      this.currentSearchString,
+      this.bookmark
+    );
     this.items = this.items.concat(result.items);
     this.bookmark = result.bookmark;
     this.updateMoreItemsAvailableState(result);
@@ -106,11 +121,7 @@ export class Index {
   }
 
   updateMoreItemsAvailableState(result) {
-    if (result.total_rows > this.items.length) {
-      this.moreItemsAvailable = true;
-    } else {
-      this.moreItemsAvailable = false;
-    }
+    this.moreItemsAvailable = result.moreItemsAvailable;
   }
 
   async loadStatistics() {
@@ -120,10 +131,12 @@ export class Index {
       let statsValues = {};
       statsValues.totalActiveCount = await this.statistics.getNumberOfActiveItems();
 
-      const lowNewItemsConfig = await this.qConfig.get('lowNewItems');
+      const lowNewItemsConfig = await this.qConfig.get("lowNewItems");
       statsValues.days = lowNewItemsConfig.days;
 
-      statsValues.count = await this.statistics.getNumberOfActiveItems(lowNewItemsConfig.days);
+      statsValues.count = await this.statistics.getNumberOfActiveItems(
+        lowNewItemsConfig.days
+      );
 
       // only set the stats after all values are available
       this.statsValues = statsValues;
@@ -137,5 +150,4 @@ export class Index {
       // we do not care about errors here but just do not show statistics if something failed
     }
   }
-
 }

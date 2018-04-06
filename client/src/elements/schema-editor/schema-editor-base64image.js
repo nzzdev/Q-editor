@@ -1,9 +1,8 @@
-import { bindable } from 'aurelia-framework';
-import { checkAvailability } from 'resources/schemaEditorDecorators.js';
+import { bindable } from "aurelia-framework";
+import { checkAvailability } from "resources/schemaEditorDecorators.js";
 
 @checkAvailability()
 export class SchemaEditorBase64image {
-
   @bindable schema;
   @bindable data;
   @bindable change;

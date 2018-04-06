@@ -1,15 +1,14 @@
-import { inject } from 'aurelia-framework';
-import CurrentItemProvider from 'resources/CurrentItemProvider.js';
+import { inject } from "aurelia-framework";
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
 @inject(CurrentItemProvider)
 export default class IdGenerator {
-
   constructor(currentItemProvider) {
     this.currentItemProvider = currentItemProvider;
   }
 
   getId() {
-    return Date.now() + '-' + (Math.random() * (10 ** 9)).toFixed(0);
+    return Date.now() + "-" + (Math.random() * 10 ** 9).toFixed(0);
   }
 
   getIdWithCurrentItemId() {
@@ -18,6 +17,6 @@ export default class IdGenerator {
       return null;
     }
 
-    return item.id + '-' + this.getId();
+    return item.id + "-" + this.getId();
   }
 }

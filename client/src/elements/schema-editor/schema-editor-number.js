@@ -1,17 +1,16 @@
-import { bindable } from 'aurelia-framework';
-import { checkAvailability } from 'resources/schemaEditorDecorators.js';
+import { bindable } from "aurelia-framework";
+import { checkAvailability } from "resources/schemaEditorDecorators.js";
 
 @checkAvailability()
 export class SchemaEditorNumber {
-
-  @bindable data
-  @bindable schema
-  @bindable change
-  @bindable required
+  @bindable data;
+  @bindable schema;
+  @bindable change;
+  @bindable required;
 
   options = {
-    step: 'any'
-  }
+    step: "any"
+  };
 
   schemaChanged() {
     this.applyOptions();
@@ -21,9 +20,8 @@ export class SchemaEditorNumber {
     if (!this.schema) {
       return;
     }
-    if (this.schema.hasOwnProperty('Q:options')) {
-      this.options = Object.assign(this.options, this.schema['Q:options']);
+    if (this.schema.hasOwnProperty("Q:options")) {
+      this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
   }
-
 }

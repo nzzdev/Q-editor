@@ -1,9 +1,9 @@
-import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
-import { Container } from 'aurelia-dependency-injection';
+import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
+import { Container } from "aurelia-dependency-injection";
 
 export function resolveDynamicEnum() {
   return function(target) {
-    let container = (Container.instance || new Container());
+    let container = Container.instance || new Container();
     const toolEndpointChecker = container.get(ToolEndpointChecker);
     let originalBind;
     if (target.prototype.bind) {
@@ -16,13 +16,21 @@ export function resolveDynamicEnum() {
     }
 
     async function getDynamicEnum(schema) {
-      if (schema['Q:options'].dynamicEnum.type !== 'ToolEndpoint') {
-        throw new Error(`${schema['Q:options'].dynamicEnum.type} is not implemented as dynamicEnum type`);
+      if (schema["Q:options"].dynamicEnum.type !== "ToolEndpoint") {
+        throw new Error(
+          `${
+            schema["Q:options"].dynamicEnum.type
+          } is not implemented as dynamicEnum type`
+        );
       }
-      if (schema['Q:options'].dynamicEnum.withData) {
-        return await toolEndpointChecker.fetchWithItem(schema['Q:options'].dynamicEnum.endpoint);
+      if (schema["Q:options"].dynamicEnum.withData) {
+        return await toolEndpointChecker.fetchWithItem(
+          schema["Q:options"].dynamicEnum.endpoint
+        );
       }
-      return await toolEndpointChecker.fetch(schema['Q:options'].dynamicEnum.endpoint);
+      return await toolEndpointChecker.fetch(
+        schema["Q:options"].dynamicEnum.endpoint
+      );
     }
 
     async function resolve() {
@@ -30,11 +38,11 @@ export function resolveDynamicEnum() {
       this.isDisabled = true;
       try {
         const dynamicEnum = await getDynamicEnum(this.schema);
-        if (dynamicEnum.hasOwnProperty('enum')) {
+        if (dynamicEnum.hasOwnProperty("enum")) {
           this.schema.enum = dynamicEnum.enum;
         }
-        if (dynamicEnum.hasOwnProperty('enum_titles')) {
-          this.schema['Q:options'].enum_titles = dynamicEnum.enum_titles;
+        if (dynamicEnum.hasOwnProperty("enum_titles")) {
+          this.schema["Q:options"].enum_titles = dynamicEnum.enum_titles;
         }
         if (this.schemaChanged) {
           this.schemaChanged(this.schema);
@@ -63,13 +71,18 @@ export function resolveDynamicEnum() {
         }
       }
 
-      if (!this.schema.hasOwnProperty('Q:options') || !this.schema['Q:options'].hasOwnProperty('dynamicEnum')) {
+      if (
+        !this.schema.hasOwnProperty("Q:options") ||
+        !this.schema["Q:options"].hasOwnProperty("dynamicEnum")
+      ) {
         return;
       }
 
-      reevaluateCallbackId = toolEndpointChecker.registerReevaluateCallback(async () => {
-        resolve.apply(this);
-      });
+      reevaluateCallbackId = toolEndpointChecker.registerReevaluateCallback(
+        async () => {
+          resolve.apply(this);
+        }
+      );
 
       resolve.apply(this);
     };

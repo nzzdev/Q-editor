@@ -1,10 +1,9 @@
-import { inject } from 'aurelia-framework';
-import { Container } from 'aurelia-dependency-injection';
-import ToolEndpointChecker from 'resources/ToolEndpointChecker.js';
+import { inject } from "aurelia-framework";
+import { Container } from "aurelia-dependency-injection";
+import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
 
 @inject(ToolEndpointChecker, Container)
 export default class SchemaEditorInputAvailabilityChecker {
-
   reevaluateCallbacks = [];
 
   constructor(toolEndpointChecker, diContainer) {
@@ -31,16 +30,16 @@ export default class SchemaEditorInputAvailabilityChecker {
   }
 
   hasAvailabilityCheck(schema) {
-    if (!schema.hasOwnProperty('Q:options')) {
+    if (!schema.hasOwnProperty("Q:options")) {
       return false;
     }
-    if (!schema['Q:options']) {
+    if (!schema["Q:options"]) {
       return false;
     }
-    if (!Array.isArray(schema['Q:options'].availabilityChecks)) {
+    if (!Array.isArray(schema["Q:options"].availabilityChecks)) {
       return false;
     }
-    if (schema['Q:options'].availabilityChecks.length < 1) {
+    if (schema["Q:options"].availabilityChecks.length < 1) {
       return false;
     }
     return true;
@@ -53,15 +52,18 @@ export default class SchemaEditorInputAvailabilityChecker {
           isAvailable: true
         };
       }
-      for (let availabilityCheck of schema['Q:options'].availabilityChecks) {
-        let checker = this.diContainer.get(availabilityCheck.type + 'AvailabilityCheck');
+      for (let availabilityCheck of schema["Q:options"].availabilityChecks) {
+        let checker = this.diContainer.get(
+          availabilityCheck.type + "AvailabilityCheck"
+        );
         const available = await checker.isAvailable(availabilityCheck);
         if (!available) {
           const availabilityInfo = {
             isAvailable: false
           };
-          if (availabilityCheck.hasOwnProperty('unavailableMessage')) {
-            availabilityInfo.unavailableMessage = availabilityCheck.unavailableMessage;
+          if (availabilityCheck.hasOwnProperty("unavailableMessage")) {
+            availabilityInfo.unavailableMessage =
+              availabilityCheck.unavailableMessage;
           }
           return availabilityInfo;
         }

@@ -1,25 +1,26 @@
-import { inject } from 'aurelia-framework';
-import IdGenerator from './IdGenerator.js';
+import { inject } from "aurelia-framework";
+import IdGenerator from "./IdGenerator.js";
 
 @inject(IdGenerator)
 export default class ObjectFromSchemaGenerator {
-
   constructor(idGenerator) {
     this.idGenerator = idGenerator;
   }
 
   getDefaultOrNull(schema) {
-    if (schema.hasOwnProperty('default')) {
-      if (typeof schema.default === 'object') {
+    if (schema.hasOwnProperty("default")) {
+      if (typeof schema.default === "object") {
         return JSON.parse(JSON.stringify(schema.default));
       }
       return schema.default;
     }
-    if (schema.hasOwnProperty('Q:default')) {
-      if (schema['Q:default'] === 'generatedId') {
+    if (schema.hasOwnProperty("Q:default")) {
+      if (schema["Q:default"] === "generatedId") {
         const id = this.idGenerator.getIdWithCurrentItemId();
         if (id === undefined || id === null) {
-          throw new Error('failed to generate id with item id as item has no id yet');
+          throw new Error(
+            "failed to generate id with item id as item has no id yet"
+          );
         }
         return id;
       }
@@ -28,7 +29,7 @@ export default class ObjectFromSchemaGenerator {
   }
 
   generateFromSchema(schema) {
-    if (schema.type === 'array') {
+    if (schema.type === "array") {
       let array = [];
       if (schema.minItems !== undefined) {
         for (let i = 0; i < schema.minItems; i++) {
@@ -45,17 +46,17 @@ export default class ObjectFromSchemaGenerator {
         }
       }
       return array;
-    } else if (schema.type === 'object') {
+    } else if (schema.type === "object") {
       const defaultValue = this.getDefaultOrNull(schema);
       if (defaultValue !== null) {
         return defaultValue;
       }
-      if (!schema.hasOwnProperty('properties')) {
+      if (!schema.hasOwnProperty("properties")) {
         return undefined;
       }
       const object = {};
       Object.keys(schema.properties).forEach(propertyName => {
-        if (schema.properties[propertyName]['Q:deprecated']) {
+        if (schema.properties[propertyName]["Q:deprecated"]) {
           return;
         }
         let value = this.generateFromSchema(schema.properties[propertyName]);
