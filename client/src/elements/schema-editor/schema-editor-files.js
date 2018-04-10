@@ -44,7 +44,7 @@ export class SchemaEditorFiles {
     if (!window.Dropzone) {
       try {
         window.Dropzone = await this.loader.loadModule("dropzone");
-        this.loader.loadModule("npm:dropzone@5.2.0/dist/min/dropzone.min.css!");
+        this.loader.loadModule("npm:dropzone@5.4.0/dist/min/dropzone.min.css!");
       } catch (e) {
         log.error(e);
       }
