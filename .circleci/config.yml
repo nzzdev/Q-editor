@@ -46,10 +46,10 @@ workflows:
   version: 2
   build-test-and-deploy:
     jobs:
-      - build
-        filters:
-          tags:
-              only: /^v.*/
+      - build:
+          filters:
+            tags:
+                only: /^v.*/
       - build-docker:
           filters:
               tags:
