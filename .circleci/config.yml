@@ -47,6 +47,12 @@ workflows:
   build-test-and-deploy:
     jobs:
       - build
+        filters:
+          tags:
+              only: /^v.*/
       - build-docker:
+          filters:
+              tags:
+                  only: /^v.*/
           requires:
             - build
