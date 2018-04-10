@@ -36,7 +36,7 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run: |
-          TAG=$CIRCLE_BRANCH
+          TAG=${CIRCLE_BRANCH:-$CIRCLE_TAG}
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker build -t q-editor:$TAG .
           docker tag q-editor:$TAG nzzonline/q-editor:$TAG
