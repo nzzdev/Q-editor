@@ -13,6 +13,10 @@ schema-editor-table .wtHolder {
   line-height: 18px;
 }
 
+schema-editor-table .ht_master .wtHolder::-webkit-scrollbar {
+  width: 8px;
+}
+
 schema-editor-table .rowHeader {
   color: var(--q-text-ultralight-color);
 }
