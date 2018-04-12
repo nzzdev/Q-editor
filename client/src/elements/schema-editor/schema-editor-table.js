@@ -92,7 +92,7 @@ export class SchemaEditorTable {
       rowHeaders: true,
       colHeaders: false,
       contextMenu: false,
-      colWidths: 70,
+      colWidths: 84,
       rowHeights: 23,
       afterChange: (changes, source) => {
         if (this.hot) {
