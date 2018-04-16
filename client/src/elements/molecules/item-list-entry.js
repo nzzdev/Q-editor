@@ -27,7 +27,7 @@ export class ItemListEntry {
   }
 
   redirectToItemView() {
-    this.router.navigateToRoute("item", { id: this.item.id });
+    window.open(this.router.generate("item", { id: this.item.id }), "_blank");
   }
 
   deleteItem() {
