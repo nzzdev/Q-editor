@@ -11,9 +11,9 @@
   <span class="q-text-small ${item.conf.active ? '' : 'q-text--light'}" if.bind="!item.conf.updatedDate">
       ${'general.edited' & t} ${item.conf.createdDate & timeAgo:7*24*60*60}, ${'general.by' & t}  ${item.conf.createdBy}
   </span>
-
+  
   <delete-button
-    if.bind="user.roles.includes('poweruser')"
+    if.bind="user.roles.includes('poweruser') || user.username === item.conf.createdBy"
     size="small"
     action.call="deleteItem()"
     button-type="secondary"
