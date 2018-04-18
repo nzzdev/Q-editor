@@ -1,5 +1,7 @@
 # Q Editor
 
+**Maintainer**: [benib](https://github.com/benib)
+
 This is the editor for the Q Toolbox. To make use of Q editor you will also need a [Q server](https://nzzdev.github.io/Q-server/).
 Here you find some technical documentation to get your own Q editor running.
 
