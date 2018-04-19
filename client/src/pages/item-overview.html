@@ -1,6 +1,12 @@
 <template>
   <require from="elements/item-preview/item-preview"></require>
   <require from="./item-overview.css"></require>
+
+  <q-bar if.bind="user.isLoggedIn" router.bind="router">
+    <a slot="q-bar__back" route-href="route: index">
+      <button-secondary icon="back" icon-size="big"></button-secondary>
+    </a>
+  </q-bar>
   <main class="item-overview">
     <q-messages></q-messages>
     <div class="item-overview-container">
@@ -18,10 +24,10 @@
       <aside class="item-overview__controls">
         <div class="item-overview__status q-text-small q-text--light">
           <icon-active-state class="tool-status-bar__item" is-active.bind="item.conf.active"></icon-active-state>
-          <div>${ 'general.created' & t } ${ item.conf.createdDate & timeAgo:7*24*60*60 }<br>
-          ${ 'general.by' & t } ${item.conf.createdBy}</div>
-          <div if.bind="item.conf.updatedDate">${ 'general.edited' & t } ${ item.conf.updatedDate & timeAgo:7*24*60*60 }<br>
-            ${ 'general.by' & t } ${item.conf.updatedBy}</div>
+          <div>${ 'general.created' & t } ${ item.conf.createdDate & timeAgo:7*24*60*60 }
+            <br> ${ 'general.by' & t } ${item.conf.createdBy}</div>
+          <div if.bind="item.conf.updatedDate">${ 'general.edited' & t } ${ item.conf.updatedDate & timeAgo:7*24*60*60 }
+            <br> ${ 'general.by' & t } ${item.conf.updatedBy}</div>
         </div>
 
         <button-secondary if.bind="!item.conf.active" click.delegate="activateItem()" icon="activate">
@@ -47,6 +53,6 @@
         </button-secondary>
 
       </aside>
-    <div>
+      <div>
   </main>
 </template>

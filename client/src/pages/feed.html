@@ -1,15 +1,23 @@
 <template>
   <require from="./feed.css"></require>
   <require from="../elements/item-preview/preview-container"></require>
+  <q-bar if.bind="user.isLoggedIn" router.bind="router">
+    <a slot="q-bar__back" route-href="route: index">
+      <button-secondary icon="back" icon-size="big"></button-secondary>
+    </a>
+  </q-bar>
   <section class="feed">
     <main>
       <section>
         <div class="feed-preview-block" repeat.for="item of items">
-          <div class="q-text">ID: <a route-href="route: editor; params.bind: {tool: item.conf.tool, id: item.id}">Edit this item</a> Tool: ${item.conf.tool} </div>
+          <div class="q-text">ID:
+            <a route-href="route: editor; params.bind: {tool: item.conf.tool, id: item.id}">Edit this item</a> Tool: ${item.conf.tool} </div>
           <preview-container width="320" id="preview-container" rendering-info.bind="renderingInfos[item.id]"></preview-container>
         </div>
       </section>
-      <button-secondary style="width: 100%;" click.delegate="loadMore()"><span t="general.loadMore"></span></button-secondary>
+      <button-secondary style="width: 100%;" click.delegate="loadMore()">
+        <span t="general.loadMore"></span>
+      </button-secondary>
     </main>
   </section>
 </template>
