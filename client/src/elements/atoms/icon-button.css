@@ -22,7 +22,7 @@ icon-button button {
   border-width: 1px;
   border-style: solid;
   border-radius: 18px;
-  
+
   height: 36px;
 
   display: flex;
@@ -41,6 +41,10 @@ icon-button button:focus {
 
 .icon-button__icon:empty {
   display: none;
+}
+
+.icon-button__text {
+  min-width: 34px;
 }
 
 .icon-button__text:empty {
