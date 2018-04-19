@@ -7,8 +7,9 @@ q-bar {
   padding: var(--q-space-base);
   position: fixed;
   width: 100%;
+  min-height: 56px;
   top: 0px;
-  z-index: 1000;
+  z-index: 500;
 }
 
 .q-bar__left {

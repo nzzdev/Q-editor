@@ -1,7 +1,9 @@
 <template>
   <require from="./index.css"></require>
 
-  <q-bar if.bind="user.isLoggedIn" router.bind="router"></q-bar>
+  <q-bar if.bind="user.isLoggedIn" router.bind="router">
+    <icon-logo slot="logo"></icon-logo>
+  </q-bar>
   <main class="index">
     <q-messages></q-messages>
     <tool-selection></tool-selection>
