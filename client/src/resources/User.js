@@ -57,6 +57,13 @@ export default class User {
     return this.data.roles;
   }
 
+  get username() {
+    if (!this.data || !this.data.hasOwnProperty("username")) {
+      return null;
+    }
+    return this.data.username;
+  }
+
   async save() {
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
