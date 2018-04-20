@@ -3,6 +3,5 @@ preview-container {
   display: block;
   margin-top: var(--q-space-base);
   margin-bottom: var(--q-space-base);
-
-  padding: var(--q-space-base) calc(var(--q-space-base) * 2);
+  height: 450px;
 }

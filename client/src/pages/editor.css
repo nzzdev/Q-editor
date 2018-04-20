@@ -17,15 +17,16 @@
 
 .editor__preview {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
 }
 
 .editor__preview item-preview {
-  flex-grow: 4;
+  width: 80%
 }
 
 .editor__preview .editor__options {
-  flex-grow: 1;
+  width: 20%;
+  margin-right: var(--q-space-base);
 }
 
 .editor__options {
