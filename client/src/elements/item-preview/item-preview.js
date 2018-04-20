@@ -16,15 +16,15 @@ export class ItemPreview {
   sizeOptions = [
     {
       value: 290,
-      icon: "mobile"
+      text: "Mobile"
     },
     {
       value: 560,
-      icon: "tablet"
+      text: "Content"
     },
     {
       value: 800,
-      icon: "widescreen"
+      text: "Full"
     }
   ];
 
@@ -222,14 +222,5 @@ export class ItemPreview {
         }
         this.renderingInfo = {};
       });
-  }
-
-  getTargetForKey(targetKey) {
-    for (let target of this.availableTargets) {
-      if (targetKey === target.key) {
-        return target;
-      }
-    }
-    return undefined;
   }
 }
