@@ -5,31 +5,33 @@
   <require from="elements/organisms/tool-status-bar"></require>
   <section class="editor">
     <main>
-        <q-messages></q-messages>
-        <section>
-          <form ref="form" class="q-form" validate>
-            <schema-editor schema.bind="schema" data.bind="item.conf" change.call="handleChange()">
-              <h1>${schema.title || 'Grafik'}</h1>
-            </schema-editor>
-            <button ref="formSubmitButton" type="submit" style="display: none;"></button>
-          </form>
-        </section>
-        <section>
-          <h2 t="general.preview"></h2>
+      <q-messages></q-messages>
+      <section>
+        <form ref="form" class="q-form" validate>
+          <schema-editor schema.bind="schema" data.bind="item.conf" change.call="handleChange()">
+            <h1>${schema.title || 'Grafik'}</h1>
+          </schema-editor>
+          <button ref="formSubmitButton" type="submit" style="display: none;"></button>
+        </form>
+      </section>
+      <section>
+        <h2 t="general.preview"></h2>
+        <div class="editor__preview">
+          <div class="editor__options" if.bind="optionsSchema">
+            <form ref="optionsForm" class="q-form" validate>
+              <schema-editor schema.bind="optionsSchema" data.bind="item.conf.options" change.call="handleChange()">
+                <h6>${optionsSchema.title || 'Optionen'}</h6>
+              </schema-editor>
+              <button ref="optionsFormSubmitButton" type="submit" style="display: none;"></button>
+            </form>
+          </div>
           <item-preview data.bind="previewData"></item-preview>
-        </section>
-        <section>
-          <meta-editor data.bind="item.conf" change.call="handleChange()"></meta-editor>
-        </section>
+        </div>
+      </section>
+      <section>
+        <meta-editor data.bind="item.conf" change.call="handleChange()"></meta-editor>
+      </section>
     </main>
-    <div class="editor__options" if.bind="optionsSchema">
-      <form ref="optionsForm" class="q-form" validate>
-        <schema-editor schema.bind="optionsSchema" data.bind="item.conf.options" change.call="handleChange()">
-          <h6>${optionsSchema.title || 'Optionen'}</h6>
-        </schema-editor>
-        <button ref="optionsFormSubmitButton" type="submit" style="display: none;"></button>
-      </form>
-    </div>
     <tool-status-bar item.bind="item" save-action.call="userSave()"></tool-status-bar>
   </section>
 </template>
