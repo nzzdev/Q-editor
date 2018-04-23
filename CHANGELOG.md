@@ -1,6 +1,8 @@
 # 2.1.0 (23.04.2018)
 - feat: users can delete items they created (powerusers can still delete all items)
 - improvement: schema-editor-table uses handsontable 2.0.0, column-width is increased, scrollbar thumb is wider
+- fix: meta-editor annotation input change triggers unsaved state
+- fix: preview-container doesn't fail if first stylesheet is from a browser extension
 - update: node to 9.11.1, aurelia-pal to 1.8.0
 
 # 2.0.1 (10.04.2018)
