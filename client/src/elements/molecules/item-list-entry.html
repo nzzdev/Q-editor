@@ -13,7 +13,7 @@
   </span>
 
   <delete-button
-    if.bind="user.roles.includes('poweruser')"
+    if.bind="user.roles.includes('poweruser') || user.username === item.conf.createdBy"
     size="small"
     action.call="deleteItem()"
     button-type="secondary"
