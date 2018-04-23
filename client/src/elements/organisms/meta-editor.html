@@ -17,7 +17,7 @@
     <label for="acronym">Kürzel</label>
     <input type="text" value.bind="data.acronym" keyup.delegate="change() & debounce:800">
     <label class="q-text-small q-text--light">${ 'metaEditor.annotations' & t }
-      <textarea value.bind="data.annotations" style="height: 150px;"></textarea>
+      <textarea value.bind="data.annotations" style="height: 150px;" keyup.delegate="change() & debounce:800"></textarea>
     </label>
   </form>
 </template>

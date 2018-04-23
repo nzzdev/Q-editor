@@ -1,4 +1,7 @@
-# 2.0.0 (xx.04.2018)
+# 2.0.1 (10.04.2018)
+- fix: load dropzone stylesheet
+
+# 2.0.0 (06.04.2018)
 - feature: use new /search endpoint of Q-server instead of building lucene query in the editor (needs Q-server >= 5.0.0)
 - deprecated feature removed: schema-editor-lat-lng (use schema-editor-geojson-point)
 - deprecated feature removed: onlyRoles config in tool is removed (use availabilityChecks)
