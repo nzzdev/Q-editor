@@ -26,10 +26,6 @@ export class ItemListEntry {
     });
   }
 
-  redirectToItemView() {
-    window.open(this.router.generate("item", { id: this.item.id }), "_blank");
-  }
-
   deleteItem() {
     this.item.delete().then(() => {
       this.element.addEventListener("transitionend", () => {
