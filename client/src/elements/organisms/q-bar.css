@@ -41,3 +41,15 @@ q-bar {
 .q-bar__help {
   padding-left: calc(var(--q-space-base) * 2);
 }
+
+@media screen and (max-width: 1000px) {
+  .q-bar__left {
+    width: 45%
+  }
+  .q-bar__center {
+    width: 10%;
+  }
+  .q-bar__right {
+    width: 45%;
+  }
+}
