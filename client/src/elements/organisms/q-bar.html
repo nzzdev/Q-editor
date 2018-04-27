@@ -2,14 +2,14 @@
   <require from="./q-bar.css"></require>
   <section class="q-bar__left">
     <slot name="back-button"></slot>
-    <slot name="tool-status-bar"></slot>
   </section>
   <section class="q-bar__center">
     <slot name="logo"></slot>
   </section>
   <section class="q-bar__right">
-    <language-switcher></language-switcher>
-    <button-secondary if.bind="user.isLoggedIn" click.delegate="showAccountModal()">${user.data.initials}</button-secondary>
-    <button-secondary if.bind="user.isLoggedIn" click.delegate="showHelp()" icon="help" icon-size="big"></button-secondary>
+    <slot name="tool-status-bar"></slot>
+    <slot name="language-switcher"></slot>
+    <slot name="account-button"></slot>
+    <button-secondary class="q-bar__help" if.bind="user.isLoggedIn" click.delegate="showHelp()" icon="help" icon-size="big"></button-secondary>
   </section>
 </template>

@@ -2,7 +2,6 @@ import { bindable, inject } from "aurelia-framework";
 import { DialogService } from "aurelia-dialog";
 import { Router } from "aurelia-router";
 import { HelpDialog } from "dialogs/help-dialog";
-import { AccountDialog } from "dialogs/account-dialog";
 
 import User from "resources/User.js";
 import Auth from "resources/Auth.js";
@@ -29,15 +28,6 @@ export class QBar {
     this.dialogService.open({
       viewModel: HelpDialog,
       model: {}
-    });
-  }
-
-  showAccountModal() {
-    this.dialogService.open({
-      viewModel: AccountDialog,
-      model: {
-        router: this.router
-      }
     });
   }
 }

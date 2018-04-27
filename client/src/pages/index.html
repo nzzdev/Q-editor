@@ -3,6 +3,8 @@
 
   <q-bar if.bind="user.isLoggedIn" router.bind="router">
     <icon-logo slot="logo"></icon-logo>
+    <language-switcher slot="language-switcher"></language-switcher>
+    <button-secondary slot="account-button" if.bind="user.isLoggedIn" click.delegate="showAccountModal()">${user.data.initials}</button-secondary>
   </q-bar>
   <main class="index">
     <q-messages></q-messages>

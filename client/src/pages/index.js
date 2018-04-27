@@ -1,14 +1,25 @@
 import { inject, singleton } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Notification } from "aurelia-notification";
+import { DialogService } from "aurelia-dialog";
 import User from "resources/User.js";
 import ItemStore from "resources/ItemStore.js";
 import ToolsInfo from "resources/ToolsInfo.js";
 import Statistics from "resources/Statistics.js";
 import QConfig from "resources/QConfig.js";
+import { AccountDialog } from "dialogs/account-dialog";
 
 @singleton()
-@inject(ItemStore, User, ToolsInfo, Router, QConfig, Statistics, Notification)
+@inject(
+  ItemStore,
+  User,
+  ToolsInfo,
+  Router,
+  QConfig,
+  Statistics,
+  Notification,
+  DialogService
+)
 export class Index {
   enoughNewItems = true;
   initialised = false;
@@ -20,7 +31,8 @@ export class Index {
     router,
     qConfig,
     statistics,
-    notification
+    notification,
+    dialogService
   ) {
     this.itemStore = itemStore;
     this.user = user;
@@ -29,6 +41,7 @@ export class Index {
     this.qConfig = qConfig;
     this.statistics = statistics;
     this.notification = notification;
+    this.dialogService = dialogService;
   }
 
   canActivate() {
@@ -149,5 +162,14 @@ export class Index {
     } catch (e) {
       // we do not care about errors here but just do not show statistics if something failed
     }
+  }
+
+  showAccountModal() {
+    this.dialogService.open({
+      viewModel: AccountDialog,
+      model: {
+        router: this.router
+      }
+    });
   }
 }
