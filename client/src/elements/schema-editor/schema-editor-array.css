@@ -7,8 +7,8 @@ schema-editor-array {
   flex-wrap: wrap;
   align-items: center;
   border-top: 1px solid var(--q-color-gray-4);
-  padding-top: var(--q-space-base);
-  margin-top: var(--q-space-base);
+  padding-top: calc(var(--q-space-base) * 2);
+  margin-top: calc(var(--q-space-base) * 2);
   position: relative;
 }
 
