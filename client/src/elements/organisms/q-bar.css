@@ -38,7 +38,7 @@ q-bar {
 }
 
 .q-bar__right {
-  margin-right: calc(var(--q-space-base) * 2);
+  padding-right: calc(var(--q-space-base) * 2);
 }
 
 .q-bar__help {
