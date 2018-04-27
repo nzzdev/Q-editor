@@ -3,7 +3,7 @@ tool-status-bar {
   align-items: center;
   margin-left: calc(var(--q-space-base) * 2);
   padding-right: var(--q-space-base);
-  border-right: solid 1px var(--q-color-gray-3);
+  border-right: solid 1px var(--q-color-gray-4);
 }
 
 .tool-status-bar__group {
