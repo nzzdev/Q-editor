@@ -62,5 +62,5 @@
   --q-link-color: var(--q-color-primary-5);
 
   /* layout */
-  --q-space-base: 8px;
+  --q-space-base: 16px;
 }

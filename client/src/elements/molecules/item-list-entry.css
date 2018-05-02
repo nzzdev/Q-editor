@@ -1,7 +1,7 @@
 item-list-entry {
   background: var(--q-color-primary-2);
 
-  padding: calc(var(--q-space-base) / 2);
+  padding: calc(var(--q-space-base) / 4);
   margin-bottom: calc(var(--q-space-base) / 4);
 
   display: flex;

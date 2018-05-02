@@ -41,7 +41,7 @@ body {
 q-screen {
   flex-grow: 1;
   transition: opacity 0.2s ease-out;
-  margin-top: calc(var(--q-space-base) * 7);
+  margin-top: calc(var(--q-space-base) * 3.5);
 }
 
 q-screen.is-navigating {
