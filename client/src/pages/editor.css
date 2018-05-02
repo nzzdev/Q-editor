@@ -12,7 +12,7 @@
   padding-bottom: var(--q-space-base);
   border-bottom: 1px solid var(--q-color-gray-4);
   margin-bottom: calc(var(--q-space-base) * 2);
-  max-width: 85%;
+  width: 85vw;
 }
 
 .editor__preview {
