@@ -17,18 +17,17 @@
 
 .editor__preview {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row;
 }
 
 .editor__preview item-preview {
-  flex-grow: 4;
-}
-
-.editor__preview .editor__options {
   flex-grow: 1;
 }
 
-.editor__options {
+.editor__preview .editor__options {
+  width: 250px;
+  flex-grow: 0;
+  flex-shrink: 0;
   overflow-y: scroll;
   --q-h1-size: 13px;
   --q-h2-size: 13px;

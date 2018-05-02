@@ -1,9 +1,9 @@
 preview-container {
+  max-width: calc(85vw - 250px);
   position: relative;
   display: block;
   margin-top: calc(var(--q-space-base) + 9px);
   margin-bottom: calc(var(--q-space-base) + 9px);
-
   padding: var(--q-space-base) calc(var(--q-space-base) * 2);
 }
 
