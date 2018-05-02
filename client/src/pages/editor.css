@@ -29,7 +29,6 @@
 }
 
 .editor__options {
-  flex-grow: 0;
   overflow-y: scroll;
   --q-h1-size: 13px;
   --q-h2-size: 13px;
@@ -37,11 +36,6 @@
   --q-h4-size: 13px;
   --q-h5-size: 13px;
   --q-h6-size: 13px;
-}
-
-.editor tool-status-bar {
-  width: 52px;
-  flex-grow: 0;
 }
 
 .editor__options .schema-editor-input {
@@ -70,12 +64,6 @@
 
 .editor__options schema-editor-wrapper {
   margin-bottom: 0;
-}
-
-.editor__options schema-editor-wrapper schema-editor-wrapper {
-  /*border-bottom: 1px solid var(--q-color-gray-4);
-  margin-bottom: 20px;*/
-  /*margin-bottom: var(--q-space-base);*/
 }
 
 .editor__options schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper {
