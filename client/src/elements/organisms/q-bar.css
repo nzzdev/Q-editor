@@ -12,14 +12,14 @@ q-bar {
 }
 
 .q-bar__left {
-  width: 25%;
+  width: 45%;
   display: flex;
   flex-flow: row wrap;
   padding-left: calc(var(--q-space-base) * 1.5);
 }
 
 .q-bar__center {
-  width: 50%;
+  width: 10%;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -31,7 +31,7 @@ q-bar {
 }
 
 .q-bar__right {
-  width: 25%;
+  width: 45%;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
@@ -40,16 +40,4 @@ q-bar {
 
 .q-bar__help {
   padding-left: var(--q-space-base);
-}
-
-@media screen and (max-width: 1000px) {
-  .q-bar__left {
-    width: 45%
-  }
-  .q-bar__center {
-    width: 10%;
-  }
-  .q-bar__right {
-    width: 45%;
-  }
 }

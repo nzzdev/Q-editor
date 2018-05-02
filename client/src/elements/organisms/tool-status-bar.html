@@ -3,12 +3,18 @@
 
   <div class="tool-status-bar__group">
     <icon-save-state class="tool-status-bar__item" is-saved.bind="item.isSaved"></icon-save-state>
-    <button-secondary class="tool-status-bar__item" icon="save" if.bind="saveAction" click.delegate="saveAction()"></button-secondary>
+    <button-secondary class="tool-status-bar__item tool-status-bar__button" icon="save" if.bind="saveAction" click.delegate="saveAction()">
+      <span class="tool-status-bar__button-text" t="item.save"></span>
+    </button-secondary>
   </div>
 
   <div class="tool-status-bar__group">
     <icon-active-state is-active.bind="item.conf.active" class="tool-status-bar__item"></icon-active-state>
-    <button-secondary if.bind="item.conf.active" class="tool-status-bar__item" icon="deactivate" click.delegate="onDeactivateClick()"></button-secondary>
-    <button-secondary if.bind="!item.conf.active" class="tool-status-bar__item" icon="activate" click.delegate="onActivateClick()"></button-secondary>
+    <button-secondary if.bind="item.conf.active" class="tool-status-bar__item tool-status-bar__button" icon="deactivate" click.delegate="onDeactivateClick()">
+      <span class="tool-status-bar__button-text" t="item.deactivate"></span>
+    </button-secondary>
+    <button-secondary if.bind="!item.conf.active" class="tool-status-bar__item tool-status-bar__button" icon="activate" click.delegate="onActivateClick()">
+      <span class="tool-status-bar__button-text" t="item.activate"></span>
+    </button-secondary>
   </div>
 </template>

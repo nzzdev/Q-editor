@@ -50,6 +50,7 @@
     "publication": "Publication"
   },
   "item": {
+    "save": "save",
     "activate": "activate",
     "deactivate": "deactivate",
     "blueprint": "use as blueprint",

@@ -14,3 +14,17 @@ tool-status-bar {
 .tool-status-bar__item {
   margin-right: calc(var(--q-space-base) / 2);
 }
+
+.tool-status-bar__button {
+  min-width: 140px;
+}
+
+@media screen and (max-width: 1010px) {
+  tool-status-bar .icon-button__text {
+    display: none;
+  }
+  .tool-status-bar__button {
+    min-width: 0px;
+  }
+}
+
