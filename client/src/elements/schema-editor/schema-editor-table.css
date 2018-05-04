@@ -17,7 +17,7 @@ schema-editor-table .ht_master .wtHolder::-webkit-scrollbar {
   width: 8px;
 }
 
-schema-editor-table .rowHeader {
+schema-editor-table .rowHeader, schema-editor-table .colHeader {
   color: var(--q-text-ultralight-color);
 }
 
