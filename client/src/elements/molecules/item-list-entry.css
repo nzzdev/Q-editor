@@ -24,6 +24,14 @@ item-list-entry .tool-icon {
   color: var(--q-color-gray-6);
 }
 
+item-list-entry > a {
+  display: flex;
+  text-decoration: none !important;
+  color: black !important;
+  align-items: center;
+  width: 100%; 
+}
+
 item-list-entry a > span {
   white-space: nowrap;
   overflow: hidden;
@@ -44,12 +52,4 @@ item-list-entry a > span:nth-of-type(3) {
 
 item-list-entry delete-button {
   margin-left: auto;
-}
-
-item-list-entry > a {
-  display: flex;
-  text-decoration: none !important;
-  color: black !important;
-  align-items: center;
-  width: 100%; 
 }
