@@ -2,7 +2,8 @@
   <require from="./index.css"></require>
 
   <q-bar if.bind="user.isLoggedIn" router.bind="router">
-    <icon-logo slot="logo"></icon-logo>
+    <icon-logo if.bind="enoughNewItems" slot="logo" click.delegate="reloadItems()"></icon-logo>
+    <icon-m if.bind="!enoughNewItems" slot="logo" click.delegate="reloadItems()"></icon-m>
     <language-switcher slot="language-switcher"></language-switcher>
     <button-secondary slot="account-button" if.bind="user.isLoggedIn" click.delegate="showAccountModal()">${user.data.initials}</button-secondary>
   </q-bar>
