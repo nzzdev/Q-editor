@@ -48,7 +48,8 @@
 }
 
 .q-form input[type="text"],
-.q-form input[type="url"] {
+.q-form input[type="url"],
+.q-form input[type="password"] {
   font-size: 14px;
   line-height: 1.3;
 

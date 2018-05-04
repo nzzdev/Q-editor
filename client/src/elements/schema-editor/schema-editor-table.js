@@ -90,20 +90,21 @@ export class SchemaEditorTable {
       minSpareRows: 1,
       minSpareCols: 1,
       rowHeaders: true,
-      colHeaders: false,
+      colHeaders: true,
+      manualColumnResize: true,
       contextMenu: false,
       colWidths: 84,
       rowHeights: 23,
       afterChange: (changes, source) => {
+        if (source !== "loadData") {
+          this.data = trimNull(emptyToNull(this.hot.getData()));
+          this.change();
+        }
         if (this.hot) {
           this.replaceCommaWithPointIfDecimal();
           this.hot.updateSettings({
             height: this.getGridHeight()
           });
-        }
-        if (source !== "loadData") {
-          this.data = trimNull(emptyToNull(this.hot.getData()));
-          this.change();
         }
       }
     });

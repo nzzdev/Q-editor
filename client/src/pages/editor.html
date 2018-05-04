@@ -3,24 +3,30 @@
   <require from="elements/schema-editor/schema-editor"></require>
   <require from="elements/item-preview/item-preview"></require>
   <require from="elements/organisms/tool-status-bar"></require>
+  <q-bar if.bind="user.isLoggedIn" router.bind="router">
+    <a slot="back-button" class="q-bar__back" route-href="route: index">
+      <button-secondary icon="back" icon-size="medium"></button-secondary>
+    </a>
+    <tool-status-bar slot="tool-status-bar" item.bind="item" save-action.call="userSave()"></tool-status-bar>
+  </q-bar>
   <section class="editor">
     <main>
-        <q-messages></q-messages>
-        <section>
-          <form ref="form" class="q-form" validate>
-            <schema-editor schema.bind="schema" data.bind="item.conf" change.call="handleChange()">
-              <h1>${schema.title || 'Grafik'}</h1>
-            </schema-editor>
-            <button ref="formSubmitButton" type="submit" style="display: none;"></button>
-          </form>
-        </section>
-        <section>
-          <h2 t="general.preview"></h2>
-          <item-preview data.bind="previewData"></item-preview>
-        </section>
-        <section>
-          <meta-editor data.bind="item.conf" change.call="handleChange()"></meta-editor>
-        </section>
+      <q-messages></q-messages>
+      <section>
+        <form ref="form" class="q-form" validate>
+          <schema-editor schema.bind="schema" data.bind="item.conf" change.call="handleChange()">
+            <h1>${schema.title || 'Grafik'}</h1>
+          </schema-editor>
+          <button ref="formSubmitButton" type="submit" style="display: none;"></button>
+        </form>
+      </section>
+      <section>
+        <h2 t="general.preview"></h2>
+        <item-preview data.bind="previewData"></item-preview>
+      </section>
+      <section>
+        <meta-editor data.bind="item.conf" change.call="handleChange()"></meta-editor>
+      </section>
     </main>
     <div class="editor__options" if.bind="optionsSchema">
       <form ref="optionsForm" class="q-form" validate>
@@ -30,6 +36,5 @@
         <button ref="optionsFormSubmitButton" type="submit" style="display: none;"></button>
       </form>
     </div>
-    <tool-status-bar item.bind="item" save-action.call="userSave()"></tool-status-bar>
   </section>
 </template>

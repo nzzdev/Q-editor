@@ -26,10 +26,6 @@ export class ItemListEntry {
     });
   }
 
-  redirectToItemView() {
-    this.router.navigateToRoute("item", { id: this.item.id });
-  }
-
   deleteItem() {
     this.item.delete().then(() => {
       this.element.addEventListener("transitionend", () => {

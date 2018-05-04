@@ -1,3 +1,8 @@
+# 2.2.0 (04.05.2018)
+- feat: fixed navigation bar on top
+- feat: item list entries are now links and can be opened in a new tab
+- feat: schema-editor-table table header is shown and columns are resizable
+
 # 2.1.0 (23.04.2018)
 - feat: users can delete items they created (powerusers can still delete all items)
 - improvement: schema-editor-table uses handsontable 2.0.0, column-width is increased, scrollbar thumb is wider

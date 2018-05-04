@@ -5,7 +5,6 @@ item-list-entry {
   margin-bottom: calc(var(--q-space-base) / 4);
 
   display: flex;
-  align-items: center;
 
   transition: transform 0.2s ease-in;
 }
@@ -25,21 +24,29 @@ item-list-entry .tool-icon {
   color: var(--q-color-gray-6);
 }
 
-item-list-entry > span {
+item-list-entry > a {
+  display: flex;
+  text-decoration: none !important;
+  color: black !important;
+  align-items: center;
+  width: 100%; 
+}
+
+item-list-entry a > span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-item-list-entry > span:nth-of-type(1) {
+item-list-entry a > span:nth-of-type(1) {
   width: calc((100% - (2 * 26px)) / 10 * 4);
 }
 
-item-list-entry > span:nth-of-type(2) {
+item-list-entry a > span:nth-of-type(2) {
   width: calc((100% - (2 * 26px)) / 10 * 2);
 }
 
-item-list-entry > span:nth-of-type(3) {
+item-list-entry a > span:nth-of-type(3) {
   width: calc((100% - (2 * 26px)) / 10 * 4);
 }
 

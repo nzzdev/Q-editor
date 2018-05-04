@@ -17,7 +17,7 @@ schema-editor-table .ht_master .wtHolder::-webkit-scrollbar {
   width: 8px;
 }
 
-schema-editor-table .rowHeader {
+schema-editor-table .rowHeader, schema-editor-table .colHeader {
   color: var(--q-text-ultralight-color);
 }
 
@@ -35,11 +35,6 @@ schema-editor-table .wtHolder td {
 
 schema-editor-table .wtHolder td:last-child {
   border-right-style: dotted;
-}
-
-schema-editor-table .wtHolder tr:first-child td {
-  background-color: var(--q-color-gray-3);
-  border-color: var(--q-color-gray-4);
 }
 
 schema-editor-table .wtHolder tr:last-child td {
