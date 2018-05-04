@@ -17,3 +17,8 @@
 .feed .feed-preview-block {
   margin: 10px;
 }
+
+.q-bar__back {
+  display: flex;
+  align-items: center;
+}

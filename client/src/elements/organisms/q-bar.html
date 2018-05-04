@@ -1,13 +1,15 @@
 <template>
   <require from="./q-bar.css"></require>
-  <section class="q-bar__section q-bar__section">
-    <a route-href="route: index" if.bind="router.currentInstruction.config.name !== 'index'" class="q-bar__item">
-      <button-secondary icon="logo" icon-size="big"></button-secondary>
-    </a>
+  <section class="q-bar__left">
+    <slot name="back-button"></slot>
   </section>
-  <language-switcher></language-switcher>
-  <section class="q-bar__section q-bar__section q-bar__user">
-    <button-secondary if.bind="user.isLoggedIn" click.delegate="showHelp()" icon="help" icon-size="big" class="q-bar__item"></button-secondary>
-    <button-secondary if.bind="user.isLoggedIn" click.delegate="showAccountModal()" class="q-bar__item">${user.data.initials}</button-secondary>
+  <section class="q-bar__center">
+    <slot name="logo"></slot>
+  </section>
+  <section class="q-bar__right">
+    <slot name="tool-status-bar"></slot>
+    <slot name="language-switcher"></slot>
+    <slot name="account-button"></slot>
+    <button-secondary class="q-bar__help" if.bind="user.isLoggedIn" click.delegate="showHelp()" icon="help" icon-size="big"></button-secondary>
   </section>
 </template>

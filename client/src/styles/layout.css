@@ -38,21 +38,10 @@ body {
   background-color: white;
 }
 
-q-bar {
-  height: 100%;
-  flex-grow: 0;
-  flex-shrink: 0;
-
-  width: 52px;
-}
-
 q-screen {
-  height: 100%;
   flex-grow: 1;
-  flex-shrink: 1;
   transition: opacity 0.2s ease-out;
-  min-width: calc(700px - 52px);
-  max-width: calc(100% - 52px);
+  margin-top: calc(var(--q-space-base) * 3.5);
 }
 
 q-screen.is-navigating {

@@ -8,7 +8,6 @@
   <require from="./styles/notifications.css"></require>
 
   <div class="q-container ${isPlayground ? 'q-container--playground' : ''}">
-    <q-bar if.bind="user.isLoggedIn" router.bind="router"></q-bar>
     <q-screen class="${router.isNavigating ? 'is-navigating' : ''}">
       <router-view containerless name="default"></router-view>
     </q-screen>

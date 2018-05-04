@@ -1,19 +1,19 @@
 <template>
   <require from="./index.css"></require>
 
+  <q-bar if.bind="user.isLoggedIn" router.bind="router">
+    <icon-logo slot="logo"></icon-logo>
+    <language-switcher slot="language-switcher"></language-switcher>
+    <button-secondary slot="account-button" if.bind="user.isLoggedIn" click.delegate="showAccountModal()">${user.data.initials}</button-secondary>
+  </q-bar>
   <main class="index">
     <q-messages></q-messages>
-    <div class="index__logo" click.delegate="reloadItems()">
-      <icon-logo if.bind="enoughNewItems"></icon-logo>
-      <icon-m if.bind="!enoughNewItems"></icon-m>
-    </div>
-
     <tool-selection></tool-selection>
-    
     <div class="search">
       <input t="[placeholder]general.searchLabel" input.delegate="filterChanged() & debounce" value.two-way="currentSearchString">
       <svg viewBox="0 0 34 32" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22.5 21.23a9.73 9.73 0 1 1 0-19.46c5.374 0 9.73 4.356 9.73 9.73 0 5.374-4.356 9.73-9.73 9.73zM13.782 19A11.455 11.455 0 0 1 11 11.5C11 5.149 16.149 0 22.5 0S34 5.149 34 11.5 28.851 23 22.5 23a11.455 11.455 0 0 1-7.5-2.782v2.496l-9.71 8.014c-.853.705-2.175.643-2.958-.132l-.914-.906c-.782-.774-.728-1.974.123-2.676L11.25 19h2.532z" fill-rule="evenodd"/>
+        <path d="M22.5 21.23a9.73 9.73 0 1 1 0-19.46c5.374 0 9.73 4.356 9.73 9.73 0 5.374-4.356 9.73-9.73 9.73zM13.782 19A11.455 11.455 0 0 1 11 11.5C11 5.149 16.149 0 22.5 0S34 5.149 34 11.5 28.851 23 22.5 23a11.455 11.455 0 0 1-7.5-2.782v2.496l-9.71 8.014c-.853.705-2.175.643-2.958-.132l-.914-.906c-.782-.774-.728-1.974.123-2.676L11.25 19h2.532z"
+          fill-rule="evenodd" />
       </svg>
     </div>
 
@@ -21,12 +21,16 @@
 
     <items-list items.bind="items"></items-list>
     <q-loader if.bind="itemsLoading"></q-loader>
-    <button-secondary if.bind="moreItemsAvailable" class="index__load-more-button" click.delegate="loadMore()"><span t="general.loadMore"></span></button-secondary>
+    <button-secondary if.bind="moreItemsAvailable" class="index__load-more-button" click.delegate="loadMore()">
+      <span t="general.loadMore"></span>
+    </button-secondary>
 
     <div class="item-list-legend">
       <div class="q-text-small">&nbsp;= ${'general.itemNotActivated' & t}</div>
     </div>
-    <p class="index__statistics q-text-small q-text--light" if.bind="!enoughNewItems && statsValues" t="statistics.tooFewNewGraphics" t-params.bind="statsValues"></p>
-    <p class="index__statistics q-text-small q-text--light" if.bind="enoughNewItems && statsValues" t="statistics.enoughNewGraphics" t-params.bind="statsValues"></p>
+    <p class="index__statistics q-text-small q-text--light" if.bind="!enoughNewItems && statsValues" t="statistics.tooFewNewGraphics"
+      t-params.bind="statsValues"></p>
+    <p class="index__statistics q-text-small q-text--light" if.bind="enoughNewItems && statsValues" t="statistics.enoughNewGraphics"
+      t-params.bind="statsValues"></p>
   </main>
 </template>
