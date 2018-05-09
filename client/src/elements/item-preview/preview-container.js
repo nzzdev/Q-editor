@@ -8,6 +8,7 @@ export class PreviewContainer {
   @bindable renderingInfo;
   @bindable noRenderingInfoText;
   @bindable target;
+  @bindable error;
 
   insertedElements = [];
 

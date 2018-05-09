@@ -9,8 +9,6 @@
       <radio-button-group options.bind="sizeOptions" value.two-way="previewWidthProxy.width"></radio-button-group>
     </div>
   </form>
-  <p class="q-text q-text--error" if.bind="errorMessage">${errorMessage}</p>
   <preview-container ref="previewContainer" width.one-way="previewWidthProxy.width" rendering-info.one-way="renderingInfo"
-    target.one-way="targetProxy.target"></preview-container>
-
+    target.one-way="targetProxy.target" error.bind="error"></preview-container>
 </template>

@@ -76,7 +76,7 @@
     "searchLabel": "Ein Q Element suchen"
   },
   "notifications": {
-    "previewBadRequest": "Es fehlen einige Daten um die Vorschau anzuzeigen",
+    "previewError": "Die Grafik kann nicht angezeigt werden",
     "failedLoadingEditorConfig": "Die Editorkonfiguration konnte nicht geladen werden",
     "graphicNeedsATitle": "Grafik braucht einen Titel",
     "failedLoadingItems": "Grafiken konnten nicht geladen werden",
@@ -95,5 +95,10 @@
     "dictCancelUpload": "Hochladen abbrechen",
     "dictRemoveFile": "Datei entfernen",
     "dictMaxFilesExceeded": "Sie können keine weiteren Dateien mehr hochladen"
+  },
+  "preview": {
+    "small": "Mobile",
+    "medium": "Artikelbreite",
+    "large": "Volle Breite"
   }
 }

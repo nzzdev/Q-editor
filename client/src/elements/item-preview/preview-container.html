@@ -15,8 +15,24 @@
     .preview-element {
       margin: auto;
       width: 50%;
+      min-height: calc(350px - var(--q-space-base) * 2);
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
-      padding: calc(var(--q-space-base) * 2);
+      padding: var(--q-space-base);
+    }
+
+    .preview-element--error-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(350px - var(--q-space-base) * 6);
+      color: var(--q-color-error);
+      background-color: var(--q-color-gray-2);
+      padding: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 3);
+      text-align: center;
+    }
+
+    .preview-element--error-text {
+      font-weight: normal;
     }
 
     .preview-note {
@@ -32,6 +48,9 @@
     <div class="preview-element-container__background">
       <div class="preview-element" css="width: ${width}px; background-color: ${previewColor};">
         <div ref="previewElement"></div>
+        <div class="preview-element--error-box" show.bind="error">
+          <h4 class="preview-element--error-text">${'notifications.previewError' & t}</h4>
+        </div>
       </div>
     </div>
   </div>
