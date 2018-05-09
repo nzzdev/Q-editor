@@ -1,6 +1,9 @@
 import { bindable, useShadowDOM, inject } from "aurelia-framework";
 import qEnv from "resources/qEnv.js";
 
+// used to create the style element only once
+let styleSheet;
+
 @useShadowDOM()
 @inject(Element)
 export class PreviewContainer {
@@ -19,7 +22,14 @@ export class PreviewContainer {
     this.id = `preview-container-${Math.floor(Math.random() * 10 ** 9)}`;
     this.element.setAttribute("id", this.id);
 
-    this.styleSheet = this.element.ownerDocument.styleSheets[0];
+    // if there is no style element yet, create and append one.
+    if (!styleSheet) {
+      const style = this.element.ownerDocument.createElement("style");
+      this.element.ownerDocument.head.appendChild(style);
+      styleSheet = style.sheet;
+    }
+
+    this.styleSheet = styleSheet;
   }
 
   attached() {

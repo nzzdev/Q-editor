@@ -47,6 +47,7 @@
     "publication": "Publikation"
   },
   "item": {
+    "save": "speichern",
     "activate": "aktivieren",
     "deactivate": "deaktivieren",
     "blueprint": "als Vorlage benutzen",

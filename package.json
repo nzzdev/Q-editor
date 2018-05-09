@@ -1,6 +1,6 @@
 {
   "name": "@nzz/q-editor",
-  "version": "2.0.1",
+  "version": "2.2.0",
   "description": "Q Editor - The editor part of the Q toolbox",
   "homepage": "https://github.com/nzzdev/Q-editor",
   "bugs": {
@@ -29,7 +29,8 @@
   "dependencies": {
     "boom": "^7.2.0",
     "brok": "^3.0.0",
-    "hapi": "^17.3.1",
+    "hapi": "^17.4.0",
+    "hoek": "^5.0.3",
     "inert": "^5.1.0"
   }
 }

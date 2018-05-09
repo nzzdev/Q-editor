@@ -69,3 +69,8 @@
 .editor__options schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper {
   margin-bottom: 0;
 }
+
+.q-bar__back {
+  display: flex;
+  align-items: center;
+}
