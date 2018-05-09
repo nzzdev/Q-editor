@@ -2,10 +2,6 @@ item-preview {
   display: block;
 }
 
-item-preview > div {
-  max-width: 560px;
-}
-
 .item-preview__settings {
   width: 100%;
   display: flex;

@@ -12,25 +12,23 @@
   padding-bottom: var(--q-space-base);
   border-bottom: 1px solid var(--q-color-gray-4);
   margin-bottom: calc(var(--q-space-base) * 2);
-  width: 85%;
+  width: 85vw;
 }
 
 .editor__preview {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row;
 }
 
 .editor__preview item-preview {
-  width: 80%
+  flex-grow: 1;
 }
 
 .editor__preview .editor__options {
-  width: 20%;
-  margin-right: var(--q-space-base);
-}
-
-.editor__options {
+  width: 250px;
   flex-grow: 0;
+  flex-shrink: 0;
+  margin-right: var(--q-space-base);
   overflow-y: scroll;
   --q-h1-size: 13px;
   --q-h2-size: 13px;
@@ -38,11 +36,6 @@
   --q-h4-size: 13px;
   --q-h5-size: 13px;
   --q-h6-size: 13px;
-}
-
-.editor tool-status-bar {
-  width: 52px;
-  flex-grow: 0;
 }
 
 .editor__options .schema-editor-input {
