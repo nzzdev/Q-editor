@@ -1,4 +1,5 @@
 preview-container {
+  max-width: calc(85vw - 250px);
   position: relative;
   display: block;
   height: 350px;
