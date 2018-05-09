@@ -19,6 +19,7 @@ import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 import qEnv from "resources/qEnv.js";
 import { registerEastereggs } from "eastereggs.js";
+import { Validation } from "resources/Validation.js";
 
 import Backend from "i18next-fetch-backend";
 
@@ -36,6 +37,7 @@ export async function configure(aurelia) {
   aurelia.use.singleton(CurrentItemProvider);
   aurelia.use.singleton(ObjectFromSchemaGenerator);
   aurelia.use.singleton(User);
+  aurelia.use.singleton(Validation);
 
   const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
