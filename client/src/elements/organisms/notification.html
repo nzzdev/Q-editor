@@ -1,0 +1,7 @@
+<template>
+  <require from="./notification.css"></require>
+  <div class="notification notification__${notification.priority.name}" show.bind="notification.message.title">
+    <h5 class="notification__title">${notification.message.title}</h5>
+    <h6 class="notification__body">${notification.message.body}</h6>
+  </div>
+</template>

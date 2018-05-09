@@ -4,6 +4,7 @@ export function configure(frameworkConfiguration) {
     .globalResources("./items-list.html")
     .globalResources("./meta-editor")
     .globalResources("./q-bar")
-    .globalResources("./tool-selection");
+    .globalResources("./tool-selection")
+    .globalResources("./notification");
   // do not include ./tool-status-bar as it is only used in editor, we do not want to load it upfront
 }
