@@ -24,9 +24,6 @@
     "failedToSaveChanges": "Die Änderung konnten nicht gespeichert werden.",
     "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt.",
     "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen.",
-    "preview": "Vorschau",
-    "previewTargetLabel": "Publikation",
-    "previewSizeLabel": "Angezeigte Grösse",
     "articlesWithThisGraphic": "Artikel mit dieser Grafik"
   },
   "statistics": {
@@ -99,6 +96,8 @@
   "preview": {
     "small": "Mobile",
     "medium": "Artikelbreite",
-    "large": "Volle Breite"
+    "large": "Volle Breite",
+    "title": "Vorschau",
+    "sizeLabel": "Vorschau für..."
   }
 }

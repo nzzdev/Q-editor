@@ -24,9 +24,6 @@
     "failedToSaveChanges": "Failed to save changes.",
     "loginFailed": "Your username or password is not correct.",
     "serverConnectionFailed": "Failed to connect to server.",
-    "preview": "Preview",
-    "previewTargetLabel": "Publication",
-    "previewSizeLabel": "Size",
     "articlesWithThisGraphic": "Articles with this graphic"
   },
   "statistics": {
@@ -101,6 +98,8 @@
   "preview": {
     "small": "Mobile",
     "medium": "Content",
-    "large": "Full"
+    "large": "Full",
+    "title": "Preview",
+    "sizeLabel": "Preview for..."
   }
 }

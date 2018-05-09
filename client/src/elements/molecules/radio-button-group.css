@@ -7,7 +7,7 @@ radio-button-group {
 .radio-button-group__option {
   position: relative;
   flex-shrink: 0;
-  width: 100%;
+  width: 110%;
   height: 30px;
 }
 
