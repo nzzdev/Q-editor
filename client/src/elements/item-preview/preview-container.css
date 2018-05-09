@@ -1,6 +1,7 @@
 preview-container {
   position: relative;
   display: block;
+  height: 350px;
   margin-top: var(--q-space-base);
   margin-bottom: var(--q-space-base);
 }

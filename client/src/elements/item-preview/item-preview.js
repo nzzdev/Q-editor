@@ -13,20 +13,9 @@ export class ItemPreview {
   @bindable id;
   @bindable target;
 
-  sizeOptions = [
-    {
-      value: 290,
-      text: "Mobile"
-    },
-    {
-      value: 560,
-      text: "Content"
-    },
-    {
-      value: 800,
-      text: "Full"
-    }
-  ];
+  sizeOptions = [];
+  error = false;
+  errorMessage = "";
 
   constructor(qTargets, qConfig, user, i18n) {
     this.qTargets = qTargets;
@@ -58,6 +47,21 @@ export class ItemPreview {
         }
       }
     );
+
+    this.sizeOptions = [
+      {
+        value: 290,
+        text: this.i18n.tr("preview.small")
+      },
+      {
+        value: 560,
+        text: this.i18n.tr("preview.medium")
+      },
+      {
+        value: 800,
+        text: this.i18n.tr("preview.large")
+      }
+    ];
 
     this.init();
   }
@@ -211,13 +215,11 @@ export class ItemPreview {
     }
     this.fetchRenderingInfo()
       .then(renderingInfo => {
-        this.errorMessage = undefined;
         this.renderingInfo = renderingInfo;
       })
       .catch(response => {
-        if (response.status === 400) {
-          this.errorMessage = this.i18n.tr("notifications.previewBadRequest");
-        } else {
+        this.error = true;
+        if (response.status !== 400) {
           this.errorMessage = response.statusText;
         }
         this.renderingInfo = {};
