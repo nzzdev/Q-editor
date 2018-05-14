@@ -1,5 +1,6 @@
 .editor {
   padding: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 2);
+  min-width: 650px;
   max-width: 1200px;
   margin: 0 auto;
 }
