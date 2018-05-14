@@ -1,5 +1,14 @@
 schema-editor {
-  display: block;
+  display: flex;
+  flex-direction: column;
+}
+
+schema-editor#schema-editor--main
+  schema-editor-wrapper
+  schema-editor-wrapper
+  > :first-child {
+  width: calc(100% - 196px);
+  margin-right: var(--q-space-base);
 }
 
 schema-editor fieldset {
@@ -37,12 +46,21 @@ schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper legend {
   font-weight: var(--q-h4-weight);
 }
 
-schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper legend {
+schema-editor-wrapper
+  schema-editor-wrapper
+  schema-editor-wrapper
+  schema-editor-wrapper
+  legend {
   font-size: var(--q-h5-size);
   font-weight: var(--q-h5-weight);
 }
 
-schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper legend {
+schema-editor-wrapper
+  schema-editor-wrapper
+  schema-editor-wrapper
+  schema-editor-wrapper
+  schema-editor-wrapper
+  legend {
   font-size: var(--q-h5-size);
   font-weight: var(--q-h5-weight);
 }

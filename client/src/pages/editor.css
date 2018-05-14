@@ -1,18 +1,13 @@
 .editor {
-  height: 100%;
-  display: flex;
+  padding: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 2);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.editor main {
-  padding: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 3);
-  flex-grow: 1;
-}
-
-.editor main section {
+.editor section {
   padding-bottom: var(--q-space-base);
   border-bottom: 1px solid var(--q-color-gray-4);
   margin-bottom: calc(var(--q-space-base) * 2);
-  width: 85vw;
 }
 
 .editor__preview {
