@@ -1,0 +1,11 @@
+schema-editor-wrapper {
+  display: flex !important;
+}
+
+schema-editor-wrapper > :first-child {
+  width: 100%;
+}
+
+.schema-editor-wrapper--input {
+  max-height: calc(var(--q-space-base) * 4.5);
+}

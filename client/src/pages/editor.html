@@ -9,12 +9,12 @@
     </a>
     <tool-status-bar slot="tool-status-bar" item.bind="item" save-action.call="userSave()"></tool-status-bar>
   </q-bar>
-  <section class="editor">
-    <main>
+  <main>
+    <div class="editor">
       <q-messages></q-messages>
       <section>
         <form ref="form" class="q-form" validate>
-          <schema-editor schema.bind="schema" data.bind="item.conf" change.call="handleChange()">
+          <schema-editor id="schema-editor--main" schema.bind="schema" data.bind="item.conf" change.call="handleChange()">
             <h1>${schema.title || 'Grafik'}</h1>
           </schema-editor>
           <button ref="formSubmitButton" type="submit" style="display: none;"></button>
@@ -37,6 +37,6 @@
       <section>
         <meta-editor data.bind="item.conf" change.call="handleChange()"></meta-editor>
       </section>
-    </main>
-  </section>
+    </div>
+  </main>
 </template>

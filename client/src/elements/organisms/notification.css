@@ -1,9 +1,10 @@
 .notification {
   position: relative;
   padding: var(--q-space-base);
-  margin: var(--q-space-base);
+  margin-top: calc(var(--q-space-base) * 1.2);
   border-radius: 4px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+  width: 180px;
 }
 
 .notification__title {
