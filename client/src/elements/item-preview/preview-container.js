@@ -14,7 +14,6 @@ export class PreviewContainer {
   @bindable error;
 
   insertedElements = [];
-
   stylesheetRules = [];
 
   constructor(element) {
@@ -34,10 +33,6 @@ export class PreviewContainer {
 
   attached() {
     this.showPreview(this.renderingInfo);
-  }
-
-  detached() {
-    this.removePreviewBorderStyles();
   }
 
   renderingInfoChanged(renderingInfo) {
@@ -61,26 +56,7 @@ export class PreviewContainer {
       // nevermind, default color already set to white
     }
 
-    this.addPreviewBorder(color);
     this.previewColor = color;
-  }
-
-  addPreviewBorder(backgroundColor) {
-    this.removePreviewBorderStyles();
-    let beforeIndex = this.styleSheet.insertRule(`preview-container::before {
-      background-image: url('data:image/svg+xml;utf-8,<svg width="14" height="9" viewBox="0 0 14 9" xmlns="http://www.w3.org/2000/svg"><path fill="#adadad" d="M14 9V7L7 0 0 7v2l7-7z"/><path fill="${backgroundColor}" d="M0 9h14L7 2z"/></svg>');
-    }`);
-    let afterIndex = this.styleSheet.insertRule(`preview-container::after {
-      background-image: url('data:image/svg+xml;utf-8,<svg width="14" height="9" viewBox="0 0 14 9" xmlns="http://www.w3.org/2000/svg"><path fill="#adadad" d="M14 0v2L7 9 0 2V0l7 7z"/><path fill="${backgroundColor}" d="M0 0h14L7 7z"/></svg>');
-    }`);
-    this.stylesheetRules.push(beforeIndex);
-    this.stylesheetRules.push(afterIndex);
-  }
-
-  removePreviewBorderStyles() {
-    while (this.stylesheetRules.length > 0) {
-      this.styleSheet.deleteRule(this.stylesheetRules.pop());
-    }
   }
 
   async showPreview(renderingInfo) {

@@ -1,13 +1,15 @@
 import { inject } from "aurelia-framework";
+import { I18N } from "aurelia-i18n";
 import { HttpClient } from "aurelia-fetch-client";
 import qEnv from "resources/qEnv.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
-@inject(HttpClient, CurrentItemProvider)
+@inject(HttpClient, CurrentItemProvider, I18N)
 export class Validation {
-  constructor(httpClient, currentItemProvider) {
+  constructor(httpClient, currentItemProvider, i18n) {
     this.httpClient = httpClient;
     this.currentItemProvider = currentItemProvider;
+    this.i18n = i18n;
   }
 
   async validate(element, validationRules, schema, data) {
@@ -24,25 +26,64 @@ export class Validation {
     return this.getNotification(notifications);
   }
 
+  validatePreview(error, errorMessage) {
+    const notification = {
+      priority: {
+        name: "high",
+        value: 2
+      },
+      message: {
+        title: "",
+        body: ""
+      }
+    };
+    if (error && errorMessage !== "") {
+      notification.message.title = this.i18n.tr("preview.technicalError.title");
+      notification.message.body =
+        this.i18n.tr("preview.technicalError.body") + `(${errorMessage})`;
+    } else if (error) {
+      notification.message.title = this.i18n.tr("preview.generalError.title");
+      notification.message.body = this.i18n.tr("preview.generalError.body");
+    } else {
+      notification.priority.name = "low";
+      notification.priority.value = 0;
+      notification.message.title = this.i18n.tr("preview.hint.title");
+      notification.message.body = this.i18n.tr("preview.hint.body");
+    }
+    return notification;
+  }
+
   getFormValidationNotifications(element, schema) {
-    let notifications = [];
+    const notifications = [];
     if (!element.checkValidity()) {
-      notifications.push({
-        priority: {
-          name: "high",
-          value: 2
-        },
-        message: {
-          title: "Whoops, kein " + schema.title,
-          body: element.validationMessage
-        }
-      });
+      if (element.validity.valueMissing) {
+        notifications.push({
+          priority: {
+            name: "high",
+            value: 2
+          },
+          message: {
+            title: this.i18n.tr("notifications.missingValue.title"),
+            body: this.i18n.tr("notifications.missingValue.body")
+          }
+        });
+      } else {
+        notifications.push({
+          priority: {
+            name: "high",
+            value: 2
+          },
+          message: {
+            title: "Ein Fehler ist aufgetreten",
+            body: element.validationMessage
+          }
+        });
+      }
     }
     return notifications;
   }
 
   async getRuleBasedNotifications(validationRules, schema, data) {
-    let notifications = [];
     const results = await validationRules.map(async validationRule => {
       if (validationRule.type === "ToolEndpoint") {
         return await this.getToolEndpointNotification(validationRule, schema);

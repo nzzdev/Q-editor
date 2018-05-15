@@ -75,13 +75,16 @@
     "searchLabel": "Search for a Q element"
   },
   "notifications": {
-    "previewError": "The graphic can not be displayed",
     "failedLoadingEditorConfig": "Failed to load editor configuration",
     "graphicNeedsATitle": "Graphic needs a title",
     "failedLoadingItems": "Failed loading graphics",
     "failedToLoadItem": "Failed to load the graphic.",
     "toolNotAvailable": "This tool is not available",
-    "maxNumberOfFilesExceed": "You are not allowed to upload more files"
+    "maxNumberOfFilesExceed": "You are not allowed to upload more files",
+    "missingValue": {
+      "title": "Please fill out this field",
+      "body": "This field must be filled out."
+    }
   },
   "dropzone": {
     "dictDefaultMessage": "Drop files here to upload",
@@ -101,6 +104,19 @@
     "medium": "Content",
     "large": "Full",
     "title": "Preview",
-    "sizeLabel": "Preview for..."
+    "sizeLabel": "Preview for...",
+    "error": "The graphic can not be displayed",
+    "hint": {
+      "title": "Please check the graphic on all sizes",
+      "body": "The graphic should be well readable on all sizes."
+    },
+    "generalError": {
+      "title": "Please fill out all required fields",
+      "body": "In order to show the preview all required fields need to be filled out."
+    },
+    "technicalError": {
+      "title": "Technical error occurred",
+      "body": "Please try to save the graphic and reload Q."
+    }
   }
 }
