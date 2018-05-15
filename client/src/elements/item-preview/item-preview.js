@@ -1,27 +1,30 @@
-import { bindable, inject, LogManager } from "aurelia-framework";
+import { bindable, observable, inject, LogManager } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import qEnv from "resources/qEnv.js";
 import QTargets from "resources/QTargets.js";
 import QConfig from "resources/QConfig.js";
 import User from "resources/User.js";
+import { Validation } from "resources/Validation.js";
 
 const log = LogManager.getLogger("Q");
 
-@inject(QTargets, QConfig, User, I18N)
+@inject(QTargets, QConfig, User, I18N, Validation)
 export class ItemPreview {
   @bindable data;
   @bindable id;
   @bindable target;
+  @observable error = false;
 
   sizeOptions = [];
-  error = false;
   errorMessage = "";
+  notification = {};
 
-  constructor(qTargets, qConfig, user, i18n) {
+  constructor(qTargets, qConfig, user, i18n, validation) {
     this.qTargets = qTargets;
     this.qConfig = qConfig;
     this.user = user;
     this.i18n = i18n;
+    this.validation = validation;
 
     // we use this proxy to catch any changes to the target and then load the preview after we have it
     this.targetProxy = new Proxy(
@@ -62,6 +65,11 @@ export class ItemPreview {
         text: this.i18n.tr("preview.large")
       }
     ];
+
+    this.notification = this.validation.validatePreview(
+      this.error,
+      this.errorMessage
+    );
 
     this.init();
   }
@@ -118,6 +126,13 @@ export class ItemPreview {
 
   idChanged() {
     this.loadPreview();
+  }
+
+  errorChanged() {
+    this.notification = this.validation.validatePreview(
+      this.error,
+      this.errorMessage
+    );
   }
 
   attached() {
@@ -216,12 +231,14 @@ export class ItemPreview {
     this.fetchRenderingInfo()
       .then(renderingInfo => {
         this.renderingInfo = renderingInfo;
+        this.error = false;
+        this.errorMessage = "";
       })
       .catch(response => {
-        this.error = true;
-        if (response.status !== 400) {
+        if (![400, 500].includes(response.status)) {
           this.errorMessage = response.statusText;
         }
+        this.error = true;
         this.renderingInfo = {};
       });
   }

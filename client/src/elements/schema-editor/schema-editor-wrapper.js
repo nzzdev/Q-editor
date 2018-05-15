@@ -18,8 +18,7 @@ export class SchemaEditorWrapper {
     this.getType = getType;
   }
 
-  async validate(element, type) {
-    console.log("Event type: " + type);
+  async validate(element) {
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
