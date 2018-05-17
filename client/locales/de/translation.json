@@ -83,6 +83,22 @@
     "missingValue": {
       "title": "Pflichtfeld ist leer",
       "body": "Dieses Feld muss zwingend ausgefüllt sein."
+    },
+    "table": {
+      "emptyData": {
+        "title": "Daten einfügen",
+        "body": "Wichtig: Die erste Zeile ist für Überschriften reserviert."
+      },
+      "emptyDataEntries": {
+        "title": "Einige Spalten oder Zeilen enthalten nicht sichtbare Zeichen",
+        "body": "Selektiere die leeren Spalten oder Zeilen und lösche den Inhalt."
+      }
+    },
+    "sources": {
+      "noSources": {
+        "title": "Keine Quelle erfasst",
+        "body": "Bist du sicher, dass es keine Quellenangabe benötigt?"
+      }
     }
   },
   "dropzone": {

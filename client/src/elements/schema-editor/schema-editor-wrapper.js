@@ -18,15 +18,23 @@ export class SchemaEditorWrapper {
     this.getType = getType;
   }
 
-  async validate(element) {
+  async attached() {
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
     this.notification = await this.validation.validate(
-      element,
       this.options.validationRules,
       this.schema,
       this.data
+    );
+  }
+
+  async validate(element) {
+    this.notification = await this.validation.validate(
+      this.options.validationRules,
+      this.schema,
+      this.data,
+      element
     );
   }
 }

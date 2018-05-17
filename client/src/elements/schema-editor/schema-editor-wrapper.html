@@ -73,7 +73,8 @@
 
   <div if.bind="getType(schema) === 'table'" class="schema-editor-block">
     <require from="./schema-editor-table"></require>
-    <schema-editor-table schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-table>
+    <schema-editor-table schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="validate($event.target)"
+      focusin.delegate="validate($event.target)"></schema-editor-table>
   </div>
 
   <div if.bind="getType(schema) === 'files'" class="schema-editor-block">
