@@ -9,7 +9,12 @@ export class ValidationRules {
 
   checkForEmptyData(validationData) {
     let notification = {};
-    if (validationData.length === 1 && validationData[0].length === 0) {
+    debugger;
+    if (
+      validationData.length === 1 &&
+      (JSON.stringify(validationData) === "[[[null]]]" ||
+        validationData[0].length === 0)
+    ) {
       notification = {
         priority: {
           name: "low",
@@ -21,21 +26,6 @@ export class ValidationRules {
         }
       };
     }
-    return notification;
-  }
-
-  checkForEmptyDataEntries(validationData) {
-    let notification = {};
-    // notification = {
-    //   priority: {
-    //     name: "low",
-    //     value: 0
-    //   },
-    //   message: {
-    //     title: this.i18n.tr("notifications.table.emptyDataEntries.title"),
-    //     body: this.i18n.tr("notifications.table.emptyDataEntries.body")
-    //   }
-    // };
     return notification;
   }
 

@@ -101,14 +101,11 @@ export class Validation {
           currentItem
         );
       } else if (validationRule.type === "Local") {
-        if (validationRule.method === "checkForEmptyDataEntries") {
-          return this.validationRules.checkForEmptyDataEntries(validationData);
-        } else if (validationRule.method === "checkForEmptyData") {
+        if (validationRule.method === "checkForEmptyData") {
           return this.validationRules.checkForEmptyData(validationData);
+        } else {
+          return {};
         }
-        // else if (validationRule.method === "checkForSources") {
-        //   return this.validationRules.checkForSources(validationData);
-        // }
       }
     });
     return await Promise.all(results).then(notifications => {
