@@ -84,6 +84,22 @@
     "missingValue": {
       "title": "Please fill out this field",
       "body": "This field must be filled out."
+    },
+    "table": {
+      "emptyData": {
+        "title": "Fill in your data",
+        "body": "Important: Die first row is reserved for headings."
+      },
+      "emptyDataEntries": {
+        "title": "Some of the columns or rows contain invisible signs",
+        "body": "Select the empty columns or rows and delete their content."
+      }
+    },
+    "sources": {
+      "noSources": {
+        "title": "No source added",
+        "body": "Are you sure, that there is no source required?"
+      }
     }
   },
   "dropzone": {

@@ -3,20 +3,24 @@ import { I18N } from "aurelia-i18n";
 import { HttpClient } from "aurelia-fetch-client";
 import qEnv from "resources/qEnv.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
+import { ValidationRules } from "resources/ValidationRules.js";
 
-@inject(HttpClient, CurrentItemProvider, I18N)
+@inject(HttpClient, CurrentItemProvider, I18N, ValidationRules)
 export class Validation {
-  constructor(httpClient, currentItemProvider, i18n) {
+  constructor(httpClient, currentItemProvider, i18n, validationRules) {
     this.httpClient = httpClient;
     this.currentItemProvider = currentItemProvider;
     this.i18n = i18n;
+    this.validationRules = validationRules;
   }
 
-  async validate(element, validationRules, schema, data) {
+  async validate(validationRules, schema, data, element) {
     let notifications = [];
-    notifications = notifications.concat(
-      this.getFormValidationNotifications(element, schema)
-    );
+    if (element) {
+      notifications = notifications.concat(
+        this.getFormValidationNotifications(element, schema)
+      );
+    }
 
     if (validationRules) {
       notifications = await notifications.concat(
@@ -55,7 +59,7 @@ export class Validation {
 
   getFormValidationNotifications(element, schema) {
     const notifications = [];
-    if (!element.checkValidity()) {
+    if (!element.validity.valid) {
       if (element.validity.valueMissing) {
         notifications.push({
           priority: {
@@ -85,10 +89,26 @@ export class Validation {
 
   async getRuleBasedNotifications(validationRules, schema, data) {
     const results = await validationRules.map(async validationRule => {
+      const currentItem = this.currentItemProvider.getCurrentItem().conf;
+      const validationData = validationRule.data.map(
+        dataEntry => currentItem[dataEntry]
+      );
       if (validationRule.type === "ToolEndpoint") {
-        return await this.getToolEndpointNotification(validationRule, schema);
-      } else if (validationRule.type === "Schema") {
-        return {};
+        return await this.getToolEndpointNotification(
+          validationRule,
+          validationData,
+          schema,
+          currentItem
+        );
+      } else if (validationRule.type === "Local") {
+        if (validationRule.method === "checkForEmptyDataEntries") {
+          return this.validationRules.checkForEmptyDataEntries(validationData);
+        } else if (validationRule.method === "checkForEmptyData") {
+          return this.validationRules.checkForEmptyData(validationData);
+        }
+        // else if (validationRule.method === "checkForSources") {
+        //   return this.validationRules.checkForSources(validationData);
+        // }
       }
     });
     return await Promise.all(results).then(notifications => {
@@ -96,12 +116,13 @@ export class Validation {
     });
   }
 
-  async getToolEndpointNotification(validationRule, schema) {
+  async getToolEndpointNotification(
+    validationRule,
+    validationData,
+    schema,
+    currentItem
+  ) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const currentItem = this.currentItemProvider.getCurrentItem().conf;
-    const validationData = validationRule.data.map(
-      dataEntry => currentItem[dataEntry]
-    );
     const response = await this.httpClient.fetch(
       `${QServerBaseUrl}/validate/${currentItem.tool}`,
       {
@@ -132,8 +153,7 @@ export class Validation {
     });
     if (notifications.length > 0) {
       return notifications.pop();
-    } else {
-      return {};
     }
+    return {};
   }
 }
