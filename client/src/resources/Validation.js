@@ -102,6 +102,8 @@ export class Validation {
       } else if (validationRule.type === "Local") {
         if (validationRule.method === "checkForEmptyData") {
           return this.validationRules.checkForEmptyData(validationData);
+        } else if (validationRule.method === "checkForSources") {
+          return this.validationRules.checkForSources(validationData);
         }
       }
     });

@@ -30,7 +30,7 @@ export class ValidationRules {
 
   checkForSources(validationData) {
     let notification = {};
-    if (validationData.length === 1) {
+    if (!validationData[0][0]) {
       notification = {
         priority: {
           name: "low",

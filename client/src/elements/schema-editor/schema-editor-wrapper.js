@@ -29,12 +29,13 @@ export class SchemaEditorWrapper {
     );
   }
 
-  async validate(element) {
+  async validate(event) {
+    event.stopPropagation();
     this.notification = await this.validation.validate(
       this.options.validationRules,
       this.schema,
       this.data,
-      element
+      event.target
     );
   }
 }
