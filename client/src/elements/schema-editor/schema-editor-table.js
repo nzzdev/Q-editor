@@ -50,6 +50,7 @@ export class SchemaEditorTable {
   @bindable schema;
   @bindable data;
   @bindable change;
+  @bindable required;
 
   options = {
     allowTranspose: true
