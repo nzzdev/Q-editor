@@ -7,8 +7,8 @@
   <div if.bind="getType(schema) === 'string'" class="schema-editor-block">
     <require from="./schema-editor-wrapper.css"></require>
     <require from="./schema-editor-string"></require>
-    <schema-editor-string schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="validate($event.target)"
-      invalid.capture="validate($event.target)"></schema-editor-string>
+    <schema-editor-string schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="validate($event)"
+      invalid.capture="validate($event)"></schema-editor-string>
   </div>
 
   <div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
@@ -48,7 +48,7 @@
 
   <div if.bind="getType(schema) === 'array'" class="schema-editor-block">
     <require from="./schema-editor-array"></require>
-    <schema-editor-array schema.bind="schema" data.two-way="data" change.bind="change"></schema-editor-array>
+    <schema-editor-array schema.bind="schema" data.two-way="data" change.bind="change" input.capture="validate($event)"></schema-editor-array>
   </div>
 
   <div if.bind="getType(schema) === 'select'" class="schema-editor-block">
@@ -73,8 +73,8 @@
 
   <div if.bind="getType(schema) === 'table'" class="schema-editor-block">
     <require from="./schema-editor-table"></require>
-    <schema-editor-table schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="validate($event.target)"
-      invalid.capture="validate($event.target)"></schema-editor-table>
+    <schema-editor-table schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="validate($event)"
+      invalid.capture="validate($event)"></schema-editor-table>
   </div>
 
   <div if.bind="getType(schema) === 'files'" class="schema-editor-block">
