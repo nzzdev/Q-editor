@@ -9,7 +9,6 @@ export class ValidationRules {
 
   checkForEmptyData(validationData) {
     let notification = {};
-    debugger;
     if (
       validationData.length === 1 &&
       (JSON.stringify(validationData) === "[[[null]]]" ||

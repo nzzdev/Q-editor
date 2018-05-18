@@ -31,7 +31,7 @@ export class Validation {
   }
 
   validatePreview(error, errorMessage) {
-    const notification = {
+    let notification = {
       priority: {
         name: "high",
         value: 2
@@ -46,8 +46,7 @@ export class Validation {
       notification.message.body =
         this.i18n.tr("preview.technicalError.body") + `(${errorMessage})`;
     } else if (error) {
-      notification.message.title = this.i18n.tr("preview.generalError.title");
-      notification.message.body = this.i18n.tr("preview.generalError.body");
+      notification = {};
     } else {
       notification.priority.name = "low";
       notification.priority.value = 0;
