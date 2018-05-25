@@ -37,6 +37,10 @@ schema-editor-table .wtHolder td:last-child {
   border-right-style: dotted;
 }
 
+schema-editor-table .wtHolder tr:first-child td {
+  font-weight: bold;
+}
+
 schema-editor-table .wtHolder tr:last-child td {
   border-bottom-style: dotted;
 }
