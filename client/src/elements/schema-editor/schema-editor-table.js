@@ -85,7 +85,7 @@ export class SchemaEditorTable {
     this.hot = new Handsontable(this.tableContainerElement, {
       dataSchema: [],
       height: this.getGridHeight(),
-      minRows: 5,
+      minRows: 10,
       minCols: 5,
       minSpareRows: 1,
       minSpareCols: 1,
