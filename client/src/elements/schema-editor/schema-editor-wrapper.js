@@ -24,8 +24,7 @@ export class SchemaEditorWrapper {
     }
     this.notification = await this.validation.validate(
       this.options.validationRules,
-      this.schema,
-      this.data
+      this.schema
     );
   }
 
@@ -34,7 +33,6 @@ export class SchemaEditorWrapper {
     this.notification = await this.validation.validate(
       this.options.validationRules,
       this.schema,
-      this.data,
       event.target
     );
   }

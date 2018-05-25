@@ -66,11 +66,6 @@ export class ItemPreview {
       }
     ];
 
-    this.notification = this.validation.validatePreview(
-      this.error,
-      this.errorMessage
-    );
-
     this.init();
   }
 
@@ -114,6 +109,10 @@ export class ItemPreview {
           }
         }
       }
+      this.notification = await this.validation.validatePreview(
+        this.error,
+        this.errorMessage
+      );
       this.initialised = true;
     } catch (e) {
       log.error(e);
@@ -128,8 +127,8 @@ export class ItemPreview {
     this.loadPreview();
   }
 
-  errorChanged() {
-    this.notification = this.validation.validatePreview(
+  async errorChanged() {
+    this.notification = await this.validation.validatePreview(
       this.error,
       this.errorMessage
     );
