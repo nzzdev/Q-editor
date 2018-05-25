@@ -91,15 +91,13 @@
         "title": "Fill in your data",
         "body": "Important: Die first row is reserved for headings."
       },
-      "emptyDataEntries": {
-        "title": "Some of the columns or rows contain invisible signs",
-        "body": "Select the empty columns or rows and delete their content."
-      }
-    },
-    "sources": {
-      "noSources": {
-        "title": "No source added",
-        "body": "Are you sure, that there is no source required?"
+      "emptyFirstRow": {
+        "title": "No column header defined",
+        "body": "Please add a header for each column in the first row."
+      },
+      "tooManyColumns": {
+        "title": "Data contains many catergories",
+        "body": "Click on the «Switch rows and columns» button. Your graphic will probably look better."
       }
     }
   },
