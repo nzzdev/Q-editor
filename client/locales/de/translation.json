@@ -90,15 +90,13 @@
         "title": "Daten einfügen",
         "body": "Wichtig: Die erste Zeile ist für Überschriften reserviert."
       },
-      "emptyDataEntries": {
-        "title": "Einige Spalten oder Zeilen enthalten nicht sichtbare Zeichen",
-        "body": "Selektiere die leeren Spalten oder Zeilen und lösche den Inhalt."
-      }
-    },
-    "sources": {
-      "noSources": {
-        "title": "Keine Quelle erfasst",
-        "body": "Bist du sicher, dass es keine Quellenangabe benötigt?"
+      "emptyFirstRow": {
+        "title": "Keine Spaltenüberschrift definiert",
+        "body": "Füge in der ersten Zeile für jede Spalte eine Überschrift hinzu."
+      },
+      "tooManyColumns": {
+        "title": "Daten enthalten sehr viele Kategorien",
+        "body": "Klicke mal auf «Zeilen und Spalten tauschen». Vermutlich ist die Grafik danach klarer."
       }
     }
   },

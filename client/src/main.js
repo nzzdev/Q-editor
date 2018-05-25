@@ -22,7 +22,8 @@ import { registerEastereggs } from "eastereggs.js";
 import { Validation } from "resources/Validation.js";
 import ValidationRules from "resources/validation-rules/index.js";
 import EmptyDataValidationRule from "resources/validation-rules/EmptyDataValidationRule.js";
-import EmptySourcesValidationRule from "resources/validation-rules/EmptySourcesValidationRule.js";
+import EmptyFirstRowValidationRule from "resources/validation-rules/EmptyFirstRowValidationRule.js";
+import TooManyColumnsValidationRule from "resources/validation-rules/TooManyColumnsValidationRule.js";
 import ToolEndpointValidationRule from "resources/validation-rules/ToolEndpointValidationRule.js";
 import FormValidationRule from "resources/validation-rules/FormValidationRule.js";
 import Backend from "i18next-fetch-backend";
@@ -44,7 +45,8 @@ export async function configure(aurelia) {
   aurelia.use.singleton(Validation);
   aurelia.use.singleton(ValidationRules);
   aurelia.use.singleton(EmptyDataValidationRule);
-  aurelia.use.singleton(EmptySourcesValidationRule);
+  aurelia.use.singleton(EmptyFirstRowValidationRule);
+  aurelia.use.singleton(TooManyColumnsValidationRule);
   aurelia.use.singleton(ToolEndpointValidationRule);
   aurelia.use.singleton(FormValidationRule);
 
