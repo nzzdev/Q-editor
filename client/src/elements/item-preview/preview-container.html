@@ -20,7 +20,7 @@
       padding: var(--q-space-base);
     }
 
-    .preview-element--error-box {
+    .preview-element__error-box {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -31,7 +31,7 @@
       text-align: center;
     }
 
-    .preview-element--error-text {
+    .preview-element__error-text {
       font-weight: normal;
     }
 
@@ -48,8 +48,8 @@
     <div class="preview-element-container__background">
       <div class="preview-element" css="width: ${width}px; background-color: ${previewColor};">
         <div ref="previewElement"></div>
-        <div class="preview-element--error-box" show.bind="error">
-          <h4 class="preview-element--error-text">${'notifications.previewError' & t}</h4>
+        <div class="preview-element__error-box" show.bind="error">
+          <h4 class="preview-element__error-text">${'notifications.previewError' & t}</h4>
         </div>
       </div>
     </div>
