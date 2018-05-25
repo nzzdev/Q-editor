@@ -93,7 +93,7 @@ export class SchemaEditorTable {
       colHeaders: true,
       manualColumnResize: true,
       contextMenu: false,
-      colWidths: 84,
+      stretchH: "all",
       rowHeights: 23,
       afterChange: (changes, source) => {
         if (source !== "loadData") {
