@@ -1,5 +1,4 @@
 import { bindable, inject, Loader } from "aurelia-framework";
-import { I18N } from "aurelia-i18n";
 import { checkAvailability } from "resources/schemaEditorDecorators.js";
 import array2d from "array2d";
 
@@ -46,20 +45,19 @@ function emptyToNull(data) {
 }
 
 @checkAvailability()
-@inject(Loader, I18N)
+@inject(Loader)
 export class SchemaEditorTable {
   @bindable schema;
   @bindable data;
   @bindable change;
 
-  minRowsDataTable = 8;
   options = {
-    allowTranspose: true
+    allowTranspose: true,
+    minRowsDataTable: 8
   };
 
-  constructor(loader, i18n) {
+  constructor(loader) {
     this.loader = loader;
-    this.i18n = i18n;
   }
 
   dataChanged() {
@@ -88,7 +86,7 @@ export class SchemaEditorTable {
     this.hot = new Handsontable(this.tableContainerElement, {
       dataSchema: [],
       height: this.getGridHeight(),
-      minRows: this.minRowsDataTable,
+      minRows: this.options.minRowsDataTable,
       minCols: 5,
       minSpareRows: 1,
       minSpareCols: 1,
@@ -119,7 +117,10 @@ export class SchemaEditorTable {
 
   getGridHeight() {
     return (
-      Math.min(280, Math.max(this.minRowsDataTable, this.data.length) * 23) + 30
+      Math.min(
+        280,
+        Math.max(this.options.minRowsDataTable, this.data.length) * 23
+      ) + 30
     );
   }
 
