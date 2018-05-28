@@ -1,3 +1,8 @@
+# 2.3.0 (29.05.2018)
+- feat: schema-editor-table minRows is now configurable via Q:options in schema.json
+- fix: schema-editor takes the whole width and expands rows to do so
+- fix: schema-editor-table cells do not wrap the content
+
 # 2.2.0 (04.05.2018)
 - feat: fixed navigation bar on top
 - feat: item list entries are now links and can be opened in a new tab
