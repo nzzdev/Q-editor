@@ -23,6 +23,14 @@
     {
       "name": "Sharon Funke",
       "email": "sharon.funke@nzz.ch"
+    },
+    {
+      "name": "Manuel Roth",
+      "email": "manuel.roth@nzz.ch"
+    },
+    {
+      "name": "Philip Küng",
+      "email": "philip.kueng@nzz.ch"
     }
   ],
   "license": "MIT",
