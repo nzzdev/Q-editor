@@ -52,7 +52,8 @@ export class SchemaEditorTable {
   @bindable change;
 
   options = {
-    allowTranspose: true
+    allowTranspose: true,
+    minRowsDataTable: 8
   };
 
   constructor(loader) {
@@ -85,15 +86,16 @@ export class SchemaEditorTable {
     this.hot = new Handsontable(this.tableContainerElement, {
       dataSchema: [],
       height: this.getGridHeight(),
-      minRows: 5,
+      minRows: this.options.minRowsDataTable,
       minCols: 5,
       minSpareRows: 1,
       minSpareCols: 1,
       rowHeaders: true,
       colHeaders: true,
       manualColumnResize: true,
+      wordWrap: false,
       contextMenu: false,
-      colWidths: 84,
+      stretchH: "all",
       rowHeights: 23,
       afterChange: (changes, source) => {
         if (source !== "loadData") {
@@ -114,7 +116,12 @@ export class SchemaEditorTable {
   }
 
   getGridHeight() {
-    return Math.min(280, Math.max(5, this.data.length) * 23) + 30;
+    return (
+      Math.min(
+        280,
+        Math.max(this.options.minRowsDataTable, this.data.length) * 23
+      ) + 30
+    );
   }
 
   replaceCommaWithPointIfDecimal() {
