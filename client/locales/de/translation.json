@@ -43,7 +43,8 @@
     "failedToSave": "Speichern ist fehlgeschlagen",
     "conflictOnSave": "Speichern ist fehlgeschlagen weil ein Konflikt besteht",
     "failedToLoadEditorPart": "Der Editor für dieses Element konnte nicht geladen werden",
-    "noAutosaveBecauseActive": "Automatisches speichern ist deaktiviert da die Grafik bereits aktiv ist"
+    "noAutosaveBecauseActive": "Automatisches speichern ist deaktiviert da die Grafik bereits aktiv ist",
+    "transpose": "Zeilen und Spalten tauschen"
   },
   "metaEditor": {
     "annotations": "Notizen",

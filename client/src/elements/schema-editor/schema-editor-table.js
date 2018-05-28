@@ -1,4 +1,5 @@
 import { bindable, inject, Loader } from "aurelia-framework";
+import { I18N } from "aurelia-i18n";
 import { checkAvailability } from "resources/schemaEditorDecorators.js";
 import array2d from "array2d";
 
@@ -45,7 +46,7 @@ function emptyToNull(data) {
 }
 
 @checkAvailability()
-@inject(Loader)
+@inject(Loader, I18N)
 export class SchemaEditorTable {
   @bindable schema;
   @bindable data;
@@ -55,8 +56,9 @@ export class SchemaEditorTable {
     allowTranspose: true
   };
 
-  constructor(loader) {
+  constructor(loader, i18n) {
     this.loader = loader;
+    this.i18n = i18n;
   }
 
   dataChanged() {
