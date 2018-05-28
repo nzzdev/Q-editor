@@ -92,6 +92,7 @@ export class SchemaEditorTable {
       rowHeaders: true,
       colHeaders: true,
       manualColumnResize: true,
+      wordWrap: false,
       contextMenu: false,
       stretchH: "all",
       rowHeights: 23,
