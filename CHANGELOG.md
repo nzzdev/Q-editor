@@ -2,6 +2,7 @@
 - feat: schema-editor-table minRows is now configurable via Q:options in schema.json
 - fix: schema-editor takes the whole width and expands rows to do so
 - fix: schema-editor-table cells do not wrap the content
+- fix/feat: schema-editor-object sets data to empty object if undefined. this allows to add new objects to the schema without running a migration on existing item
 
 # 2.2.0 (04.05.2018)
 - feat: fixed navigation bar on top
