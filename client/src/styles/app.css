@@ -1,12 +1,3 @@
 .icon {
   display: block;
 }
-
-*::-webkit-scrollbar {
-  background: transparent;
-  width: 2px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: var(--q-color-gray-5);
-}
