@@ -3,7 +3,7 @@
 }
 
 .q-form ::placeholder {
-  color: var(--q-text-ultralight-color)
+  color: var(--q-text-ultralight-color);
 }
 
 .q-form label {
@@ -13,7 +13,7 @@
 }
 
 .q-form input,
-.q-form textarea,
+.q-form textarea:not(.handsontableInput),
 .q-form select {
   font-family: Roboto, sans-serif;
   font-size: 14px;
@@ -33,7 +33,7 @@
 }
 
 .q-form input:focus,
-.q-form textarea:focus,
+.q-form textarea:focus:not(.handsontableInput),
 .q-form select:focus {
   border-color: var(--q-color-gray-4);
   outline: none;
@@ -42,7 +42,7 @@
 
 .q-form .disabled,
 .q-form input:disabled,
-.q-form textarea:disabled,
+.q-form textarea:disabled:not(.handsontableInput),
 .q-form select:disabled {
   opacity: 0.5;
 }
@@ -93,7 +93,7 @@
 }
 
 .q-form__checkbox label > span::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   left: 0;
@@ -166,7 +166,7 @@
 }
 
 .q-form input[type="radio"] + label::before {
-  content: '';
+  content: "";
   width: 1.4em;
   height: 1.4em;
   margin-right: 5px;
@@ -188,6 +188,7 @@
   border-color: var(--q-color-primary-5);
 }
 
-.q-form input[type="radio"]:active + label::before, .q-form input[type="radio"]:focus + label::before {
+.q-form input[type="radio"]:active + label::before,
+.q-form input[type="radio"]:focus + label::before {
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
 }
