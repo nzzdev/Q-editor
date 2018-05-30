@@ -67,7 +67,7 @@ export class Validation {
 
   getNotification(notifications) {
     const notification = notifications
-      .filter(notification => notification.message)
+      .filter(entry => entry.message)
       .sort((a, b) => {
         const priorityValueA = this.getPriorityValue(a.priority);
         const priorityValueB = this.getPriorityValue(b.priority);
