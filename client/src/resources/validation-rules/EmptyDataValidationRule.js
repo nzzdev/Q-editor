@@ -1,30 +1,8 @@
-import { inject } from "aurelia-framework";
-import { I18N } from "aurelia-i18n";
-
-@inject(I18N)
 export default class EmptyDataValidationRule {
-  constructor(i18n) {
-    this.i18n = i18n;
-  }
-
-  validate(validationData) {
-    let notification = {};
-    if (
-      validationData.length === 1 &&
-      (JSON.stringify(validationData) === "[[[null]]]" ||
-        validationData[0].length === 0)
-    ) {
-      notification = {
-        priority: {
-          name: "low",
-          value: 0
-        },
-        message: {
-          title: this.i18n.tr("notifications.table.emptyData.title"),
-          body: this.i18n.tr("notifications.table.emptyData.body")
-        }
-      };
-    }
-    return notification;
+  validate(data) {
+    return {
+      showNotification: data.length === 1 && data[0].length === 0,
+      priority: "medium"
+    };
   }
 }

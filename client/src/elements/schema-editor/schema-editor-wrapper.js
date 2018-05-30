@@ -23,8 +23,7 @@ export class SchemaEditorWrapper {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
     this.notification = await this.validation.validate(
-      this.options.validationRules,
-      this.schema
+      this.options.validationRules
     );
   }
 
@@ -32,7 +31,6 @@ export class SchemaEditorWrapper {
     event.stopPropagation();
     this.notification = await this.validation.validate(
       this.options.validationRules,
-      this.schema,
       event.target
     );
   }
