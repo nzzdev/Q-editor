@@ -81,23 +81,21 @@
     "failedToLoadItem": "Die Grafik konnte nicht geladen werden.",
     "toolNotAvailable": "Dieses Tool steht nicht zur Verfügung",
     "maxNumberOfFilesExceed": "Es können keine weiteren Dateien hochgeladen werden",
-    "missingValue": {
+    "isValueMissing": {
       "title": "Pflichtfeld ist leer",
       "body": "Dieses Feld muss zwingend ausgefüllt sein."
     },
-    "table": {
-      "emptyData": {
-        "title": "Daten einfügen",
-        "body": "Wichtig: Die erste Zeile ist für Überschriften reserviert."
-      },
-      "emptyFirstRow": {
-        "title": "Keine Spaltenüberschrift definiert",
-        "body": "Füge in der ersten Zeile für jede Spalte eine Überschrift hinzu."
-      },
-      "tooManyColumns": {
-        "title": "Daten enthalten sehr viele Kategorien",
-        "body": "Klicke mal auf «Zeilen und Spalten tauschen». Vermutlich ist die Grafik danach klarer."
-      }
+    "emptyData": {
+      "title": "Daten einfügen",
+      "body": "Wichtig: Die erste Zeile ist für Überschriften reserviert."
+    },
+    "emptyFirstRow": {
+      "title": "Keine Spaltenüberschrift definiert",
+      "body": "Füge in der ersten Zeile für jede Spalte eine Überschrift hinzu."
+    },
+    "tooManyColumns": {
+      "title": "Daten enthalten sehr viele Kategorien",
+      "body": "Klicke mal auf «Zeilen und Spalten tauschen». Vermutlich ist die Grafik danach klarer."
     }
   },
   "dropzone": {

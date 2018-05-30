@@ -25,7 +25,7 @@ import EmptyDataValidationRule from "resources/validation-rules/EmptyDataValidat
 import EmptyFirstRowValidationRule from "resources/validation-rules/EmptyFirstRowValidationRule.js";
 import TooManyColumnsValidationRule from "resources/validation-rules/TooManyColumnsValidationRule.js";
 import ToolEndpointValidationRule from "resources/validation-rules/ToolEndpointValidationRule.js";
-import FormValidationRule from "resources/validation-rules/FormValidationRule.js";
+import IsValueMissingValidationRule from "resources/validation-rules/IsValueMissingValidationRule.js";
 import Backend from "i18next-fetch-backend";
 
 export async function configure(aurelia) {
@@ -48,7 +48,7 @@ export async function configure(aurelia) {
   aurelia.use.singleton(EmptyFirstRowValidationRule);
   aurelia.use.singleton(TooManyColumnsValidationRule);
   aurelia.use.singleton(ToolEndpointValidationRule);
-  aurelia.use.singleton(FormValidationRule);
+  aurelia.use.singleton(IsValueMissingValidationRule);
 
   const QServerBaseUrl = await qEnv.QServerBaseUrl;
 

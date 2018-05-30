@@ -13,7 +13,8 @@ schema-editor-table .wtHolder {
   line-height: 18px;
 }
 
-schema-editor-table .rowHeader, schema-editor-table .colHeader {
+schema-editor-table .rowHeader,
+schema-editor-table .colHeader {
   color: var(--q-text-ultralight-color);
 }
 
