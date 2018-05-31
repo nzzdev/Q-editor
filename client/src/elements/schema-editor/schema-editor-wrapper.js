@@ -28,7 +28,6 @@ export class SchemaEditorWrapper {
   }
 
   async validate(event) {
-    event.stopPropagation();
     this.notification = await this.validation.validate(
       this.options.validationRules,
       event.target
