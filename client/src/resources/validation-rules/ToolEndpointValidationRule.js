@@ -11,11 +11,10 @@ export default class ToolEndpointValidationRule {
   async validate(validationRule, data, tool) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
     const response = await this.httpClient.fetch(
-      `${QServerBaseUrl}/validate/${tool}`,
+      `${QServerBaseUrl}/tools/${tool}/${validationRule.endpoint}`,
       {
         method: "POST",
         body: JSON.stringify({
-          endpoint: validationRule.endpoint,
           data: data
         })
       }
