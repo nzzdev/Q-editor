@@ -48,26 +48,19 @@ export class ItemPreview {
       }
     );
 
-    this.sizeOptions = [
-      {
-        value: 290,
-        text: this.i18n.tr("preview.small")
-      },
-      {
-        value: 560,
-        text: this.i18n.tr("preview.medium")
-      },
-      {
-        value: 800,
-        text: this.i18n.tr("preview.large")
-      }
-    ];
-
     this.init();
   }
 
   async init() {
     try {
+      // set the preview size options
+      const previewSizes = await this.qConfig.get("previewSizes");
+      this.sizeOptions = previewSizes.map(previewSize => {
+        return {
+          value: previewSize.value,
+          text: this.i18n.tr(previewSize.translationKey)
+        };
+      });
       // set the default preview width to the most narrow variant
       this.previewWidthProxy.width = this.sizeOptions[0].value;
 
