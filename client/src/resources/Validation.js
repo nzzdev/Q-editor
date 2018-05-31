@@ -17,12 +17,12 @@ export class Validation {
   async validate(validationRules, element) {
     let notifications = [];
     if (validationRules) {
-      const results = await validationRules.map(async validationRule => {
+      const results = await validationRules.map(validationRule => {
         const item = this.currentItemProvider.getCurrentItem().conf;
         const data = validationRule.data.map(property =>
           getDescendantProperty(item, property)
         );
-        return await this.validationRules.validate(
+        return this.validationRules.validate(
           validationRule,
           data,
           item.tool,
