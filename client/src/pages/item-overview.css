@@ -7,6 +7,10 @@
   flex-grow: 1;
 }
 
+.item-overview__content > item-preview {
+  height: 500px;
+}
+
 .item-overview__content > section {
   margin-top: calc(var(--q-space-base) * 2);
 }
