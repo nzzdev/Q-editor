@@ -71,7 +71,18 @@ export class ItemPreview {
       // set the preview size options
       const previewSizes = await this.qConfig.get("previewSizes");
       if (previewSizes) {
-        this.sizeOptions = previewSizes;
+        this.sizeOptions = [];
+        for (let previewSizeName in previewSizes) {
+          const previewSize = previewSizes[previewSizeName];
+          const sizeOption = {
+            value: previewSize.value,
+            translationKey: previewSizeName
+          };
+          if (previewSize.label) {
+            sizeOption.label = previewSize.label;
+          }
+          this.sizeOptions.push(sizeOption);
+        }
       }
 
       // set the default preview width to the most narrow variant

@@ -2,7 +2,10 @@
   <require from="./radio-button-group.css"></require>
   <div class="radio-button-group__option" repeat.for="option of options">
     <input type="radio" id="button-${option.value}" value.bind="option.value" checked.bind="value" matcher.bind="valueMatcher">
-    <label class="q-text" for="button-${option.value}">
+    <label if.bind="option.label" class="q-text" for="button-${option.value}">
+      ${option.label}
+    </label>
+    <label if.bind="!option.label" class="q-text" for="button-${option.value}">
       ${option.translationKey & t}
     </label>
   </div>
