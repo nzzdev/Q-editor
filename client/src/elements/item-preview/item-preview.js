@@ -48,6 +48,21 @@ export class ItemPreview {
       }
     );
 
+    this.sizeOptions = [
+      {
+        value: 290,
+        translationKey: "preview.default__small"
+      },
+      {
+        value: 560,
+        translationKey: "preview.default__medium"
+      },
+      {
+        value: 800,
+        translationKey: "preview.default__large"
+      }
+    ];
+
     this.init();
   }
 
@@ -55,12 +70,10 @@ export class ItemPreview {
     try {
       // set the preview size options
       const previewSizes = await this.qConfig.get("previewSizes");
-      this.sizeOptions = previewSizes.map(previewSize => {
-        return {
-          value: previewSize.value,
-          text: this.i18n.tr(previewSize.translationKey)
-        };
-      });
+      if (previewSizes) {
+        this.sizeOptions = previewSizes;
+      }
+
       // set the default preview width to the most narrow variant
       this.previewWidthProxy.width = this.sizeOptions[0].value;
 

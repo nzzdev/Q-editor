@@ -95,9 +95,9 @@
     "dictMaxFilesExceeded": "Sie können keine weiteren Dateien mehr hochladen"
   },
   "preview": {
-    "small": "Mobile",
-    "medium": "Artikelbreite",
-    "large": "Volle Breite",
+    "default__small": "Klein",
+    "default__medium": "Mittel",
+    "default__large": "Gross",
     "title": "Vorschau",
     "sizeLabel": "Vorschau für..."
   }

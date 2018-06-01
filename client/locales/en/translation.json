@@ -97,9 +97,9 @@
     "dictMaxFilesExceeded": "You cannot upload any more files."
   },
   "preview": {
-    "small": "Mobile",
-    "medium": "Content",
-    "large": "Full",
+    "default__small": "Small",
+    "default__medium": "Medium",
+    "default__large": "Large",
     "title": "Preview",
     "sizeLabel": "Preview for..."
   }

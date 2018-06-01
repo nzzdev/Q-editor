@@ -3,7 +3,7 @@
   <div class="radio-button-group__option" repeat.for="option of options">
     <input type="radio" id="button-${option.value}" value.bind="option.value" checked.bind="value" matcher.bind="valueMatcher">
     <label class="q-text" for="button-${option.value}">
-      ${option.text}
+      ${option.translationKey & t}
     </label>
   </div>
 </template>
