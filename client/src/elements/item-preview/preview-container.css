@@ -1,8 +1,9 @@
 preview-container {
   position: relative;
   display: block;
+  overflow: auto;
   min-height: 350px;
-  height: 100%;
   width: 100%;
-  padding-top: var(--q-space-base);
+  margin-top: var(--q-space-base);
+  margin-bottom: calc(var(--q-space-base) / 2);
 }
