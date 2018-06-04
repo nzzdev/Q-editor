@@ -22,10 +22,6 @@ export class PreviewContainer {
     this.showPreview(this.renderingInfo);
   }
 
-  detached() {
-    this.removePreviewBorderStyles();
-  }
-
   renderingInfoChanged(renderingInfo) {
     this.showPreview(this.renderingInfo);
   }
