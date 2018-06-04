@@ -230,9 +230,11 @@ export class ItemPreview {
     if (!this.id && !this.data) {
       return;
     }
+    this.loadingStatus = 'loading';
     this.fetchRenderingInfo()
       .then(renderingInfo => {
         this.renderingInfo = renderingInfo;
+        this.loadingStatus = 'loaded';
       })
       .catch(response => {
         this.error = true;
@@ -240,6 +242,7 @@ export class ItemPreview {
           this.errorMessage = response.statusText;
         }
         this.renderingInfo = {};
+        this.loadingStatus = 'loaded';
       });
   }
 }
