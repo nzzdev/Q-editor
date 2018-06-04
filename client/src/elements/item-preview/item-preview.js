@@ -51,15 +51,15 @@ export class ItemPreview {
     this.sizeOptions = [
       {
         value: 290,
-        translationKey: "preview.default__small"
+        translationKey: "preview.small"
       },
       {
         value: 560,
-        translationKey: "preview.default__medium"
+        translationKey: "preview.medium"
       },
       {
         value: 800,
-        translationKey: "preview.default__large"
+        translationKey: "preview.large"
       }
     ];
 
