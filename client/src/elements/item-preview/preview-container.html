@@ -41,7 +41,7 @@
   </style>
   <div class="preview-note" if.bind="!renderingInfo && noRenderingInfoText">${noRenderingInfoText}</div>
   <div class="preview-element-container">
-    <div class="preview-element" css="width: ${width}px; background-color: ${previewColor};">
+    <div class="preview-element" css="width: ${width}px; color: ${previewColor}; background-color: ${previewColor}; height: 100%;">
       <div ref="previewElement"></div>
       <div class="preview-element__error-box" show.bind="error">
         <h4 class="preview-element__error-text">${'notifications.previewError' & t}</h4>
