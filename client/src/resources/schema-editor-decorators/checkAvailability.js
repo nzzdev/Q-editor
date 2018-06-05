@@ -9,8 +9,8 @@ async function check(context) {
     context.getSchema()
   );
   if (availabilityInfo.isAvailable) {
-    context.element.style.display = "block";
-    context.element.closest("schema-editor-wrapper").style.display = "block";
+    delete context.element.style.display;
+    delete context.element.closest("schema-editor-wrapper").style.display;
     context.element.classList.remove("disabled");
     const messageElement = getMessageElement(context);
     if (messageElement) {
