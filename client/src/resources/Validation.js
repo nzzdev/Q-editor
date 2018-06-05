@@ -34,7 +34,7 @@ export class Validation {
     return this.getNotification(notifications);
   }
 
-  async validatePreview(error, errorMessage) {
+  async validatePreview(error, errorMessage, validationRules) {
     let notification = {
       priority: "high",
       message: {
@@ -48,6 +48,8 @@ export class Validation {
         this.i18n.tr("preview.technicalError.body") + `(${errorMessage})`;
     } else if (error) {
       notification = {};
+    } else if (validationRules) {
+      notification = await this.validate(validationRules);
     } else {
       notification.priority = "low";
       notification.message.title = this.i18n.tr("preview.hint.title");
