@@ -3,21 +3,22 @@ button-secondary {
 }
 
 button-secondary icon-button button {
+  background-color: var(--q-color-white);
+  border-color: var(--q-color-gray-4);
   color: var(--q-color-gray-6);
+}
+
+button-secondary icon-button button[disabled] {
+  color: var(--q-color-gray-5);
+}
+
+button-secondary icon-button button:hover {
   background-color: var(--q-color-gray-3);
   border-color: var(--q-color-gray-5);
 }
 
 button-secondary icon-button button:focus {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);
-}
-
-button-secondary icon-button button:hover {
-  color: var(--q-color-black);
-  background-color: var(--q-color-gray-4);
-}
-
-button-secondary icon-button button[disabled] {
-  color: var(--q-color-gray-5);
-  border-color: var(--q-color-gray-4);
+  background-color: var(--q-color-gray-3);
+  border-color: var(--q-color-gray-5);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }

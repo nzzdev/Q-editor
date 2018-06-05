@@ -3,20 +3,20 @@ button-primary {
 }
 
 button-primary button {
-  color: var(--q-color-gray-6);
   background-color: var(--q-color-primary-2);
-}
-
-button-primary button:focus {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);
-}
-
-button-primary button:hover {
-  color: var(--q-color-black);
-  background-color: var(--q-color-primary-3);
+  color: var(--q-color-white);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 button-primary button[disabled] {
-  color: var(--q-color-primary-3);
-  border-color: var(--q-color-primary-2);
+  background-color: var(--q-color-primary-1);
+}
+
+button-primary button:hover {
+  background-color: var(--q-color-primary-3);
+}
+
+button-primary button:focus {
+  background-color: var(--q-color-primary-3);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 }
