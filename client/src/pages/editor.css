@@ -12,27 +12,26 @@
   padding-bottom: var(--q-space-base);
   border-bottom: 1px solid var(--q-color-gray-4);
   margin-bottom: calc(var(--q-space-base) * 2);
-  max-width: 630px;
+  width: 85vw;
 }
 
-.editor__options {
-  background-color: var(--q-color-gray-2);
-  box-shadow: -1px 0 2px 0 rgba(0, 0, 0, 0.25);
-  padding: calc(var(--q-space-base) * 2) var(--q-space-base);
+.editor__preview {
+  display: flex;
+  flex-direction: row;
+}
 
-  width: 280px;
+.editor__preview item-preview {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor__preview .editor__options {
+  width: 250px;
   flex-grow: 0;
-
-  height: 100%;
+  flex-shrink: 0;
+  margin-right: var(--q-space-base);
   overflow-y: scroll;
-}
-
-.editor tool-status-bar {
-  width: 52px;
-  flex-grow: 0;
-}
-
-.editor__options {
   --q-h1-size: 13px;
   --q-h2-size: 13px;
   --q-h3-size: 13px;
@@ -67,12 +66,6 @@
 
 .editor__options schema-editor-wrapper {
   margin-bottom: 0;
-}
-
-.editor__options schema-editor-wrapper schema-editor-wrapper {
-  /*border-bottom: 1px solid var(--q-color-gray-4);
-  margin-bottom: 20px;*/
-  /*margin-bottom: var(--q-space-base);*/
 }
 
 .editor__options schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper {

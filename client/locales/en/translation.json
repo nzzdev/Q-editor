@@ -24,9 +24,6 @@
     "failedToSaveChanges": "Failed to save changes.",
     "loginFailed": "Your username or password is not correct.",
     "serverConnectionFailed": "Failed to connect to server.",
-    "preview": "Preview",
-    "previewTargetLabel": "Publication",
-    "previewSizeLabel": "Size",
     "articlesWithThisGraphic": "Articles with this graphic"
   },
   "statistics": {
@@ -78,7 +75,7 @@
     "searchLabel": "Search for a Q element"
   },
   "notifications": {
-    "previewBadRequest": "There is data missing to show the preview",
+    "previewError": "The graphic can not be displayed",
     "failedLoadingEditorConfig": "Failed to load editor configuration",
     "graphicNeedsATitle": "Graphic needs a title",
     "failedLoadingItems": "Failed loading graphics",
@@ -98,5 +95,12 @@
     "dictCancelUploadConfirmation": "Are you sure you want to cancel this upload?",
     "dictRemoveFile": "Remove file",
     "dictMaxFilesExceeded": "You cannot upload any more files."
+  },
+  "preview": {
+    "small": "Small",
+    "medium": "Medium",
+    "large": "Large",
+    "title": "Preview",
+    "sizeLabel": "Preview for..."
   }
 }

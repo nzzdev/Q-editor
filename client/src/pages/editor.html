@@ -21,20 +21,22 @@
         </form>
       </section>
       <section>
-        <h2 t="general.preview"></h2>
-        <item-preview data.bind="previewData"></item-preview>
+        <h2 t="preview.title"></h2>
+        <div class="editor__preview">
+          <div class="editor__options" if.bind="optionsSchema">
+            <form ref="optionsForm" class="q-form" validate>
+              <schema-editor schema.bind="optionsSchema" data.bind="item.conf.options" change.call="handleChange()">
+                <h6>${optionsSchema.title || 'Optionen'}</h6>
+              </schema-editor>
+              <button ref="optionsFormSubmitButton" type="submit" style="display: none;"></button>
+            </form>
+          </div>
+          <item-preview data.bind="previewData"></item-preview>
+        </div>
       </section>
       <section>
         <meta-editor data.bind="item.conf" change.call="handleChange()"></meta-editor>
       </section>
     </main>
-    <div class="editor__options" if.bind="optionsSchema">
-      <form ref="optionsForm" class="q-form" validate>
-        <schema-editor schema.bind="optionsSchema" data.bind="item.conf.options" change.call="handleChange()">
-          <h6>${optionsSchema.title || 'Optionen'}</h6>
-        </schema-editor>
-        <button ref="optionsFormSubmitButton" type="submit" style="display: none;"></button>
-      </form>
-    </div>
   </section>
 </template>
