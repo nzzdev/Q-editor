@@ -1,10 +1,8 @@
 :root {
   /* colors */
-  --q-color-primary-5: #0084c7;
-  --q-color-primary-4: #339dd2;
-  --q-color-primary-3: #66b5df;
-  --q-color-primary-2: #99cee9;
-  --q-color-primary-1: #cce6f4;
+  --q-color-primary-3: #272ca9;
+  --q-color-primary-2: #2c32bd;
+  --q-color-primary-1: #9598dd;
 
   --q-color-yes-5: #66a622;
   --q-color-yes-4: #85b84e;
@@ -59,7 +57,7 @@
   --q-text-light-color: var(--q-color-gray-6);
   --q-text-ultralight-color: var(--q-color-gray-5);
 
-  --q-link-color: var(--q-color-primary-5);
+  --q-link-color: var(--q-color-primary-2);
 
   /* layout */
   --q-space-base: 16px;
