@@ -6,7 +6,6 @@ schema-editor-array {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  border-top: 1px solid var(--q-color-gray-4);
   padding-top: var(--q-space-base);
   margin-top: var(--q-space-base);
   position: relative;
@@ -18,7 +17,6 @@ schema-editor-array {
 
 .schema-editor-array__entry:last-of-type {
   padding-bottom: var(--q-space-base);
-  border-bottom: 1px solid var(--q-color-gray-4);
 }
 
 .schema-editor-array__collapsecontrol {
