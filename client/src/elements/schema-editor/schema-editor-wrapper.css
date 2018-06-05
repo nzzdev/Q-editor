@@ -1,5 +1,5 @@
 schema-editor-wrapper {
-  display: flex !important;
+  display: flex;
 }
 
 schema-editor-wrapper > :first-child {
