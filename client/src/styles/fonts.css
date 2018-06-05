@@ -1,5 +1,5 @@
 body {
-  font-family: 'Inconsolata', monospace;
+  font-family: "Roboto", sans-serif;
   line-height: 1.2;
   color: var(--q-text-color);
 }
@@ -75,7 +75,9 @@ h6 {
   color: var(--q-color-error);
 }
 
-a, a:hover, a:visited {
+a,
+a:hover,
+a:visited {
   color: var(--q-link-color);
   text-decoration: none;
 }
