@@ -31,6 +31,7 @@
     "enoughNewGraphics": "{{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active."
   },
   "editor": {
+    "title": "Enter your data",
     "questionLeaveWithUnsavedChanges": "Not all changes are saved, close anyway?",
     "questionReallyEditBecauseActive": "This graphic is already activ. Changes will be applied in all articles. Do you really want to edit this graphic?",
     "confirmProceedToEditor": "Yes, proceed to editor",
@@ -44,6 +45,7 @@
     "transpose": "Switch rows and columns"
   },
   "metaEditor": {
+    "title": "Finalize your chart",
     "annotations": "Annotations",
     "annotationPlaceholder": "Add tags to your graphic which help you to search for it",
     "publication": "Publication",
@@ -101,10 +103,10 @@
     "dictMaxFilesExceeded": "You cannot upload any more files."
   },
   "preview": {
+    "title": "Customize your chart",
     "small": "Small",
     "medium": "Medium",
     "large": "Large",
-    "title": "Preview",
     "sizeLabel": "Preview for..."
   }
 }

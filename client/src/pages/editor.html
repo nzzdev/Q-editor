@@ -15,13 +15,13 @@
       <section>
         <form ref="form" class="q-form" validate>
           <schema-editor schema.bind="schema" data.bind="item.conf" change.call="handleChange()">
-            <h1>${schema.title || 'Grafik'}</h1>
+            <h2>${ 'editor.title' & t }</h2>
           </schema-editor>
           <button ref="formSubmitButton" type="submit" style="display: none;"></button>
         </form>
       </section>
       <section>
-        <h2 t="preview.title"></h2>
+        <h2>${ 'preview.title' & t }</h2>
         <div class="editor__preview">
           <div class="editor__options" if.bind="optionsSchema">
             <form ref="optionsForm" class="q-form" validate>
@@ -35,6 +35,7 @@
         </div>
       </section>
       <section>
+        <h2>${ 'metaEditor.title' & t }</h2>
         <meta-editor data.bind="item.conf" change.call="handleChange()"></meta-editor>
       </section>
     </main>
