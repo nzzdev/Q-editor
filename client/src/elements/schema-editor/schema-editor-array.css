@@ -39,6 +39,7 @@ schema-editor-array {
 
 .schema-editor-array__add-item-button {
   margin: var(--q-space-base) 0;
+  width: 160px;
 }
 
 .schema-editor-array__entry-actions {
