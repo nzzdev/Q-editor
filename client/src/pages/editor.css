@@ -4,13 +4,13 @@
 }
 
 .editor main {
-  padding: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 3);
+  padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 6);
   flex-grow: 1;
 }
 
 .editor main section {
-  padding-bottom: var(--q-space-base);
-  margin-bottom: calc(var(--q-space-base) * 2);
+  padding-bottom: calc(var(--q-space-base) * 2);
+  margin-bottom: calc(var(--q-space-base) * 4);
   width: 85vw;
 }
 
@@ -29,7 +29,7 @@
   width: 250px;
   flex-grow: 0;
   flex-shrink: 0;
-  margin-right: var(--q-space-base);
+  margin-right: calc(var(--q-space-base) * 2);
   overflow-y: scroll;
   --q-h1-size: 13px;
   --q-h2-size: 13px;
@@ -40,18 +40,18 @@
 }
 
 .editor__options .schema-editor-input {
-  margin-bottom: calc(var(--q-space-base) / 2);
+  margin-bottom: var(--q-space-base);
 }
 
 .editor__options legend {
   width: 100%;
-  margin-top: var(--q-space-base);
+  margin-top: calc(var(--q-space-base) * 2);
 
   /* the following properties are copied from h6 style */
   font-size: var(--q-h6-size);
   font-weight: var(--q-h6-weight);
   color: var(--q-text-light-color);
-  margin-bottom: calc(var(--q-space-base) / 2);
+  margin-bottom: var(--q-space-base);
 }
 
 /* make the options more compact by removing the margin around fieldsets */

@@ -1,5 +1,5 @@
 .q-form button-primary {
-  margin-top: calc(var(--q-space-base) * 2);
+  margin-top: calc(var(--q-space-base) * 4);
 }
 
 .q-form ::placeholder {
@@ -18,7 +18,7 @@
   font-family: Roboto, sans-serif;
   font-size: 14px;
   line-height: 18px;
-  padding: calc(var(--q-space-base) / 2);
+  padding: var(--q-space-base);
 
   background-color: var(--q-color-white);
   border: 1px solid var(--q-color-gray-3);
@@ -59,7 +59,7 @@
 
 .q-form__block {
   display: block;
-  margin-bottom: calc(var(--q-space-base) / 2);
+  margin-bottom: var(--q-space-base);
 }
 
 /*
@@ -121,7 +121,7 @@
 .q-form select {
   height: 2.4375rem;
   margin: 0;
-  padding: calc(var(--q-space-base) / 2);
+  padding: var(--q-space-base);
   appearance: none;
   -webkit-appearance: none;
   border-radius: 0;

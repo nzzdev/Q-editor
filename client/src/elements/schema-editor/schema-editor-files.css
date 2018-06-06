@@ -1,5 +1,5 @@
 schema-editor-files .dropzone {
-  padding: calc(var(--q-space-base) / 2);
+  padding: var(--q-space-base);
   font-size: var(--q-text-small-size);
   line-height: 1.33;
   color: var(--q-text-light-color);
@@ -8,7 +8,7 @@ schema-editor-files .dropzone {
 }
 
 schema-editor-files .dropzone .dz-preview {
-  margin: calc(var(--q-space-base) / 2);
+  margin: var(--q-space-base);
 }
 
 schema-editor-files .dropzone .dz-preview .dz-image {
@@ -18,4 +18,3 @@ schema-editor-files .dropzone .dz-preview .dz-image {
 schema-editor-files .dropzone .dz-preview .dz-remove {
   font-size: var(--q-text-small-size);
 }
-
