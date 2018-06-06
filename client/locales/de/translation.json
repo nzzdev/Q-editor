@@ -31,6 +31,7 @@
     "enoughNewGraphics": "{{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive."
   },
   "editor": {
+    "title": "Gib deine Daten ein",
     "questionLeaveWithUnsavedChanges": "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
     "questionReallyEditBecauseActive": "Diese Grafik ist bereits aktiv. Änderungen werden in allen Artikel übernommen. Willst du diese Grafik wirklich bearbeiten?",
     "confirmProceedToEditor": "Ja, weiter zum Editor",
@@ -44,6 +45,7 @@
     "transpose": "Zeilen und Spalten tauschen"
   },
   "metaEditor": {
+    "title": "Füge weitere Informationen zur Grafik hinzu",
     "annotations": "Notizen",
     "annotationPlaceholder": "Hier kannst du zusätzliche Schlagwörter erfassen, mit denen die Grafik einfacher gefunden werden kann",
     "publication": "Medium",
@@ -99,10 +101,10 @@
     "dictMaxFilesExceeded": "Sie können keine weiteren Dateien mehr hochladen"
   },
   "preview": {
+    "title": "Bearbeite deine Grafik",
     "small": "Klein",
     "medium": "Mittel",
     "large": "Gross",
-    "title": "Vorschau",
     "sizeLabel": "Vorschau für..."
   }
 }
