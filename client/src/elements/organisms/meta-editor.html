@@ -1,23 +1,32 @@
 <template>
+  <require from="./meta-editor.css"></require>
   <form class="q-form">
-    <label for="publication" if.bind="publications.length > 0">${ 'metaEditor.publication' & t }</label>
-    <div class="q-select" if.bind="publications.length > 0">
-      <select name="publication" value.bind="data.publication" change.delegate="change()">
-        <option value="default"></option>
-        <option repeat.for="publication of publications" value.bind="publication.key">${publication.label}</option>
-      </select>
+    <div class="meta-editor-container">
+      <div class="meta-editor-item">
+        <label for="department">${ 'metaEditor.department' & t }</label>
+        <div class="q-select">
+          <select name="department" value.bind="data.department" change.delegate="change()">
+            <option value="default"></option>
+            <option repeat.for="department of departments" value.bind="department">${department}</option>
+          </select>
+        </div>
+      </div>
+      <div class="meta-editor-item">
+        <label for="acronym">${ 'metaEditor.shortname' & t }</label>
+        <input type="text" value.bind="data.acronym" keyup.delegate="change() & debounce:800">
+      </div>
+      <div class="meta-editor-item">
+        <label for="publication" if.bind="publications.length > 0">${ 'metaEditor.publication' & t }</label>
+        <div class="q-select" if.bind="publications.length > 0">
+          <select name="publication" value.bind="data.publication" change.delegate="change()">
+            <option value="default"></option>
+            <option repeat.for="publication of publications" value.bind="publication.key">${publication.label}</option>
+          </select>
+        </div>
+      </div>
     </div>
-    <label for="department">Ressort</label>
-    <div class="q-select">
-      <select name="department" value.bind="data.department" change.delegate="change()">
-        <option value="default"></option>
-        <option repeat.for="department of departments" value.bind="department">${department}</option>
-      </select>
-    </div>
-    <label for="acronym">Kürzel</label>
-    <input type="text" value.bind="data.acronym" keyup.delegate="change() & debounce:800">
     <label class="q-text-small q-text--light">${ 'metaEditor.annotations' & t }
-      <textarea value.bind="data.annotations" style="height: 150px;" keyup.delegate="change() & debounce:800"></textarea>
+      <textarea class="meta-editor__textarea" value.bind="data.annotations" keyup.delegate="change() & debounce:800" placeholder="${ 'metaEditor.annotationPlaceholder' & t }"></textarea>
     </label>
   </form>
 </template>

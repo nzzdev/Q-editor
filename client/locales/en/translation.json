@@ -45,7 +45,10 @@
   },
   "metaEditor": {
     "annotations": "Annotations",
-    "publication": "Publication"
+    "annotationPlaceholder": "Add tags to your graphic which help you to search for it",
+    "publication": "Publication",
+    "shortname": "Shortname",
+    "department": "Department"
   },
   "item": {
     "save": "save",
