@@ -5,4 +5,5 @@ preview-container {
   width: 100%;
   margin-top: calc(var(--q-space-base) * 2);
   margin-bottom: var(--q-space-base);
+  border: solid 1px var(--q-color-gray-4);
 }
