@@ -45,7 +45,10 @@
   },
   "metaEditor": {
     "annotations": "Notizen",
-    "publication": "Publikation"
+    "annotationPlaceholder": "Hier kannst du zusätzliche Schlagwörter erfassen, mit denen die Grafik einfacher gefunden werden kann",
+    "publication": "Medium",
+    "shortname": "Autorenkürzel",
+    "department": "Ressort"
   },
   "item": {
     "save": "speichern",
