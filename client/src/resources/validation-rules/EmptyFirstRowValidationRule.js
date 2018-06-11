@@ -2,7 +2,10 @@ export default class EmptyFirstRowValidationRule {
   validate(data) {
     const validationResult = {
       showNotification: false,
-      priority: "medium"
+      priority: {
+        type: "medium",
+        value: 10
+      }
     };
     if (data[0][0]) {
       const totalValues = data[0][0].length;

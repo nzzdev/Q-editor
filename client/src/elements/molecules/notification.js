@@ -7,7 +7,11 @@ export class Notification {
   iconName = "";
 
   notificationChanged() {
-    this.hasIcon = ["medium", "high"].includes(this.notification.priority);
-    this.iconName = `notification-${this.notification.priority}`;
+    if (this.notification.priority) {
+      this.hasIcon = ["medium", "high"].includes(
+        this.notification.priority.type
+      );
+      this.iconName = `notification-${this.notification.priority.type}`;
+    }
   }
 }

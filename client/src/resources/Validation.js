@@ -36,10 +36,13 @@ export class Validation {
 
   async validatePreview(error, errorMessage, validationRules) {
     let notification = {
-      priority: "high",
       message: {
         title: "",
         body: ""
+      },
+      priority: {
+        type: "high",
+        value: 10
       }
     };
     if (error && errorMessage !== "") {
@@ -51,7 +54,10 @@ export class Validation {
     } else if (validationRules) {
       notification = await this.validate(validationRules);
     } else {
-      notification.priority = "low";
+      notification.priority = {
+        type: "low",
+        value: 10
+      };
       notification.message.title = this.i18n.tr("preview.hint.title");
       notification.message.body = this.i18n.tr("preview.hint.body");
     }
@@ -71,15 +77,11 @@ export class Validation {
     const notification = notifications
       .filter(entry => entry.message)
       .sort((a, b) => {
-        const priorityValueA = this.getPriorityValue(a.priority);
-        const priorityValueB = this.getPriorityValue(b.priority);
-        if (priorityValueA > priorityValueB) {
-          return 1;
-        }
-        if (priorityValueA < priorityValueB) {
-          return -1;
-        }
-        return 0;
+        const priorityValueA = this.getPriorityValue(a.priority.type);
+        const priorityValueB = this.getPriorityValue(b.priority.type);
+        return (
+          priorityValueA - priorityValueB || a.priority.value - b.priority.value
+        );
       })
       .pop();
     if (notification) {
