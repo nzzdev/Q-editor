@@ -69,12 +69,9 @@ export default class ValidationRules {
       return {
         priority: validationResult.priority,
         message: {
-          title: this.i18n.tr(
-            `${translationNamespace}notifications.${translationKey}.title`
-          ),
-          body: this.i18n.tr(
-            `${translationNamespace}notifications.${translationKey}.body`
-          )
+          title: `${translationNamespace}notifications.${translationKey}.title`,
+          body: `${translationNamespace}notifications.${translationKey}.body`,
+          parameters: validationResult.messageParameters
         }
       };
     }
