@@ -1,8 +1,8 @@
 <template>
   <require from="./notification.css"></require>
-  <div class="notification notification--${notification.priority}" show.bind="notification.message.title">
-    <div class="notification__icon-container">
-      <span class="notification__icon notification__icon--${notification.priority.type}" if.bind="hasIcon">
+  <div class="notification notification--${notification.priority.type}" show.bind="notification.message.title">
+    <div class="notification__icon-container" if.bind="hasIcon">
+      <span class="notification__icon notification__icon--${notification.priority.type}">
         <box-icon icon.bind="iconName"></box-icon>
       </span>
     </div>
