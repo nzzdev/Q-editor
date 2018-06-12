@@ -2,8 +2,7 @@ const env = {
   QServerBaseUrl: process.env.Q_SERVER_BASE_URL,
   loginMessage: process.env.LOGIN_MESSAGE || null,
   devLogging: process.env.DEV_LOGGING || false,
-  pushState: process.env.PUSH_STATE || true,
-  notificationConfig: JSON.parse(process.env.NOTIFICATION_CONFIG) || {}
+  pushState: process.env.PUSH_STATE || true
 };
 
 if (process.env.PLAYGROUND) {

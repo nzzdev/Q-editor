@@ -1,9 +1,9 @@
 export default class TooManyColumnsNotificationRule {
-  getNotificationResult(data, notificationConfig) {
+  getNotificationResult(data, notificationRule) {
     return {
       showNotification:
-        data[0][0] && data[0][0].length > notificationConfig.limit,
-      priority: notificationConfig.priority
+        data[0][0] && data[0][0].length > notificationRule.limit,
+      priority: notificationRule.priority
     };
   }
 }

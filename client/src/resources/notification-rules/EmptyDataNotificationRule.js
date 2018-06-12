@@ -1,8 +1,8 @@
 export default class EmptyDataNotificationRule {
-  getNotificationResult(data, notificationConfig) {
+  getNotificationResult(data, notificationRule) {
     return {
       showNotification: data.length === 1 && data[0].length === 0,
-      priority: notificationConfig.priority
+      priority: notificationRule.priority
     };
   }
 }

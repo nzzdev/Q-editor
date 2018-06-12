@@ -1,6 +1,5 @@
 import { inject } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
-import qEnv from "resources/qEnv.js";
 import EmptyDataNotificationRule from "./EmptyDataNotificationRule.js";
 import EmptyFirstRowNotificationRule from "./EmptyFirstRowNotificationRule.js";
 import TooManyColumnsNotificationRule from "./TooManyColumnsNotificationRule.js";
@@ -33,11 +32,10 @@ export default class NotificationRules {
   }
 
   async getNotification(notificationRule, data, tool, element) {
-    const notificationConfig = await qEnv.notificationConfig;
     if (notificationRule.type === "IsValueMissing") {
       let notificationResult = this.isValueMissingNotificationRule.getNotificationResult(
         element,
-        notificationConfig.isValueMissing
+        notificationRule
       );
       return this.getNotificationObject(
         notificationResult,
@@ -47,7 +45,7 @@ export default class NotificationRules {
     } else if (notificationRule.type === "EmptyData") {
       let notificationResult = this.emptyDataNotificationRule.getNotificationResult(
         data,
-        notificationConfig.emptyData
+        notificationRule
       );
       return this.getNotificationObject(
         notificationResult,
@@ -57,7 +55,7 @@ export default class NotificationRules {
     } else if (notificationRule.type === "EmptyFirstRow") {
       let notificationResult = this.emptyFirstRowNotificationRule.getNotificationResult(
         data,
-        notificationConfig.emptyFirstRow
+        notificationRule
       );
       return this.getNotificationObject(
         notificationResult,
@@ -67,7 +65,7 @@ export default class NotificationRules {
     } else if (notificationRule.type === "TooManyColumns") {
       let notificationResult = this.tooManyColumnsNotificationRule.getNotificationResult(
         data,
-        notificationConfig.tooManyColumns
+        notificationRule
       );
       return this.getNotificationObject(
         notificationResult,

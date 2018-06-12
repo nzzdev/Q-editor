@@ -2,32 +2,5 @@
   "QServerBaseUrl": "http://localhost:3001",
   "loginMessage": "login message",
   "devLogging": true,
-  "pushState": false,
-  "notificationConfig": {
-    "emptyData": {
-      "priority": {
-        "type": "low",
-        "value": 10
-      }
-    },
-    "emptyFirstRow": {
-      "priority": {
-        "type": "medium",
-        "value": 10
-      }
-    },
-    "isValueMissing": {
-      "priority": {
-        "type": "high",
-        "value": 10
-      }
-    },
-    "tooManyColumns": {
-      "limit": 8,
-      "priority": {
-        "type": "medium",
-        "value": 10
-      }
-    }
-  }
+  "pushState": false
 }

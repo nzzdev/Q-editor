@@ -15,7 +15,8 @@ export default class ToolEndpointNotificationRule {
       {
         method: "POST",
         body: JSON.stringify({
-          data: data
+          data: data,
+          notificationRule: notificationRule
         })
       }
     );

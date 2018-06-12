@@ -1,8 +1,8 @@
 export default class EmptyFirstRowNotificationRule {
-  getNotificationResult(data, notificationConfig) {
+  getNotificationResult(data, notificationRule) {
     const notificationResult = {
       showNotification: false,
-      priority: notificationConfig.priority
+      priority: notificationRule.priority
     };
     if (data[0][0]) {
       const totalValues = data[0][0].length;
