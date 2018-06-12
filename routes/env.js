@@ -3,7 +3,7 @@ const env = {
   loginMessage: process.env.LOGIN_MESSAGE || null,
   devLogging: process.env.DEV_LOGGING || false,
   pushState: process.env.PUSH_STATE || true,
-  validationConfig: JSON.parse(process.env.VALIDATION_LIMITS) || {}
+  validationConfig: JSON.parse(process.env.VALIDATION_CONFIG) || {}
 };
 
 if (process.env.PLAYGROUND) {
