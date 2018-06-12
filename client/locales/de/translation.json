@@ -87,7 +87,7 @@
     },
     "emptyData": {
       "title": "Daten einfügen",
-      "body": "Wichtig: Die erste Zeile ist für Überschriften reserviert."
+      "body": "Du kannst Daten direkt eintragen oder aus Excel o.ä. kopieren. Dafür die Zelle A1 anwählen und per Ctrl/Cmd + V einfügen. Wichtig: Jede Spalte braucht eine Überschrift."
     },
     "emptyFirstRow": {
       "title": "Keine Spaltenüberschrift definiert",
@@ -95,7 +95,7 @@
     },
     "tooManyColumns": {
       "title": "Daten enthalten sehr viele Kategorien",
-      "body": "Klicke mal auf «Zeilen und Spalten tauschen». Vermutlich ist die Grafik danach klarer."
+      "body": "Klicke auf «Zeilen und Spalten tauschen». Vermutlich ist die Grafik danach klarer."
     }
   },
   "dropzone": {
