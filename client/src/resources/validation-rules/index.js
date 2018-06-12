@@ -59,7 +59,7 @@ export default class ValidationRules {
       );
       return this.getNotification(validationResult, "", validationRule.type);
     } else if (validationRule.type === "ToolEndpoint") {
-      let validationResult = this.toolEndpointValidationRule.validate(
+      let validationResult = await this.toolEndpointValidationRule.validate(
         validationRule,
         data,
         tool
