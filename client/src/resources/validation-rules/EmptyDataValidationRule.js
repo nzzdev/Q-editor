@@ -1,11 +1,8 @@
 export default class EmptyDataValidationRule {
-  validate(data) {
+  validate(data, validationConfig) {
     return {
       showNotification: data.length === 1 && data[0].length === 0,
-      priority: {
-        type: "low",
-        value: 10
-      }
+      priority: validationConfig.priority
     };
   }
 }

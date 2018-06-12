@@ -1,11 +1,9 @@
 export default class TooManyColumnsValidationRule {
-  validate(data) {
+  validate(data, validationConfig) {
     return {
-      showNotification: data[0][0] && data[0][0].length > 5,
-      priority: {
-        type: "medium",
-        value: 20
-      }
+      showNotification:
+        data[0][0] && data[0][0].length > validationConfig.limit,
+      priority: validationConfig.priority
     };
   }
 }

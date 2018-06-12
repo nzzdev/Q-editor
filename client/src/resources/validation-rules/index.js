@@ -1,5 +1,6 @@
 import { inject } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
+import qEnv from "resources/qEnv.js";
 import EmptyDataValidationRule from "./EmptyDataValidationRule.js";
 import EmptyFirstRowValidationRule from "./EmptyFirstRowValidationRule.js";
 import TooManyColumnsValidationRule from "./TooManyColumnsValidationRule.js";
@@ -32,22 +33,33 @@ export default class ValidationRules {
   }
 
   async validate(validationRule, data, tool, element) {
+    const validationConfig = await qEnv.validationConfig;
     if (validationRule.type === "IsValueMissing") {
       let validationResult = this.isValueMissingValidationRule.validate(
-        element
+        element,
+        validationConfig.isValueMissing
       );
       return this.getNotification(validationResult, "", validationRule.type);
     } else if (validationRule.type === "EmptyData") {
-      let validationResult = this.emptyDataValidationRule.validate(data);
+      let validationResult = this.emptyDataValidationRule.validate(
+        data,
+        validationConfig.emptyData
+      );
       return this.getNotification(validationResult, "", validationRule.type);
     } else if (validationRule.type === "EmptyFirstRow") {
-      let validationResult = this.emptyFirstRowValidationRule.validate(data);
+      let validationResult = this.emptyFirstRowValidationRule.validate(
+        data,
+        validationConfig.emptyFirstRow
+      );
       return this.getNotification(validationResult, "", validationRule.type);
     } else if (validationRule.type === "TooManyColumns") {
-      let validationResult = this.tooManyColumnsValidationRule.validate(data);
+      let validationResult = this.tooManyColumnsValidationRule.validate(
+        data,
+        validationConfig.tooManyColumns
+      );
       return this.getNotification(validationResult, "", validationRule.type);
     } else if (validationRule.type === "ToolEndpoint") {
-      let validationResult = await this.toolEndpointValidationRule.validate(
+      let validationResult = this.toolEndpointValidationRule.validate(
         validationRule,
         data,
         tool

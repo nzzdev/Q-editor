@@ -1,11 +1,9 @@
+import qEnv from "resources/qEnv.js";
 export default class EmptyFirstRowValidationRule {
-  validate(data) {
+  validate(data, validationConfig) {
     const validationResult = {
       showNotification: false,
-      priority: {
-        type: "medium",
-        value: 10
-      }
+      priority: validationConfig.priority
     };
     if (data[0][0]) {
       const totalValues = data[0][0].length;

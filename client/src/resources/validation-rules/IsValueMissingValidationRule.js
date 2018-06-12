@@ -1,11 +1,8 @@
 export default class IsValueMissingValidationRule {
-  validate(element) {
+  validate(element, validationConfig) {
     const validationResult = {
       showNotification: false,
-      priority: {
-        type: "high",
-        value: 10
-      }
+      priority: validationConfig.priority
     };
     if (element && !element.validity.valid) {
       validationResult.showNotification = element.validity.valueMissing;
