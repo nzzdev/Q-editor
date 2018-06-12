@@ -1,8 +1,8 @@
 import { bindable, inject } from "aurelia-framework";
 import { getType } from "./helpers";
-import { Validation } from "resources/Validation.js";
+import { Notification } from "resources/Notification.js";
 
-@inject(Validation)
+@inject(Notification)
 export class SchemaEditorWrapper {
   @bindable schema;
   @bindable data;
@@ -10,11 +10,11 @@ export class SchemaEditorWrapper {
   @bindable required;
   @bindable noObjectTitle;
 
-  notification = {};
+  notificationObject = {};
   options = {};
 
-  constructor(validation) {
-    this.validation = validation;
+  constructor(notification) {
+    this.notification = notification;
     this.getType = getType;
   }
 
@@ -22,14 +22,14 @@ export class SchemaEditorWrapper {
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
-    this.notification = await this.validation.validate(
-      this.options.validationRules
+    this.notificationObject = await this.notification.getNotification(
+      this.options.notificationRules
     );
   }
 
-  async validate(event) {
-    this.notification = await this.validation.validate(
-      this.options.validationRules,
+  async getNotification(event) {
+    this.notificationObject = await this.notification.getNotification(
+      this.options.notificationRules,
       event.target
     );
   }

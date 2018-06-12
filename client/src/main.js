@@ -19,13 +19,13 @@ import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 import qEnv from "resources/qEnv.js";
 import { registerEastereggs } from "eastereggs.js";
-import { Validation } from "resources/Validation.js";
-import ValidationRules from "resources/validation-rules/index.js";
-import EmptyDataValidationRule from "resources/validation-rules/EmptyDataValidationRule.js";
-import EmptyFirstRowValidationRule from "resources/validation-rules/EmptyFirstRowValidationRule.js";
-import TooManyColumnsValidationRule from "resources/validation-rules/TooManyColumnsValidationRule.js";
-import ToolEndpointValidationRule from "resources/validation-rules/ToolEndpointValidationRule.js";
-import IsValueMissingValidationRule from "resources/validation-rules/IsValueMissingValidationRule.js";
+import { Notification } from "resources/Notification.js";
+import NotificationRules from "resources/notification-rules/index.js";
+import EmptyDataNotificationRule from "resources/notification-rules/EmptyDataNotificationRule.js";
+import EmptyFirstRowNotificationRule from "resources/notification-rules/EmptyFirstRowNotificationRule.js";
+import TooManyColumnsNotificationRule from "resources/notification-rules/TooManyColumnsNotificationRule.js";
+import ToolEndpointNotificationRule from "resources/notification-rules/ToolEndpointNotificationRule.js";
+import IsValueMissingNotificationRule from "resources/notification-rules/IsValueMissingNotificationRule.js";
 import Backend from "i18next-fetch-backend";
 
 export async function configure(aurelia) {
@@ -42,13 +42,13 @@ export async function configure(aurelia) {
   aurelia.use.singleton(CurrentItemProvider);
   aurelia.use.singleton(ObjectFromSchemaGenerator);
   aurelia.use.singleton(User);
-  aurelia.use.singleton(Validation);
-  aurelia.use.singleton(ValidationRules);
-  aurelia.use.singleton(EmptyDataValidationRule);
-  aurelia.use.singleton(EmptyFirstRowValidationRule);
-  aurelia.use.singleton(TooManyColumnsValidationRule);
-  aurelia.use.singleton(ToolEndpointValidationRule);
-  aurelia.use.singleton(IsValueMissingValidationRule);
+  aurelia.use.singleton(Notification);
+  aurelia.use.singleton(NotificationRules);
+  aurelia.use.singleton(EmptyDataNotificationRule);
+  aurelia.use.singleton(EmptyFirstRowNotificationRule);
+  aurelia.use.singleton(TooManyColumnsNotificationRule);
+  aurelia.use.singleton(ToolEndpointNotificationRule);
+  aurelia.use.singleton(IsValueMissingNotificationRule);
 
   const QServerBaseUrl = await qEnv.QServerBaseUrl;
 

@@ -7,7 +7,7 @@
   <div if.bind="getType(schema) === 'string'" class="schema-editor-block">
     <require from="./schema-editor-wrapper.css"></require>
     <require from="./schema-editor-string"></require>
-    <schema-editor-string schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="validate($event)"></schema-editor-string>
+    <schema-editor-string schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="getNotification($event)"></schema-editor-string>
   </div>
 
   <div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
@@ -72,12 +72,12 @@
 
   <div if.bind="getType(schema) === 'table'" class="schema-editor-block">
     <require from="./schema-editor-table"></require>
-    <schema-editor-table schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="validate($event)"></schema-editor-table>
+    <schema-editor-table schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="getNotification($event)"></schema-editor-table>
   </div>
 
   <div if.bind="getType(schema) === 'files'" class="schema-editor-block">
     <require from="./schema-editor-files"></require>
     <schema-editor-files schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-files>
   </div>
-  <notification notification.bind="notification"></notification>
+  <notification notification.bind="notificationObject"></notification>
 </template>

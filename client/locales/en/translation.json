@@ -131,7 +131,7 @@
     },
     "technicalError": {
       "title": "Technical error occurred",
-      "body": "Please try to save the graphic and reload Q."
+      "body": "Please try to save the graphic and reload Q. {{errorMessage}}"
     }
   }
 }
