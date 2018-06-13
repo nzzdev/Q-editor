@@ -4,14 +4,15 @@
 }
 
 .editor main {
-  padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 6);
   flex-grow: 1;
 }
 
 .editor main section {
-  padding-bottom: calc(var(--q-space-base) * 2);
-  margin-bottom: calc(var(--q-space-base) * 4);
-  width: 85vw;
+  padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 6);
+}
+
+.editor__preview-container {
+  background-color: var(--q-color-gray-2);
 }
 
 .editor__preview {
