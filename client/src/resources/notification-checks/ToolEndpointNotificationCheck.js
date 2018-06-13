@@ -3,20 +3,20 @@ import { HttpClient } from "aurelia-fetch-client";
 import qEnv from "resources/qEnv.js";
 
 @inject(HttpClient)
-export default class ToolEndpointNotificationRule {
+export default class ToolEndpointNotificationCheck {
   constructor(httpClient) {
     this.httpClient = httpClient;
   }
 
-  async getNotificationResult(notificationRule, data, tool) {
+  async getNotificationResult(notificationCheck, data, tool) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
     const response = await this.httpClient.fetch(
-      `${QServerBaseUrl}/tools/${tool}/${notificationRule.endpoint}`,
+      `${QServerBaseUrl}/tools/${tool}/${notificationCheck.endpoint}`,
       {
         method: "POST",
         body: JSON.stringify({
           data: data,
-          notificationRule: notificationRule
+          notificationCheck: notificationCheck
         })
       }
     );

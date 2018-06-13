@@ -1,28 +1,28 @@
 import { inject } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
-import NotificationRules from "resources/notification-rules/index.js";
+import NotificationChecks from "resources/notification-checks/index.js";
 
 const getDescendantProperty = (obj, path) =>
   path.split(".").reduce((acc, part) => acc && acc[part], obj);
 
-@inject(CurrentItemProvider, I18N, NotificationRules)
+@inject(CurrentItemProvider, I18N, NotificationChecks)
 export class Notification {
-  constructor(currentItemProvider, i18n, notificationRules) {
+  constructor(currentItemProvider, i18n, notificationChecks) {
     this.currentItemProvider = currentItemProvider;
     this.i18n = i18n;
-    this.notificationRules = notificationRules;
+    this.notificationChecks = notificationChecks;
   }
 
-  async getNotification(notificationRules, element) {
+  async getNotification(notificationChecks, element) {
     let notifications = [];
-    if (notificationRules) {
-      const results = await notificationRules.map(notificationRule => {
+    if (notificationChecks) {
+      const results = await notificationChecks.map(notificationRule => {
         const item = this.currentItemProvider.getCurrentItem().conf;
         const data = notificationRule.data.map(property =>
           getDescendantProperty(item, property)
         );
-        return this.notificationRules.getNotification(
+        return this.notificationChecks.getNotification(
           notificationRule,
           data,
           item.tool,
@@ -34,7 +34,7 @@ export class Notification {
     return this.getMostImportantNotification(notifications);
   }
 
-  async getPreviewNotification(error, errorMessage, notificationRules) {
+  async getPreviewNotification(error, errorMessage, notificationChecks) {
     let notification = {
       message: {
         title: "",
@@ -53,8 +53,8 @@ export class Notification {
       };
     } else if (error) {
       notification = {};
-    } else if (notificationRules) {
-      notification = await this.getNotification(notificationRules);
+    } else if (notificationChecks) {
+      notification = await this.getNotification(notificationChecks);
     } else {
       notification.priority = {
         type: "low",

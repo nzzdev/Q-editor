@@ -23,13 +23,13 @@ export class SchemaEditorWrapper {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
     this.notificationObject = await this.notification.getNotification(
-      this.options.notificationRules
+      this.options.notificationChecks
     );
   }
 
   async getNotification(event) {
     this.notificationObject = await this.notification.getNotification(
-      this.options.notificationRules,
+      this.options.notificationChecks,
       event.target
     );
   }

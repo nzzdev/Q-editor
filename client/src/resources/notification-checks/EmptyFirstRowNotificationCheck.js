@@ -1,8 +1,8 @@
-export default class EmptyFirstRowNotificationRule {
-  getNotificationResult(data, notificationRule) {
+export default class EmptyFirstRowNotificationCheck {
+  getNotificationResult(data, notificationCheck) {
     const notificationResult = {
       showNotification: false,
-      priority: notificationRule.priority
+      priority: notificationCheck.priority
     };
     if (data[0][0]) {
       const totalValues = data[0][0].length;

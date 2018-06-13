@@ -1,39 +1,39 @@
 import { inject } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
-import EmptyDataNotificationRule from "./EmptyDataNotificationRule.js";
-import EmptyFirstRowNotificationRule from "./EmptyFirstRowNotificationRule.js";
-import TooManyColumnsNotificationRule from "./TooManyColumnsNotificationRule.js";
-import ToolEndpointNotificationRule from "./ToolEndpointNotificationRule.js";
-import IsValueMissingNotificationRule from "./IsValueMissingNotificationRule.js";
+import EmptyDataNotificationCheck from "./EmptyDataNotificationCheck";
+import EmptyFirstRowNotificationCheck from "./EmptyFirstRowNotificationCheck.js";
+import TooManyColumnsNotificationCheck from "./TooManyColumnsNotificationCheck.js";
+import ToolEndpointNotificationCheck from "./ToolEndpointNotificationCheck.js";
+import IsValueMissingNotificationCheck from "./IsValueMissingNotificationCheck.js";
 
 @inject(
   I18N,
-  EmptyDataNotificationRule,
-  EmptyFirstRowNotificationRule,
-  TooManyColumnsNotificationRule,
-  ToolEndpointNotificationRule,
-  IsValueMissingNotificationRule
+  EmptyDataNotificationCheck,
+  EmptyFirstRowNotificationCheck,
+  TooManyColumnsNotificationCheck,
+  ToolEndpointNotificationCheck,
+  IsValueMissingNotificationCheck
 )
-export default class NotificationRules {
+export default class NotificationChecks {
   constructor(
     i18n,
-    emptyDataNotificationRule,
-    emptyFirstRowNotificationRule,
-    tooManyColumnsNotificationRule,
-    toolEndpointNotificationRule,
-    isValueMissingNotificationRule
+    emptyDataNotificationCheck,
+    emptyFirstRowNotificationCheck,
+    tooManyColumnsNotificationCheck,
+    toolEndpointNotificationCheck,
+    isValueMissingNotificationCheck
   ) {
     this.i18n = i18n;
-    this.emptyDataNotificationRule = emptyDataNotificationRule;
-    this.emptyFirstRowNotificationRule = emptyFirstRowNotificationRule;
-    this.tooManyColumnsNotificationRule = tooManyColumnsNotificationRule;
-    this.toolEndpointNotificationRule = toolEndpointNotificationRule;
-    this.isValueMissingNotificationRule = isValueMissingNotificationRule;
+    this.emptyDataNotificationCheck = emptyDataNotificationCheck;
+    this.emptyFirstRowNotificationCheck = emptyFirstRowNotificationCheck;
+    this.tooManyColumnsNotificationCheck = tooManyColumnsNotificationCheck;
+    this.toolEndpointNotificationCheck = toolEndpointNotificationCheck;
+    this.isValueMissingNotificationCheck = isValueMissingNotificationCheck;
   }
 
   async getNotification(notificationRule, data, tool, element) {
     if (notificationRule.type === "IsValueMissing") {
-      let notificationResult = this.isValueMissingNotificationRule.getNotificationResult(
+      let notificationResult = this.isValueMissingNotificationCheck.getNotificationResult(
         element,
         notificationRule
       );
@@ -43,7 +43,7 @@ export default class NotificationRules {
         notificationRule.type
       );
     } else if (notificationRule.type === "EmptyData") {
-      let notificationResult = this.emptyDataNotificationRule.getNotificationResult(
+      let notificationResult = this.emptyDataNotificationCheck.getNotificationResult(
         data,
         notificationRule
       );
@@ -53,7 +53,7 @@ export default class NotificationRules {
         notificationRule.type
       );
     } else if (notificationRule.type === "EmptyFirstRow") {
-      let notificationResult = this.emptyFirstRowNotificationRule.getNotificationResult(
+      let notificationResult = this.emptyFirstRowNotificationCheck.getNotificationResult(
         data,
         notificationRule
       );
@@ -63,7 +63,7 @@ export default class NotificationRules {
         notificationRule.type
       );
     } else if (notificationRule.type === "TooManyColumns") {
-      let notificationResult = this.tooManyColumnsNotificationRule.getNotificationResult(
+      let notificationResult = this.tooManyColumnsNotificationCheck.getNotificationResult(
         data,
         notificationRule
       );
@@ -73,7 +73,7 @@ export default class NotificationRules {
         notificationRule.type
       );
     } else if (notificationRule.type === "ToolEndpoint") {
-      let notificationResult = await this.toolEndpointNotificationRule.getNotificationResult(
+      let notificationResult = await this.toolEndpointNotificationCheck.getNotificationResult(
         notificationRule,
         data,
         tool

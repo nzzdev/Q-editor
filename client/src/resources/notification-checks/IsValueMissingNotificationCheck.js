@@ -1,8 +1,8 @@
-export default class IsValueMissingNotificationRule {
-  getNotificationResult(element, notificationRule) {
+export default class IsValueMissingNotificationCheck {
+  getNotificationResult(element, notificationCheck) {
     const notificationResult = {
       showNotification: false,
-      priority: notificationRule.priority
+      priority: notificationCheck.priority
     };
     if (element && !element.validity.valid) {
       notificationResult.showNotification = element.validity.valueMissing;

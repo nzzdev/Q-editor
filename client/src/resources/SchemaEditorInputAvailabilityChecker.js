@@ -1,13 +1,11 @@
 import { inject } from "aurelia-framework";
 import { Container } from "aurelia-dependency-injection";
-import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
 
-@inject(ToolEndpointChecker, Container)
+@inject(Container)
 export default class SchemaEditorInputAvailabilityChecker {
   reevaluateCallbacks = [];
 
-  constructor(toolEndpointChecker, diContainer) {
-    this.toolEndpointChecker = toolEndpointChecker;
+  constructor(diContainer) {
     this.diContainer = diContainer;
   }
 
