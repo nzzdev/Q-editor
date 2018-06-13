@@ -31,54 +31,54 @@ export default class NotificationChecks {
     this.isValueMissingNotificationCheck = isValueMissingNotificationCheck;
   }
 
-  async getNotification(notificationRule, data, tool, element) {
-    if (notificationRule.type === "IsValueMissing") {
+  async getNotification(notificationCheck, data, tool, element) {
+    if (notificationCheck.type === "IsValueMissing") {
       let notificationResult = this.isValueMissingNotificationCheck.getNotificationResult(
         element,
-        notificationRule
+        notificationCheck
       );
       return this.getNotificationObject(
         notificationResult,
         "",
-        notificationRule.type
+        notificationCheck.type
       );
-    } else if (notificationRule.type === "EmptyData") {
+    } else if (notificationCheck.type === "EmptyData") {
       let notificationResult = this.emptyDataNotificationCheck.getNotificationResult(
         data,
-        notificationRule
+        notificationCheck
       );
       return this.getNotificationObject(
         notificationResult,
         "",
-        notificationRule.type
+        notificationCheck.type
       );
-    } else if (notificationRule.type === "EmptyFirstRow") {
+    } else if (notificationCheck.type === "EmptyFirstRow") {
       let notificationResult = this.emptyFirstRowNotificationCheck.getNotificationResult(
         data,
-        notificationRule
+        notificationCheck
       );
       return this.getNotificationObject(
         notificationResult,
         "",
-        notificationRule.type
+        notificationCheck.type
       );
-    } else if (notificationRule.type === "TooManyColumns") {
+    } else if (notificationCheck.type === "TooManyColumns") {
       let notificationResult = this.tooManyColumnsNotificationCheck.getNotificationResult(
         data,
-        notificationRule
+        notificationCheck
       );
       return this.getNotificationObject(
         notificationResult,
         "",
-        notificationRule.type
+        notificationCheck.type
       );
-    } else if (notificationRule.type === "ToolEndpoint") {
+    } else if (notificationCheck.type === "ToolEndpoint") {
       let notificationResult = await this.toolEndpointNotificationCheck.getNotificationResult(
-        notificationRule,
+        notificationCheck,
         data,
         tool
       );
-      const notificationType = notificationRule.endpoint.replace(
+      const notificationType = notificationCheck.endpoint.replace(
         "notification/",
         ""
       );

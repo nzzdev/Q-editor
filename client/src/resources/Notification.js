@@ -17,13 +17,13 @@ export class Notification {
   async getNotification(notificationChecks, element) {
     let notifications = [];
     if (notificationChecks) {
-      const results = await notificationChecks.map(notificationRule => {
+      const results = await notificationChecks.map(notificationCheck => {
         const item = this.currentItemProvider.getCurrentItem().conf;
-        const data = notificationRule.data.map(property =>
+        const data = notificationCheck.data.map(property =>
           getDescendantProperty(item, property)
         );
         return this.notificationChecks.getNotification(
-          notificationRule,
+          notificationCheck,
           data,
           item.tool,
           element
