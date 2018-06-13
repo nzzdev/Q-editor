@@ -1,13 +1,13 @@
 <template class="${getType(schema) === 'string' ? 'schema-editor-wrapper--input' : ''}">
+  <require from="./schema-editor-wrapper.css"></require>
   <div if.bind="getType(schema) === 'object'" class="schema-editor-block">
     <require from="./schema-editor-object"></require>
     <schema-editor-object schema.bind="schema" data.two-way="data" change.bind="change" no-object-title.bind="noObjectTitle"></schema-editor-object>
   </div>
 
   <div if.bind="getType(schema) === 'string'" class="schema-editor-block">
-    <require from="./schema-editor-wrapper.css"></require>
     <require from="./schema-editor-string"></require>
-    <schema-editor-string schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="getNotification($event)"></schema-editor-string>
+    <schema-editor-string schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-string>
   </div>
 
   <div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
@@ -72,12 +72,12 @@
 
   <div if.bind="getType(schema) === 'table'" class="schema-editor-block">
     <require from="./schema-editor-table"></require>
-    <schema-editor-table schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" input.delegate="getNotification($event)"></schema-editor-table>
+    <schema-editor-table schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-table>
   </div>
 
   <div if.bind="getType(schema) === 'files'" class="schema-editor-block">
     <require from="./schema-editor-files"></require>
     <schema-editor-files schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-files>
   </div>
-  <notification notification.bind="notificationObject"></notification>
+  <notification notification.bind="notifications[0]"></notification>
 </template>

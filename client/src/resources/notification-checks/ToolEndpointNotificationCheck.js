@@ -1,25 +1,36 @@
-import { inject } from "aurelia-framework";
-import { HttpClient } from "aurelia-fetch-client";
-import qEnv from "resources/qEnv.js";
+import { inject, LogManager } from "aurelia-framework";
+import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
 
-@inject(HttpClient)
+const log = LogManager.getLogger("Q");
+
+@inject(ToolEndpointChecker)
 export default class ToolEndpointNotificationCheck {
-  constructor(httpClient) {
-    this.httpClient = httpClient;
+  constructor(toolEndpointChecker) {
+    this.toolEndpointChecker = toolEndpointChecker;
   }
 
-  async getNotificationResult(notificationCheck, data, tool) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const response = await this.httpClient.fetch(
-      `${QServerBaseUrl}/tools/${tool}/${notificationCheck.endpoint}`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          data: data,
-          notificationCheck: notificationCheck
-        })
-      }
-    );
-    return response.json();
+  async getNotification(notificationCheck, data) {
+    if (!notificationCheck.endpoint) {
+      log.error(
+        "no endpoint defined for notificationCheck ToolEndpointNotificationCheck:",
+        notificationCheck
+      );
+      return false;
+    }
+    const dataForEndpoint = {
+      data: data
+    };
+    if (notificationCheck.hasOwnProperty("options")) {
+      dataForEndpoint.options = notificationCheck.options;
+    }
+    try {
+      const notification = await this.toolEndpointChecker.fetchWithData(
+        notificationCheck.endpoint,
+        dataForEndpoint
+      );
+      return notification;
+    } catch (e) {
+      log.error("failed to fetch with toolEndpointChecker", e);
+    }
   }
 }

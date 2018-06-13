@@ -13,19 +13,13 @@ import ItemStore from "resources/ItemStore.js";
 import Statistics from "resources/Statistics.js";
 import ToolsInfo from "resources/ToolsInfo.js";
 import SchemaEditorInputAvailabilityChecker from "resources/SchemaEditorInputAvailabilityChecker.js";
+import NotificationChecker from "resources/NotificationChecker.js";
 import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
 import IdGenerator from "resources/IdGenerator.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 import qEnv from "resources/qEnv.js";
 import { registerEastereggs } from "eastereggs.js";
-import { Notification } from "resources/Notification.js";
-import NotificationChecks from "resources/notification-checks/index.js";
-import EmptyDataNotificationCheck from "resources/notification-checks/EmptyDataNotificationCheck.js";
-import EmptyFirstRowNotificationCheck from "resources/notification-checks/EmptyFirstRowNotificationCheck.js";
-import TooManyColumnsNotificationCheck from "resources/notification-checks/TooManyColumnsNotificationCheck.js";
-import ToolEndpointNotificationCheck from "resources/notification-checks/ToolEndpointNotificationCheck.js";
-import IsValueMissingNotificationCheck from "resources/notification-checks/IsValueMissingNotificationCheck.js";
 import Backend from "i18next-fetch-backend";
 
 export async function configure(aurelia) {
@@ -37,18 +31,12 @@ export async function configure(aurelia) {
   aurelia.use.singleton(QTargets);
   aurelia.use.singleton(ToolsInfo);
   aurelia.use.singleton(SchemaEditorInputAvailabilityChecker);
+  aurelia.use.singleton(NotificationChecker);
   aurelia.use.singleton(ToolEndpointChecker);
   aurelia.use.singleton(IdGenerator);
   aurelia.use.singleton(CurrentItemProvider);
   aurelia.use.singleton(ObjectFromSchemaGenerator);
   aurelia.use.singleton(User);
-  aurelia.use.singleton(Notification);
-  aurelia.use.singleton(NotificationChecks);
-  aurelia.use.singleton(EmptyDataNotificationCheck);
-  aurelia.use.singleton(EmptyFirstRowNotificationCheck);
-  aurelia.use.singleton(TooManyColumnsNotificationCheck);
-  aurelia.use.singleton(ToolEndpointNotificationCheck);
-  aurelia.use.singleton(IsValueMissingNotificationCheck);
 
   const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
@@ -59,6 +47,7 @@ export async function configure(aurelia) {
     .feature("elements/organisms")
     .feature("icons")
     .feature("resources/availability-checks")
+    .feature("resources/notification-checks")
     .feature("binding-behaviors")
     .feature("value-converters")
     .plugin("aurelia-dialog", config => {

@@ -1,8 +1,8 @@
 import { bindable, inject } from "aurelia-framework";
 import { getType } from "./helpers";
-import { Notification } from "resources/Notification.js";
+import NotificationChecker from "resources/NotificationChecker.js";
 
-@inject(Notification)
+@inject(NotificationChecker)
 export class SchemaEditorWrapper {
   @bindable schema;
   @bindable data;
@@ -13,8 +13,8 @@ export class SchemaEditorWrapper {
   notificationObject = {};
   options = {};
 
-  constructor(notification) {
-    this.notification = notification;
+  constructor(notificationChecker) {
+    this.notificationChecker = notificationChecker;
     this.getType = getType;
   }
 
@@ -22,15 +22,27 @@ export class SchemaEditorWrapper {
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
-    this.notificationObject = await this.notification.getNotification(
-      this.options.notificationChecks
+
+    // if this has notifications
+    if (Array.isArray(this.options.notificationChecks)) {
+      this.applyNotifications();
+      this.reevaluateCallback = this.applyNotifications.bind(this);
+      this.notificationChecker.registerReevaluateCallback(
+        this.reevaluateCallback
+      );
+    }
+  }
+
+  detached() {
+    this.notificationChecker.unregisterReevaluateCallback(
+      this.reevaluateCallback
     );
   }
 
-  async getNotification(event) {
-    this.notificationObject = await this.notification.getNotification(
-      this.options.notificationChecks,
-      event.target
+  async applyNotifications() {
+    const newNotifications = await this.notificationChecker.getNotifications(
+      this.options.notificationChecks
     );
+    this.notifications = newNotifications;
   }
 }

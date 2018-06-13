@@ -7,7 +7,7 @@ export class Notification {
   iconName = "";
 
   notificationChanged() {
-    if (this.notification.priority) {
+    if (this.notification && this.notification.priority) {
       this.hasIcon = ["medium", "high"].includes(
         this.notification.priority.type
       );

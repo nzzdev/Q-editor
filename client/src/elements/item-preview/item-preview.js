@@ -4,11 +4,11 @@ import qEnv from "resources/qEnv.js";
 import QTargets from "resources/QTargets.js";
 import QConfig from "resources/QConfig.js";
 import User from "resources/User.js";
-import { Notification } from "resources/Notification.js";
+import NotificationChecker from "resources/NotificationChecker.js";
 
 const log = LogManager.getLogger("Q");
 
-@inject(QTargets, QConfig, User, I18N, Notification)
+@inject(QTargets, QConfig, User, I18N, NotificationChecker)
 export class ItemPreview {
   @bindable data;
   @bindable id;
@@ -19,12 +19,12 @@ export class ItemPreview {
   errorMessage = "";
   notificationObject = {};
 
-  constructor(qTargets, qConfig, user, i18n, notification) {
+  constructor(qTargets, qConfig, user, i18n, notificationChecker) {
     this.qTargets = qTargets;
     this.qConfig = qConfig;
     this.user = user;
     this.i18n = i18n;
-    this.notification = notification;
+    this.notificationChecker = notificationChecker;
 
     // we use this proxy to catch any changes to the target and then load the preview after we have it
     this.targetProxy = new Proxy(
@@ -109,7 +109,7 @@ export class ItemPreview {
           }
         }
       }
-      this.notificationObject = await this.notification.getPreviewNotification(
+      this.notificationObject = await this.notificationChecker.getPreviewNotification(
         this.error,
         this.errorMessage
       );
@@ -128,7 +128,7 @@ export class ItemPreview {
   }
 
   async errorChanged() {
-    this.notificationObject = await this.notification.getPreviewNotification(
+    this.notificationObject = await this.notificationChecker.getPreviewNotification(
       this.error,
       this.errorMessage
     );

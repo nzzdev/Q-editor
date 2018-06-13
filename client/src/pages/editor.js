@@ -13,6 +13,7 @@ import qEnv from "resources/qEnv.js";
 import ItemStore from "resources/ItemStore.js";
 import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
 import SchemaEditorInputAvailabilityChecker from "resources/SchemaEditorInputAvailabilityChecker.js";
+import NotificationChecker from "resources/NotificationChecker.js";
 import ToolsInfo from "resources/ToolsInfo.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
@@ -68,6 +69,7 @@ function getTranslatedSchema(schema, toolName, i18n) {
   Notification,
   ToolEndpointChecker,
   SchemaEditorInputAvailabilityChecker,
+  NotificationChecker,
   ToolsInfo,
   CurrentItemProvider,
   ObjectFromSchemaGenerator,
@@ -82,6 +84,7 @@ export class Editor {
     notification,
     toolEndpointChecker,
     schemaEditorInputAvailabilityChecker,
+    notificationChecker,
     toolsInfo,
     currentItemProvider,
     objectFromSchemaGenerator,
@@ -94,6 +97,7 @@ export class Editor {
     this.notification = notification;
     this.toolEndpointChecker = toolEndpointChecker;
     this.schemaEditorInputAvailabilityChecker = schemaEditorInputAvailabilityChecker;
+    this.notificationChecker = notificationChecker;
     this.toolsInfo = toolsInfo;
     this.currentItemProvider = currentItemProvider;
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
@@ -249,6 +253,7 @@ export class Editor {
 
       // whenever we have a change in data, we need to reevaluate all the checks
       this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
+      this.notificationChecker.triggerReevaluation();
       this.toolEndpointChecker.triggerReevaluation();
       this.previewData = JSON.parse(JSON.stringify(this.item.conf));
     });
