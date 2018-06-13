@@ -174,6 +174,9 @@ export class SchemaEditorTable {
   transpose() {
     this.hot.loadData(array2d.transpose(this.hot.getData()));
     this.data = trimNull(emptyToNull(this.hot.getData()));
+    this.hot.updateSettings({
+      height: this.getGridHeight()
+    });
     this.change();
   }
 }
