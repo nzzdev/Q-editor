@@ -1,12 +1,10 @@
 import { inject, bindable } from "aurelia-framework";
-import { checkAvailability } from "resources/schemaEditorDecorators.js";
 import SchemaEditorInputAvailabilityChecker from "resources/SchemaEditorInputAvailabilityChecker.js";
 import Ajv from "ajv";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 
 const ajv = new Ajv();
 
-@checkAvailability()
 @inject(SchemaEditorInputAvailabilityChecker, ObjectFromSchemaGenerator)
 export class SchemaEditorArray {
   @bindable schema;

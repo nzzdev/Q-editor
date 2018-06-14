@@ -1,5 +1,5 @@
 import { inject, LogManager } from "aurelia-framework";
-import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
+import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 
 const log = LogManager.getLogger("Q");
 

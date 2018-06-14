@@ -1,8 +1,9 @@
 import { bindable, inject } from "aurelia-framework";
 import { getType } from "./helpers";
-import NotificationChecker from "resources/NotificationChecker.js";
+import NotificationChecker from "resources/checkers/NotificationChecker.js";
+import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
 
-@inject(NotificationChecker)
+@inject(NotificationChecker, AvailabilityChecker, Element)
 export class SchemaEditorWrapper {
   @bindable schema;
   @bindable data;
@@ -13,8 +14,10 @@ export class SchemaEditorWrapper {
   notificationObject = {};
   options = {};
 
-  constructor(notificationChecker) {
+  constructor(notificationChecker, availabilityChecker, element) {
     this.notificationChecker = notificationChecker;
+    this.availabilityChecker = availabilityChecker;
+    this.element = element;
     this.getType = getType;
   }
 
@@ -26,16 +29,28 @@ export class SchemaEditorWrapper {
     // if this has notifications
     if (Array.isArray(this.options.notificationChecks)) {
       this.applyNotifications();
-      this.reevaluateCallback = this.applyNotifications.bind(this);
+      this.reevaluateNotificationsCallback = this.applyNotifications.bind(this);
       this.notificationChecker.registerReevaluateCallback(
-        this.reevaluateCallback
+        this.reevaluateNotificationsCallback
+      );
+    }
+
+    // if this has availabilityChecks
+    if (Array.isArray(this.options.availabilityChecks)) {
+      this.applyAvailability();
+      this.reevaluateAvailabilityCallback = this.applyAvailability.bind(this);
+      this.availabilityChecker.registerReevaluateCallback(
+        this.reevaluateAvailabilityCallback
       );
     }
   }
 
   detached() {
     this.notificationChecker.unregisterReevaluateCallback(
-      this.reevaluateCallback
+      this.reevaluateNotificationsCallback
+    );
+    this.availabilityChecker.unregisterReevaluateCallback(
+      this.reevaluateAvailabilityCallback
     );
   }
 
@@ -44,5 +59,17 @@ export class SchemaEditorWrapper {
       this.options.notificationChecks
     );
     this.notifications = newNotifications;
+  }
+
+  async applyAvailability() {
+    const availability = await this.availabilityChecker.getAvailabilityInfo(
+      this.options.availabilityChecks
+    );
+    // console.log(this.options.availabilityChecks, availability);
+    if (availability.isAvailable) {
+      this.element.style.display = "flex";
+    } else {
+      this.element.style.display = "none";
+    }
   }
 }
