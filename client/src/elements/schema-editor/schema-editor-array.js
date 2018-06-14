@@ -1,11 +1,11 @@
 import { inject, bindable } from "aurelia-framework";
-import SchemaEditorInputAvailabilityChecker from "resources/SchemaEditorInputAvailabilityChecker.js";
+import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
 import Ajv from "ajv";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 
 const ajv = new Ajv();
 
-@inject(SchemaEditorInputAvailabilityChecker, ObjectFromSchemaGenerator)
+@inject(AvailabilityChecker, ObjectFromSchemaGenerator)
 export class SchemaEditorArray {
   @bindable schema;
   @bindable data;
@@ -19,8 +19,8 @@ export class SchemaEditorArray {
 
   collapsedStates = {};
 
-  constructor(schemaEditorInputAvailabilityChecker, objectFromSchemaGenerator) {
-    this.schemaEditorInputAvailabilityChecker = schemaEditorInputAvailabilityChecker;
+  constructor(availabilityChecker, objectFromSchemaGenerator) {
+    this.availabilityChecker = availabilityChecker;
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.handleChange = () => {
       this.calculateEntryLabels();
@@ -120,12 +120,22 @@ export class SchemaEditorArray {
     return this.dataItemsSchemas[index];
   }
 
-  async isEntryAvailable(index) {
-    const schema = this.getSchemaForArrayEntryIndex(index);
-    const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(
-      schema
+  async isItemWithSchemaAvailable(schema) {
+    if (
+      !schema.hasOwnProperty("Q:options") ||
+      !Array.isArray(schema["Q:options"].availabilityChecks)
+    ) {
+      return true;
+    }
+    const availabilityInfo = await this.availabilityChecker.getAvailabilityInfo(
+      schema["Q:options"].availabilityChecks
     );
     return await availabilityInfo.isAvailable;
+  }
+
+  async isEntryAvailable(index) {
+    const schema = this.getSchemaForArrayEntryIndex(index);
+    return await this.isItemWithSchemaAvailable(schema);
   }
 
   async calculateArrayEntryOptions() {
@@ -149,10 +159,7 @@ export class SchemaEditorArray {
       Array.isArray(this.getPossibleItemSchemas())
     ) {
       for (let schema of this.getPossibleItemSchemas()) {
-        const availabilityInfo = await this.schemaEditorInputAvailabilityChecker.getAvailabilityInfo(
-          schema
-        );
-        if (availabilityInfo.isAvailable) {
+        if (await this.isItemWithSchemaAvailable(schema)) {
           this.arrayEntryOptions.push({
             schema: schema,
             arrayEntryLabel: schema.title
