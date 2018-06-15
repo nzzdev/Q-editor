@@ -4,11 +4,10 @@ import qEnv from "resources/qEnv.js";
 import QTargets from "resources/QTargets.js";
 import QConfig from "resources/QConfig.js";
 import User from "resources/User.js";
-import NotificationChecker from "resources/NotificationChecker.js";
 
 const log = LogManager.getLogger("Q");
 
-@inject(QTargets, QConfig, User, I18N, NotificationChecker)
+@inject(QTargets, QConfig, User, I18N)
 export class ItemPreview {
   @bindable data;
   @bindable id;
@@ -19,12 +18,11 @@ export class ItemPreview {
   errorMessage = "";
   notificationObject = {};
 
-  constructor(qTargets, qConfig, user, i18n, notificationChecker) {
+  constructor(qTargets, qConfig, user, i18n) {
     this.qTargets = qTargets;
     this.qConfig = qConfig;
     this.user = user;
     this.i18n = i18n;
-    this.notificationChecker = notificationChecker;
 
     // we use this proxy to catch any changes to the target and then load the preview after we have it
     this.targetProxy = new Proxy(
@@ -109,10 +107,6 @@ export class ItemPreview {
           }
         }
       }
-      this.notificationObject = await this.notificationChecker.getPreviewNotification(
-        this.error,
-        this.errorMessage
-      );
       this.initialised = true;
     } catch (e) {
       log.error(e);
@@ -128,10 +122,32 @@ export class ItemPreview {
   }
 
   async errorChanged() {
-    this.notificationObject = await this.notificationChecker.getPreviewNotification(
-      this.error,
-      this.errorMessage
-    );
+    if (this.error) {
+      this.notification = {
+        message: {
+          title: "preview.technicalError.title",
+          body: "preview.technicalError.body",
+          parameters: {
+            errorMessage: this.errorMessage
+          }
+        },
+        priority: {
+          type: "high",
+          value: 10
+        }
+      };
+    } else {
+      this.notification = {
+        message: {
+          title: "preview.hint.title",
+          body: "preview.hint.body"
+        },
+        priority: {
+          type: "low",
+          value: 10
+        }
+      };
+    }
   }
 
   attached() {
@@ -230,8 +246,8 @@ export class ItemPreview {
     this.fetchRenderingInfo()
       .then(renderingInfo => {
         this.renderingInfo = renderingInfo;
-        this.error = false;
-        this.errorMessage = "";
+        this.error = undefined;
+        this.errorMessage = undefined;
       })
       .catch(response => {
         if (![400, 500].includes(response.status)) {

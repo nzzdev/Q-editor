@@ -1,5 +1,4 @@
 import { bindable, inject, Loader } from "aurelia-framework";
-import { checkAvailability } from "resources/schemaEditorDecorators.js";
 import array2d from "array2d";
 
 function hasNonNullInArray(arr) {
@@ -44,7 +43,6 @@ function emptyToNull(data) {
   return data;
 }
 
-@checkAvailability()
 @inject(Loader)
 export class SchemaEditorTable {
   @bindable schema;

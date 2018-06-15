@@ -11,9 +11,9 @@ import { ConfirmDialog } from "dialogs/confirm-dialog.js";
 
 import qEnv from "resources/qEnv.js";
 import ItemStore from "resources/ItemStore.js";
-import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
-import SchemaEditorInputAvailabilityChecker from "resources/SchemaEditorInputAvailabilityChecker.js";
-import NotificationChecker from "resources/NotificationChecker.js";
+import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
+import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
+import NotificationChecker from "resources/checkers/NotificationChecker.js";
 import ToolsInfo from "resources/ToolsInfo.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
@@ -68,7 +68,7 @@ function getTranslatedSchema(schema, toolName, i18n) {
   ItemStore,
   Notification,
   ToolEndpointChecker,
-  SchemaEditorInputAvailabilityChecker,
+  AvailabilityChecker,
   NotificationChecker,
   ToolsInfo,
   CurrentItemProvider,
@@ -83,7 +83,7 @@ export class Editor {
     itemStore,
     notification,
     toolEndpointChecker,
-    schemaEditorInputAvailabilityChecker,
+    availabilityChecker,
     notificationChecker,
     toolsInfo,
     currentItemProvider,
@@ -96,7 +96,7 @@ export class Editor {
     this.itemStore = itemStore;
     this.notification = notification;
     this.toolEndpointChecker = toolEndpointChecker;
-    this.schemaEditorInputAvailabilityChecker = schemaEditorInputAvailabilityChecker;
+    this.availabilityChecker = availabilityChecker;
     this.notificationChecker = notificationChecker;
     this.toolsInfo = toolsInfo;
     this.currentItemProvider = currentItemProvider;
@@ -167,7 +167,7 @@ export class Editor {
         if (item) {
           // set the toolName and the current item to toolEndpointChecker
           // whenever we activate the editor. The toolEndpointChecker is used
-          // in the SchemaEditorInputAvailabilityChecker to send requests to the current tool
+          // in the AvailabilityChecker and NotificationChecker to send requests to the current tool
           this.toolEndpointChecker.setCurrentToolName(this.toolName);
           this.toolEndpointChecker.setCurrentItem(item);
           this.currentItemProvider.setCurrentItem(item);
@@ -252,7 +252,7 @@ export class Editor {
       this.item.changed();
 
       // whenever we have a change in data, we need to reevaluate all the checks
-      this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
+      this.availabilityChecker.triggerReevaluation();
       this.notificationChecker.triggerReevaluation();
       this.toolEndpointChecker.triggerReevaluation();
       this.previewData = JSON.parse(JSON.stringify(this.item.conf));
@@ -265,7 +265,8 @@ export class Editor {
       .then(() => {
         log.info("item saved", this.item);
         // whenever we save the item, we need to reevaluate all the checks
-        this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
+        this.availabilityChecker.triggerReevaluation();
+        this.notificationChecker.triggerReevaluation();
         this.toolEndpointChecker.triggerReevaluation();
       })
       .catch(error => {

@@ -1,10 +1,8 @@
 import { bindable } from "aurelia-framework";
-import { checkAvailability } from "resources/schemaEditorDecorators.js";
 import Ajv from "ajv";
 
 const ajv = new Ajv();
 
-@checkAvailability()
 export class SchemaEditorJson {
   @bindable schema;
   @bindable data;

@@ -2,7 +2,7 @@ import { inject } from "aurelia-framework";
 import { Container } from "aurelia-dependency-injection";
 
 @inject(Container)
-export default class SchemaEditorInputAvailabilityChecker {
+export default class AvailabilityChecker {
   reevaluateCallbacks = [];
 
   constructor(diContainer) {
@@ -27,30 +27,9 @@ export default class SchemaEditorInputAvailabilityChecker {
     }
   }
 
-  hasAvailabilityCheck(schema) {
-    if (!schema.hasOwnProperty("Q:options")) {
-      return false;
-    }
-    if (!schema["Q:options"]) {
-      return false;
-    }
-    if (!Array.isArray(schema["Q:options"].availabilityChecks)) {
-      return false;
-    }
-    if (schema["Q:options"].availabilityChecks.length < 1) {
-      return false;
-    }
-    return true;
-  }
-
-  async getAvailabilityInfo(schema) {
+  async getAvailabilityInfo(availabilityChecks) {
     try {
-      if (!this.hasAvailabilityCheck(schema)) {
-        return {
-          isAvailable: true
-        };
-      }
-      for (let availabilityCheck of schema["Q:options"].availabilityChecks) {
+      for (let availabilityCheck of availabilityChecks) {
         let checker = this.diContainer.get(
           availabilityCheck.type + "AvailabilityCheck"
         );
