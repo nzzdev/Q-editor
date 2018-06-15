@@ -37,7 +37,7 @@
 .q-form select:focus {
   border-color: var(--q-color-gray-4);
   outline: none;
-  box-shadow: 0px 0px 5px 1px var(--q-color-gray-4);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 .q-form .disabled,
