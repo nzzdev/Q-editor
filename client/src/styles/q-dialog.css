@@ -4,7 +4,7 @@
   align-items: stretch;
   width: 80vw;
   height: auto;
-  padding: calc(var(--q-space-base) * 3);
+  padding: calc(var(--q-space-base) * 6);
   background-color: var(--q-color-gray-1);
   border: 1px solid var(--q-color-gray-4);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);
@@ -23,7 +23,7 @@
   width: 30%;
   flex-shrink: 0;
 
-  padding-left: calc(var(--q-space-base) * 3);
+  padding-left: calc(var(--q-space-base) * 6);
 
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@
 
 .q-dialog--bottom-controls .q-dialog__controls .button {
   flex-grow: 1;
-  margin-right: var(--q-space-base);
+  margin-right: calc(var(--q-space-base) * 2);
   max-width: 25%;
 }
 
@@ -51,5 +51,5 @@
 }
 
 ai-dialog-overlay {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
 }

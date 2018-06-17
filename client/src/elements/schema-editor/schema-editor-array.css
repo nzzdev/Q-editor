@@ -6,9 +6,8 @@ schema-editor-array {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  border-top: 1px solid var(--q-color-gray-4);
-  padding-top: var(--q-space-base);
-  margin-top: var(--q-space-base);
+  padding-top: calc(var(--q-space-base) * 2);
+  margin-top: calc(var(--q-space-base) * 2);
   position: relative;
 }
 
@@ -17,8 +16,7 @@ schema-editor-array {
 }
 
 .schema-editor-array__entry:last-of-type {
-  padding-bottom: var(--q-space-base);
-  border-bottom: 1px solid var(--q-color-gray-4);
+  padding-bottom: calc(var(--q-space-base) * 2);
 }
 
 .schema-editor-array__collapsecontrol {
@@ -30,17 +28,17 @@ schema-editor-array {
 }
 
 .schema-editor-array__collapsecontrol > span {
-  padding-left: calc(var(--q-space-base) / 2);
+  padding-left: var(--q-space-base);
 }
 
 .schema-editor-array__entry > schema-editor-wrapper {
   flex-grow: 1;
   z-index: 1; /* stay below collapsecontrol */
-  margin-top: calc(var(--q-space-base) / 2);
+  margin-top: var(--q-space-base);
 }
 
 .schema-editor-array__add-item-button {
-  margin: calc(var(--q-space-base) / 2) 0;
+  margin: var(--q-space-base) 0;
 }
 
 .schema-editor-array__entry-actions {
@@ -54,5 +52,5 @@ schema-editor-array {
 }
 
 .schema-editor-array__entry-actions > * {
-  margin-right: calc(var(--q-space-base) / 2);
+  margin-right: var(--q-space-base);
 }

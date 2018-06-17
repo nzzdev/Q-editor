@@ -3,6 +3,6 @@ preview-container {
   display: block;
   overflow: auto;
   width: 100%;
-  margin-top: var(--q-space-base);
-  margin-bottom: calc(var(--q-space-base) / 2);
+  margin-top: calc(var(--q-space-base) * 2);
+  margin-bottom: var(--q-space-base);
 }

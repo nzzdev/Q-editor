@@ -15,5 +15,5 @@ schema-editor-base64image label .schema-editor-base64image__input {
 schema-editor-base64image label img {
   height: 30px;
   align-self: center;
-  padding-left: calc(var(--q-space-base) / 2);
+  padding-left: var(--q-space-base);
 }

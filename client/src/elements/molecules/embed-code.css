@@ -5,7 +5,7 @@ embed-code:empty {
 embed-code pre {
   background: white;
   border: 1px solid var(--q-color-gray-3);
-  padding: calc(var(--q-space-base) / 2);
+  padding: var(--q-space-base);
   margin: 0;
   white-space: normal;
   overflow-wrap: break-word;
