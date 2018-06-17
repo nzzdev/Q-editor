@@ -19,7 +19,8 @@
     "only": "only",
     "graphic": "graphic",
     "graphic_plural": "graphics",
-    "browserSupportMessage": "Q is optimised for Chrome and may does not work in your browser.",
+    "browserSupportMessage":
+      "Q is optimised for Chrome and may does not work in your browser.",
     "changesSaved": "Changes saved.",
     "failedToSaveChanges": "Failed to save changes.",
     "loginFailed": "Your username or password is not correct.",
@@ -27,20 +28,26 @@
     "articlesWithThisGraphic": "Articles with this graphic"
   },
   "statistics": {
-    "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",
-    "enoughNewGraphics": "{{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active."
+    "tooFewNewGraphics":
+      "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",
+    "enoughNewGraphics":
+      "{{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active."
   },
   "editor": {
-    "questionLeaveWithUnsavedChanges": "Not all changes are saved, close anyway?",
-    "questionReallyEditBecauseActive": "This graphic is already activ. Changes will be applied in all articles. Do you really want to edit this graphic?",
+    "questionLeaveWithUnsavedChanges":
+      "Not all changes are saved, close anyway?",
+    "questionReallyEditBecauseActive":
+      "This graphic is already activ. Changes will be applied in all articles. Do you really want to edit this graphic?",
     "confirmProceedToEditor": "Yes, proceed to editor",
     "cancelProceedToEditor": "No, cancel",
     "arrayEntryAdd": "add {{ arrayEntryLabel }}",
-    "activatingEditorTakesTooLong": "It takes too long to load the editor, something is wrong.",
+    "activatingEditorTakesTooLong":
+      "It takes too long to load the editor, something is wrong.",
     "failedToSave": "Failed to save",
     "conflictOnSave": "Failed to save due to a conflict",
     "failedToLoadEditorPart": "failed to load the editor for this element",
-    "noAutosaveBecauseActive": "Automatic saving is deactivated because the graphic is already active",
+    "noAutosaveBecauseActive":
+      "Automatic saving is deactivated because the graphic is already active",
     "required": "required"
   },
   "metaEditor": {
@@ -54,7 +61,6 @@
     "blueprint": "use as blueprint",
     "blueprintTitlePrefix": "Copy of ",
     "edit": "edit",
-    "failedToLoadItem": "Failed to load the graphic.",
     "failedToBlueprintItem": "Failed to blueprint the graphic."
   },
   "itemsFilter": {
@@ -82,35 +88,39 @@
     "failedToLoadItem": "Failed to load the graphic.",
     "toolNotAvailable": "This tool is not available",
     "maxNumberOfFilesExceed": "You are not allowed to upload more files",
-    "missingValue": {
-      "title": "Please fill out this field",
+    "isValueMissing": {
+      "title": "Required field",
       "body": "This field must be filled out."
     },
-    "table": {
-      "emptyData": {
-        "title": "Fill in your data",
-        "body": "Enter your data or copy directly from Excel. Select cell A1 and copy/paste using Ctrl/Cmd + V. Important: Each column needs a header."
-      },
-      "emptyFirstRow": {
-        "title": "No column header defined",
-        "body": "Please add a header for each column in the first row."
-      },
-      "tooManyColumns": {
-        "title": "Data contains many categories",
-        "body": "Click on the «Switch rows and columns» button. Your graphic will probably be more clear."
-      }
+    "emptyData": {
+      "title": "Fill in your data",
+      "body":
+        "Enter your data or copy directly from Excel. Select cell A1 and copy/paste using Ctrl/Cmd + V."
+    },
+    "emptyFirstRow": {
+      "title": "No column header defined",
+      "body": "Please add a header for each column in the first row."
+    },
+    "tooManyColumns": {
+      "title": "Data contains many columns",
+      "body":
+        "Click on the «Switch rows and columns» button. Your graphic will probably be more clear."
     }
   },
   "dropzone": {
     "dictDefaultMessage": "Drop files here to upload",
     "dictDefaultMessageSingleFile": "Drop file here to upload",
-    "dictFallbackMessage": "Your browser does not support drag'n'drop file uploads.",
-    "dictFallbackText": "Please use the fallback form below to upload your files like in the olden days.",
-    "dictFileTooBig": "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
+    "dictFallbackMessage":
+      "Your browser does not support drag'n'drop file uploads.",
+    "dictFallbackText":
+      "Please use the fallback form below to upload your files like in the olden days.",
+    "dictFileTooBig":
+      "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
     "dictInvalidFileType": "You can't upload files of this type.",
     "dictResponseError": "Server responded with {{statusCode}} code.",
     "dictCancelUpload": "Cancel upload",
-    "dictCancelUploadConfirmation": "Are you sure you want to cancel this upload?",
+    "dictCancelUploadConfirmation":
+      "Are you sure you want to cancel this upload?",
     "dictRemoveFile": "Remove file",
     "dictMaxFilesExceeded": "You cannot upload any more files."
   },
@@ -127,7 +137,8 @@
     },
     "generalError": {
       "title": "Please fill out all required fields",
-      "body": "In order to show the preview all required fields need to be filled out."
+      "body":
+        "In order to show the preview all required fields need to be filled out."
     },
     "technicalError": {
       "title": "Technical error occurred",
