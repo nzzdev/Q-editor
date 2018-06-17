@@ -105,6 +105,11 @@ export class Editor {
     this.i18n = i18n;
     this.eventAggregator = eventAggregator;
     this.taskQueue = taskQueue;
+
+    // used to hold all the notifications appearing in
+    // the schema-editor tree
+    this.optionsNotifications = [];
+    this.editorNotifications = [];
   }
 
   async activate(routeParams) {
@@ -247,14 +252,22 @@ export class Editor {
     }
   }
 
+  triggerReevaluations() {
+    // emtpy the notifications as we will get new ones
+    this.editorNotifications = [];
+    this.optionsNotifications = [];
+    this.availabilityChecker.triggerReevaluation();
+    this.notificationChecker.triggerReevaluation();
+    this.toolEndpointChecker.triggerReevaluation();
+  }
+
   handleChange() {
     this.taskQueue.queueMicroTask(() => {
       this.item.changed();
 
-      // whenever we have a change in data, we need to reevaluate all the checks
-      this.availabilityChecker.triggerReevaluation();
-      this.notificationChecker.triggerReevaluation();
-      this.toolEndpointChecker.triggerReevaluation();
+      // whenever we have a change in data, we need to reevaluate all the checks...
+      this.triggerReevaluations();
+      // ... and update thte previewData to fetch new renderingInfo from the tool
       this.previewData = JSON.parse(JSON.stringify(this.item.conf));
     });
   }
@@ -265,9 +278,7 @@ export class Editor {
       .then(() => {
         log.info("item saved", this.item);
         // whenever we save the item, we need to reevaluate all the checks
-        this.availabilityChecker.triggerReevaluation();
-        this.notificationChecker.triggerReevaluation();
-        this.toolEndpointChecker.triggerReevaluation();
+        this.triggerReevaluations();
       })
       .catch(error => {
         log.error(error);

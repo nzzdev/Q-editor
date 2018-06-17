@@ -12,6 +12,10 @@
   <div class="item-preview__container">
     <preview-container ref="previewContainer" width.one-way="previewWidthProxy.width" rendering-info.one-way="renderingInfo"
       target.one-way="targetProxy.target" error.bind="error"></preview-container>
-    <notification notification.bind="notification"></notification>
+    <div>
+        <notification notification.bind="notification"></notification>
+        <!-- this is used to show the notifications from options -->
+        <slot name="notifications"></slot>
+    </div>
   </div>
 </template>

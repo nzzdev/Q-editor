@@ -6,6 +6,8 @@ export class SchemaEditorObject {
   @bindable data;
   @bindable change;
   @bindable noObjectTitle;
+  @bindable notifications;
+  @bindable showNotifications;
 
   constructor() {
     this.getType = getType;

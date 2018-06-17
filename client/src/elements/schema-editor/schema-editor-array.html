@@ -20,7 +20,7 @@
       </div>
     </div>
     <schema-editor-wrapper if.bind="(collapsedStates[$index] === 'expanded' || !options.expandable) && isEntryAvailable($index) & async"
-      schema.bind="dataItemsSchemas[$index]" data.two-way="data[$index]" change.bind="$parent.handleChange" no-object-title="true">
+      schema.bind="dataItemsSchemas[$index]" data.two-way="data[$index]" change.bind="$parent.handleChange" no-object-title="true" notifications.bind="notifications" show-notifications.bind="showNotifications">
     </schema-editor-wrapper>
     <div class="schema-editor-array__entry-actions" if.bind="!options.expandable">
       <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp($index)" size="small"></button-tertiary>

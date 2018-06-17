@@ -2,7 +2,7 @@
   <require from="./schema-editor-wrapper.css"></require>
   <div if.bind="getType(schema) === 'object'" class="schema-editor-block">
     <require from="./schema-editor-object"></require>
-    <schema-editor-object schema.bind="schema" data.two-way="data" change.bind="change" no-object-title.bind="noObjectTitle"></schema-editor-object>
+    <schema-editor-object schema.bind="schema" data.two-way="data" change.bind="change" no-object-title.bind="noObjectTitle" notifications.bind="notifications" show-notifications.bind="showNotifications"></schema-editor-object>
   </div>
 
   <div if.bind="getType(schema) === 'string'" class="schema-editor-block">
@@ -47,7 +47,7 @@
 
   <div if.bind="getType(schema) === 'array'" class="schema-editor-block">
     <require from="./schema-editor-array"></require>
-    <schema-editor-array schema.bind="schema" data.two-way="data" change.bind="change"></schema-editor-array>
+    <schema-editor-array schema.bind="schema" data.two-way="data" change.bind="change" notifications.bind="notifications" show-notifications.bind="showNotifications"></schema-editor-array>
   </div>
 
   <div if.bind="getType(schema) === 'select'" class="schema-editor-block">
@@ -79,5 +79,5 @@
     <require from="./schema-editor-files"></require>
     <schema-editor-files schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-files>
   </div>
-  <notification notification.bind="notifications[0]"></notification>
+  <notification if.bind="showNotifications" notification.bind="visibleNotification"></notification>
 </template>

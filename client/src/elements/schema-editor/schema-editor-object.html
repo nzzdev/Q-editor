@@ -10,7 +10,9 @@
             schema.bind="$parent.schema.properties[propertyName]"
             data.two-way="$parent.data[propertyName]"
             change.bind="$parent.change"
-            required.bind="isRequired($parent.schema, propertyName)">
+            required.bind="isRequired($parent.schema, propertyName)"
+            notifications.bind="notifications"
+            show-notifications.bind="showNotifications">
         </schema-editor-wrapper>
       </fieldset>
 
@@ -19,7 +21,9 @@
         schema.bind="$parent.schema.properties[propertyName]"
         data.two-way="$parent.data[propertyName]"
         change.bind="$parent.change"
-        required.bind="isRequired($parent.schema, propertyName)">
+        required.bind="isRequired($parent.schema, propertyName)"
+        notifications.bind="notifications"
+        show-notifications.bind="showNotifications">
       </schema-editor-wrapper>
 
     </div>

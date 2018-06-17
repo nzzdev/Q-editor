@@ -9,9 +9,10 @@ export class SchemaEditorWrapper {
   @bindable data;
   @bindable change;
   @bindable required;
+  @bindable notifications;
+  @bindable showNotifications;
   @bindable noObjectTitle;
 
-  notificationObject = {};
   options = {};
 
   constructor(notificationChecker, availabilityChecker, element) {
@@ -26,7 +27,7 @@ export class SchemaEditorWrapper {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
 
-    // if this has notifications
+    // if this has notificationChecks
     if (Array.isArray(this.options.notificationChecks)) {
       this.applyNotifications();
       this.reevaluateNotificationsCallback = this.applyNotifications.bind(this);
@@ -58,14 +59,17 @@ export class SchemaEditorWrapper {
     const newNotifications = await this.notificationChecker.getNotifications(
       this.options.notificationChecks
     );
-    this.notifications = newNotifications;
+    // the visibleNotification is shown directly if showNotifications is true
+    this.visibleNotification = newNotifications[0];
+    // the notifications array is passed down the schema-editor childs to hold all notifications
+    // in the object tree
+    this.notifications.push(newNotifications[0]);
   }
 
   async applyAvailability() {
     const availability = await this.availabilityChecker.getAvailabilityInfo(
       this.options.availabilityChecks
     );
-    // console.log(this.options.availabilityChecks, availability);
     if (availability.isAvailable) {
       this.element.style.display = "flex";
     } else {

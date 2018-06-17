@@ -10,6 +10,8 @@ export class SchemaEditorArray {
   @bindable schema;
   @bindable data;
   @bindable change;
+  @bindable notifications;
+  @bindable showNotifications;
 
   arrayEntryOptions = [];
 

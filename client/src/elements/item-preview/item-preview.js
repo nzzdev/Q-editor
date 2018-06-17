@@ -16,7 +16,6 @@ export class ItemPreview {
 
   sizeOptions = [];
   errorMessage = "";
-  notificationObject = {};
 
   constructor(qTargets, qConfig, user, i18n) {
     this.qTargets = qTargets;
