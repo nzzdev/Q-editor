@@ -2,21 +2,14 @@
   <require from="./preview-container"></require>
   <require from="./item-preview.css"></require>
   <require from="../molecules/radio-button-group"></require>
-
-  <form class="item-preview__settings" if.bind="initialised">
-    <div class="q-form">
-      <label class="q-text-small q-text--light"><span t="general.previewTargetLabel"></span>
-        <select value.bind="targetProxy.target">
-          <option repeat.for="publication of publications" model.bind="getTargetForKey(publication.previewTarget)">${publication.label}</option>
-        </select>
-      </label>
-    </div>
-    <div>
-      <label class="q-text-small q-text--light" t="general.previewSizeLabel"></label>
-      <radio-button-group options.bind="sizeOptions" value.two-way="previewWidthProxy.width"></radio-button-group>
-    </div>
-  </form>
-  <p class="q-text q-text--error" if.bind="errorMessage">${errorMessage}</p>
-  <preview-container ref="previewContainer" width.one-way="previewWidthProxy.width" rendering-info.one-way="renderingInfo" target.one-way="targetProxy.target"></preview-container>
-  
+  <div class="item-preview__holder">
+    <form class="item-preview__settings" if.bind="initialised">
+      <div>
+        <label class="q-text-small q-text--light">${'preview.sizeLabel' & t}</label>
+        <radio-button-group options.bind="sizeOptions" value.two-way="previewWidthProxy.width"></radio-button-group>
+      </div>
+    </form>
+    <preview-container ref="previewContainer" width.one-way="previewWidthProxy.width" rendering-info.one-way="renderingInfo"
+      target.one-way="targetProxy.target" error.bind="error" loading-status.bind="loadingStatus"></preview-container>
+  </div>
 </template>

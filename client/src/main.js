@@ -82,8 +82,11 @@ export async function configure(aurelia) {
         backend: {
           loadPath: (lngs, namespaces) => {
             const namespace = namespaces[0];
-            if (namespace === "tools") {
+            if (namespace === "editorConfig") {
               return `${QServerBaseUrl}/editor/locales/{{lng}}/translation.json`;
+            }
+            if (namespace === "tools") {
+              return `${QServerBaseUrl}/editor/tools/locales/{{lng}}/translation.json`;
             }
             if (toolNames.indexOf(namespace) >= 0) {
               return `${QServerBaseUrl}/tools/${namespace}/locales/{{lng}}/translation.json`;
@@ -100,8 +103,9 @@ export async function configure(aurelia) {
         fallbackLng: "de",
         lng: availableLanguages[0],
         whitelist: availableLanguages,
-        ns: ["translation", "tools"].concat(toolNames),
-        defaultNS: "translation",
+        ns: ["translation", "tools", "editorConfig"].concat(toolNames),
+        defaultNS: "editorConfig",
+        fallbackNS: "translation",
         load: "languageOnly",
         debug: false
       });

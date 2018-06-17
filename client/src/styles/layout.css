@@ -1,15 +1,17 @@
 html {
   height: 100%;
-  box-sizing: border-box;
 }
 
 body {
   height: 100%;
   margin: 0;
   background-color: var(--q-color-gray-1);
+  box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
@@ -26,7 +28,7 @@ body {
 }
 
 .q-container--playground::before {
-  content: '';
+  content: "";
   display: block;
   width: 5px;
   position: absolute;
@@ -41,7 +43,7 @@ body {
 q-screen {
   flex-grow: 1;
   transition: opacity 0.2s ease-out;
-  margin-top: calc(var(--q-space-base) * 3.5);
+  margin-top: calc(var(--q-space-base) * 7);
 }
 
 q-screen.is-navigating {
@@ -55,5 +57,5 @@ q-screen main {
 
 main.index,
 main.item-overview {
-  padding: calc(var(--q-space-base) * 3);
+  padding: calc(var(--q-space-base) * 6);
 }

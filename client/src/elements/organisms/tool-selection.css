@@ -1,16 +1,18 @@
 tool-selection {
-  padding: calc(var(--q-space-base) * 2) 0;
+  padding: calc(var(--q-space-base) * 4) 0;
   border-top: 1px solid var(--q-color-gray-4);
   border-bottom: 1px solid var(--q-color-gray-4);
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  grid-gap: calc(var(--q-space-base) * 2) calc(var(--q-space-base) / 2);
+  grid-gap: calc(var(--q-space-base) * 4) var(--q-space-base);
 
   text-align: center;
 }
 
-tool-selection a, tool-selection a:hover, tool-selection a:visited {
+tool-selection a,
+tool-selection a:hover,
+tool-selection a:visited {
   color: var(--q-color-black);
   text-decoration: none;
 }

@@ -6,7 +6,7 @@ q-bar {
   box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.1);
   position: fixed;
   width: 100%;
-  height: calc(var(--q-space-base) * 3.5);
+  height: calc(var(--q-space-base) * 7);
   top: 0px;
   z-index: 500;
 }
@@ -15,7 +15,7 @@ q-bar {
   width: 45%;
   display: flex;
   flex-flow: row wrap;
-  padding-left: calc(var(--q-space-base) * 1.5);
+  padding-left: calc(var(--q-space-base) * 3);
 }
 
 .q-bar__center {
@@ -35,9 +35,9 @@ q-bar {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
-  padding-right: calc(var(--q-space-base) * 1.5);
+  padding-right: calc(var(--q-space-base) * 3);
 }
 
 .q-bar__help {
-  padding-left: var(--q-space-base);
+  padding-left: calc(var(--q-space-base) * 2);
 }

@@ -13,20 +13,9 @@ export class ItemPreview {
   @bindable id;
   @bindable target;
 
-  sizeOptions = [
-    {
-      value: 290,
-      icon: "mobile"
-    },
-    {
-      value: 560,
-      icon: "tablet"
-    },
-    {
-      value: 800,
-      icon: "widescreen"
-    }
-  ];
+  sizeOptions = [];
+  error = false;
+  errorMessage = "";
 
   constructor(qTargets, qConfig, user, i18n) {
     this.qTargets = qTargets;
@@ -59,11 +48,43 @@ export class ItemPreview {
       }
     );
 
+    this.sizeOptions = [
+      {
+        value: 290,
+        translationKey: "preview.small"
+      },
+      {
+        value: 560,
+        translationKey: "preview.medium"
+      },
+      {
+        value: 800,
+        translationKey: "preview.large"
+      }
+    ];
+
     this.init();
   }
 
   async init() {
     try {
+      // set the preview size options
+      const previewSizes = await this.qConfig.get("previewSizes");
+      if (previewSizes) {
+        this.sizeOptions = [];
+        for (let previewSizeName in previewSizes) {
+          const previewSize = previewSizes[previewSizeName];
+          const sizeOption = {
+            value: previewSize.value,
+            translationKey: previewSizeName
+          };
+          if (previewSize.label) {
+            sizeOption.label = previewSize.label;
+          }
+          this.sizeOptions.push(sizeOption);
+        }
+      }
+
       // set the default preview width to the most narrow variant
       this.previewWidthProxy.width = this.sizeOptions[0].value;
 
@@ -209,27 +230,19 @@ export class ItemPreview {
     if (!this.id && !this.data) {
       return;
     }
+    this.loadingStatus = 'loading';
     this.fetchRenderingInfo()
       .then(renderingInfo => {
-        this.errorMessage = undefined;
         this.renderingInfo = renderingInfo;
+        this.loadingStatus = 'loaded';
       })
       .catch(response => {
-        if (response.status === 400) {
-          this.errorMessage = this.i18n.tr("notifications.previewBadRequest");
-        } else {
+        this.error = true;
+        if (response.status !== 400) {
           this.errorMessage = response.statusText;
         }
         this.renderingInfo = {};
+        this.loadingStatus = 'loaded';
       });
-  }
-
-  getTargetForKey(targetKey) {
-    for (let target of this.availableTargets) {
-      if (targetKey === target.key) {
-        return target;
-      }
-    }
-    return undefined;
   }
 }

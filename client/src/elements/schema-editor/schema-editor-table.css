@@ -1,10 +1,10 @@
 schema-editor-table {
   display: block;
-  margin-bottom: var(--q-space-base);
+  margin-bottom: calc(var(--q-space-base) * 2);
 }
 
 schema-editor-table .handsontable {
-  margin-bottom: calc(var(--q-space-base) / 2);
+  margin-bottom: var(--q-space-base);
 }
 
 schema-editor-table .wtHolder {
@@ -13,7 +13,8 @@ schema-editor-table .wtHolder {
   line-height: 18px;
 }
 
-schema-editor-table .rowHeader, schema-editor-table .colHeader {
+schema-editor-table .rowHeader,
+schema-editor-table .colHeader {
   color: var(--q-text-ultralight-color);
 }
 
