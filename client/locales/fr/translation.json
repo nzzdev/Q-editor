@@ -25,9 +25,6 @@
     "failedToSaveChanges": "Impossible de sauvegarder les changements.",
     "loginFailed": "Votre identifiant ou mot de passe est incorrect.",
     "serverConnectionFailed": "Impossible de se connecter au serveur.",
-    "preview": "Prévisualisation",
-    "previewTargetLabel": "Publier",
-    "previewSizeLabel": "Taille",
     "articlesWithThisGraphic": "Articles avec ce graphique"
   },
   "statistics": {
@@ -37,6 +34,7 @@
       "{{count}} nouvellement activés $t(general.graphic) lors des derniers {{days}} jours. Total: {{totalActiveCount}} activés."
   },
   "editor": {
+    "title": "Entrez vos données",
     "questionLeaveWithUnsavedChanges":
       "Des changements n'ont pas été sauvegardés, fermer quand même ?",
     "questionReallyEditBecauseActive":
@@ -51,11 +49,18 @@
     "failedToLoadEditorPart":
       "L'éditeur ne peut être chargé en raison de cet élément",
     "noAutosaveBecauseActive":
-      "La sauvegarde automatique est désactivée car ce graphique est déjà actif"
+      "La sauvegarde automatique est désactivée car ce graphique est déjà actif",
+    "required": "requis",
+    "transpose": "Echange de lignes et de colonnes"
   },
   "metaEditor": {
+    "title": "Ajouter plus d'informations au graphique",
     "annotations": "Annotations",
-    "publication": "Publication"
+    "annotationPlaceholder":
+      "Ici vous pouvez capturer des mots-clés supplémentaires qui facilitent la recherche du graphique",
+    "publication": "Publication",
+    "shortname": "Raccourcis Auteur",
+    "department": "Département"
   },
   "item": {
     "save": "sauvegarder",
@@ -87,15 +92,31 @@
     "searchLabel": "Chercher un élément Q"
   },
   "notifications": {
-    "previewBadRequest":
-      "Des données manquent pour générer une prévisualisation",
     "failedLoadingEditorConfig":
       "Impossible de charger la configuration de l'éditeur",
     "graphicNeedsATitle": "Ce graphique a besoin d'un titre",
     "failedLoadingItems": "Impossible de charger ces graphiques",
     "failedToLoadItem": "Impossible de charger ce graphique.",
     "toolNotAvailable": "Cet outil n'est pas disponible",
-    "maxNumberOfFilesExceed": "Vous ne pouvez pas envoyer plus de fichiers"
+    "maxNumberOfFilesExceed": "Vous ne pouvez pas envoyer plus de fichiers",
+    "isValueMissing": {
+      "title": "Champ obligatoire",
+      "body": "Ce champ doit être rempli."
+    },
+    "emptyData": {
+      "title": "Entrer les données",
+      "body":
+        "Vous pouvez entrer des données directement ou copier à partir d'Excel. Sélectionnez la cellule A1 et collez-la avec Ctrl / Cmd + V."
+    },
+    "emptyFirstRow": {
+      "title": "Oubliez les en-têtes de colonnes?",
+      "body": "Chaque colonne devrait avoir un titre dans la rangée 1."
+    },
+    "tooManyColumns": {
+      "title": "De très nombreuses colonnes",
+      "body":
+        "Cliquez sur «Echange de lignes et de colonnes». Vraisemblablement, le graphique est plus clair après."
+    }
   },
   "dropzone": {
     "dictDefaultMessage": "Déposez ici les fichiers à envoyer",
@@ -113,5 +134,27 @@
       "Êtes-vous certain de vouloir annuler cet envoi ?",
     "dictRemoveFile": "Supprimer ce fichier",
     "dictMaxFilesExceeded": "Vous ne pouvez pas envoyer plus de fichiers."
+  },
+  "preview": {
+    "title": "Modifier ta graphique",
+    "small": "Petit",
+    "medium": "Moyens",
+    "large": "Grand",
+    "sizeLabel": "Taille",
+    "error": "Le graphique ne peut pas être affiché",
+    "hint": {
+      "title": "Toutes les tailles contrôlées?",
+      "body":
+        "S'il vous plaît vérifier si le graphique fonctionne bien dans toutes les tailles. Nos utilisateurs les verront sur des appareils très différents."
+    },
+    "generalError": {
+      "title": "Il y a un manque de données pour montrer l'aperçu",
+      "body": "S'il vous plaît remplir tous les champs obligatoires."
+    },
+    "technicalError": {
+      "title": "Un problème technique est survenu",
+      "body":
+        "Veuillez réessayer de sauvegarder le graphique et recharger Q. {{errorMessage}}"
+    }
   }
 }
