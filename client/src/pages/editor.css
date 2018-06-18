@@ -1,14 +1,13 @@
 .editor {
-  padding: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 2);
+  padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 4);
   min-width: 650px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .editor section {
-  padding-bottom: var(--q-space-base);
-  border-bottom: 1px solid var(--q-color-gray-4);
-  margin-bottom: calc(var(--q-space-base) * 2);
+  padding-bottom: calc(var(--q-space-base) * 2);
+  margin-bottom: calc(var(--q-space-base) * 4);
 }
 
 .editor__preview {

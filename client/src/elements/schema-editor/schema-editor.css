@@ -7,8 +7,8 @@ schema-editor#schema-editor--main
   schema-editor-wrapper
   schema-editor-wrapper
   > :first-child {
-  width: calc(100% - 196px);
-  margin-right: var(--q-space-base);
+  width: calc(100% - (180px + 2 * var(--q-space-base)));
+  margin-right: calc(var(--q-space-base) * 2);
 }
 
 schema-editor fieldset {

@@ -7,5 +7,5 @@ schema-editor-wrapper > :first-child {
 }
 
 .schema-editor-wrapper--input {
-  max-height: calc(var(--q-space-base) * 4.5);
+  max-height: calc(var(--q-space-base) * 9);
 }
