@@ -9,7 +9,14 @@
         <radio-button-group options.bind="sizeOptions" value.two-way="previewWidthProxy.width"></radio-button-group>
       </div>
     </form>
-    <preview-container ref="previewContainer" width.one-way="previewWidthProxy.width" rendering-info.one-way="renderingInfo"
-      target.one-way="targetProxy.target" error.bind="error" loading-status.bind="loadingStatus"></preview-container>
+    <div class="item-preview__container">
+      <preview-container ref="previewContainer" width.one-way="previewWidthProxy.width" rendering-info.one-way="renderingInfo"
+        target.one-way="targetProxy.target" error.bind="error" loading-status.bind="loadingStatus"></preview-container>
+      <div class="item-preview__notification">
+        <notification notification.bind="notification"></notification>
+        <!-- this is used to show the notifications from options -->
+        <slot name="notifications"></slot>
+      </div>
+    </div>
   </div>
 </template>

@@ -12,14 +12,14 @@ import EmbedCodeGenerator from "resources/EmbedCodeGenerator.js";
 import ItemStore from "resources/ItemStore.js";
 import Statistics from "resources/Statistics.js";
 import ToolsInfo from "resources/ToolsInfo.js";
-import SchemaEditorInputAvailabilityChecker from "resources/SchemaEditorInputAvailabilityChecker.js";
-import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
+import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
+import NotificationChecker from "resources/checkers/NotificationChecker.js";
+import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 import IdGenerator from "resources/IdGenerator.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 import qEnv from "resources/qEnv.js";
 import { registerEastereggs } from "eastereggs.js";
-
 import Backend from "i18next-fetch-backend";
 
 export async function configure(aurelia) {
@@ -30,7 +30,8 @@ export async function configure(aurelia) {
   aurelia.use.singleton(ItemStore);
   aurelia.use.singleton(QTargets);
   aurelia.use.singleton(ToolsInfo);
-  aurelia.use.singleton(SchemaEditorInputAvailabilityChecker);
+  aurelia.use.singleton(AvailabilityChecker);
+  aurelia.use.singleton(NotificationChecker);
   aurelia.use.singleton(ToolEndpointChecker);
   aurelia.use.singleton(IdGenerator);
   aurelia.use.singleton(CurrentItemProvider);
@@ -46,6 +47,7 @@ export async function configure(aurelia) {
     .feature("elements/organisms")
     .feature("icons")
     .feature("resources/availability-checks")
+    .feature("resources/notification-checks")
     .feature("binding-behaviors")
     .feature("value-converters")
     .plugin("aurelia-dialog", config => {
