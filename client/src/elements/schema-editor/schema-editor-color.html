@@ -2,6 +2,10 @@
   <require from="./schema-editor-color.css"></require>
   <label>
     ${schema["title"]}
+    <span show.bind="required">
+      <span>- </span>
+      <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
+    </span>
     <input type="color" value.bind="data" required.bind="required" change.delegate="change() & debounce:500">
   </label>
 </template>

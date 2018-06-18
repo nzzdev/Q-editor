@@ -1,23 +1,17 @@
-.editor {
-  height: 100%;
-  display: flex;
-}
-
-.editor main {
-  flex-grow: 1;
-}
-
-.editor main section {
-  padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 6);
-}
-
-.editor__preview-container {
-  background-color: var(--q-color-gray-2);
+.editor section {
+  min-width: 650px;
+  max-width: 1200px;
+  padding: calc(var(--q-space-base) * 6) calc(var(--q-space-base) * 4);
+  margin: 0 auto;
 }
 
 .editor__preview {
   display: flex;
   flex-direction: row;
+}
+
+.editor__preview-container {
+  background-color: var(--q-color-gray-2);
 }
 
 .editor__preview item-preview {

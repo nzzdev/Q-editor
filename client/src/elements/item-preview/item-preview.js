@@ -1,4 +1,4 @@
-import { bindable, inject, LogManager } from "aurelia-framework";
+import { bindable, observable, inject, LogManager } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import qEnv from "resources/qEnv.js";
 import QTargets from "resources/QTargets.js";
@@ -12,9 +12,9 @@ export class ItemPreview {
   @bindable data;
   @bindable id;
   @bindable target;
+  @observable error = false;
 
   sizeOptions = [];
-  error = false;
   errorMessage = "";
 
   constructor(qTargets, qConfig, user, i18n) {
@@ -137,6 +137,35 @@ export class ItemPreview {
     this.loadPreview();
   }
 
+  async errorChanged() {
+    if (this.error && this.errorMessage) {
+      this.notification = {
+        message: {
+          title: "preview.technicalError.title",
+          body: "preview.technicalError.body",
+          parameters: {
+            errorMessage: this.errorMessage
+          }
+        },
+        priority: {
+          type: "high",
+          value: 10
+        }
+      };
+    } else if (!this.error) {
+      this.notification = {
+        message: {
+          title: "preview.hint.title",
+          body: "preview.hint.body"
+        },
+        priority: {
+          type: "low",
+          value: 10
+        }
+      };
+    }
+  }
+
   attached() {
     this.loadPreview();
   }
@@ -230,19 +259,21 @@ export class ItemPreview {
     if (!this.id && !this.data) {
       return;
     }
-    this.loadingStatus = 'loading';
+    this.loadingStatus = "loading";
     this.fetchRenderingInfo()
       .then(renderingInfo => {
         this.renderingInfo = renderingInfo;
-        this.loadingStatus = 'loaded';
+        this.error = undefined;
+        this.errorMessage = undefined;
+        this.loadingStatus = "loaded";
       })
       .catch(response => {
-        this.error = true;
-        if (response.status !== 400) {
+        if (![400, 500].includes(response.status)) {
           this.errorMessage = response.statusText;
         }
+        this.error = true;
         this.renderingInfo = {};
-        this.loadingStatus = 'loaded';
+        this.loadingStatus = "loaded";
       });
   }
 }

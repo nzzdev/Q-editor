@@ -1,13 +1,11 @@
 import { inject, LogManager } from "aurelia-framework";
-import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
-import User from "resources/User.js";
+import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 
 const log = LogManager.getLogger("Q");
 
-@inject(User, ToolEndpointChecker)
+@inject(ToolEndpointChecker)
 export default class ToolEndpointAvailabilityCheck {
-  constructor(user, toolEndpointChecker) {
-    this.user = user;
+  constructor(toolEndpointChecker) {
     this.toolEndpointChecker = toolEndpointChecker;
   }
 

@@ -12,6 +12,7 @@ export class PreviewContainer {
   @bindable error;
 
   insertedElements = [];
+  stylesheetRules = [];
 
   constructor(element) {
     this.element = element;

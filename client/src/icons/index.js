@@ -24,6 +24,8 @@ export function configure(frameworkConfiguration) {
     .globalResources("./icon-mobile.html")
     .globalResources("./icon-next.html")
     .globalResources("./icon-no.html")
+    .globalResources("./icon-notification-medium.html")
+    .globalResources("./icon-notification-high.html")
     .globalResources("./icon-proceed.html")
     .globalResources("./icon-save-state.html")
     .globalResources("./icon-save.html")

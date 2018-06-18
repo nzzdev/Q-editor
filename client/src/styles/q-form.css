@@ -29,7 +29,13 @@
 }
 
 .q-form input:invalid {
-  border-color: var(--q-color-error-light);
+  border: solid 1px var(--q-color-error);
+  box-shadow: 0 0 4px 0 var(--q-color-error-light);
+}
+
+.q-form input:focus:invalid {
+  border: solid 1px var(--q-color-error);
+  box-shadow: 0 0 4px 0 var(--q-color-error-light);
 }
 
 .q-form input:focus,

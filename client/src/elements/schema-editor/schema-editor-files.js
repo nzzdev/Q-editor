@@ -1,12 +1,10 @@
 import { bindable, inject, Loader, LogManager } from "aurelia-framework";
 import { Notification } from "aurelia-notification";
 import { I18N } from "aurelia-i18n";
-import { checkAvailability } from "resources/schemaEditorDecorators.js";
 import qEnv from "resources/qEnv.js";
 import { AuthService } from "aurelia-authentication";
 const log = LogManager.getLogger("Q");
 
-@checkAvailability()
 @inject(Loader, AuthService, Notification, I18N)
 export class SchemaEditorFiles {
   @bindable schema;

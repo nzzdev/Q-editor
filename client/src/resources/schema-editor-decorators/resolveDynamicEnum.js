@@ -1,4 +1,4 @@
-import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
+import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 import { Container } from "aurelia-dependency-injection";
 
 export function resolveDynamicEnum() {

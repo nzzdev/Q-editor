@@ -49,6 +49,7 @@
     "failedToLoadEditorPart": "failed to load the editor for this element",
     "noAutosaveBecauseActive":
       "Automatic saving is deactivated because the graphic is already active",
+    "required": "required",
     "transpose": "Switch rows and columns"
   },
   "metaEditor": {
@@ -67,7 +68,6 @@
     "blueprint": "use as blueprint",
     "blueprintTitlePrefix": "Copy of ",
     "edit": "edit",
-    "failedToLoadItem": "Failed to load the graphic.",
     "failedToBlueprintItem": "Failed to blueprint the graphic."
   },
   "itemsFilter": {
@@ -89,13 +89,30 @@
     "searchLabel": "Search for a Q element"
   },
   "notifications": {
-    "previewError": "The graphic can not be displayed",
     "failedLoadingEditorConfig": "Failed to load editor configuration",
     "graphicNeedsATitle": "Graphic needs a title",
     "failedLoadingItems": "Failed loading graphics",
     "failedToLoadItem": "Failed to load the graphic.",
     "toolNotAvailable": "This tool is not available",
-    "maxNumberOfFilesExceed": "You are not allowed to upload more files"
+    "maxNumberOfFilesExceed": "You are not allowed to upload more files",
+    "isValueMissing": {
+      "title": "Required field",
+      "body": "This field must be filled out."
+    },
+    "emptyData": {
+      "title": "Fill in your data",
+      "body":
+        "Enter your data or copy directly from Excel. Select cell A1 and copy/paste using Ctrl/Cmd + V."
+    },
+    "emptyFirstRow": {
+      "title": "No column header defined",
+      "body": "Please add a header for each column in the first row."
+    },
+    "tooManyColumns": {
+      "title": "Data contains many columns",
+      "body":
+        "Click on the «Switch rows and columns» button. Your graphic will probably be more clear."
+    }
   },
   "dropzone": {
     "dictDefaultMessage": "Drop files here to upload",
@@ -119,6 +136,20 @@
     "small": "Small",
     "medium": "Medium",
     "large": "Large",
-    "sizeLabel": "Preview for..."
+    "sizeLabel": "Preview for...",
+    "error": "The graphic can not be displayed",
+    "hint": {
+      "title": "Please check the graphic on all sizes",
+      "body": "The graphic should be well readable on all sizes."
+    },
+    "generalError": {
+      "title": "Please fill out all required fields",
+      "body":
+        "In order to show the preview all required fields need to be filled out."
+    },
+    "technicalError": {
+      "title": "Technical error occurred",
+      "body": "Please try to save the graphic and reload Q. {{errorMessage}}"
+    }
   }
 }

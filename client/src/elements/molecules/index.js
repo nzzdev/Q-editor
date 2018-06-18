@@ -5,5 +5,6 @@ export function configure(frameworkConfiguration) {
     .globalResources("./embed-code")
     .globalResources("./item-list-entry")
     .globalResources("./language-switcher")
-    .globalResources("./radio-button-group");
+    .globalResources("./radio-button-group")
+    .globalResources("./notification");
 }
