@@ -51,15 +51,15 @@ export class ItemPreview {
     this.sizeOptions = [
       {
         value: 290,
-        text: this.i18n.tr("preview.small")
+        translationKey: "preview.small"
       },
       {
         value: 560,
-        text: this.i18n.tr("preview.medium")
+        translationKey: "preview.medium"
       },
       {
         value: 800,
-        text: this.i18n.tr("preview.large")
+        translationKey: "preview.large"
       }
     ];
 
@@ -68,6 +68,23 @@ export class ItemPreview {
 
   async init() {
     try {
+      // set the preview size options
+      const previewSizes = await this.qConfig.get("previewSizes");
+      if (previewSizes) {
+        this.sizeOptions = [];
+        for (let previewSizeName in previewSizes) {
+          const previewSize = previewSizes[previewSizeName];
+          const sizeOption = {
+            value: previewSize.value,
+            translationKey: previewSizeName
+          };
+          if (previewSize.label) {
+            sizeOption.label = previewSize.label;
+          }
+          this.sizeOptions.push(sizeOption);
+        }
+      }
+
       // set the default preview width to the most narrow variant
       this.previewWidthProxy.width = this.sizeOptions[0].value;
 
@@ -242,11 +259,13 @@ export class ItemPreview {
     if (!this.id && !this.data) {
       return;
     }
+    this.loadingStatus = "loading";
     this.fetchRenderingInfo()
       .then(renderingInfo => {
         this.renderingInfo = renderingInfo;
         this.error = undefined;
         this.errorMessage = undefined;
+        this.loadingStatus = "loaded";
       })
       .catch(response => {
         if (![400, 500].includes(response.status)) {
@@ -254,6 +273,7 @@ export class ItemPreview {
         }
         this.error = true;
         this.renderingInfo = {};
+        this.loadingStatus = "loaded";
       });
   }
 }

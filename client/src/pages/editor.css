@@ -13,18 +13,20 @@
 
 .editor__preview {
   display: flex;
-  flex-flow: row;
+  flex-direction: row;
 }
 
 .editor__preview item-preview {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .editor__preview .editor__options {
   width: 250px;
   flex-grow: 0;
   flex-shrink: 0;
-  margin-right: var(--q-space-base);
+  margin-right: calc(var(--q-space-base) * 2);
   overflow-y: scroll;
   --q-h1-size: 13px;
   --q-h2-size: 13px;
@@ -35,21 +37,18 @@
 }
 
 .editor__options .schema-editor-input {
-  margin-bottom: calc(var(--q-space-base) / 2);
+  margin-bottom: var(--q-space-base);
 }
 
 .editor__options legend {
   width: 100%;
-  margin-top: var(--q-space-base);
+  margin-top: calc(var(--q-space-base) * 2);
 
   /* the following properties are copied from h6 style */
   font-size: var(--q-h6-size);
   font-weight: var(--q-h6-weight);
   color: var(--q-text-light-color);
-  margin-bottom: calc(var(--q-space-base) / 2);
-
-  padding-bottom: 3px;
-  border-bottom: 1px solid var(--q-color-gray-4);
+  margin-bottom: var(--q-space-base);
 }
 
 /* make the options more compact by removing the margin around fieldsets */

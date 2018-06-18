@@ -32,43 +32,43 @@ confirm-button.state-question {
 }
 
 confirm-button.state-question .actions {
-  left: calc(var(--q-space-base) / 2 * -1);
-  padding: calc(var(--q-space-base) / 2);
+  left: calc(var(--q-space-base) * -1);
+  padding: var(--q-space-base);
   border: solid 1px var(--q-color-gray-4);
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.15);
   overflow: visible;
 }
 
 confirm-button.state-question .actions::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: -12px;
-  left: calc(((36px - var(--q-space-base)) / 2) + 4px);
+  left: calc(((36px - var(--q-space-base) * 2) / 2) + 4px);
   border-left: 12px solid transparent;
   border-right: 12px solid transparent;
   border-bottom: 12px solid var(--q-color-gray-4);
 }
 
 confirm-button.state-question .actions::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: -11px;
-  left: calc(((36px - var(--q-space-base)) / 2) + 4px);
+  left: calc(((36px - var(--q-space-base) * 2) / 2) + 4px);
   border-left: 12px solid transparent;
   border-right: 12px solid transparent;
   border-bottom: 12px solid var(--background-color);
 }
 
 confirm-button .actions > *:not(:last-child) {
-  margin-bottom: calc(var(--q-space-base) / 2);
+  margin-bottom: var(--q-space-base);
 }
 
 confirm-button.size-small.state-question .actions::before {
-  left: calc(((24px - var(--q-space-base)) / 2) + 4px);
+  left: calc(((24px - var(--q-space-base) * 2) / 2) + 4px);
 }
 
 confirm-button.size-small.state-question .actions::after {
-  left: calc(((24px - var(--q-space-base)) / 2) + 4px);
+  left: calc(((24px - var(--q-space-base) * 2) / 2) + 4px);
 }

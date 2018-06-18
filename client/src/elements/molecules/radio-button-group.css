@@ -7,7 +7,7 @@ radio-button-group {
 .radio-button-group__option {
   position: relative;
   flex-shrink: 0;
-  width: 110%;
+  width: 100px;
   height: 30px;
 }
 
@@ -21,11 +21,10 @@ radio-button-group {
   bottom: 0;
   left: 0;
   cursor: pointer;
-
-  background: var(--q-color-gray-3);
-
+  background: var(--q-color-white);
+  color: var(--q-color-gray-8);
   border-style: solid;
-  border-color: var(--q-color-gray-5);
+  border-color: var(--q-color-gray-4);
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 1px;
@@ -47,7 +46,7 @@ radio-button-group {
 }
 
 .radio-button-group__option label:hover {
-  background: var(--q-color-primary-3);
+  background: var(--q-color-primary-2);
   color: var(--q-color-white);
 }
 
@@ -60,6 +59,6 @@ radio-button-group {
 }
 
 .radio-button-group__option input[type="radio"]:checked ~ label {
-  background: var(--q-color-primary-4);
+  background: var(--q-color-primary-2);
   color: var(--q-color-white);
 }

@@ -130,9 +130,9 @@
     "dictMaxFilesExceeded": "Sie können keine weiteren Dateien mehr hochladen"
   },
   "preview": {
-    "small": "Mobile",
-    "medium": "Artikelbreite",
-    "large": "Volle Breite",
+    "small": "Klein",
+    "medium": "Mittel",
+    "large": "Gross",
     "title": "Vorschau",
     "sizeLabel": "Vorschau für...",
     "error": "Die Grafik kann nicht angezeigt werden",

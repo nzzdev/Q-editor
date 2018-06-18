@@ -2,20 +2,21 @@
   <require from="./preview-container"></require>
   <require from="./item-preview.css"></require>
   <require from="../molecules/radio-button-group"></require>
-
-  <form class="item-preview__settings" if.bind="initialised">
-    <div>
-      <label class="q-text-small q-text--light" t="preview.sizeLabel"></label>
-      <radio-button-group options.bind="sizeOptions" value.two-way="previewWidthProxy.width"></radio-button-group>
-    </div>
-  </form>
-  <div class="item-preview__container">
-    <preview-container ref="previewContainer" width.one-way="previewWidthProxy.width" rendering-info.one-way="renderingInfo"
-      target.one-way="targetProxy.target" error.bind="error"></preview-container>
-    <div>
+  <div class="item-preview__holder">
+    <form class="item-preview__settings" if.bind="initialised">
+      <div>
+        <label class="q-text-small q-text--light">${'preview.sizeLabel' & t}</label>
+        <radio-button-group options.bind="sizeOptions" value.two-way="previewWidthProxy.width"></radio-button-group>
+      </div>
+    </form>
+    <div class="item-preview__container">
+      <preview-container ref="previewContainer" width.one-way="previewWidthProxy.width" rendering-info.one-way="renderingInfo"
+        target.one-way="targetProxy.target" error.bind="error" loading-status.bind="loadingStatus"></preview-container>
+      <div>
         <notification notification.bind="notification"></notification>
         <!-- this is used to show the notifications from options -->
         <slot name="notifications"></slot>
+      </div>
     </div>
   </div>
 </template>

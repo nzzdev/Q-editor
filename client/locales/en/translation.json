@@ -125,9 +125,9 @@
     "dictMaxFilesExceeded": "You cannot upload any more files."
   },
   "preview": {
-    "small": "Mobile",
-    "medium": "Content",
-    "large": "Full",
+    "small": "Small",
+    "medium": "Medium",
+    "large": "Large",
     "title": "Preview",
     "sizeLabel": "Preview for...",
     "error": "The graphic can not be displayed",

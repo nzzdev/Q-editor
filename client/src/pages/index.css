@@ -36,7 +36,7 @@
 
   font-family: Roboto, sans-serif;
   font-size: var(--q-text-size);
-  caret-color: var(--q-color-primary-5);
+  caret-color: var(--q-color-primary-2);
 }
 
 .search input::placeholder {
@@ -64,7 +64,7 @@
 }
 
 .item-list-legend > div::before {
-  content: '';
+  content: "";
   width: 60px;
   height: 16px;
   border: 1px dashed var(--q-color-primary-2);
