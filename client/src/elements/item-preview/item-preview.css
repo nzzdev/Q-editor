@@ -29,3 +29,7 @@ item-preview {
 .item-preview__container {
   display: flex;
 }
+
+.item-preview__notification {
+  width: 180px;
+}

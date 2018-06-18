@@ -138,7 +138,7 @@ export class ItemPreview {
   }
 
   async errorChanged() {
-    if (this.error) {
+    if (this.error && this.errorMessage) {
       this.notification = {
         message: {
           title: "preview.technicalError.title",
@@ -152,7 +152,7 @@ export class ItemPreview {
           value: 10
         }
       };
-    } else {
+    } else if (!this.error) {
       this.notification = {
         message: {
           title: "preview.hint.title",

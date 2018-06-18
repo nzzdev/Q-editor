@@ -20,7 +20,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: calc(100% - var(--q-space-base) * 12);
+      height: calc(350px - var(--q-space-base) * 15);
       color: var(--q-color-error);
       background-color: var(--q-color-gray-2);
       padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 6);
@@ -35,7 +35,7 @@
     <div class="preview-element" css="width: ${width}px; color: ${previewColor}; background-color: ${previewColor};">
       <div ref="previewElement" css="${loadingStatus === 'loading' ? 'opacity: 0' : 'opacity: 1'};"></div>
       <div class="preview-element__error-box" show.bind="error">
-        <h4 class="preview-element__error-text">${'notifications.previewError' & t}</h4>
+        <h4 class="preview-element__error-text">${'preview.generalError.title' & t} ${'preview.generalError.body' & t}</h4>
       </div>
     </div>
   </div>
