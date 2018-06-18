@@ -19,7 +19,8 @@
     "only": "seulement",
     "graphic": "graphique",
     "graphic_plural": "graphiques",
-    "browserSupportMessage": "Q est optimisé pour Chrome et peut ne pas fonctionner dans votre navigateur.",
+    "browserSupportMessage":
+      "Q est optimisé pour Chrome et peut ne pas fonctionner dans votre navigateur.",
     "changesSaved": "Changements sauvegardés.",
     "failedToSaveChanges": "Impossible de sauvegarder les changements.",
     "loginFailed": "Votre identifiant ou mot de passe est incorrect.",
@@ -30,20 +31,27 @@
     "articlesWithThisGraphic": "Articles avec ce graphique"
   },
   "statistics": {
-    "tooFewNewGraphics": "{{count}} nouvellement activés $t(general.graphic) lors des derniers {{days}} jours. Total: {{totalActiveCount}} activés.",
-    "enoughNewGraphics": "{{count}} nouvellement activés $t(general.graphic) lors des derniers {{days}} jours. Total: {{totalActiveCount}} activés."
+    "tooFewNewGraphics":
+      "{{count}} nouvellement activés $t(general.graphic) lors des derniers {{days}} jours. Total: {{totalActiveCount}} activés.",
+    "enoughNewGraphics":
+      "{{count}} nouvellement activés $t(general.graphic) lors des derniers {{days}} jours. Total: {{totalActiveCount}} activés."
   },
   "editor": {
-    "questionLeaveWithUnsavedChanges": "Des changements n'ont pas été sauvegardés, fermer quand même ?",
-    "questionReallyEditBecauseActive": "Ce graphique est actif. Les changements seront appliqués dans tous les articles. Voulez-vous vraiment éditer ce graphique ?",
+    "questionLeaveWithUnsavedChanges":
+      "Des changements n'ont pas été sauvegardés, fermer quand même ?",
+    "questionReallyEditBecauseActive":
+      "Ce graphique est actif. Les changements seront appliqués dans tous les articles. Voulez-vous vraiment éditer ce graphique ?",
     "confirmProceedToEditor": "Oui, édition",
     "cancelProceedToEditor": "Non, annuler",
     "arrayEntryAdd": "ajouter {{ arrayEntryLabel }}",
-    "activatingEditorTakesTooLong": "L'éditeur met trop de temps à charger, quelque chose s'est mal passé.",
+    "activatingEditorTakesTooLong":
+      "L'éditeur met trop de temps à charger, quelque chose s'est mal passé.",
     "failedToSave": "Impossible de sauvegarder",
     "conflictOnSave": "Impossible de sauvegarder en raison d'un conflit",
-    "failedToLoadEditorPart": "L'éditeur ne peut être chargé en raison de cet élément",
-    "noAutosaveBecauseActive": "La sauvegarde automatique est désactivée car ce graphique est déjà actif"
+    "failedToLoadEditorPart":
+      "L'éditeur ne peut être chargé en raison de cet élément",
+    "noAutosaveBecauseActive":
+      "La sauvegarde automatique est désactivée car ce graphique est déjà actif"
   },
   "metaEditor": {
     "annotations": "Annotations",
@@ -57,7 +65,8 @@
     "blueprintTitlePrefix": "Copie de ",
     "edit": "modifier",
     "failedToLoadItem": "Impossible de charger le graphique.",
-    "failedToBlueprintItem": "Impossible de préparer le graphique à partir du modèle."
+    "failedToBlueprintItem":
+      "Impossible de préparer le graphique à partir du modèle."
   },
   "itemsFilter": {
     "allGraphics": "tous les graphiques",
@@ -78,8 +87,10 @@
     "searchLabel": "Chercher un élément Q"
   },
   "notifications": {
-    "previewBadRequest": "Des données manquent pour générer une prévisualisation",
-    "failedLoadingEditorConfig": "Impossible de charger la configuration de l'éditeur",
+    "previewBadRequest":
+      "Des données manquent pour générer une prévisualisation",
+    "failedLoadingEditorConfig":
+      "Impossible de charger la configuration de l'éditeur",
     "graphicNeedsATitle": "Ce graphique a besoin d'un titre",
     "failedLoadingItems": "Impossible de charger ces graphiques",
     "failedToLoadItem": "Impossible de charger ce graphique.",
@@ -89,13 +100,17 @@
   "dropzone": {
     "dictDefaultMessage": "Déposez ici les fichiers à envoyer",
     "dictDefaultMessageSingleFile": "Déposez ici le fichier à envoyer",
-    "dictFallbackMessage": "Votre navigateur ne permet pas les envois de fichiers par glisser-déposer.",
-    "dictFallbackText": "Merci d'utiliser le formulaire ci-dessous pour envoyer vos fichiers comme à l'ancienne époque.",
-    "dictFileTooBig": "Le fichier est trop gros ({{filesize}}MiB). Taille max : {{maxFilesize}}MiB.",
+    "dictFallbackMessage":
+      "Votre navigateur ne permet pas les envois de fichiers par glisser-déposer.",
+    "dictFallbackText":
+      "Merci d'utiliser le formulaire ci-dessous pour envoyer vos fichiers comme à l'ancienne époque.",
+    "dictFileTooBig":
+      "Le fichier est trop gros ({{filesize}}MiB). Taille max : {{maxFilesize}}MiB.",
     "dictInvalidFileType": "Vous ne pouvez pas envoyer de fichiers de ce type.",
     "dictResponseError": "Le serveur a répondu avec le code {{statusCode}}.",
     "dictCancelUpload": "Annuler l'envoi",
-    "dictCancelUploadConfirmation": "Êtes-vous certain de vouloir annuler cet envoi ?",
+    "dictCancelUploadConfirmation":
+      "Êtes-vous certain de vouloir annuler cet envoi ?",
     "dictRemoveFile": "Supprimer ce fichier",
     "dictMaxFilesExceeded": "Vous ne pouvez pas envoyer plus de fichiers."
   }
