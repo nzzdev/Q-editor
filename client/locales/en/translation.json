@@ -34,6 +34,7 @@
       "{{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active."
   },
   "editor": {
+    "title": "Enter your data",
     "questionLeaveWithUnsavedChanges":
       "Not all changes are saved, close anyway?",
     "questionReallyEditBecauseActive":
@@ -48,11 +49,17 @@
     "failedToLoadEditorPart": "failed to load the editor for this element",
     "noAutosaveBecauseActive":
       "Automatic saving is deactivated because the graphic is already active",
-    "required": "required"
+    "required": "required",
+    "transpose": "Switch rows and columns"
   },
   "metaEditor": {
+    "title": "Finalize your chart",
     "annotations": "Annotations",
-    "publication": "Publication"
+    "annotationPlaceholder":
+      "Add tags to your graphic which help you to search for it",
+    "publication": "Publication",
+    "shortname": "Shortname",
+    "department": "Department"
   },
   "item": {
     "save": "save",
@@ -125,10 +132,10 @@
     "dictMaxFilesExceeded": "You cannot upload any more files."
   },
   "preview": {
+    "title": "Customize your chart",
     "small": "Small",
     "medium": "Medium",
     "large": "Large",
-    "title": "Preview",
     "sizeLabel": "Preview for...",
     "error": "The graphic can not be displayed",
     "hint": {

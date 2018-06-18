@@ -14,18 +14,20 @@
       <q-messages></q-messages>
       <section>
         <form ref="form" class="q-form" validate>
-          <schema-editor id="schema-editor--main" schema.bind="schema" data.bind="item.conf" change.call="handleChange()" notifications.bind="editorNotifications" show-notifications.bind="true">
-            <h1>${schema.title || 'Grafik'}</h1>
+          <schema-editor id="schema-editor--main" schema.bind="schema" data.bind="item.conf" change.call="handleChange()" notifications.bind="editorNotifications"
+            show-notifications.bind="true">
+            <h2>${ 'editor.title' & t }</h2>
           </schema-editor>
           <button ref="formSubmitButton" type="submit" style="display: none;"></button>
         </form>
       </section>
-      <section>
-        <h2 t="preview.title"></h2>
+      <section class="editor__preview-container">
+        <h2>${ 'preview.title' & t }</h2>
         <div class="editor__preview">
           <div class="editor__options" if.bind="optionsSchema">
             <form ref="optionsForm" class="q-form" validate>
-              <schema-editor schema.bind="optionsSchema" data.bind="item.conf.options" change.call="handleChange()" notifications.bind="optionsNotifications" show-notifications.bind="false">
+              <schema-editor schema.bind="optionsSchema" data.bind="item.conf.options" change.call="handleChange()" notifications.bind="optionsNotifications"
+                show-notifications.bind="false">
                 <h6>${optionsSchema.title || 'Optionen'}</h6>
               </schema-editor>
               <button ref="optionsFormSubmitButton" type="submit" style="display: none;"></button>
@@ -39,6 +41,7 @@
         </div>
       </section>
       <section>
+        <h2>${ 'metaEditor.title' & t }</h2>
         <meta-editor data.bind="item.conf" change.call="handleChange()"></meta-editor>
       </section>
     </div>

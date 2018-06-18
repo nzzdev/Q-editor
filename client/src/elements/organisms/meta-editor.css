@@ -1,0 +1,13 @@
+.meta-editor-container {
+  display: flex;
+  padding-bottom: var(--q-space-base);
+}
+
+.meta-editor-item {
+  padding-right: calc(var(--q-space-base) * 2);
+}
+
+.meta-editor__textarea {
+  resize: vertical;
+  min-height: calc(var(--q-space-base) * 7);
+}

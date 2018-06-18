@@ -34,6 +34,7 @@
       "{{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive."
   },
   "editor": {
+    "title": "Gib deine Daten ein",
     "questionLeaveWithUnsavedChanges":
       "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
     "questionReallyEditBecauseActive":
@@ -49,11 +50,17 @@
       "Der Editor für dieses Element konnte nicht geladen werden",
     "noAutosaveBecauseActive":
       "Automatisches speichern ist deaktiviert da die Grafik bereits aktiv ist",
-    "required": "erforderlich"
+    "required": "erforderlich",
+    "transpose": "Zeilen und Spalten tauschen"
   },
   "metaEditor": {
+    "title": "Füge weitere Informationen zur Grafik hinzu",
     "annotations": "Notizen",
-    "publication": "Publikation"
+    "annotationPlaceholder":
+      "Hier kannst du zusätzliche Schlagwörter erfassen, mit denen die Grafik einfacher gefunden werden kann",
+    "publication": "Medium",
+    "shortname": "Autorenkürzel",
+    "department": "Ressort"
   },
   "item": {
     "save": "speichern",
@@ -130,10 +137,10 @@
     "dictMaxFilesExceeded": "Sie können keine weiteren Dateien mehr hochladen"
   },
   "preview": {
+    "title": "Bearbeite deine Grafik",
     "small": "Klein",
     "medium": "Mittel",
     "large": "Gross",
-    "title": "Vorschau",
     "sizeLabel": "Vorschau für...",
     "error": "Die Grafik kann nicht angezeigt werden",
     "hint": {
