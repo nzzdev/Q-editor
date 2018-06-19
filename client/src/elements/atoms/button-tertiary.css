@@ -19,5 +19,5 @@ button-tertiary icon-button button:hover {
 }
 
 button-tertiary icon-button button:focus {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);
+  text-decoration: underline;
 }

@@ -1,30 +1,58 @@
 tool-selection {
+  display: block;
+  position: relative;
   padding: calc(var(--q-space-base) * 4) 0;
   border-top: 1px solid var(--q-color-gray-4);
   border-bottom: 1px solid var(--q-color-gray-4);
 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  grid-gap: calc(var(--q-space-base) * 4) var(--q-space-base);
+  background-color: var(--q-color-gray-2);
+}
 
+tool-selection h2 {
+  text-align: center;
+}
+
+.tool-selection__toggle-tools-button {
+  position: absolute;
+  right: 0;
+  top: calc(var(--q-space-base) * 4);
+}
+
+.tool-selection__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   text-align: center;
 }
 
 tool-selection a,
 tool-selection a:hover,
 tool-selection a:visited {
-  color: var(--q-color-black);
+  width: 150px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  padding: calc(var(--q-space-base) * 2) 0;
+  color: var(--q-color-primary-3);
   text-decoration: none;
 }
 
-tool-selection a:hover button-primary button {
-  /* this styles are doubled from button-primary.css to have the button appear hovered when the a around it is */
-  color: var(--q-color-black);
-  background-color: var(--q-color-primary-3);
+tool-selection a span {
+  padding-top: calc(var(--q-space-base) / 2);
 }
 
-tool-selection a button-primary {
-  width: 48px;
+tool-selection a button-secondary icon-button button {
+  /* this styles are doubled from button-secondary.css to have the button appear hovered when the a around it is */
+  color: var(--q-color-primary-3);
+}
+
+tool-selection a:hover button-secondary icon-button button {
+  /* this styles are doubled from button-secondary.css to have the button appear hovered when the a around it is */
+  color: var(--q-color-primary-3);
+  background-color: var(--q-color-gray-3);
+}
+
+tool-selection a button-secondary {
+  width: 80px;
   margin-left: auto;
   margin-right: auto;
 }

@@ -2,6 +2,9 @@
   "general": {
     "yes": "yes",
     "no": "no",
+    "createLabel": "Create a graphic",
+    "showAllTools": "show all tools",
+    "showLessTools": "show less tools",
     "searchLabel": "Search for a graphic",
     "login": "login",
     "logout": "logout",

@@ -2,6 +2,9 @@
   "general": {
     "yes": "Oui",
     "no": "Non",
+    "createLabel": "créer un graphique",
+    "showAllTools": "montrer tous les outils",
+    "showLessTools": "montrer moins d'outils",
     "searchLabel": "Chercher un graphique",
     "login": "Se connecter",
     "logout": "Se déconnecter",

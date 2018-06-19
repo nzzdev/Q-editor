@@ -1,8 +1,20 @@
 <template>
   <require from="./tool-selection.css"></require>
-  <a repeat.for="tool of tools" route-href="route: editor; params.bind: {tool: tool.name}">
-    <button-primary tabindex="-1" size="big" code.bind=tool.icon></button-primary>
-    <span if.bind="tool.label" class="q-text-small q-text--light">${tool.label}</span>
-    <span if.bind="!tool.label" class="q-text-small q-text--light" t="tools:${tool.name}"></span>
-  </a>
+  <h2>${'general.createLabel' & t}</h2>
+  <button-tertiary class="tool-selection__toggle-tools-button" if.bind="!showAllTools" click.delegate="toggleShowAll()" icon="expand-collapse">${'general.showAllTools' & t}</button-tertiary>
+  <button-tertiary class="tool-selection__toggle-tools-button" if.bind="showAllTools" click.delegate="toggleShowAll()" icon="expand-collapse">${'general.showLessTools' & t}</button-tertiary>
+  <div class="tool-selection__list">
+    <a repeat.for="tool of tools" if.bind="$index < alwaysVisibleToolCount" route-href="route: editor; params.bind: {tool: tool.name}">
+      <button-secondary tabindex="-1" size="huge" code.bind=tool.icon></button-secondary>
+      <span if.bind="tool.label" class="q-text">${tool.label}</span>
+      <span if.bind="!tool.label" class="q-text" t="tools:${tool.name}"></span>
+    </a>
+  </div>
+  <div class="tool-selection__list" if.bind="showAllTools">
+    <a repeat.for="tool of tools" if.bind="$index >= alwaysVisibleToolCount" route-href="route: editor; params.bind: {tool: tool.name}">
+      <button-secondary tabindex="-1" size="huge" code.bind=tool.icon></button-secondary>
+      <span if.bind="tool.label" class="q-text">${tool.label}</span>
+      <span if.bind="!tool.label" class="q-text" t="tools:${tool.name}"></span>
+    </a>
+  </div>
 </template>

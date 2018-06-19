@@ -11,6 +11,7 @@ export function configure(frameworkConfiguration) {
     .globalResources("./icon-deactivate.html")
     .globalResources("./icon-delete.html")
     .globalResources("./icon-edit.html")
+    .globalResources("./icon-expand-collapse.html")
     .globalResources("./icon-expand.html")
     .globalResources("./icon-help.html")
     .globalResources("./icon-leave.html")
