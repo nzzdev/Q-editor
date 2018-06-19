@@ -1,7 +1,10 @@
 .editor section {
+  padding: calc(var(--q-space-base) * 6) calc(var(--q-space-base) * 4);
+}
+
+.editor section > * {
   min-width: 650px;
   max-width: 1200px;
-  padding: calc(var(--q-space-base) * 6) calc(var(--q-space-base) * 4);
   margin: 0 auto;
 }
 

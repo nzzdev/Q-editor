@@ -1,3 +1,7 @@
+meta-editor {
+  display: block;
+}
+
 .meta-editor-container {
   display: flex;
   padding-bottom: var(--q-space-base);
