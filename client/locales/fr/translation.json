@@ -108,7 +108,7 @@
       "body":
         "Vous pouvez entrer des données directement ou copier à partir d'Excel. Sélectionnez la cellule A1 et collez-la avec Ctrl / Cmd + V."
     },
-    "emptyFirstRow": {
+    "hasColumnTitles": {
       "title": "Oubliez les en-têtes de colonnes?",
       "body": "Chaque colonne devrait avoir un titre dans la rangée 1."
     },

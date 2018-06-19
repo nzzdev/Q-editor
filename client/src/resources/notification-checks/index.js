@@ -1,5 +1,5 @@
 import EmptyDataNotificationCheck from "./EmptyDataNotificationCheck";
-import EmptyFirstRowNotificationCheck from "./EmptyFirstRowNotificationCheck.js";
+import HasColumnTitlesNotificationCheck from "./HasColumnTitlesNotificationCheck.js";
 import TooManyColumnsNotificationCheck from "./TooManyColumnsNotificationCheck.js";
 import ToolEndpointNotificationCheck from "./ToolEndpointNotificationCheck.js";
 import IsValueMissingNotificationCheck from "./IsValueMissingNotificationCheck.js";
@@ -10,8 +10,8 @@ export function configure(frameworkConfiguration) {
     EmptyDataNotificationCheck
   );
   frameworkConfiguration.singleton(
-    "EmptyFirstRowNotificationCheck",
-    EmptyFirstRowNotificationCheck
+    "HasColumnTitlesNotificationCheck",
+    HasColumnTitlesNotificationCheck
   );
   frameworkConfiguration.singleton(
     "TooManyColumnsNotificationCheck",

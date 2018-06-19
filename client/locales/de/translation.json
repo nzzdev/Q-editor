@@ -108,7 +108,7 @@
       "body":
         "Du kannst Daten direkt eintragen oder aus Excel kopieren. Dafür die Zelle A1 anwählen und per Ctrl/Cmd + V einfügen."
     },
-    "emptyFirstRow": {
+    "hasColumnTitles": {
       "title": "Spaltenüberschriften vergessen?",
       "body": "Jede Spalte sollte in Zeile 1 eine Überschrift haben."
     },
