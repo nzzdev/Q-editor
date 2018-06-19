@@ -27,15 +27,30 @@ tool-selection h2 {
   text-align: center;
 }
 
-tool-selection a,
+
 tool-selection a:hover,
 tool-selection a:visited {
-  width: 150px;
+  text-decoration: none;
+}
+
+tool-selection a {
+  width: 100px;
   flex-shrink: 0;
   flex-grow: 0;
   padding: calc(var(--q-space-base) * 2) 0;
   color: var(--q-color-primary-3);
-  text-decoration: none;
+}
+
+@media (min-width: 700px) {
+  tool-selection a {
+    width: 150px;
+  }
+}
+
+@media (min-width: 900px) {
+  tool-selection a {
+    width: 200px;
+  }
 }
 
 tool-selection a span {
