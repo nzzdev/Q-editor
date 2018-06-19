@@ -104,7 +104,7 @@
       "body":
         "Enter your data or copy directly from Excel. Select cell A1 and copy/paste using Ctrl/Cmd + V."
     },
-    "emptyFirstRow": {
+    "hasColumnTitles": {
       "title": "No column header defined",
       "body": "Please add a header for each column in the first row."
     },
