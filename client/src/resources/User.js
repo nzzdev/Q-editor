@@ -1,6 +1,8 @@
-import { inject } from "aurelia-framework";
+import { inject, LogManager } from "aurelia-framework";
 import { HttpClient } from "aurelia-fetch-client";
 import qEnv from "resources/qEnv.js";
+
+const log = LogManager.getLogger("Q");
 
 @inject(HttpClient)
 export default class User {
@@ -86,7 +88,9 @@ export default class User {
         for (let cb of this.changeCallbacks) {
           cb();
         }
-      } catch (e) {}
+      } catch (e) {
+        log.error("failed to call user change callback", e);
+      }
       return true;
     } catch (e) {
       return false;
