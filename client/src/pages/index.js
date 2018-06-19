@@ -164,12 +164,16 @@ export class Index {
     }
   }
 
-  showAccountModal() {
-    this.dialogService.open({
+  async showAccountModal() {
+    const openDialogResult = await this.dialogService.open({
       viewModel: AccountDialog,
       model: {
         router: this.router
       }
     });
+    const closeResult = await openDialogResult.closeResult;
+    if (closeResult.wasCancelled === false) {
+      this.router.navigateToRoute("index", { replace: true });
+    }
   }
 }

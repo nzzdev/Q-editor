@@ -30,6 +30,15 @@
     "serverConnectionFailed": "Impossible de se connecter au serveur.",
     "articlesWithThisGraphic": "Articles avec ce graphique"
   },
+  "userConfig": {
+    "initials": "initiales",
+    "toolSelection": "sélection d'outil",
+    "toolsToShowInitially": "Outils à afficher initialement",
+    "toolSelectionType": {
+      "byUsage": "par mon utilisation",
+      "byConfig": "par configuration"
+    }
+  },
   "statistics": {
     "tooFewNewGraphics":
       "{{count}} nouvellement activés $t(general.graphic) lors des derniers {{days}} jours. Total: {{totalActiveCount}} activés.",

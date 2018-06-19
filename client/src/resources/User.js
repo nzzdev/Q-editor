@@ -4,6 +4,8 @@ import qEnv from "resources/qEnv.js";
 
 @inject(HttpClient)
 export default class User {
+  changeCallbacks = [];
+
   constructor(httpClient) {
     this.httpClient = httpClient;
     this.isLoggedIn = false;
@@ -43,9 +45,13 @@ export default class User {
     this.save();
   }
 
-  getUserConfig(key) {
-    if (!this.data || !this.data.hasOwnProperty("config")) {
-      return null;
+  getUserConfig(key, defaultValue = null) {
+    if (
+      !this.data ||
+      !this.data.hasOwnProperty("config") ||
+      !this.data.config.hasOwnProperty(key)
+    ) {
+      this.data.config[key] = defaultValue;
     }
     return this.data.config[key];
   }
@@ -76,9 +82,25 @@ export default class User {
       if (!response.ok) {
         throw response;
       }
+      try {
+        for (let cb of this.changeCallbacks) {
+          cb();
+        }
+      } catch (e) {}
       return true;
     } catch (e) {
       return false;
+    }
+  }
+
+  registerChangeCallback(cb) {
+    this.changeCallbacks.push(cb);
+  }
+
+  unregisterChangeCallback(cb) {
+    const index = this.changeCallbacks.indexOf(cb);
+    if (index > -1) {
+      this.changeCallbacks.splice(index, 1);
     }
   }
 }
