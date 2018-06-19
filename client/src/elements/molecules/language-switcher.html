@@ -1,6 +1,7 @@
 <template>
   <require from="./language-switcher.css"></require>
-  <div if.bind="availableLanguages.length > 1">
-    <button repeat.for="availableLanguage of availableLanguages" click.delegate="switchLanguage(availableLanguage.key)">${availableLanguage.label}</button>
+  <require from="./radio-button-group.js"></require>
+  <div if.bind="languageOptions.length > 1">
+    <radio-button-group class="radio-button-group--compact" options.bind="languageOptions" value.two-way="selectedLanguageKey"></radio-button-group>
   </div>
 </template>
