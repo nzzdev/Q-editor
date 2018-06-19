@@ -38,6 +38,6 @@ q-bar {
   padding-right: calc(var(--q-space-base) * 3);
 }
 
-.q-bar__help {
+.q-bar__right > * {
   padding-left: calc(var(--q-space-base) * 2);
 }

@@ -11,15 +11,16 @@ radio-button-group {
   height: 30px;
 }
 
+radio-button-group.radio-button-group--compact .radio-button-group__option {
+  width: auto;
+}
+
 .radio-button-group__option label {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  width: 100%;
+  padding: 0 5px;
   cursor: pointer;
   background: var(--q-color-white);
   color: var(--q-color-gray-8);
