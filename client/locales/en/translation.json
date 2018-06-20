@@ -67,7 +67,8 @@
     "blueprint": "use as blueprint",
     "blueprintTitlePrefix": "Copy of ",
     "edit": "edit",
-    "failedToBlueprintItem": "Failed to blueprint the graphic."
+    "failedToBlueprintItem": "Failed to blueprint the graphic.",
+    "delete": "delete"
   },
   "itemsFilter": {
     "allGraphics": "all graphics",

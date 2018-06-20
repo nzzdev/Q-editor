@@ -70,7 +70,8 @@
     "edit": "modifier",
     "failedToLoadItem": "Impossible de charger le graphique.",
     "failedToBlueprintItem":
-      "Impossible de préparer le graphique à partir du modèle."
+      "Impossible de préparer le graphique à partir du modèle.",
+    "delete": "effacer"
   },
   "itemsFilter": {
     "allGraphics": "tous les graphiques",

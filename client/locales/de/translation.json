@@ -69,7 +69,8 @@
     "blueprintTitlePrefix": "Kopie von ",
     "edit": "bearbeiten",
     "failedToBlueprintItem":
-      "Die Grafik konnte nicht als Vorlage verwendet werden."
+      "Die Grafik konnte nicht als Vorlage verwendet werden.",
+    "delete": "löschen"
   },
   "itemsFilter": {
     "allGraphics": "alle Grafiken",

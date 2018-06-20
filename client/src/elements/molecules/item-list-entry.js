@@ -28,10 +28,13 @@ export class ItemListEntry {
 
   deleteItem() {
     this.item.delete().then(() => {
-      this.element.addEventListener("transitionend", () => {
-        this.element.parentNode.removeChild(this.element);
-      });
-      this.element.style.transform = "scale(0)";
+      this.element.parentNode.removeChild(this.element);
     });
+  }
+
+  toggleOptionDropdown() {
+    this.optionsDropdown.classList.toggle(
+      "item-list-entry__options-dropdown--show"
+    );
   }
 }
