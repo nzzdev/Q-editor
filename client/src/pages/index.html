@@ -19,11 +19,8 @@
 
     <items-filter filters.bind="availableFilters" change.call="filterChanged()"></items-filter>
 
-    <items-list items.bind="items"></items-list>
+    <items-list items.bind="items" ref="itemsListElement"></items-list>
     <q-loader if.bind="itemsLoading"></q-loader>
-    <button-secondary if.bind="moreItemsAvailable" class="index__load-more-button" click.delegate="loadMore()">
-      <span t="general.loadMore"></span>
-    </button-secondary>
 
     <p class="index__statistics q-text-small q-text--light" if.bind="!enoughNewItems && statsValues" t="statistics.tooFewNewGraphics"
       t-params.bind="statsValues"></p>

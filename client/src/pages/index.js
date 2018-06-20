@@ -74,6 +74,14 @@ export class Index {
     this.initialised = true;
   }
 
+  attached() {
+    this.itemListScrollObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && this.moreItemsAvailable !== false) {
+        this.loadMore();
+      }
+    });
+  }
+
   filterChanged() {
     this.reloadItems();
 
@@ -116,6 +124,7 @@ export class Index {
     this.items = [];
     const result = await this.loadItems(this.currentSearchString);
     this.items = result.items;
+    this.setScrollObserverToLastItem();
     this.bookmark = result.bookmark;
     this.updateMoreItemsAvailableState(result);
 
@@ -128,9 +137,16 @@ export class Index {
       this.bookmark
     );
     this.items = this.items.concat(result.items);
+    this.setScrollObserverToLastItem();
     this.bookmark = result.bookmark;
     this.updateMoreItemsAvailableState(result);
     return this.items;
+  }
+
+  setScrollObserverToLastItem() {
+    this.itemListScrollObserver.observe(
+      this.itemsListElement.children[this.itemsListElement.children.length - 1]
+    );
   }
 
   updateMoreItemsAvailableState(result) {
