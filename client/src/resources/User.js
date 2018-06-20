@@ -47,11 +47,13 @@ export default class User {
     this.save();
   }
 
-  getUserConfig(key, defaultValue = null) {
+  getUserConfig(key, defaultValue = undefined) {
     if (
-      !this.data ||
-      !this.data.hasOwnProperty("config") ||
-      !this.data.config.hasOwnProperty(key)
+      (!this.data ||
+        !this.data.hasOwnProperty("config") ||
+        !this.data.config.hasOwnProperty(key) ||
+        this.data.config[key] === undefined) &&
+      defaultValue !== undefined
     ) {
       this.data.config[key] = defaultValue;
     }
