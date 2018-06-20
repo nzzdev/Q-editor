@@ -63,6 +63,8 @@
   },
   "item": {
     "save": "speichern",
+    "activ": "aktiv",
+    "inactiv": "inaktiv",
     "activate": "aktivieren",
     "deactivate": "deaktivieren",
     "blueprint": "als Vorlage benutzen",

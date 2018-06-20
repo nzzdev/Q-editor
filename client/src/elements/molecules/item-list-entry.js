@@ -26,6 +26,14 @@ export class ItemListEntry {
     });
   }
 
+  activateItem() {
+    this.item.activate();
+  }
+
+  deactivateItem() {
+    this.item.deactivate();
+  }
+
   deleteItem() {
     this.item.delete().then(() => {
       this.element.parentNode.removeChild(this.element);

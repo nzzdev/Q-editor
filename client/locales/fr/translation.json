@@ -63,6 +63,8 @@
   },
   "item": {
     "save": "sauvegarder",
+    "activ": "activement",
+    "inactiv": "inactif",
     "activate": "activer",
     "deactivate": "désactiver",
     "blueprint": "utiliser comme modèle",

@@ -27,12 +27,31 @@ item-list-entry > a {
   width: 100%;
 }
 
-item-list-entry a > span {
+item-list-entry a > span:not(.item-list-entry__state-tag) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   flex-grow: 1;
   flex-basis: 0;
+}
+
+.item-list-entry__state-tag {
+  height: 20px;
+  line-height: 20px !important;
+  min-width: calc(var(--q-space-base) * 7);
+  border-radius: 10px;
+  margin-right: calc(var(--q-space-base) * 2);
+  text-align: center;
+}
+
+.item-list-entry__state-tag--active {
+  background-color: var(--q-color-primary-2);
+  color: var(--q-color-white);
+}
+
+.item-list-entry__state-tag--inactive {
+  background-color: var(--q-color-primary-1);
+  color: var(--q-color-primary-2);
 }
 
 .item-list-entry__options-dropdown-button {
