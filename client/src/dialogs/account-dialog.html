@@ -37,9 +37,9 @@
         </div>
         <div class="q-form__block">
           <label>${'userConfig.toolSelection' & t}
-            <div repeat.for="option of toolSelectionTypes">
+            <div repeat.for="option of toolSelectionTypes" class="q-form__radio">
               <input id="option-${option.value}" type="radio" value.bind="option.value" checked.bind="toolSelectionConfig.type"></input>
-              <label for="option-${option.value}">${option.translationKey & t}</label>
+              <label for="option-${option.value}">${option.label_i18n_key & t}</label>
             </div>
           </label>
         </div>

@@ -1,8 +1,11 @@
 <template>
   <require from="./items-filter.css"></require>
   <div class="items-filter-container q-form">
-    <select value.bind="filter.selected" change.delegate="handleChange()" repeat.for="filter of filters" class="${filter.selected === filter.options[0].name ? 'q-text--ultralight' : ''}">
-      <option repeat.for="option of filter.options" value.bind="option.name">${option.visibleLabel}</option>
-    </select>
+    <div repeat.for="filter of filters">
+      <select value.bind="filter.selected" change.delegate="handleChange()" if.bind="filter.options.length > 2" class="${filter.selected === filter.options[0].name ? 'q-text--ultralight' : ''}">
+        <option repeat.for="option of filter.options" value.two-way="option.value">${option.label_i18n_key & t}</option>
+      </select>
+      <radio-button-group class="radio-button-group--compact" if.bind="filter.options.length < 3" options.bind="filter.options" value.two-way="filter.selected" change.delegate="handleChange()"></radio-button-group>
+    </div>    
   </div>
 </template>
