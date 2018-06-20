@@ -1,8 +1,8 @@
 <template>
   <require from="./tool-selection.css"></require>
   <h2>${'general.createLabel' & t}</h2>
-  <button-tertiary class="tool-selection__toggle-tools-button" if.bind="!showAllTools" click.delegate="toggleShowAll()" icon="expand-collapse">${'general.showAllTools' & t}</button-tertiary>
-  <button-tertiary class="tool-selection__toggle-tools-button" if.bind="showAllTools" click.delegate="toggleShowAll()" icon="expand-collapse">${'general.showLessTools' & t}</button-tertiary>
+  <button-tertiary class="tool-selection__toggle-tools-button" if.bind="!showAllTools" click.delegate="toggleShowAll()" icon="expand-collapse" icon-size="big">${'general.showAllTools' & t}</button-tertiary>
+  <button-tertiary class="tool-selection__toggle-tools-button" if.bind="showAllTools" click.delegate="toggleShowAll()" icon="expand-collapse" icon-size="big">${'general.showLessTools' & t}</button-tertiary>
   <div class="tool-selection__list">
     <a repeat.for="tool of tools" if.bind="$index < alwaysVisibleToolCount" route-href="route: editor; params.bind: {tool: tool.name}">
       <button-secondary tabindex="-1" size="huge" code.bind=tool.icon></button-secondary>
