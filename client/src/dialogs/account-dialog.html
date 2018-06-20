@@ -7,40 +7,52 @@
         Username: ${user.data.username}<br>
       </p>
       <form class="q-form" ref="userForm">
-        <label for="publication" if.bind="publications.length > 0">${'metaEditor.publication' & t}</label>
-        <div class="q-select" if.bind="publications.length > 0">
-          <select value.bind="user.data.publication">
-            <option value="default"></option>
-            <option repeat.for="publication of publications" value.bind="publication.key">${publication.label}</option>
-          </select>
-        </div>
-        <label for="department">${'metaEditor.department' & t}</label>
-        <div class="q-select">
-          <select value.bind="user.data.department">
-            <option value="default"></option>
-            <option repeat.for="department of departments" value.bind="department">${department}</option>
-          </select>
-        </div>
-        <label for="acronym">${'metaEditor.shortname' & t}
-          <input type="text" id="acronym" value.bind="user.data.acronym">
-        </label>
-        <label for="initials">${'userConfig.initials' & t}
-          <input type="text" id="initials" value.bind="user.data.initials">
-        </label>
-        <label>${'userConfig.toolSelection' & t}
-          <div repeat.for="option of toolSelectionTypes">
-            <input id="option-${option.value}" type="radio" value.bind="option.value" checked.bind="toolSelectionConfig.type"></input>
-            <label for="option-${option.value}">${option.translationKey & t}</label>
+        <div class="q-form__block">
+          <label for="publication" if.bind="publications.length > 0">${'metaEditor.publication' & t}</label>
+          <div class="q-select" if.bind="publications.length > 0">
+            <select value.bind="user.data.publication">
+              <option value="default"></option>
+              <option repeat.for="publication of publications" value.bind="publication.key">${publication.label}</option>
+            </select>
           </div>
-        </label>
-        <div if.bind="toolSelectionConfig.type === 'byConfig'">
-          <label>${'userConfig.toolsToShowInitially' & t}</label>
-          <div class="q-form__checkbox" repeat.for="tool of tools">
-            <label>
-              <input type="checkbox" checked.bind="toolSelectionConfig.tools[tool.name].inInitialToolSelection">
-              <span for="option-${tool.name}" if.bind="tool.label">${tool.label}</span>
-              <span for="option-${tool.name}" if.bind="!tool.label" t="tools:${tool.name}"></span>
-            </label>
+        </div>
+        <div class="q-form__block">
+          <label for="department">${'metaEditor.department' & t}</label>
+          <div class="q-select">
+            <select value.bind="user.data.department">
+              <option value="default"></option>
+              <option repeat.for="department of departments" value.bind="department">${department}</option>
+            </select>
+          </div>
+        </div>
+        <div class="q-form__block">
+          <label for="acronym">${'metaEditor.shortname' & t}
+            <input type="text" id="acronym" value.bind="user.data.acronym">
+          </label>
+        </div>
+        <div class="q-form__block">
+          <label for="initials">${'userConfig.initials' & t}
+            <input type="text" id="initials" value.bind="user.data.initials">
+          </label>
+        </div>
+        <div class="q-form__block">
+          <label>${'userConfig.toolSelection' & t}
+            <div repeat.for="option of toolSelectionTypes">
+              <input id="option-${option.value}" type="radio" value.bind="option.value" checked.bind="toolSelectionConfig.type"></input>
+              <label for="option-${option.value}">${option.translationKey & t}</label>
+            </div>
+          </label>
+        </div>
+        <div class="q-form__block">
+          <div if.bind="toolSelectionConfig.type === 'byConfig'">
+            <label>${'userConfig.toolsToShowInitially' & t}</label>
+            <div class="q-form__checkbox" repeat.for="tool of tools">
+              <label>
+                <input type="checkbox" checked.bind="toolSelectionConfig.tools[tool.name].inInitialToolSelection">
+                <span for="option-${tool.name}" if.bind="tool.label">${tool.label}</span>
+                <span for="option-${tool.name}" if.bind="!tool.label" t="tools:${tool.name}"></span>
+              </label>
+            </div>
           </div>
         </div>
         <p class="q-text q-text--success" if.bind="userFormMessage">${userFormMessage}</p>
