@@ -9,9 +9,6 @@ item-list-entry:hover {
   background-color: var(--q-color-gray-2);
 }
 
-item-list-entry.inactive {
-}
-
 item-list-entry .tool-icon {
   width: 26px;
   height: 26px;
