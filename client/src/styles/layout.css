@@ -55,7 +55,16 @@ q-screen main {
   overflow-y: scroll;
 }
 
-main.index,
 main.item-overview {
-  padding: calc(var(--q-space-base) * 6);
+  padding: calc(var(--q-space-base) * 6) 0;
+}
+
+main.index {
+  padding: 0 0 calc(var(--q-space-base) * 6) 0;
+}
+
+main.index > *,
+main.item-overview > * {
+  padding-left: calc(var(--q-space-base) * 6);
+  padding-right: calc(var(--q-space-base) * 6);
 }

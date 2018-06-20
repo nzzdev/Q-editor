@@ -2,6 +2,9 @@
   "general": {
     "yes": "yes",
     "no": "no",
+    "createLabel": "Create a graphic",
+    "showAllTools": "Show all tools",
+    "showLessTools": "Show only my favorites",
     "searchLabel": "Search for a graphic",
     "login": "login",
     "logout": "logout",
@@ -25,6 +28,15 @@
     "loginFailed": "Your username or password is not correct.",
     "serverConnectionFailed": "Failed to connect to server.",
     "articlesWithThisGraphic": "Articles with this graphic"
+  },
+  "userConfig": {
+    "initials": "initials",
+    "toolSelection": "Tool selection",
+    "toolsToShowInitially": "Tools to show initially",
+    "toolSelectionType": {
+      "byUsage": "by my usage",
+      "byConfig": "by configuration"
+    }
   },
   "statistics": {
     "tooFewNewGraphics":

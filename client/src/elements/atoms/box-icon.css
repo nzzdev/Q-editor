@@ -31,3 +31,8 @@ box-icon.size-big svg {
   width: 20px;
   height: 20px;
 }
+
+box-icon.size-huge svg {
+  width: 34px;
+  height: 34px;
+}

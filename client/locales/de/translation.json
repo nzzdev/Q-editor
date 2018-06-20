@@ -2,6 +2,9 @@
   "general": {
     "yes": "Ja",
     "no": "Nein",
+    "createLabel": "Neu erstellen",
+    "showAllTools": "Alle Tools anzeigen",
+    "showLessTools": "nur meine Favoriten anzeigen",
     "searchLabel": "Eine Grafik suchen",
     "login": "anmelden",
     "logout": "abmelden",
@@ -25,6 +28,15 @@
     "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt.",
     "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen.",
     "articlesWithThisGraphic": "Artikel mit dieser Grafik"
+  },
+  "userConfig": {
+    "initials": "Initialen",
+    "toolSelection": "Tool Auswahl",
+    "toolsToShowInitially": "Tools die initial angezeigt werden sollen",
+    "toolSelectionType": {
+      "byUsage": "nach meiner Nutzung",
+      "byConfig": "nach Konfiguration"
+    }
   },
   "statistics": {
     "tooFewNewGraphics":
