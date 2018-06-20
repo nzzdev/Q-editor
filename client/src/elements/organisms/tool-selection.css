@@ -21,6 +21,7 @@ tool-selection h2 {
 }
 
 .tool-selection__list {
+  max-width: 1400px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
