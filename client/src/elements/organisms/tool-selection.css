@@ -23,7 +23,7 @@ tool-selection h2 {
 .tool-selection__list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
   text-align: center;
 }
 
