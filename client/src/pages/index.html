@@ -22,9 +22,10 @@
     <items-list items.bind="items" ref="itemsListElement"></items-list>
     <q-loader if.bind="itemsLoading"></q-loader>
 
-    <p class="index__statistics q-text-small q-text--light" if.bind="!enoughNewItems && statsValues" t="statistics.tooFewNewGraphics"
-      t-params.bind="statsValues"></p>
-    <p class="index__statistics q-text-small q-text--light" if.bind="enoughNewItems && statsValues" t="statistics.enoughNewGraphics"
-      t-params.bind="statsValues"></p>
+    <div class="index__statistics q-text-small q-text--ultralight" click.delegate="scrollToTop()">
+      <span if.bind="!enoughNewItems && statsValues" t="statistics.tooFewNewGraphics" t-params.bind="statsValues"></span>
+      <span if.bind="enoughNewItems && statsValues" t="statistics.enoughNewGraphics" t-params.bind="statsValues"></span>
+    </div>
+    
   </main>
 </template>

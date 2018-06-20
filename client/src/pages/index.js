@@ -192,4 +192,8 @@ export class Index {
       this.router.navigateToRoute("index", { replace: true });
     }
   }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }
 }
