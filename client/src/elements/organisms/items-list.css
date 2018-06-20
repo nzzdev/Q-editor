@@ -1,3 +1,7 @@
+items-list {
+  display: block;
+}
+
 .items-list__header {
   display: flex;
   padding-left: calc(var(--q-space-base) * 4);
