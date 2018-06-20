@@ -53,24 +53,6 @@
   fill: var(--q-color-gray-5);
 }
 
-.item-list-legend {
-  margin: var(--q-space-base) 0;
-}
-
-.item-list-legend > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.item-list-legend > div::before {
-  content: "";
-  width: 60px;
-  height: 16px;
-  border: 1px dashed var(--q-color-primary-2);
-  background-color: var(--q-color-primary-1);
-}
-
 .index__load-more-button {
   max-width: 400px;
   margin: calc(var(--q-space-base) * 2) auto;

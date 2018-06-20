@@ -26,9 +26,6 @@
       <span t="general.loadMore"></span>
     </button-secondary>
 
-    <div class="item-list-legend">
-      <div class="q-text-small">&nbsp;= ${'general.itemNotActivated' & t}</div>
-    </div>
     <p class="index__statistics q-text-small q-text--light" if.bind="!enoughNewItems && statsValues" t="statistics.tooFewNewGraphics"
       t-params.bind="statsValues"></p>
     <p class="index__statistics q-text-small q-text--light" if.bind="enoughNewItems && statsValues" t="statistics.enoughNewGraphics"
