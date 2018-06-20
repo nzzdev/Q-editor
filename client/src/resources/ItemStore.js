@@ -27,7 +27,7 @@ export default class ItemStore {
         name: "tool",
         options: [
           {
-            name: "all",
+            value: "all",
             label_i18n_key: "itemsFilter.allGraphics"
           }
         ],
@@ -37,11 +37,11 @@ export default class ItemStore {
         name: "createdBy",
         options: [
           {
-            name: "all",
+            value: "all",
             label_i18n_key: "itemsFilter.byAll"
           },
           {
-            name: "byMe",
+            value: "byMe",
             label_i18n_key: "itemsFilter.byMe"
           }
         ],
@@ -51,11 +51,11 @@ export default class ItemStore {
         name: "department",
         options: [
           {
-            name: "all",
+            value: "all",
             label_i18n_key: "itemsFilter.allDepartments"
           },
           {
-            name: "myDepartment",
+            value: "myDepartment",
             label_i18n_key: "itemsFilter.myDepartment"
           }
         ],
@@ -70,7 +70,7 @@ export default class ItemStore {
         name: "publication",
         options: [
           {
-            name: "all",
+            value: "all",
             label_i18n_key: "itemsFilter.allPublications"
           }
         ],
@@ -78,8 +78,8 @@ export default class ItemStore {
       };
       for (let publication of publications) {
         publicationsFilter.options.push({
-          name: publication.key,
-          label: publication.label
+          value: publication.key,
+          label_i18n_key: publication.label
         });
       }
       this.filters.push(publicationsFilter);
@@ -90,15 +90,15 @@ export default class ItemStore {
       name: "active",
       options: [
         {
-          name: "all",
+          value: "all",
           label_i18n_key: "itemsFilter.allStates"
         },
         {
-          name: "onlyActive",
+          value: "onlyActive",
           label_i18n_key: "itemsFilter.onlyActive"
         },
         {
-          name: "onlyInactive",
+          value: "onlyInactive",
           label_i18n_key: "itemsFilter.onlyInactive"
         }
       ],
@@ -107,7 +107,10 @@ export default class ItemStore {
 
     const tools = await this.toolsInfo.getAvailableTools();
     tools.map(tool => {
-      this.filters[0].options.push(tool);
+      this.filters[0].options.push({
+        value: tool.name,
+        label_i18n_key: `tools:${tool.name}`
+      });
     });
   }
 

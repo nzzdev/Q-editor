@@ -51,15 +51,15 @@ export class ItemPreview {
     this.sizeOptions = [
       {
         value: 290,
-        translationKey: "preview.small"
+        label_i18n_key: "preview.small"
       },
       {
         value: 560,
-        translationKey: "preview.medium"
+        label_i18n_key: "preview.medium"
       },
       {
         value: 800,
-        translationKey: "preview.large"
+        label_i18n_key: "preview.large"
       }
     ];
 
@@ -76,7 +76,7 @@ export class ItemPreview {
           const previewSize = previewSizes[previewSizeName];
           const sizeOption = {
             value: previewSize.value,
-            translationKey: previewSizeName
+            label_i18n_key: previewSizeName
           };
           if (previewSize.label) {
             sizeOption.label = previewSize.label;

@@ -3,6 +3,7 @@
     "yes": "Ja",
     "no": "Nein",
     "createLabel": "Neu erstellen",
+    "searchEditLabel": "Suchen und bearbeiten",
     "showAllTools": "Alle Tools anzeigen",
     "showLessTools": "nur meine Favoriten anzeigen",
     "searchLabel": "Eine Grafik suchen",
@@ -87,14 +88,14 @@
   },
   "itemsFilter": {
     "allGraphics": "alle Grafiken",
-    "byAll": "von allen",
-    "byMe": "von mir",
-    "allDepartments": "alle Ressorts",
-    "myDepartment": "nur mein Ressort",
-    "allPublications": "alle Publikationen",
-    "allStates": "alle Zustände",
-    "onlyActive": "nur aktive",
-    "onlyInactive": "nur inaktive"
+    "byAll": "Von allen",
+    "byMe": "Von mir",
+    "allDepartments": "Alle Ressorts",
+    "myDepartment": "Mein Ressort",
+    "allPublications": "Alle",
+    "allStates": "Alle",
+    "onlyActive": "Aktive",
+    "onlyInactive": "Inaktive"
   },
   "itemsList": {
     "title": "Titel",

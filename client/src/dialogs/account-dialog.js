@@ -24,11 +24,11 @@ export class AccountDialog {
   toolSelectionTypes = [
     {
       value: "byUsage",
-      translationKey: "userConfig.toolSelectionType.byUsage"
+      label_i18n_key: "userConfig.toolSelectionType.byUsage"
     },
     {
       value: "byConfig",
-      translationKey: "userConfig.toolSelectionType.byConfig"
+      label_i18n_key: "userConfig.toolSelectionType.byConfig"
     }
   ];
 
