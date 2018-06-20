@@ -8,7 +8,6 @@
     <button-secondary slot="account-button" if.bind="user.isLoggedIn" click.delegate="showAccountModal()">${user.data.initials}</button-secondary>
   </q-bar>
   <main class="index">
-    <q-messages></q-messages>
     <tool-selection></tool-selection>
     <div class="search">
       <input t="[placeholder]general.searchLabel" input.delegate="filterChanged() & debounce" value.two-way="currentSearchString">

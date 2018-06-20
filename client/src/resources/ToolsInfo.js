@@ -1,13 +1,15 @@
 import { inject } from "aurelia-framework";
 import { Container } from "aurelia-dependency-injection";
+import { HttpClient } from "aurelia-fetch-client";
 import User from "resources/User.js";
 import qEnv from "resources/qEnv.js";
 
-@inject(User, Container)
+@inject(User, Container, HttpClient)
 export default class ToolsInfo {
-  constructor(user, diContainer) {
+  constructor(user, diContainer, httpClient) {
     this.user = user;
     this.diContainer = diContainer;
+    this.httpClient = httpClient;
     this.availableTools = this.loadAvailableTools();
   }
 
@@ -60,5 +62,30 @@ export default class ToolsInfo {
   async getAvailableToolsNames() {
     const tools = await this.getAvailableTools();
     return tools.map(tool => tool.name);
+  }
+
+  async getToolsOrderedForUser() {
+    const availableTools = await this.getAvailableTools();
+
+    await this.user.loaded;
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+
+    const response = await this.httpClient.fetch(
+      `${QServerBaseUrl}/editor/tools-ordered-by-user-usage`,
+      {
+        credentials: "include",
+        method: "GET"
+      }
+    );
+
+    if (!response.ok) {
+      throw response;
+    }
+
+    const tools = await response.json();
+
+    return availableTools.sort((a, b) => {
+      return tools.indexOf(a.name) - tools.indexOf(b.name);
+    });
   }
 }
