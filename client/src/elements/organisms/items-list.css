@@ -1,0 +1,11 @@
+.items-list__header {
+  display: flex;
+  padding-left: calc(var(--q-space-base) * 4);
+  padding-top: var(--q-space-base);
+  padding-bottom: var(--q-space-base);
+}
+
+.items-list__header > * {
+  flex-grow: 1;
+  flex-basis: 0;
+}

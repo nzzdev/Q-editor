@@ -19,5 +19,4 @@ button-secondary icon-button button:hover {
 
 button-secondary icon-button button:focus {
   border-color: var(--q-color-gray-5);
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }

@@ -15,9 +15,9 @@ button-tertiary icon-button button[disabled] {
 
 button-tertiary icon-button button:hover {
   color: var(--q-color-black);
-  background-color: transparent;
+  background-color: var(--q-color-gray-3);
 }
 
 button-tertiary icon-button button:focus {
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }

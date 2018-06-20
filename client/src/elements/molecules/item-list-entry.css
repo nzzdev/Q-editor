@@ -1,27 +1,22 @@
 item-list-entry {
-  background: var(--q-color-primary-2);
-
-  padding: calc(var(--q-space-base) / 2);
-  margin-bottom: calc(var(--q-space-base) / 2);
-
   display: flex;
-
-  transition: transform 0.2s ease-in;
+  padding: calc(var(--q-space-base) * 2) 0;
+  border-top: solid 1px var(--q-color-gray-3);
 }
 
 item-list-entry:hover {
   cursor: pointer;
+  background-color: var(--q-color-gray-2);
 }
 
 item-list-entry.inactive {
-  background: var(--q-color-primary-1);
-  border: 1px dashed var(--q-color-primary-2);
 }
 
 item-list-entry .tool-icon {
   width: 26px;
   height: 26px;
-  color: var(--q-color-gray-6);
+  color: var(--q-color-primary-3);
+  margin-right: var(--q-space-base);
 }
 
 item-list-entry > a {
@@ -36,20 +31,6 @@ item-list-entry a > span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-item-list-entry a > span:nth-of-type(1) {
-  width: calc((100% - (2 * 26px)) / 10 * 4);
-}
-
-item-list-entry a > span:nth-of-type(2) {
-  width: calc((100% - (2 * 26px)) / 10 * 2);
-}
-
-item-list-entry a > span:nth-of-type(3) {
-  width: calc((100% - (2 * 26px)) / 10 * 4);
-}
-
-item-list-entry delete-button {
-  margin-left: auto;
+  flex-grow: 1;
+  flex-basis: 0;
 }

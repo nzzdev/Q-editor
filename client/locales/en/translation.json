@@ -81,6 +81,11 @@
     "onlyActive": "active only",
     "onlyInactive": "inactive only"
   },
+  "itemsList": {
+    "title": "title",
+    "author": "created by",
+    "updated": "last edited"
+  },
   "livingdocsComponent": {
     "insert": "use Q element",
     "edit": "edit in Q",

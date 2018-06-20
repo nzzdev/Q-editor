@@ -2,21 +2,19 @@
   <a route-href="route: item; params.bind: {id: item.id}">
     <require from="./item-list-entry.css"></require>
     <require from="../molecules/delete-button.html"></require>
-    <box-icon if.bind="iconSvg" code.bind="iconSvg" size="medium" class="tool-icon"></box-icon>
-    
+    <box-icon if.bind="iconSvg" code.bind="iconSvg" size="big" class="tool-icon"></box-icon>
+
     <span class="q-text-small">${item.conf.title}</span>
     <span class="q-text-small">${item.conf.createdBy}</span>
     <span class="q-text-small ${item.conf.active ? '' : 'q-text--light'}" if.bind="item.conf.updatedDate">
       ${'general.edited' & t} ${item.conf.updatedDate & timeAgo:7*24*60*60}, ${'general.by' & t} ${item.conf.updatedBy}
     </span>
     <span class="q-text-small ${item.conf.active ? '' : 'q-text--light'}" if.bind="!item.conf.updatedDate">
-        ${'general.edited' & t} ${item.conf.createdDate & timeAgo:7*24*60*60}, ${'general.by' & t}  ${item.conf.createdBy}
+      ${'general.edited' & t} ${item.conf.createdDate & timeAgo:7*24*60*60}, ${'general.by' & t} ${item.conf.createdBy}
     </span>
   </a>
-  <delete-button
-    if.bind="user.roles.includes('poweruser') || user.username === item.conf.createdBy"
-    size="small"
-    action.call="deleteItem()"
+  <!-- <button-tertiary icon="more" size="big"></button-tertiary> -->
+  <!-- <delete-button if.bind="user.roles.includes('poweruser') || user.username === item.conf.createdBy" size="small" action.call="deleteItem()"
     button-type="secondary">
-  </delete-button>
+  </delete-button> -->
 </template>

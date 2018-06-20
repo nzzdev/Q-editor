@@ -84,6 +84,11 @@
     "onlyActive": "actifs seulement",
     "onlyInactive": "inactifs seulement"
   },
+  "itemsList": {
+    "title": "titre",
+    "author": "créé par",
+    "updated": "dernière édition"
+  },
   "livingdocsComponent": {
     "insert": "utiliser l'élément Q",
     "edit": "modifier dans Q",
