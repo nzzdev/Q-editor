@@ -53,11 +53,6 @@
   fill: var(--q-color-gray-5);
 }
 
-.index__load-more-button {
-  max-width: 400px;
-  margin: calc(var(--q-space-base) * 2) auto;
-}
-
 .index__statistics {
   text-align: center;
   padding-top: var(--q-space-base);
