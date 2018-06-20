@@ -140,10 +140,6 @@ export class ItemOverview {
     this.item.deactivate();
   }
 
-  back() {
-    this.router.navigateBack();
-  }
-
   async loadMetaInformation() {
     let QServerBaseUrl = await qEnv.QServerBaseUrl;
     const metaInformationConfig = await this.qConfig.get("metaInformation");
