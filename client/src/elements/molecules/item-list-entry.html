@@ -21,7 +21,7 @@
     <div ref="optionsDropdown" class="item-list-entry__options-dropdown-content q-text-small">
       <a if.bind="!item.conf.active" click.delegate="activateItem()">${'item.activate' & t }</a>
       <a if.bind="item.conf.active" click.delegate="deactivateItem()">${'item.deactivate' & t }</a>
-      <a href="#">${'item.blueprint' & t}</a>
+      <a click.delegate="blueprint()">${'item.blueprint' & t}</a>
       <a if.bind="user.roles.includes('poweruser') || user.username === item.conf.createdBy" size="small" click.delegate="deleteItem()">${'item.delete' & t}</a>
     </div>
   </div>
