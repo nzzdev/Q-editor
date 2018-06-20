@@ -91,10 +91,10 @@
     "byMe": "Von mir",
     "allDepartments": "Alle Ressorts",
     "myDepartment": "Mein Ressort",
-    "allPublications": "alle Publikationen",
-    "allStates": "alle Zustände",
-    "onlyActive": "nur aktive",
-    "onlyInactive": "nur inaktive"
+    "allPublications": "Alle",
+    "allStates": "Alle",
+    "onlyActive": "Aktive",
+    "onlyInactive": "Inaktive"
   },
   "livingdocsComponent": {
     "insert": "Q Element verwenden",

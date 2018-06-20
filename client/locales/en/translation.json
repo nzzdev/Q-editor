@@ -87,12 +87,12 @@
     "allGraphics": "all graphics",
     "byAll": "by all",
     "byMe": "by me",
-    "allDepartments": "all departments",
-    "myDepartment": "my department only",
-    "allPublications": "all publications",
-    "allStates": "all states",
-    "onlyActive": "active only",
-    "onlyInactive": "inactive only"
+    "allDepartments": "all",
+    "myDepartment": "my department",
+    "allPublications": "all",
+    "allStates": "all",
+    "onlyActive": "active",
+    "onlyInactive": "inactive"
   },
   "livingdocsComponent": {
     "insert": "use Q element",

@@ -90,12 +90,12 @@
     "allGraphics": "tous les graphiques",
     "byAll": "par tous",
     "byMe": "par moi",
-    "allDepartments": "tous les services",
-    "myDepartment": "mon service seulement",
-    "allPublications": "toutes les publications",
-    "allStates": "tous les états",
-    "onlyActive": "actifs seulement",
-    "onlyInactive": "inactifs seulement"
+    "allDepartments": "tous",
+    "myDepartment": "mon service",
+    "allPublications": "toutes",
+    "allStates": "tous",
+    "onlyActive": "actifs",
+    "onlyInactive": "inactifs"
   },
   "livingdocsComponent": {
     "insert": "utiliser l'élément Q",
