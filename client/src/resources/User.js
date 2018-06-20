@@ -57,7 +57,10 @@ export default class User {
     ) {
       this.data.config[key] = defaultValue;
     }
-    return this.data.config[key];
+    if (this.data && this.data.config && this.data.config[key]) {
+      return this.data.config[key];
+    }
+    return undefined;
   }
 
   get roles() {
