@@ -17,11 +17,11 @@ export default class ItemActionController {
   }
 
   activate(item) {
-    item.activate();
+    return item.activate();
   }
 
   deactivate(item) {
-    item.deactivate();
+    return item.deactivate();
   }
 
   async edit(item) {
@@ -78,7 +78,7 @@ export default class ItemActionController {
     }
   }
 
-  async delete(item, afterDeleteAction) {
+  async delete(item) {
     const openDialogResult = await this.dialogService.open({
       viewModel: ConfirmDialog,
       model: {
@@ -90,9 +90,9 @@ export default class ItemActionController {
     const closeResult = await openDialogResult.closeResult;
 
     if (!closeResult.wasCancelled) {
-      item.delete().then(() => {
-        afterDeleteAction();
-      });
+      return item.delete();
+    } else {
+      return Promise.reject();
     }
   }
 

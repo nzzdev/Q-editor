@@ -26,7 +26,7 @@ export class ItemListEntry {
   }
 
   deleteItem() {
-    this.itemActionController.delete(this.item, () => {
+    this.itemActionController.delete(this.item).then(() => {
       this.element.addEventListener("transitionend", () => {
         this.element.parentNode.removeChild(this.element);
       });
