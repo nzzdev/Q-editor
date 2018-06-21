@@ -86,6 +86,7 @@
       "Impossible de préparer le graphique à partir du modèle.",
     "delete": "Supprimer",
     "questionDeleteItem": "Supprimer le graphique?",
+    "questionDeleteItemSub": "Voulez-vous vraiment supprimer <strong>{{graphicTitle}}</strong>?",
     "confirmDeleteItem": "Oui, supprimer",
     "cancelDeleteItem": "Abandonner"
   },

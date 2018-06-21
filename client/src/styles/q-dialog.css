@@ -51,6 +51,17 @@
   margin-right: 0;
 }
 
+.q-dialog--centered .q-dialog__content {
+  width: 100%;
+}
+.q-dialog--centered .q-dialog-title,
+.q-dialog--centered .q-dialog-subtitle {
+  text-align: center;
+}
+.q-dialog--centered .q-dialog__controls {
+  justify-content: center;
+}
+
 .q-dialog__close-button {
   position: absolute;
   right: calc(var(--q-space-base) * 6);

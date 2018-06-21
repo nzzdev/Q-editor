@@ -85,6 +85,7 @@
       "Die Grafik konnte nicht als Vorlage verwendet werden.",
     "delete": "Löschen",
     "questionDeleteItem": "Grafik löschen?",
+    "questionDeleteItemSub": "Bist du sicher, dass du die Grafik <strong>{{graphicTitle}}</strong> löschen willst?",
     "confirmDeleteItem": "Ja, löschen",
     "cancelDeleteItem": "Abbrechen"
   },
