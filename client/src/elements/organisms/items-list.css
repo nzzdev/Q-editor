@@ -4,9 +4,10 @@ items-list {
 
 .items-list__header {
   display: flex;
-  padding-left: calc(var(--q-space-base) * 4);
   padding-top: var(--q-space-base);
   padding-bottom: var(--q-space-base);
+  padding-left: calc(var(--q-space-base) * 13);
+  padding-right: calc(var(--q-space-base) * 3);
 }
 
 .items-list__header > * {
