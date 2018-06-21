@@ -76,7 +76,7 @@ export class ItemPreview {
           const previewSize = previewSizes[previewSizeName];
           const sizeOption = {
             value: previewSize.value,
-            label_i18n_key: previewSizeName
+            label_i18n_key: `preview.${previewSizeName}`
           };
           if (previewSize.label) {
             sizeOption.label = previewSize.label;
