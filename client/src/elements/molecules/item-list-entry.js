@@ -29,6 +29,35 @@ export class ItemListEntry {
     this.dialogService = dialogService;
   }
 
+  attached() {
+    document.addEventListener("click", this.handleBodyClick, { capture: true });
+  }
+
+  detached() {
+    document.removeEventListener("click", this.handleBodyClick, {
+      capture: true
+    });
+  }
+
+  handleBodyClick(event) {
+    if (!event.target.matches("item-list-entry__options-dropdown-button")) {
+      const dropdownMenus = Array.prototype.slice.call(
+        document.querySelectorAll(".item-list-entry__options-dropdown-content")
+      );
+      dropdownMenus.map(dropdownMenu => {
+        if (
+          dropdownMenu.classList.contains(
+            "item-list-entry__options-dropdown--show"
+          )
+        ) {
+          dropdownMenu.classList.remove(
+            "item-list-entry__options-dropdown--show"
+          );
+        }
+      });
+    }
+  }
+
   itemChanged() {
     this.toolsInfo.getAvailableTools().then(tools => {
       let itemTool = tools.filter(tool => {
