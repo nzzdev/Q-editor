@@ -64,7 +64,7 @@
     "transpose": "Echange de lignes et de colonnes"
   },
   "metaEditor": {
-    "title": "Ajouter plus d'informations au graphique",
+    "title": "Informations pour usage interne",
     "annotations": "Annotations",
     "annotationPlaceholder":
       "Ici vous pouvez capturer des mots-clés supplémentaires qui facilitent la recherche du graphique",

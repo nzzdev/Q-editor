@@ -63,7 +63,7 @@
     "transpose": "Switch rows and columns"
   },
   "metaEditor": {
-    "title": "Finalize your chart",
+    "title": "Metainfos for internal use",
     "annotations": "Annotations",
     "annotationPlaceholder":
       "Add tags to your graphic which help you to search for it",

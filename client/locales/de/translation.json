@@ -64,7 +64,7 @@
     "transpose": "Zeilen und Spalten tauschen"
   },
   "metaEditor": {
-    "title": "Füge weitere Informationen zur Grafik hinzu",
+    "title": "Metainfos für den internen Gebrauch",
     "annotations": "Notizen",
     "annotationPlaceholder":
       "Hier kannst du zusätzliche Schlagwörter erfassen, mit denen die Grafik einfacher gefunden werden kann",
