@@ -6,7 +6,7 @@
     <form class="item-preview__settings" if.bind="initialised">
       <div>
         <label class="q-text-small q-text--light">${'preview.sizeLabel' & t}</label>
-        <radio-button-group options.bind="sizeOptions" value.two-way="previewWidthProxy.width"></radio-button-group>
+        <radio-button-group options.bind="sizeOptions" value.two-way="previewWidthProxy.width | forceNumber"></radio-button-group>
       </div>
     </form>
     <div class="item-preview__container">

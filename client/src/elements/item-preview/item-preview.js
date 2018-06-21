@@ -7,6 +7,21 @@ import User from "resources/User.js";
 
 const log = LogManager.getLogger("Q");
 
+const defaultSizeOptions = [
+  {
+    value: 290,
+    label_i18n_key: "preview.small"
+  },
+  {
+    value: 560,
+    label_i18n_key: "preview.medium"
+  },
+  {
+    value: 800,
+    label_i18n_key: "preview.large"
+  }
+];
+
 @inject(QTargets, QConfig, User, I18N)
 export class ItemPreview {
   @bindable data;
@@ -22,6 +37,10 @@ export class ItemPreview {
     this.qConfig = qConfig;
     this.user = user;
     this.i18n = i18n;
+
+    // we track the preview widths the user clicked
+    // to hide the notification about checking all of them if he has done so
+    this.sizeOptionsChecked = [];
 
     // we use this proxy to catch any changes to the target and then load the preview after we have it
     this.targetProxy = new Proxy(
@@ -48,21 +67,6 @@ export class ItemPreview {
       }
     );
 
-    this.sizeOptions = [
-      {
-        value: 290,
-        label_i18n_key: "preview.small"
-      },
-      {
-        value: 560,
-        label_i18n_key: "preview.medium"
-      },
-      {
-        value: 800,
-        label_i18n_key: "preview.large"
-      }
-    ];
-
     this.init();
   }
 
@@ -83,6 +87,8 @@ export class ItemPreview {
           }
           this.sizeOptions.push(sizeOption);
         }
+      } else {
+        this.sizeOptions = defaultSizeOptions;
       }
 
       // set the default preview width to the most narrow variant
@@ -129,7 +135,13 @@ export class ItemPreview {
     }
   }
 
-  dataChanged() {
+  attached() {
+    this.loadPreview();
+  }
+
+  dataChanged(newValue, oldValue) {
+    this.sizeOptionsChecked = [this.previewWidthProxy.width];
+    this.applyPreviewHint();
     this.loadPreview();
   }
 
@@ -137,7 +149,7 @@ export class ItemPreview {
     this.loadPreview();
   }
 
-  async errorChanged() {
+  errorChanged() {
     if (this.error && this.errorMessage) {
       this.notification = {
         message: {
@@ -153,6 +165,21 @@ export class ItemPreview {
         }
       };
     } else if (!this.error) {
+      this.applyPreviewHint();
+    }
+  }
+
+  areAllSizeOptionsChecked() {
+    for (const sizeOption of this.sizeOptions) {
+      if (!this.sizeOptionsChecked.includes(sizeOption.value)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  applyPreviewHint() {
+    if (!this.areAllSizeOptionsChecked()) {
       this.notification = {
         message: {
           title: "preview.hint.title",
@@ -163,14 +190,14 @@ export class ItemPreview {
           value: 10
         }
       };
+    } else {
+      this.notification = null;
     }
   }
 
-  attached() {
-    this.loadPreview();
-  }
-
   handleSizeChange() {
+    this.sizeOptionsChecked.push(this.previewWidthProxy.width);
+    this.applyPreviewHint();
     this.loadPreview();
   }
 
