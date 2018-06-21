@@ -73,6 +73,6 @@
   top: calc(var(--q-space-base) * 2);
 }
 
-ai-dialog-overlay {
-  background: rgba(0, 0, 0, 0.5);
+ux-dialog-overlay {
+  background: rgba(255, 255, 255, 0.5);
 }
