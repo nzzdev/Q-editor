@@ -12,8 +12,6 @@
     "username": "Username",
     "password": "Password",
     "back": "back",
-    "loadMore": "load more",
-    "itemNotActivated": "Item is not activated",
     "saveChanges": "save changes",
     "close": "close",
     "created": "created",
@@ -74,13 +72,19 @@
     "department": "Department"
   },
   "item": {
-    "save": "save",
-    "activate": "activate",
-    "deactivate": "deactivate",
-    "blueprint": "use as blueprint",
+    "save": "Save",
+    "activ": "active",
+    "inactiv": "inactive",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "blueprint": "Use as blueprint",
     "blueprintTitlePrefix": "Copy of ",
-    "edit": "edit",
-    "failedToBlueprintItem": "Failed to blueprint the graphic."
+    "edit": "Edit",
+    "failedToBlueprintItem": "Failed to blueprint the graphic.",
+    "delete": "Delete",
+    "questionDeleteItem": "Delete graphic?",
+    "confirmDeleteItem": "Yes, delete",
+    "cancelDeleteItem": "Cancel"
   },
   "itemsFilter": {
     "allGraphics": "all graphics",
@@ -92,6 +96,11 @@
     "allStates": "all",
     "onlyActive": "active",
     "onlyInactive": "inactive"
+  },
+  "itemsList": {
+    "title": "title",
+    "author": "created by",
+    "updated": "last edited"
   },
   "livingdocsComponent": {
     "insert": "use Q element",

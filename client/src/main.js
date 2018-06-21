@@ -15,6 +15,7 @@ import ToolsInfo from "resources/ToolsInfo.js";
 import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
 import NotificationChecker from "resources/checkers/NotificationChecker.js";
 import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
+import ItemActionController from "resources/ItemActionController.js";
 import IdGenerator from "resources/IdGenerator.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
@@ -37,6 +38,7 @@ export async function configure(aurelia) {
   aurelia.use.singleton(CurrentItemProvider);
   aurelia.use.singleton(ObjectFromSchemaGenerator);
   aurelia.use.singleton(User);
+  aurelia.use.singleton(ItemActionController);
 
   const QServerBaseUrl = await qEnv.QServerBaseUrl;
 

@@ -12,8 +12,6 @@
     "username": "Benutzername",
     "password": "Passwort",
     "back": "zurück",
-    "loadMore": "mehr laden",
-    "itemNotActivated": "Grafik ist noch nicht aktiviert",
     "saveChanges": "Änderungen speichern",
     "close": "schliessen",
     "created": "erstellt",
@@ -75,14 +73,20 @@
     "department": "Ressort"
   },
   "item": {
-    "save": "speichern",
-    "activate": "aktivieren",
-    "deactivate": "deaktivieren",
-    "blueprint": "als Vorlage benutzen",
+    "save": "Speichern",
+    "activ": "aktiv",
+    "inactiv": "inaktiv",
+    "activate": "Aktivieren",
+    "deactivate": "Deaktivieren",
+    "blueprint": "Als Vorlage benutzen",
     "blueprintTitlePrefix": "Kopie von ",
-    "edit": "bearbeiten",
+    "edit": "Bearbeiten",
     "failedToBlueprintItem":
-      "Die Grafik konnte nicht als Vorlage verwendet werden."
+      "Die Grafik konnte nicht als Vorlage verwendet werden.",
+    "delete": "Löschen",
+    "questionDeleteItem": "Grafik löschen?",
+    "confirmDeleteItem": "Ja, löschen",
+    "cancelDeleteItem": "Abbrechen"
   },
   "itemsFilter": {
     "allGraphics": "alle Grafiken",
@@ -94,6 +98,11 @@
     "allStates": "Alle",
     "onlyActive": "Aktive",
     "onlyInactive": "Inaktive"
+  },
+  "itemsList": {
+    "title": "Titel",
+    "author": "erstellt von",
+    "updated": "zuletzt bearbeitet"
   },
   "livingdocsComponent": {
     "insert": "Q Element verwenden",

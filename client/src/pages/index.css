@@ -54,6 +54,10 @@
   outline: none;
 }
 
+.search input:focus + svg {
+  fill: var(--q-color-gray-5);
+}
+
 .item-list-legend {
   margin: var(--q-space-base) 0;
 }
@@ -79,7 +83,11 @@
 
 .index__statistics {
   text-align: center;
-  padding-top: var(--q-space-base);
-  margin: calc(var(--q-space-base) * 2) 0 0 0;
-  border-top: 1px solid var(--q-color-gray-2);
+  padding: 0;
+  position: fixed;
+  right: calc(var(--q-space-base) * 2);
+  bottom: calc(var(--q-space-base) * 2);
+  transform: rotate(270deg) translate(100%);
+  transform-origin: 100% 100%;
+  cursor: pointer;
 }

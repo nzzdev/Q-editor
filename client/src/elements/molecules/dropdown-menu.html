@@ -1,0 +1,7 @@
+<template>
+  <require from="./dropdown-menu.css"></require>
+  <button-tertiary class="dropdown-menu__button" icon="more" size="big" click.delegate="toggleDropdownMenu()"></button-tertiary>
+  <div ref="dropdownMenu" class="dropdown-menu__content q-text-small">
+    <slot></slot>
+  </div>
+</template>

@@ -12,8 +12,6 @@
     "username": "Identifiant",
     "password": "Mot de passe",
     "back": "Retour",
-    "loadMore": "Charger plus",
-    "itemNotActivated": "Objet non activé",
     "saveChanges": "Sauvegarder les changements",
     "close": "Fermer",
     "created": "créé",
@@ -75,15 +73,21 @@
     "department": "Département"
   },
   "item": {
-    "save": "sauvegarder",
-    "activate": "activer",
-    "deactivate": "désactiver",
-    "blueprint": "utiliser comme modèle",
+    "save": "Sauvegarder",
+    "activ": "activement",
+    "inactiv": "inactif",
+    "activate": "Activer",
+    "deactivate": "Désactiver",
+    "blueprint": "Utiliser comme modèle",
     "blueprintTitlePrefix": "Copie de ",
-    "edit": "modifier",
+    "edit": "Modifier",
     "failedToLoadItem": "Impossible de charger le graphique.",
     "failedToBlueprintItem":
-      "Impossible de préparer le graphique à partir du modèle."
+      "Impossible de préparer le graphique à partir du modèle.",
+    "delete": "Supprimer",
+    "questionDeleteItem": "Supprimer le graphique?",
+    "confirmDeleteItem": "Oui, supprimer",
+    "cancelDeleteItem": "Abandonner"
   },
   "itemsFilter": {
     "allGraphics": "tous les graphiques",
@@ -95,6 +99,11 @@
     "allStates": "tous",
     "onlyActive": "actifs",
     "onlyInactive": "inactifs"
+  },
+  "itemsList": {
+    "title": "titre",
+    "author": "créé par",
+    "updated": "dernière édition"
   },
   "livingdocsComponent": {
     "insert": "utiliser l'élément Q",
