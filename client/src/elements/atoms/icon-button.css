@@ -45,6 +45,7 @@ icon-button button:focus {
 
 .icon-button__text {
   min-width: 34px;
+  padding-left: var(--q-space-base);
   padding-right: var(--q-space-base);
 }
 
