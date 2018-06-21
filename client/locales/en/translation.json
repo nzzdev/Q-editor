@@ -50,7 +50,8 @@
       "This graphic is already activ. Changes will be applied in all articles. Do you really want to edit this graphic?",
     "confirmProceedToEditor": "Yes, proceed to editor",
     "cancelProceedToEditor": "No, cancel",
-    "arrayEntryAdd": "add {{ arrayEntryLabel }}",
+    "arrayEntryAdd": "Add {{ arrayEntryLabel }}",
+    "arrayEntryRemove": "Delete {{ arrayEntryLabel }}",
     "activatingEditorTakesTooLong":
       "It takes too long to load the editor, something is wrong.",
     "failedToSave": "Failed to save",
@@ -62,7 +63,7 @@
     "transpose": "Switch rows and columns"
   },
   "metaEditor": {
-    "title": "Finalize your chart",
+    "title": "Metainfos for internal use",
     "annotations": "Annotations",
     "annotationPlaceholder":
       "Add tags to your graphic which help you to search for it",

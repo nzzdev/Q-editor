@@ -51,6 +51,7 @@
     "confirmProceedToEditor": "Ja, weiter zum Editor",
     "cancelProceedToEditor": "Nein, abbrechen",
     "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",
+    "arrayEntryRemove": "{{ arrayEntryLabel }} löschen",
     "activatingEditorTakesTooLong":
       "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
     "failedToSave": "Speichern ist fehlgeschlagen",
@@ -63,7 +64,7 @@
     "transpose": "Zeilen und Spalten tauschen"
   },
   "metaEditor": {
-    "title": "Füge weitere Informationen zur Grafik hinzu",
+    "title": "Metainfos für den internen Gebrauch",
     "annotations": "Notizen",
     "annotationPlaceholder":
       "Hier kannst du zusätzliche Schlagwörter erfassen, mit denen die Grafik einfacher gefunden werden kann",

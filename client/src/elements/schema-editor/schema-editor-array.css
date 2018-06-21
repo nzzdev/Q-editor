@@ -4,8 +4,7 @@ schema-editor-array {
 
 .schema-editor-array__entry {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
   padding-top: calc(var(--q-space-base) * 2);
   margin-top: calc(var(--q-space-base) * 2);
   position: relative;
@@ -17,8 +16,13 @@ schema-editor-array {
 }
 
 .schema-editor-array__entry:last-of-type {
-  padding-bottom: calc(var(--q-space-base) * 2);
   border-bottom: 1px solid var(--q-color-gray-4);
+}
+
+.schema-editor-array__entry-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .schema-editor-array__collapsecontrol {
@@ -33,14 +37,16 @@ schema-editor-array {
   padding-left: var(--q-space-base);
 }
 
-.schema-editor-array__entry > schema-editor-wrapper {
+.schema-editor-array__entry
+  > .schema-editor-array__entry-container
+  > schema-editor-wrapper {
   flex-grow: 1;
   z-index: 1; /* stay below collapsecontrol */
   margin-top: var(--q-space-base);
 }
 
-.schema-editor-array__add-item-button {
-  margin: var(--q-space-base) 0;
+.schema-editor-array__button {
+  margin: calc(var(--q-space-base) * 2) 0 !important;
   width: 160px;
 }
 
