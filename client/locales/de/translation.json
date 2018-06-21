@@ -51,6 +51,7 @@
     "confirmProceedToEditor": "Ja, weiter zum Editor",
     "cancelProceedToEditor": "Nein, abbrechen",
     "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",
+    "arrayEntryRemove": "{{ arrayEntryLabel }} löschen",
     "activatingEditorTakesTooLong":
       "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
     "failedToSave": "Speichern ist fehlgeschlagen",

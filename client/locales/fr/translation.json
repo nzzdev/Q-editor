@@ -50,7 +50,8 @@
       "Ce graphique est actif. Les changements seront appliqués dans tous les articles. Voulez-vous vraiment éditer ce graphique ?",
     "confirmProceedToEditor": "Oui, édition",
     "cancelProceedToEditor": "Non, annuler",
-    "arrayEntryAdd": "ajouter {{ arrayEntryLabel }}",
+    "arrayEntryAdd": "Ajouter {{ arrayEntryLabel }}",
+    "arrayEntryRemove": "Supprimer {{ arrayEntryLabel }}",
     "activatingEditorTakesTooLong":
       "L'éditeur met trop de temps à charger, quelque chose s'est mal passé.",
     "failedToSave": "Impossible de sauvegarder",
