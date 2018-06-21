@@ -83,6 +83,9 @@ export default class ItemActionController {
       viewModel: ConfirmDialog,
       model: {
         confirmQuestion: this.i18n.tr("item.questionDeleteItem"),
+        confirmQuestionSub: this.i18n.tr("item.questionDeleteItemSub", {
+          graphicTitle: item.conf.title
+        }),
         proceedText: this.i18n.tr("item.confirmDeleteItem"),
         cancelText: this.i18n.tr("item.cancelDeleteItem")
       }
