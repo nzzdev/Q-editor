@@ -16,10 +16,6 @@ tool-selection {
   padding-right: inherit;
 }
 
-.tool-selection__toggle-tools-button button {
-  padding-right: var(--q-space-base);
-}
-
 .tool-selection__list {
   max-width: 1400px;
   display: flex;
