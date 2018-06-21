@@ -16,6 +16,10 @@ tool-selection {
   padding-right: inherit;
 }
 
+.tool-selection__toggle-tools-button button {
+  padding-right: calc(var(--q-space-base) * 2);
+}
+
 .tool-selection__list {
   max-width: 1400px;
   display: flex;
@@ -23,7 +27,6 @@ tool-selection {
   justify-content: center;
   text-align: center;
 }
-
 
 tool-selection a:hover,
 tool-selection a:visited {
