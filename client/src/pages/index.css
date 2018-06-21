@@ -1,4 +1,4 @@
-.index tool-selection { 
+.index tool-selection {
   margin-bottom: calc((var(--q-space-base) * 4));
 }
 .index h2 {
@@ -8,7 +8,7 @@
 .index items-filter {
   margin-left: calc((var(--q-space-base) / 4) * -1);
   margin-right: calc((var(--q-space-base) / 4) * -1);
-  margin-bottom: var(--q-space-base);
+  margin-bottom: calc(var(--q-space-base) * 2);
 }
 
 .search {
