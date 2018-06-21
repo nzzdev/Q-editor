@@ -1,3 +1,7 @@
+# 3.0.0 (xx.xx.xxxx)
+- ...
+- fix: schema-editor-table allows to copy 10000 rows now
+
 # 2.3.0 (29.05.2018)
 - feat: schema-editor-table minRows is now configurable via Q:options in schema.json
 - fix: schema-editor takes the whole width and expands rows to do so
