@@ -33,10 +33,10 @@
   "userConfig": {
     "initials": "initiales",
     "toolSelection": "sélection d'outil",
-    "toolsToShowInitially": "Outils à afficher initialement",
+    "toolsToShowInitially": "Outils sur la page d'accueil",
     "toolSelectionType": {
-      "byUsage": "par mon utilisation",
-      "byConfig": "par configuration"
+      "byUsage": "montrer ceux que j'utilise le plus souvent",
+      "byConfig": "Je voudrais décider pour moi-même lequel je vois"
     }
   },
   "statistics": {
