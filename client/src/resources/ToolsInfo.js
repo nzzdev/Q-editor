@@ -84,7 +84,7 @@ export default class ToolsInfo {
 
     const tools = await response.json();
 
-    return availableTools.sort((a, b) => {
+    return availableTools.slice(0).sort((a, b) => {
       return tools.indexOf(a.name) - tools.indexOf(b.name);
     });
   }

@@ -71,12 +71,7 @@ export class AccountDialog {
   }
 
   async loadToolSelectionConfig() {
-    // load the tools in users order
-    try {
-      this.tools = await this.toolsInfo.getToolsOrderedForUser();
-    } catch (e) {
-      this.tools = await this.toolsInfo.getAvailableTools();
-    }
+    this.tools = await this.toolsInfo.getAvailableTools();
 
     this.toolSelectionConfig = this.user.getUserConfig("toolSelection", {
       type: "byUsage",

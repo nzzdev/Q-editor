@@ -2,6 +2,13 @@ import { inject } from "aurelia-framework";
 import ToolsInfo from "resources/ToolsInfo";
 import User from "resources/User.js";
 
+function isInInitialToolSelection(userToolSelectionConfig, toolName) {
+  return (
+    userToolSelectionConfig.tools[toolName] &&
+    userToolSelectionConfig.tools[toolName].inInitialToolSelection === true
+  );
+}
+
 @inject(ToolsInfo, User)
 export class ToolSelection {
   constructor(toolsInfo, user) {
@@ -21,11 +28,6 @@ export class ToolSelection {
 
   async init() {
     this.alwaysVisibleToolCount = 4;
-    try {
-      this.tools = await this.toolsInfo.getToolsOrderedForUser();
-    } catch (e) {
-      this.tools = await this.toolsInfo.getAvailableTools();
-    }
     this.update();
   }
 
@@ -36,15 +38,12 @@ export class ToolSelection {
       userToolSelectionConfig &&
       userToolSelectionConfig.type === "byConfig"
     ) {
+      this.tools = await this.toolsInfo.getAvailableTools();
       // set the alwaysVisibleToolCount to the number of tools the user has checked as
       // visible initially
       this.alwaysVisibleToolCount = Object.keys(userToolSelectionConfig.tools)
         .map(toolName => {
-          return (
-            userToolSelectionConfig.tools[toolName] &&
-            userToolSelectionConfig.tools[toolName].inInitialToolSelection ===
-              true
-          );
+          return isInInitialToolSelection(userToolSelectionConfig, toolName);
         })
         .reduce((amountVisibleTools, isToolVisible) => {
           if (isToolVisible) {
@@ -54,31 +53,36 @@ export class ToolSelection {
         }, 0);
 
       // sort the tools by their config value for inInitialToolSelection;
-      //
-      this.tools = this.tools.sort((a, b) => {
+      this.visibleTools = this.tools.slice(0).sort((a, b) => {
         if (
-          userToolSelectionConfig.tools[a.name] &&
-          userToolSelectionConfig.tools[a.name].inInitialToolSelection ===
-            true &&
-          userToolSelectionConfig.tools[b.name] &&
-          userToolSelectionConfig.tools[b.name].inInitialToolSelection === true
+          isInInitialToolSelection(userToolSelectionConfig, a.name) &&
+          !isInInitialToolSelection(userToolSelectionConfig, b.name)
         ) {
-          return 0; // keep order if both are selected
+          return -1; // take a before if it is selected but b not
         }
         if (
-          userToolSelectionConfig.tools[a.name] &&
-          userToolSelectionConfig.tools[a.name].inInitialToolSelection === true
+          isInInitialToolSelection(userToolSelectionConfig, b.name) &&
+          !isInInitialToolSelection(userToolSelectionConfig, a.name)
         ) {
-          return -1; // take a before if it is selected
+          return 1; // take b before if it is selected but a not
         }
-        if (
-          userToolSelectionConfig.tools[b.name] &&
-          userToolSelectionConfig.tools[b.name].inInitialToolSelection === true
-        ) {
-          return 1; // take b before if it is selected
-        }
-        return 0; // keep order if none is selected
+        // otherwise keep the configured order
+        const configIndexA = this.tools.findIndex(tool => {
+          return tool.name === a.name;
+        });
+        const configIndexB = this.tools.findIndex(tool => {
+          return tool.name === b.name;
+        });
+        return configIndexA - configIndexB;
       });
+    } else {
+      // if the user wants the tools to see by her usage, we try to load it that way and fall back
+      // to the configured order in case this fails
+      try {
+        this.visibleTools = await this.toolsInfo.getToolsOrderedForUser();
+      } catch (e) {
+        this.visibleTools = await this.toolsInfo.getAvailableTools();
+      }
     }
   }
 
