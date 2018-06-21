@@ -11,6 +11,11 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.33);
 }
 
+.q-dialog--small {
+  max-width: 630px;
+  top: calc(var(--q-space-base) * 10);
+}
+
 .q-dialog-subtitle {
   margin: calc(var(--q-space-base) * 3) 0;
 }

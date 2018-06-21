@@ -60,13 +60,13 @@
         <p class="q-text q-text--error" if.bind="userFormErrors">${userFormErrors}</p>
         <button-primary
           click.delegate="saveUser()"
-          icon="proceed"><span t="general.saveChanges"></span></button-primary>
+          icon="proceed">${'general.saveChanges' & t}</button-primary>
       </form>
     </div>
     <aside class="q-dialog__controls">
       <button-secondary
         click.trigger="logout()"
-        icon="logout"><span t="general.logout"></span></button-primary>
+        icon="logout">${'general.logout' & t}</button-primary>
     </aside>
   </div>
 </template>
