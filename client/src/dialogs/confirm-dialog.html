@@ -4,7 +4,7 @@
     <button-tertiary class="q-dialog__close-button" icon="close" icon-size="medium" click.delegate="controller.cancel()"></button-tertiary>
     <div class="q-dialog__content">
       <h1 class="q-dialog-title">${config.confirmQuestion}</h1>
-      <h2 class="q-dialog-subtitle" if.bind="config.confirmQuestionSub" innerhtml.bind="config.confirmQuestionSub"></h2>
+      <p class="q-dialog-subtitle q-text--big" if.bind="config.confirmQuestionSub" innerhtml.bind="config.confirmQuestionSub"></p>
     </div>
     <div class="q-dialog__controls">
       <button-secondary click.delegate="controller.cancel()">${config.cancelText}</button-secondary>

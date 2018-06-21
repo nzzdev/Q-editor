@@ -60,6 +60,11 @@ h6 {
   line-height: 1.28;
 }
 
+.q-text--big {
+  font-size: var(--q-text-big-size);
+  line-height: 1.28;
+}
+
 .q-text-small {
   font-size: var(--q-text-small-size);
   line-height: 1.33;
