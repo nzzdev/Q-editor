@@ -9,6 +9,7 @@ schema-editor-array {
   padding-top: calc(var(--q-space-base) * 2);
   margin-top: calc(var(--q-space-base) * 2);
   position: relative;
+  border-top: 1px solid var(--q-color-gray-4);
 }
 
 .schema-editor-array__entry:empty {
@@ -17,6 +18,7 @@ schema-editor-array {
 
 .schema-editor-array__entry:last-of-type {
   padding-bottom: calc(var(--q-space-base) * 2);
+  border-bottom: 1px solid var(--q-color-gray-4);
 }
 
 .schema-editor-array__collapsecontrol {
