@@ -36,14 +36,13 @@ icon-button button:focus {
   height: 34px;
 }
 
-.icon-button__icon:empty {
-  display: none;
-}
-
 .icon-button__text {
   min-width: 34px;
-  padding-left: var(--q-space-base);
   padding-right: var(--q-space-base);
+}
+
+.icon-button__text:first-child {
+  padding-left: var(--q-space-base);
 }
 
 .icon-button__text:empty {
