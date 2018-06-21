@@ -86,7 +86,8 @@
     "questionDeleteItemSub":
       "Do you really want to delete <strong>{{graphicTitle}}</strong>?",
     "confirmDeleteItem": "Yes, delete",
-    "cancelDeleteItem": "Cancel"
+    "cancelDeleteItem": "Cancel",
+    "lastSaved": "Last saved"
   },
   "itemsFilter": {
     "allGraphics": "all graphics",

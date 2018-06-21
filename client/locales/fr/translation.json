@@ -89,7 +89,8 @@
     "questionDeleteItemSub":
       "Voulez-vous vraiment supprimer <strong>{{graphicTitle}}</strong>?",
     "confirmDeleteItem": "Oui, supprimer",
-    "cancelDeleteItem": "Abandonner"
+    "cancelDeleteItem": "Abandonner",
+    "lastSaved": "dernier enregistré"
   },
   "itemsFilter": {
     "allGraphics": "tous les graphiques",

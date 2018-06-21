@@ -88,7 +88,8 @@
     "questionDeleteItemSub":
       "Bist du sicher, dass du die Grafik <strong>{{graphicTitle}}</strong> löschen willst?",
     "confirmDeleteItem": "Ja, löschen",
-    "cancelDeleteItem": "Abbrechen"
+    "cancelDeleteItem": "Abbrechen",
+    "lastSaved": "Zuletzt gespeichert"
   },
   "itemsFilter": {
     "allGraphics": "alle Grafiken",

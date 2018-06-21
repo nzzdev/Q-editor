@@ -1,10 +1,11 @@
 import { bindable, inject } from "aurelia-framework";
+import { BindingSignaler } from "aurelia-templating-resources";
 import { Notification } from "aurelia-notification";
 import { DialogService } from "aurelia-dialog";
 import { ItemDialog } from "dialogs/item-dialog.js";
 import QConfig from "resources/QConfig.js";
 
-@inject(QConfig, Notification, DialogService)
+@inject(QConfig, Notification, DialogService, BindingSignaler)
 export class ToolStatusBar {
   @bindable item;
   @bindable saveAction;
@@ -12,10 +13,12 @@ export class ToolStatusBar {
 
   message;
 
-  constructor(qConfig, notification, dialogService) {
+  constructor(qConfig, notification, dialogService, signaler) {
     this.qConfig = qConfig;
     this.notification = notification;
     this.dialogService = dialogService;
+
+    setInterval(() => signaler.signal("update-timeago"), 1000);
   }
 
   created() {
