@@ -10,7 +10,7 @@ export class ToolSelection {
   }
 
   async attached() {
-    this.userChangedCallback = this.init.bind(this);
+    this.userChangedCallback = this.update.bind(this);
     this.user.registerChangeCallback(this.userChangedCallback);
     await this.init();
   }
@@ -26,7 +26,10 @@ export class ToolSelection {
     } catch (e) {
       this.tools = await this.toolsInfo.getAvailableTools();
     }
+    this.update();
+  }
 
+  async update() {
     await this.user.loaded;
     const userToolSelectionConfig = this.user.getUserConfig("toolSelection");
     if (
