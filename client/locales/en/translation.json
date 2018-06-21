@@ -72,16 +72,16 @@
     "department": "Department"
   },
   "item": {
-    "save": "save",
+    "save": "Save",
     "activ": "active",
     "inactiv": "inactive",
-    "activate": "activate",
-    "deactivate": "deactivate",
-    "blueprint": "use as blueprint",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "blueprint": "Use as blueprint",
     "blueprintTitlePrefix": "Copy of ",
-    "edit": "edit",
+    "edit": "Edit",
     "failedToBlueprintItem": "Failed to blueprint the graphic.",
-    "delete": "delete"
+    "delete": "Delete"
   },
   "itemsFilter": {
     "allGraphics": "all graphics",

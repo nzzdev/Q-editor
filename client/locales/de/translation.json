@@ -73,17 +73,17 @@
     "department": "Ressort"
   },
   "item": {
-    "save": "speichern",
+    "save": "Speichern",
     "activ": "aktiv",
     "inactiv": "inaktiv",
-    "activate": "aktivieren",
-    "deactivate": "deaktivieren",
-    "blueprint": "als Vorlage benutzen",
+    "activate": "Aktivieren",
+    "deactivate": "Deaktivieren",
+    "blueprint": "Als Vorlage benutzen",
     "blueprintTitlePrefix": "Kopie von ",
-    "edit": "bearbeiten",
+    "edit": "Bearbeiten",
     "failedToBlueprintItem":
       "Die Grafik konnte nicht als Vorlage verwendet werden.",
-    "delete": "löschen"
+    "delete": "Löschen"
   },
   "itemsFilter": {
     "allGraphics": "alle Grafiken",

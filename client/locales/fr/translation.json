@@ -73,18 +73,18 @@
     "department": "Département"
   },
   "item": {
-    "save": "sauvegarder",
+    "save": "Sauvegarder",
     "activ": "activement",
     "inactiv": "inactif",
-    "activate": "activer",
-    "deactivate": "désactiver",
-    "blueprint": "utiliser comme modèle",
+    "activate": "Activer",
+    "deactivate": "Désactiver",
+    "blueprint": "Utiliser comme modèle",
     "blueprintTitlePrefix": "Copie de ",
-    "edit": "modifier",
+    "edit": "Modifier",
     "failedToLoadItem": "Impossible de charger le graphique.",
     "failedToBlueprintItem":
       "Impossible de préparer le graphique à partir du modèle.",
-    "delete": "effacer"
+    "delete": "Effacer"
   },
   "itemsFilter": {
     "allGraphics": "tous les graphiques",
