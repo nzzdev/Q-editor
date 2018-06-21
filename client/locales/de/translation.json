@@ -83,7 +83,10 @@
     "edit": "Bearbeiten",
     "failedToBlueprintItem":
       "Die Grafik konnte nicht als Vorlage verwendet werden.",
-    "delete": "Löschen"
+    "delete": "Löschen",
+    "questionDeleteItem": "Grafik löschen?",
+    "confirmDeleteItem": "Ja, löschen",
+    "cancelDeleteItem": "Abbrechen"
   },
   "itemsFilter": {
     "allGraphics": "alle Grafiken",

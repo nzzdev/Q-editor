@@ -2,20 +2,31 @@ import { bindable, inject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Notification } from "aurelia-notification";
 import { I18N } from "aurelia-i18n";
+import { DialogService } from "aurelia-dialog";
+import { ConfirmDialog } from "dialogs/confirm-dialog.js";
 import User from "resources/User";
 import ToolsInfo from "resources/ToolsInfo";
 
-@inject(Element, ToolsInfo, User, Router, Notification, I18N)
+@inject(Element, ToolsInfo, User, Router, Notification, I18N, DialogService)
 export class ItemListEntry {
   @bindable item;
 
-  constructor(element, toolsInfo, user, router, notification, i18n) {
+  constructor(
+    element,
+    toolsInfo,
+    user,
+    router,
+    notification,
+    i18n,
+    dialogService
+  ) {
     this.element = element;
     this.toolsInfo = toolsInfo;
     this.user = user;
     this.router = router;
     this.notification = notification;
     this.i18n = i18n;
+    this.dialogService = dialogService;
   }
 
   itemChanged() {
@@ -44,10 +55,25 @@ export class ItemListEntry {
     this.item.deactivate();
   }
 
-  deleteItem() {
-    this.item.delete().then(() => {
-      this.element.parentNode.removeChild(this.element);
+  async deleteItem() {
+    const openDialogResult = await this.dialogService.open({
+      viewModel: ConfirmDialog,
+      model: {
+        confirmQuestion: this.i18n.tr("item.questionDeleteItem"),
+        proceedText: this.i18n.tr("item.confirmDeleteItem"),
+        cancelText: this.i18n.tr("item.cancelDeleteItem")
+      }
     });
+    const closeResult = await openDialogResult.closeResult;
+
+    if (!closeResult.wasCancelled) {
+      this.item.delete().then(() => {
+        this.element.addEventListener("transitionend", () => {
+          this.element.parentNode.removeChild(this.element);
+        });
+        this.element.style.transform = "scale(0)";
+      });
+    }
   }
 
   async blueprint() {

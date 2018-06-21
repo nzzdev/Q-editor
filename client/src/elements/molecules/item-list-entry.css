@@ -2,6 +2,7 @@ item-list-entry {
   display: flex;
   border-top: solid 1px var(--q-color-gray-3);
   padding: var(--q-space-base) 0;
+  transition: transform 0.2s ease-in;
 }
 
 item-list-entry:hover {

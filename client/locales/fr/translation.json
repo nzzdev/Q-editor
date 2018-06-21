@@ -84,7 +84,10 @@
     "failedToLoadItem": "Impossible de charger le graphique.",
     "failedToBlueprintItem":
       "Impossible de préparer le graphique à partir du modèle.",
-    "delete": "Effacer"
+    "delete": "Supprimer",
+    "questionDeleteItem": "Supprimer le graphique?",
+    "confirmDeleteItem": "Oui, supprimer",
+    "cancelDeleteItem": "Abandonner"
   },
   "itemsFilter": {
     "allGraphics": "tous les graphiques",

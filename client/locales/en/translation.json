@@ -81,7 +81,10 @@
     "blueprintTitlePrefix": "Copy of ",
     "edit": "Edit",
     "failedToBlueprintItem": "Failed to blueprint the graphic.",
-    "delete": "Delete"
+    "delete": "Delete",
+    "questionDeleteItem": "Delete graphic?",
+    "confirmDeleteItem": "Yes, delete",
+    "cancelDeleteItem": "Cancel"
   },
   "itemsFilter": {
     "allGraphics": "all graphics",
