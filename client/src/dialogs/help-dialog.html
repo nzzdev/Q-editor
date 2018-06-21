@@ -1,6 +1,7 @@
 <template>
   <require from="../styles/q-dialog.css"></require>
   <div class="q-dialog help-dialog">
+    <button-tertiary class="q-dialog__close-button" icon="close" icon-size="medium" click.delegate="controller.cancel()"></button-tertiary>
     <div class="q-dialog__content">
       <h1 class="q-dialog-title">Hilfe</h1>
       <p innerhtml.bind="intro" class="q-dialog-text"></p>

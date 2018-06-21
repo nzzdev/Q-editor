@@ -1,4 +1,5 @@
 .q-dialog {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -48,6 +49,12 @@
 
 .q-dialog--bottom-controls .q-dialog__controls .button:last-child {
   margin-right: 0;
+}
+
+.q-dialog__close-button {
+  position: absolute;
+  right: calc(var(--q-space-base) * 6);
+  top: calc(var(--q-space-base) * 6);
 }
 
 ai-dialog-overlay {

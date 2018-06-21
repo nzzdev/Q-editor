@@ -1,6 +1,7 @@
 <template>
   <require from="../styles/q-dialog.css"></require>
   <div class="q-dialog">
+    <button-tertiary class="q-dialog__close-button" icon="close" icon-size="medium" click.delegate="controller.cancel()"></button-tertiary>
     <div class="q-dialog__content">
       <h1 class="q-dialog-title">Konto</h1>
       <p class="q-dialog-text">
@@ -63,17 +64,9 @@
       </form>
     </div>
     <aside class="q-dialog__controls">
-      <button-primary
+      <button-secondary
         click.trigger="logout()"
         icon="logout"><span t="general.logout"></span></button-primary>
-      <button-secondary
-        if.bind="userChanged"
-        click.trigger="controller.ok()"
-        icon="leave"><span t="general.close"></span></button-secondary>
-      <button-secondary
-        if.bind="!userChanged"
-        click.trigger="controller.cancel()"
-        icon="leave"><span t="general.close"></span></button-secondary>
     </aside>
   </div>
 </template>

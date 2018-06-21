@@ -116,7 +116,6 @@ export class AccountDialog {
       if (!saved) {
         throw saved;
       }
-      this.userChanged = true;
       this.userFormMessage = this.i18n.tr("general.changesSaved");
     } catch (e) {
       this.userFormErrors.push(this.i18n.tr("general.failedToSaveChanges"));
