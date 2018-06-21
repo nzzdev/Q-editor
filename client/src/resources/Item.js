@@ -21,8 +21,7 @@ export default class Item {
   }
 
   getToolName() {
-    // this is used because we have legacy tool names with - which is not supported in Q server config
-    return this.conf.tool.replace(new RegExp("-", "g"), "_");
+    return this.conf.tool;
   }
 
   changed() {

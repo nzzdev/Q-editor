@@ -102,8 +102,7 @@ export default class ItemActionController {
     try {
       await item.blueprint();
       item.conf.title = this.i18n.tr("item.blueprintTitlePrefix");
-      let tool = item.conf.tool.replace(new RegExp("-", "g"), "_");
-      this.router.navigate(`/editor/${tool}/${item.conf._id}`);
+      this.router.navigate(`/editor/${item.conf.tool}/${item.conf._id}`);
     } catch (e) {
       this.notification.error("notification.failedToLoadItem");
     }

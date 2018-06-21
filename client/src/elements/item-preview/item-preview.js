@@ -197,7 +197,6 @@ export class ItemPreview {
           )}`
         );
       } else if (this.data) {
-        this.data.tool = this.data.tool.replace(new RegExp("-", "g"), "_");
         const body = {
           item: this.data,
           toolRuntimeConfig: toolRuntimeConfig
