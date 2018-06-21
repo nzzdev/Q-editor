@@ -9,10 +9,6 @@ tool-selection {
   background-color: var(--q-color-gray-2);
 }
 
-tool-selection h2 {
-  text-align: center;
-}
-
 .tool-selection__toggle-tools-button {
   position: absolute;
   right: 0;

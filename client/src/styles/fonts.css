@@ -7,6 +7,7 @@ body {
 h1 {
   font-size: var(--q-h1-size);
   font-weight: var(--q-h1-weight);
+  line-height: 1.25;
   margin-top: 0;
   margin-bottom: calc(var(--q-space-base) * 2);
 }
@@ -14,6 +15,7 @@ h1 {
 h2 {
   font-size: var(--q-h2-size);
   font-weight: var(--q-h2-weight);
+  line-height: 1.25;
   margin-top: 0;
   margin-bottom: calc(var(--q-space-base) * 2);
 }
@@ -21,6 +23,7 @@ h2 {
 h3 {
   font-size: var(--q-h3-size);
   font-weight: var(--q-h3-weight);
+  line-height: 1.25;
   margin-top: 0;
   margin-bottom: var(--q-space-base);
 }
@@ -28,6 +31,7 @@ h3 {
 h4 {
   font-size: var(--q-h4-size);
   font-weight: var(--q-h4-weight);
+  line-height: 1.25;
   margin-top: 0;
   margin-bottom: var(--q-space-base);
 }
@@ -35,6 +39,7 @@ h4 {
 h5 {
   font-size: var(--q-h5-size);
   font-weight: var(--q-h5-weight);
+  line-height: 1.25;
   margin-top: 0;
   margin-bottom: var(--q-space-base);
 }
@@ -42,6 +47,7 @@ h5 {
 h6 {
   font-size: var(--q-h6-size);
   font-weight: var(--q-h6-weight);
+  line-height: 1.25;
   color: var(--q-text-light-color);
   margin-top: 0;
   margin-bottom: var(--q-space-base);

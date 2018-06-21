@@ -2,7 +2,7 @@ language-switcher {
   margin: calc(var(--q-space-base) / 2) 0;
 }
 
-language-switcher div {
+language-switcher > div {
   display: flex;
   flex-wrap: wrap;
 }

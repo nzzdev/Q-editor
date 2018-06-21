@@ -1,3 +1,10 @@
+.index tool-selection { 
+  margin-bottom: calc((var(--q-space-base) * 4));
+}
+.index h2 {
+  text-align: center;
+}
+
 .index items-filter {
   margin-left: calc((var(--q-space-base) / 4) * -1);
   margin-right: calc((var(--q-space-base) / 4) * -1);
@@ -15,26 +22,26 @@
 .search svg {
   order: 1;
 
-  fill: var(--q-color-gray-4);
-  width: 34px;
+  fill: var(--q-color-gray-6);
+  width: 20px;
   position: relative;
-  left: var(--q-space-base);
+  left: calc(var(--q-space-base) * 2 + 20px);
 }
 
 .search input {
   flex-grow: 1;
   order: 2;
 
-  background: none;
+  background: white;
+  box-shadow: 0px 0px 5px 0px var(--q-color-gray-4);
 
   border: none;
-  border-bottom: 1px solid var(--q-color-gray-4);
-  padding-top: calc(var(--q-space-base) / 2);
-  padding-right: calc(var(--q-space-base) / 2);
-  padding-bottom: calc(var(--q-space-base) / 2);
-  padding-left: calc(var(--q-space-base) * 2);
+  border-radius: 8px;
+  padding-top: calc(var(--q-space-base) * 2);
+  padding-right: calc(var(--q-space-base) * 2);
+  padding-bottom: calc(var(--q-space-base) * 2);
+  padding-left: calc(var(--q-space-base) * 6);
 
-  font-family: Roboto, sans-serif;
   font-size: var(--q-text-size);
   caret-color: var(--q-color-primary-2);
 }
@@ -44,8 +51,6 @@
 }
 
 .search input:focus {
-  border-bottom-color: var(--q-color-gray-5);
-  background: none;
   outline: none;
 }
 
@@ -53,9 +58,36 @@
   fill: var(--q-color-gray-5);
 }
 
+.item-list-legend {
+  margin: var(--q-space-base) 0;
+}
+
+.item-list-legend > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-list-legend > div::before {
+  content: "";
+  width: 60px;
+  height: 16px;
+  border: 1px dashed var(--q-color-primary-2);
+  background-color: var(--q-color-primary-1);
+}
+
+.index__load-more-button {
+  max-width: 400px;
+  margin: calc(var(--q-space-base) * 2) auto;
+}
+
 .index__statistics {
   text-align: center;
-  padding-top: var(--q-space-base);
-  margin: calc(var(--q-space-base) * 2) 0 0 0;
-  border-top: 1px solid var(--q-color-gray-2);
+  padding: 0;
+  position: fixed;
+  right: calc(var(--q-space-base) * 2);
+  bottom: calc(var(--q-space-base) * 2);
+  transform: rotate(270deg) translate(100%);
+  transform-origin: 100% 100%;
+  cursor: pointer;
 }

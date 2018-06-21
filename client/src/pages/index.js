@@ -75,10 +75,27 @@ export class Index {
   }
 
   attached() {
+    // this observer will always observe the last item in the item list
+    // it checks if the observed element is within the viewport
+    // if so, we load more items
     this.itemListScrollObserver = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && this.moreItemsAvailable !== false) {
         this.loadMore();
       }
+    });
+
+    // this observer checks if we have any mutation in the items-list
+    // and lets the itemListScrollObserver observe the last item in the list
+    this.itemListModificationObserver = new MutationObserver(entries => {
+      const lastEntry = entries.pop();
+      this.itemListScrollObserver.observe(
+        lastEntry.target.children[lastEntry.target.children.length - 1]
+      );
+    });
+
+    // start observing the items-list
+    this.itemListModificationObserver.observe(this.itemsListElement, {
+      childList: true
     });
   }
 
@@ -124,7 +141,6 @@ export class Index {
     this.items = [];
     const result = await this.loadItems(this.currentSearchString);
     this.items = result.items;
-    this.setScrollObserverToLastItem();
     this.bookmark = result.bookmark;
     this.updateMoreItemsAvailableState(result);
 
@@ -137,16 +153,9 @@ export class Index {
       this.bookmark
     );
     this.items = this.items.concat(result.items);
-    this.setScrollObserverToLastItem();
     this.bookmark = result.bookmark;
     this.updateMoreItemsAvailableState(result);
     return this.items;
-  }
-
-  setScrollObserverToLastItem() {
-    this.itemListScrollObserver.observe(
-      this.itemsListElement.children[this.itemsListElement.children.length - 1]
-    );
   }
 
   updateMoreItemsAvailableState(result) {
@@ -191,5 +200,9 @@ export class Index {
     if (closeResult.wasCancelled === false) {
       this.router.navigateToRoute("index", { replace: true });
     }
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }
 }
