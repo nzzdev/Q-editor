@@ -23,7 +23,6 @@ export function configure(frameworkConfiguration) {
     .globalResources("./icon-message-info.html")
     .globalResources("./icon-message-success.html")
     .globalResources("./icon-message-warning.html")
-    .globalResources("./icon-mobile.html")
     .globalResources("./icon-next.html")
     .globalResources("./icon-no.html")
     .globalResources("./icon-notification-medium.html")
@@ -31,9 +30,7 @@ export function configure(frameworkConfiguration) {
     .globalResources("./icon-proceed.html")
     .globalResources("./icon-save-state.html")
     .globalResources("./icon-save.html")
-    .globalResources("./icon-tablet.html")
     .globalResources("./icon-transpose.html")
     .globalResources("./icon-up.html")
-    .globalResources("./icon-widescreen.html")
     .globalResources("./icon-yes.html");
 }
