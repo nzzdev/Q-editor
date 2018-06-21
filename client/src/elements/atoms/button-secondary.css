@@ -1,22 +1,33 @@
 button-secondary {
   display: block;
+  color: var(--q-color-gray-6);
 }
 
 button-secondary icon-button button {
   background-color: var(--q-color-white);
-  border-color: var(--q-color-gray-4);
-  color: var(--q-color-gray-6);
+  border-color: var(--q-color-gray-4);  
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 button-secondary icon-button button[disabled] {
   color: var(--q-color-gray-5);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 button-secondary icon-button button:hover {
   background-color: var(--q-color-gray-3);
   border-color: var(--q-color-gray-5);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 button-secondary icon-button button:focus {
+  background-color: var(--q-color-gray-3);
   border-color: var(--q-color-gray-5);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+button-secondary icon-button button:active {
+  border-color: var(--q-color-gray-5);
+  background-color: var(--q-color-gray-3);
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.25);
 }

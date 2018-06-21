@@ -1,9 +1,9 @@
 button-tertiary {
   display: block;
+  color: var(--q-color-gray-6);
 }
 
 button-tertiary icon-button button {
-  color: var(--q-color-gray-6);
   background-color: transparent;
   border-color: transparent;
 }
@@ -16,8 +16,17 @@ button-tertiary icon-button button[disabled] {
 button-tertiary icon-button button:hover {
   color: var(--q-color-black);
   background-color: var(--q-color-gray-3);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 button-tertiary icon-button button:focus {
-  text-decoration: underline;
+  color: var(--q-color-black);
+  background-color: var(--q-color-gray-3);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+button-tertiary icon-button button:active {
+  color: var(--q-color-black);
+  background-color: var(--q-color-gray-3);
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.25);
 }
