@@ -1,7 +1,6 @@
-<template containerless class="${item.conf.active ? 'active' : 'inactive'}">
+<template containerless>
   <a route-href="route: item; params.bind: {id: item.id}">
     <require from="./item-list-entry.css"></require>
-    <require from="../molecules/delete-button.html"></require>
     <span if.bind="item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--active">${'item.activ' & t}</span>
     <span if.bind="!item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--inactive">${'item.inactiv' & t}</span>
     <box-icon if.bind="iconSvg" code.bind="iconSvg" size="big" class="tool-icon"></box-icon>
@@ -15,14 +14,5 @@
       ${'general.edited' & t} ${item.conf.createdDate & timeAgo:7*24*60*60}, ${'general.by' & t} ${item.conf.createdBy}
     </span>
   </a>
-
-  <div class="item-list-entry__options-dropdown">
-    <button-tertiary class="item-list-entry__options-dropdown-button" icon="more" size="big" click.delegate="toggleOptionDropdown()"></button-tertiary>
-    <div ref="optionsDropdown" class="item-list-entry__options-dropdown-content q-text-small">
-      <a if.bind="!item.conf.active" click.delegate="activateItem()">${'item.activate' & t }</a>
-      <a if.bind="item.conf.active" click.delegate="deactivateItem()">${'item.deactivate' & t }</a>
-      <a click.delegate="blueprint()">${'item.blueprint' & t}</a>
-      <a if.bind="user.roles.includes('poweruser') || user.username === item.conf.createdBy" size="small" click.delegate="deleteItem()">${'item.delete' & t}</a>
-    </div>
-  </div>
+  <item-list-entry-dropdown item.bind="item"></item-list-entry-dropdown>
 </template>
