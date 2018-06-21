@@ -91,9 +91,8 @@ export default class ItemActionController {
 
     if (!closeResult.wasCancelled) {
       return item.delete();
-    } else {
-      return Promise.reject();
     }
+    return Promise.reject();
   }
 
   async blueprint(item) {
