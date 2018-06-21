@@ -30,7 +30,6 @@ export function configure(frameworkConfiguration) {
     .globalResources("./icon-proceed.html")
     .globalResources("./icon-save-state.html")
     .globalResources("./icon-save.html")
-    .globalResources("./icon-transpose.html")
     .globalResources("./icon-up.html")
     .globalResources("./icon-yes.html");
 }
