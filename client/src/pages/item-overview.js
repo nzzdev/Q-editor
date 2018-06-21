@@ -2,6 +2,7 @@ import { inject } from "aurelia-framework";
 import { RelativeTime } from "aurelia-i18n";
 import { Notification } from "aurelia-notification";
 import { HttpClient } from "aurelia-fetch-client";
+import { Router } from "aurelia-router";
 
 import ItemStore from "resources/ItemStore.js";
 import ToolsInfo from "resources/ToolsInfo.js";
@@ -13,6 +14,7 @@ import QConfig from "resources/QConfig.js";
   RelativeTime,
   Notification,
   HttpClient,
+  Router,
   ItemStore,
   ToolsInfo,
   ItemActionController,
@@ -25,6 +27,7 @@ export class ItemOverview {
     relativeTime,
     notification,
     httpClient,
+    router,
     itemStore,
     toolsInfo,
     itemActionController,
@@ -33,10 +36,20 @@ export class ItemOverview {
     this.relativeTime = relativeTime;
     this.notification = notification;
     this.httpClient = httpClient;
+    this.router = router;
     this.itemStore = itemStore;
     this.toolsInfo = toolsInfo;
     this.itemActionController = itemActionController;
     this.qConfig = qConfig;
+  }
+
+  async attached() {
+    this.isToolAvailable = await this.toolsInfo.isToolWithNameAvailable(
+      this.item.conf.tool
+    );
+    if (await this.qConfig.get("metaInformation")) {
+      this.loadMetaInformation();
+    }
   }
 
   async activate(routeParams) {
@@ -48,12 +61,12 @@ export class ItemOverview {
     }
   }
 
-  async attached() {
-    this.isToolAvailable = await this.toolsInfo.isToolWithNameAvailable(
-      this.item.conf.tool
-    );
-    if (await this.qConfig.get("metaInformation")) {
-      this.loadMetaInformation();
+  async deleteItem() {
+    try {
+      await this.itemActionController.delete(this.item);
+      this.router.navigate("index");
+    } catch (e) {
+      console.log(e);
     }
   }
 

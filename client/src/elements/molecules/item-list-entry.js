@@ -25,12 +25,15 @@ export class ItemListEntry {
     });
   }
 
-  deleteItem() {
-    this.itemActionController.delete(this.item).then(() => {
+  async deleteItem() {
+    try {
+      await this.itemActionController.delete(this.item);
       this.element.addEventListener("transitionend", () => {
         this.element.parentNode.removeChild(this.element);
       });
       this.element.style.transform = "scale(0)";
-    });
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

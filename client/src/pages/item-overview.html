@@ -44,6 +44,10 @@
           <span t="item.blueprint"></span>
         </button-secondary>
 
+        <button-secondary if.bind="isToolAvailable" click.delegate="deleteItem()" icon="delete">
+          <span t="item.delete"></span>
+        </button-secondary>
+
         <button-secondary if.bind="isToolAvailable" click.delegate="itemActionController.edit(item)" icon="edit">
           <span t="item.edit"></span>
         </button-secondary>
