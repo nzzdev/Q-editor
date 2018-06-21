@@ -13,7 +13,6 @@
     "password": "Passwort",
     "back": "zurück",
     "saveChanges": "Änderungen speichern",
-    "close": "schliessen",
     "created": "erstellt",
     "edited": "bearbeitet",
     "by": "von",
@@ -85,7 +84,8 @@
       "Die Grafik konnte nicht als Vorlage verwendet werden.",
     "delete": "Löschen",
     "questionDeleteItem": "Grafik löschen?",
-    "questionDeleteItemSub": "Bist du sicher, dass du die Grafik <strong>{{graphicTitle}}</strong> löschen willst?",
+    "questionDeleteItemSub":
+      "Bist du sicher, dass du die Grafik <strong>{{graphicTitle}}</strong> löschen willst?",
     "confirmDeleteItem": "Ja, löschen",
     "cancelDeleteItem": "Abbrechen"
   },

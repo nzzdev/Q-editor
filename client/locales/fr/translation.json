@@ -13,7 +13,6 @@
     "password": "Mot de passe",
     "back": "Retour",
     "saveChanges": "Sauvegarder les changements",
-    "close": "Fermer",
     "created": "créé",
     "edited": "édité",
     "by": "par",
@@ -86,7 +85,8 @@
       "Impossible de préparer le graphique à partir du modèle.",
     "delete": "Supprimer",
     "questionDeleteItem": "Supprimer le graphique?",
-    "questionDeleteItemSub": "Voulez-vous vraiment supprimer <strong>{{graphicTitle}}</strong>?",
+    "questionDeleteItemSub":
+      "Voulez-vous vraiment supprimer <strong>{{graphicTitle}}</strong>?",
     "confirmDeleteItem": "Oui, supprimer",
     "cancelDeleteItem": "Abandonner"
   },

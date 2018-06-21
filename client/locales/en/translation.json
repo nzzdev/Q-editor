@@ -13,7 +13,6 @@
     "password": "Password",
     "back": "back",
     "saveChanges": "save changes",
-    "close": "close",
     "created": "created",
     "edited": "edited",
     "by": "by",
@@ -83,7 +82,8 @@
     "failedToBlueprintItem": "Failed to blueprint the graphic.",
     "delete": "Delete",
     "questionDeleteItem": "Delete graphic?",
-    "questionDeleteItemSub": "Do you really want to delete <strong>{{graphicTitle}}</strong>?",
+    "questionDeleteItemSub":
+      "Do you really want to delete <strong>{{graphicTitle}}</strong>?",
     "confirmDeleteItem": "Yes, delete",
     "cancelDeleteItem": "Cancel"
   },

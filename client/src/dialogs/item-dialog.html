@@ -9,8 +9,8 @@
     <aside class="q-dialog__controls">
       <div class="q-text-small q-text--light">
         <icon-active-state is-active.bind="item.conf.active"></icon-active-state>
-        <span>${ 'general.created' & t } ${ item.conf.createdDate & timeAgo:7*24*60*60 }<br>
-        ${ 'general.by' & t } ${item.conf.createdBy}</span>
+        <span>${ 'general.created' & t } ${ item.conf.createdDate & timeAgo:7*24*60*60 }
+          <br> ${ 'general.by' & t } ${item.conf.createdBy}</span>
       </div>
 
       <button-secondary if.bind="config.allowActivate && !item.conf.active" click.delegate="activateItem()" icon="activate">
@@ -27,8 +27,6 @@
         <h6>ID</h6>
         <pre><code class="q-text-small q-text--light">${item.conf._id}</code></pre>
       </div>
-
-      <button-secondary click.delegate="controller.cancel()" icon="leave"><span t="general.close"></span></button-secondary>
     </aside>
   </div>
 </template>
