@@ -4,7 +4,7 @@ export function configure(frameworkConfiguration) {
     .globalResources("./delete-button.html")
     .globalResources("./embed-code")
     .globalResources("./item-list-entry")
-    .globalResources("./item-list-entry-dropdown")
+    .globalResources("./dropdown-menu")
     .globalResources("./language-switcher")
     .globalResources("./radio-button-group")
     .globalResources("./notification");

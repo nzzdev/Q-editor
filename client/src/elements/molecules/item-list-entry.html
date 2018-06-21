@@ -14,5 +14,10 @@
       ${'general.edited' & t} ${item.conf.createdDate & timeAgo:7*24*60*60}, ${'general.by' & t} ${item.conf.createdBy}
     </span>
   </a>
-  <item-list-entry-dropdown item.bind="item"></item-list-entry-dropdown>
+  <dropdown-menu>
+    <a if.bind="!item.conf.active" click.delegate="activateItem()">${'item.activate' & t }</a>
+    <a if.bind="item.conf.active" click.delegate="deactivateItem()">${'item.deactivate' & t }</a>
+    <a click.delegate="blueprint()">${'item.blueprint' & t}</a>
+    <a if.bind="user.roles.includes('poweruser') || user.username === item.conf.createdBy" size="small" click.delegate="deleteItem()">${'item.delete' & t}</a>
+  </dropdown-menu>
 </template>
