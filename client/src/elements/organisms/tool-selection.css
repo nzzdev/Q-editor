@@ -17,7 +17,7 @@ tool-selection {
 }
 
 .tool-selection__toggle-tools-button button {
-  padding-right: calc(var(--q-space-base) * 2);
+  padding-right: var(--q-space-base);
 }
 
 .tool-selection__list {
