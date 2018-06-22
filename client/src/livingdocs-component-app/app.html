@@ -52,7 +52,7 @@
         <preview-container ref="previewContainer" id="preview-container" if.bind="selectedItemIndex !== undefined" width.bind="previewWidth"
           rendering-info.bind="renderingInfo" target.bind="target">
         </preview-container>
-        <h2 if.bind="selectedItemIndex === undefined">${'livingdocsComponent.selectGraphic' & t}</h2>
+        <h2 class="livingdocs-component-item-preview__message" if.bind="selectedItemIndex === undefined">${'livingdocsComponent.selectGraphic' & t}</h2>
       </div>
       <div class="livingdocs-component-item-options">
         <div if.bind="selectedItemIndex !== undefinded">
