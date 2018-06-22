@@ -33,6 +33,10 @@ item-list-entry a > span:not(.item-list-entry__state-tag) {
   flex-basis: 0;
 }
 
+item-list-entry:last-child {
+  margin-bottom: 160px;
+}
+
 .item-list-entry__state-tag {
   height: 20px;
   line-height: 20px !important;
