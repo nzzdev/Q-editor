@@ -17,15 +17,18 @@ q-bar {
   padding-left: calc(var(--q-space-base) * 3);
 }
 
+.q-bar__left:emtpy {
+  display: none;
+}
+
 .q-bar__center {
   width: 10%;
   display: flex;
   justify-content: center;
 }
 
-.q-bar__center > * {
-  width: 40px;
-  height: 40px;
+.q-bar__center:empty {
+  display: none;
 }
 
 .q-bar__right {
@@ -35,6 +38,15 @@ q-bar {
   padding-right: calc(var(--q-space-base) * 3);
 }
 
-.q-bar__help {
-  padding-left: calc(var(--q-space-base) * 2);
+.q-bar__right:empty {
+  display: none;
+}
+
+.q-bar__right > * {
+  margin-left: calc(var(--q-space-base) * 2);
+}
+
+.q-bar--no-logo .q-bar__left, .q-bar--no-logo .q-bar__right{
+  flex-grow: 1;
+  width: auto;
 }
