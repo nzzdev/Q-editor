@@ -30,6 +30,10 @@
             <br> ${ 'general.by' & t } ${item.conf.updatedBy}</div>
         </div>
 
+        <button-secondary if.bind="isToolAvailable" click.delegate="itemActionController.edit(item)" icon="edit">
+          <span t="item.edit"></span>
+        </button-secondary>
+
         <button-secondary if.bind="!item.conf.active" click.delegate="itemActionController.activate(item)" icon="activate">
           <span t="item.activate"></span>
         </button-secondary>
@@ -42,10 +46,6 @@
 
         <button-secondary if.bind="isToolAvailable" click.delegate="itemActionController.blueprint(item)" icon="blueprint">
           <span t="item.blueprint"></span>
-        </button-secondary>
-
-        <button-secondary if.bind="isToolAvailable" click.delegate="itemActionController.edit(item)" icon="edit">
-          <span t="item.edit"></span>
         </button-secondary>
 
         <button-secondary if.bind="isToolAvailable" click.delegate="deleteItem()" icon="delete">
