@@ -38,7 +38,7 @@
 }
 
 .notification__icon--high {
-  background-color: var(--q-color-error-light);
+  background-color: var(--q-color-error);
   color: var(--q-color-white);
 }
 
