@@ -14,14 +14,12 @@ q-bar {
 .q-bar__left {
   width: 45%;
   display: flex;
-  flex-flow: row wrap;
   padding-left: calc(var(--q-space-base) * 3);
 }
 
 .q-bar__center {
   width: 10%;
   display: flex;
-  flex-flow: row wrap;
   justify-content: center;
 }
 
@@ -33,11 +31,10 @@ q-bar {
 .q-bar__right {
   width: 45%;
   display: flex;
-  flex-flow: row wrap;
   justify-content: flex-end;
   padding-right: calc(var(--q-space-base) * 3);
 }
 
-.q-bar__right > * {
+.q-bar__help {
   padding-left: calc(var(--q-space-base) * 2);
 }
