@@ -25,7 +25,8 @@
     "failedToSaveChanges": "Impossible de sauvegarder les changements.",
     "loginFailed": "Votre identifiant ou mot de passe est incorrect.",
     "serverConnectionFailed": "Impossible de se connecter au serveur.",
-    "articlesWithThisGraphic": "Articles avec ce graphique"
+    "articlesWithThisGraphic": "Articles avec ce graphique",
+    "loadMore": "Charger plus"
   },
   "userConfig": {
     "initials": "initiales",
@@ -74,8 +75,8 @@
   },
   "item": {
     "save": "Sauvegarder",
-    "activ": "activement",
-    "inactiv": "inactif",
+    "active": "activement",
+    "inactive": "inactif",
     "activate": "Activer",
     "deactivate": "Désactiver",
     "blueprint": "Utiliser comme modèle",
@@ -109,11 +110,9 @@
     "updated": "dernière édition"
   },
   "livingdocsComponent": {
-    "insert": "utiliser l'élément Q",
-    "edit": "modifier dans Q",
-    "titleLabel": "titre de l'élément Q: ",
-    "selectGraphic": "Sélectionner un élément Q depuis la liste",
-    "searchLabel": "Chercher un élément Q"
+    "insert": "Utilisez ce graphique",
+    "edit": "Modifier dans Q",
+    "selectGraphic": "Sélectionnez un graphique dans la liste"
   },
   "notifications": {
     "failedLoadingEditorConfig":

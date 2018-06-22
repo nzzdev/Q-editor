@@ -7,7 +7,6 @@ export class PreviewContainer {
   @bindable width;
   @bindable renderingInfo;
   @bindable loadingStatus;
-  @bindable noRenderingInfoText;
   @bindable target;
   @bindable error;
 

@@ -25,7 +25,8 @@
     "failedToSaveChanges": "Failed to save changes.",
     "loginFailed": "Your username or password is not correct.",
     "serverConnectionFailed": "Failed to connect to server.",
-    "articlesWithThisGraphic": "Articles with this graphic"
+    "articlesWithThisGraphic": "Articles with this graphic",
+    "loadMore": "Load more"
   },
   "userConfig": {
     "initials": "initials",
@@ -73,8 +74,8 @@
   },
   "item": {
     "save": "Save",
-    "activ": "active",
-    "inactiv": "inactive",
+    "active": "active",
+    "inactive": "inactive",
     "activate": "Activate",
     "deactivate": "Deactivate",
     "blueprint": "Use as blueprint",
@@ -106,11 +107,9 @@
     "updated": "last edited"
   },
   "livingdocsComponent": {
-    "insert": "use Q element",
-    "edit": "edit in Q",
-    "titleLabel": "title Q element: ",
-    "selectGraphic": "please select a Q element from the list",
-    "searchLabel": "Search for a Q element"
+    "insert": "Use this graphic",
+    "edit": "Edit in Q",
+    "selectGraphic": "Select a graphic from the list"
   },
   "notifications": {
     "failedLoadingEditorConfig": "Failed to load editor configuration",

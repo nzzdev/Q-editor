@@ -60,7 +60,7 @@ export class App {
   async attached() {
     this.tools = await this.getTools();
     await this.loadTarget();
-    await this.reloadItems();
+    await this.filterChanged();
     this.loadView();
   }
 
@@ -127,7 +127,7 @@ export class App {
     window.parent.postMessage(message, "*");
   }
 
-  async reloadItems() {
+  async filterChanged() {
     this.items = [];
     try {
       const result = await this.loadItems(this.currentSearchString);

@@ -1,16 +1,16 @@
 <template containerless>
   <a route-href="route: item; params.bind: {id: item.id}">
     <require from="./item-list-entry.css"></require>
-    <span if.bind="item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--active">${'item.activ' & t}</span>
-    <span if.bind="!item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--inactive">${'item.inactiv' & t}</span>
+    <span if.bind="item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--active">${'item.active' & t}</span>
+    <span if.bind="!item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--inactive">${'item.inactive' & t}</span>
     <box-icon if.bind="iconSvg" code.bind="iconSvg" size="big" class="tool-icon"></box-icon>
 
     <span class="q-text-small">${item.conf.title}</span>
     <span class="q-text-small">${item.conf.createdBy}</span>
-    <span class="q-text-small ${item.conf.active ? '' : 'q-text--light'}" if.bind="item.conf.updatedDate">
+    <span class="q-text-small" if.bind="item.conf.updatedDate">
       ${'general.edited' & t} ${item.conf.updatedDate & timeAgo:7*24*60*60}, ${'general.by' & t} ${item.conf.updatedBy}
     </span>
-    <span class="q-text-small ${item.conf.active ? '' : 'q-text--light'}" if.bind="!item.conf.updatedDate">
+    <span class="q-text-small" if.bind="!item.conf.updatedDate">
       ${'general.edited' & t} ${item.conf.createdDate & timeAgo:7*24*60*60}, ${'general.by' & t} ${item.conf.createdBy}
     </span>
   </a>
