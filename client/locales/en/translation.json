@@ -109,7 +109,8 @@
   "livingdocsComponent": {
     "insert": "Use this graphic",
     "edit": "Edit in Q",
-    "selectGraphic": "Select a graphic from the list"
+    "selectGraphic": "Select a graphic from the list",
+    "inactiveGraphic": "The graphic must first be activated in Q"
   },
   "notifications": {
     "failedLoadingEditorConfig": "Failed to load editor configuration",

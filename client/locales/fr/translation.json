@@ -112,7 +112,8 @@
   "livingdocsComponent": {
     "insert": "Utilisez ce graphique",
     "edit": "Modifier dans Q",
-    "selectGraphic": "Sélectionnez un graphique dans la liste"
+    "selectGraphic": "Sélectionnez un graphique dans la liste",
+    "inactiveGraphic": "Le graphique doit d'abord être activé en Q"
   },
   "notifications": {
     "failedLoadingEditorConfig":

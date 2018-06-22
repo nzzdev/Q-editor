@@ -111,7 +111,8 @@
   "livingdocsComponent": {
     "insert": "Grafik verwenden",
     "edit": "In Q bearbeiten",
-    "selectGraphic": "Wähle eine Grafik aus der Liste aus"
+    "selectGraphic": "Wähle eine Grafik aus der Liste aus",
+    "inactiveGraphic": "Die Grafik muss zuerst in Q aktiviert werden"
   },
   "notifications": {
     "failedLoadingEditorConfig":

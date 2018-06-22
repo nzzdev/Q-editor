@@ -172,10 +172,11 @@ html {
 
 .livingdocs-component-item-preview {
   margin-top: 0;
-  flex-grow: 1;
   overflow: auto;
   display: flex;
   justify-content: center;
+  height: auto;
+  max-height: 80%;
 }
 
 .livingdocs-component-item-preview__message {
