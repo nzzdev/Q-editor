@@ -33,6 +33,7 @@ item-list-entry a > span:not(.item-list-entry__state-tag) {
   flex-basis: 0;
 }
 
+/* this margin is here to have space for the dropdown menu */
 item-list-entry:last-child {
   margin-bottom: 160px;
 }
