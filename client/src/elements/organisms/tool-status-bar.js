@@ -13,18 +13,28 @@ export class ToolStatusBar {
 
   message;
 
-  constructor(qConfig, notification, dialogService, signaler) {
+  constructor(qConfig, notification, dialogService, bindingSignaler) {
     this.qConfig = qConfig;
     this.notification = notification;
     this.dialogService = dialogService;
-
-    setInterval(() => signaler.signal("update-timeago"), 1000);
+    this.bindingSignaler = bindingSignaler;
   }
 
   created() {
     return this.qConfig.get("uiBehavior").then(uiBehaviorConfig => {
       this.uiBehaviorConfig = uiBehaviorConfig;
     });
+  }
+
+  attached() {
+    this.updateTimeAgoIntervalId = setInterval(
+      () => this.bindingSignaler.signal("update-timeago"),
+      1000
+    );
+  }
+
+  detached() {
+    clearInterval(this.updateTimeAgoIntervalId);
   }
 
   onActivateClick() {
