@@ -30,7 +30,7 @@ html {
 
 .search {
   width: 100%;
-  max-width: 400px;
+  width: 80%;
   margin: calc(var(--q-space-base) * 3) auto;
 
   display: flex;
@@ -176,7 +176,10 @@ html {
   overflow: auto;
   display: flex;
   justify-content: center;
-  align-items: center;
+}
+
+.livingdocs-component-item-preview__message {
+  align-self: center;
 }
 
 .livingdocs-component-item-controls {
