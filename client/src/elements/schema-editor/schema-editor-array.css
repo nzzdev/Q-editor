@@ -15,10 +15,6 @@ schema-editor-array {
   display: none;
 }
 
-.schema-editor-array__entry:last-of-type {
-  border-bottom: 1px solid var(--q-color-gray-4);
-}
-
 .schema-editor-array__entry-container {
   display: flex;
   flex-wrap: wrap;
@@ -45,8 +41,14 @@ schema-editor-array {
   margin-top: var(--q-space-base);
 }
 
+.schema-editor-array__button-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .schema-editor-array__button {
-  margin: calc(var(--q-space-base) * 2) 0 !important;
+  margin: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 2)
+    calc(var(--q-space-base) * 2) 0 !important;
   width: 160px;
 }
 

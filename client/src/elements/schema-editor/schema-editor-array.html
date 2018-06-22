@@ -26,13 +26,17 @@
         <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown($index)" size="small"></button-tertiary>
       </div>
     </div>
-    <div class="schema-editor-array__entry-delete-button">
+    <div class="schema-editor-array__button-container">
       <button-secondary class="schema-editor-array__button" repeat.for="arrayEntryOption of arrayEntryOptions" click.delegate="deleteElement($index)">
         ${'editor.arrayEntryRemove' & t: arrayEntryOption}
       </button-secondary>
+      <button-primary class="schema-editor-array__button" if.bind="$last" repeat.for="arrayEntryOption of arrayEntryOptions" click.delegate="addElement(arrayEntryOption.schema)">
+        ${'editor.arrayEntryAdd' & t: arrayEntryOption}
+      </button-primary>
     </div>
   </div>
-  <button-primary class="schema-editor-array__button" repeat.for="arrayEntryOption of arrayEntryOptions" click.delegate="addElement(arrayEntryOption.schema)">
+  <button-primary class="schema-editor-array__button" if.bind="data.length === 0" repeat.for="arrayEntryOption of arrayEntryOptions"
+    click.delegate="addElement(arrayEntryOption.schema)">
     ${'editor.arrayEntryAdd' & t: arrayEntryOption}
   </button-primary>
 </template>
