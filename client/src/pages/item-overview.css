@@ -1,5 +1,6 @@
 .item-overview-container {
   display: flex;
+  margin-top: calc(var(--q-space-base) * 4);
 }
 
 .item-overview__content {
@@ -9,10 +10,6 @@
 
 .item-overview__content > item-preview {
   height: 500px;
-}
-
-.item-overview__content > section {
-  margin-top: calc(var(--q-space-base) * 4);
 }
 
 .item-overview__controls {

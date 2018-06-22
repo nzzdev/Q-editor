@@ -1,5 +1,5 @@
 .editor section {
-  padding: calc(var(--q-space-base) * 6) calc(var(--q-space-base) * 4);
+  padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 4);
 }
 
 .editor section > * {
