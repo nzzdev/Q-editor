@@ -47,10 +47,11 @@
     "title": "Gib deine Daten ein",
     "questionLeaveWithUnsavedChanges":
       "Es sind nicht alle Änderungen gespeichert.",
-    "questionLeaveWithUnsavedChangesSub": "trotzdem schliessen?",
+    "questionLeaveWithUnsavedChangesSub": "Trotzdem schliessen?",
     "questionReallyEditBecauseActive":
-      "Diese Grafik ist bereits aktiv. Änderungen werden in allen Artikel übernommen.",
-    "questionReallyEditBecauseActiveSub": " Willst du diese Grafik wirklich bearbeiten?",
+      "Diese Grafik ist bereits aktiv. Änderungen werden in allen Artikeln übernommen.",
+    "questionReallyEditBecauseActiveSub":
+      "Willst du diese Grafik wirklich bearbeiten?",
     "confirmProceedToEditor": "Ja, weiter zum Editor",
     "cancelProceedToEditor": "Nein, abbrechen",
     "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",

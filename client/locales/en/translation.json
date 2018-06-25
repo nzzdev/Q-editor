@@ -45,12 +45,12 @@
   },
   "editor": {
     "title": "Enter your data",
-    "questionLeaveWithUnsavedChanges":
-      "Not all changes are saved",
-    "questionLeaveWithUnsavedChangesSub": "close anyway?",
+    "questionLeaveWithUnsavedChanges": "Not all changes are saved",
+    "questionLeaveWithUnsavedChangesSub": "Close anyway?",
     "questionReallyEditBecauseActive":
       "This graphic is already activ. Changes will be applied in all articles.",
-    "questionReallyEditBecauseActiveSub": " Do you really want to edit this graphic?",
+    "questionReallyEditBecauseActiveSub":
+      "Do you really want to edit this graphic?",
     "confirmProceedToEditor": "Yes, proceed to editor",
     "cancelProceedToEditor": "No, cancel",
     "arrayEntryAdd": "Add {{ arrayEntryLabel }}",

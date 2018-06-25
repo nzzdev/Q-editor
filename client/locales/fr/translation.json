@@ -47,10 +47,11 @@
     "title": "Entrez vos données",
     "questionLeaveWithUnsavedChanges":
       "Des changements n'ont pas été sauvegardés",
-    "questionLeaveWithUnsavedChangesSub": "fermer quand même ?",
+    "questionLeaveWithUnsavedChangesSub": "Fermer quand même ?",
     "questionReallyEditBecauseActive":
       "Ce graphique est actif. Les changements seront appliqués dans tous les articles.",
-    "questionReallyEditBecauseActiveSub": "Voulez-vous vraiment éditer ce graphique ?",  
+    "questionReallyEditBecauseActiveSub":
+      "Voulez-vous vraiment éditer ce graphique ?",
     "confirmProceedToEditor": "Oui, édition",
     "cancelProceedToEditor": "Non, annuler",
     "arrayEntryAdd": "Ajouter {{ arrayEntryLabel }}",
