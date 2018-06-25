@@ -49,14 +49,14 @@
     </div>
     <div class="livingdocs-component-item-container">
       <div class="livingdocs-component-item-preview">
-        <preview-container ref="previewContainer" id="preview-container" if.bind="selectedItemIndex !== undefined && item.conf.active"
+        <preview-container ref="previewContainer" id="preview-container" if.bind="selectedItemIndex !== undefined && items[selectedItemIndex].conf.active"
           width.bind="previewWidth" rendering-info.bind="renderingInfo" target.bind="target">
         </preview-container>
         <h2 class="livingdocs-component-item-preview__message" if.bind="selectedItemIndex === undefined">${'livingdocsComponent.selectGraphic' & t}</h2>
-        <h2 class="livingdocs-component-item-preview__message" if.bind="selectedItemIndex !== undefined && !item.conf.active">${'livingdocsComponent.inactiveGraphic' & t}</h2>
+        <h2 class="livingdocs-component-item-preview__message" if.bind="selectedItemIndex !== undefined && !items[selectedItemIndex].conf.active">${'livingdocsComponent.inactiveGraphic' & t}</h2>
       </div>
       <div class="livingdocs-component-item-options">
-        <div if.bind="selectedItemIndex !== undefinded && item.conf.active">
+        <div if.bind="selectedItemIndex !== undefined && items[selectedItemIndex].conf.active">
           <form class="q-form">
             <div class="q-form__checkbox" if.bind="displayOptionsSchema.properties" repeat.for="optionKey of displayOptionsSchema.properties | keys">
               <label>
