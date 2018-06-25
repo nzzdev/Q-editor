@@ -82,10 +82,29 @@ export default class ToolsInfo {
       throw response;
     }
 
-    const tools = await response.json();
+    const toolsOrderedByUserUsage = await response.json();
 
     return availableTools.slice(0).sort((a, b) => {
-      return tools.indexOf(a.name) - tools.indexOf(b.name);
+      // if the user has never used a tool, put it to the end
+      // put a first to be consistent
+      if (
+        !toolsOrderedByUserUsage.includes(a.name) &&
+        !toolsOrderedByUserUsage.includes(b.name)
+      ) {
+        return -1;
+      }
+      // if a is never used, put it last
+      if (!toolsOrderedByUserUsage.includes(a.name)) {
+        return 1;
+      }
+      // if b is never used, put it last
+      if (!toolsOrderedByUserUsage.includes(b.name)) {
+        return -1;
+      }
+      return (
+        toolsOrderedByUserUsage.indexOf(a.name) -
+        toolsOrderedByUserUsage.indexOf(b.name)
+      );
     });
   }
 }
