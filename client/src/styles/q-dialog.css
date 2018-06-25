@@ -54,7 +54,7 @@
 .q-dialog--bottom-controls .q-dialog__controls .button {
   flex-grow: 1;
   margin-right: calc(var(--q-space-base) * 2);
-  max-width: 25%;
+  max-width: 33.33%;
 }
 
 .q-dialog--bottom-controls .q-dialog__controls .button:last-child {
