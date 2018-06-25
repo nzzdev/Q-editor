@@ -48,7 +48,8 @@
     "questionLeaveWithUnsavedChanges":
       "Des changements n'ont pas été sauvegardés, fermer quand même ?",
     "questionReallyEditBecauseActive":
-      "Ce graphique est actif. Les changements seront appliqués dans tous les articles. Voulez-vous vraiment éditer ce graphique ?",
+      "Ce graphique est actif. Les changements seront appliqués dans tous les articles.",
+    "questionReallyEditBecauseActiveSub": "Voulez-vous vraiment éditer ce graphique ?",  
     "confirmProceedToEditor": "Oui, édition",
     "cancelProceedToEditor": "Non, annuler",
     "arrayEntryAdd": "Ajouter {{ arrayEntryLabel }}",

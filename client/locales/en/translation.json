@@ -48,7 +48,8 @@
     "questionLeaveWithUnsavedChanges":
       "Not all changes are saved, close anyway?",
     "questionReallyEditBecauseActive":
-      "This graphic is already activ. Changes will be applied in all articles. Do you really want to edit this graphic?",
+      "This graphic is already activ. Changes will be applied in all articles.",
+    "questionReallyEditBecauseActiveSub": " Do you really want to edit this graphic?",
     "confirmProceedToEditor": "Yes, proceed to editor",
     "cancelProceedToEditor": "No, cancel",
     "arrayEntryAdd": "Add {{ arrayEntryLabel }}",

@@ -48,7 +48,8 @@
     "questionLeaveWithUnsavedChanges":
       "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
     "questionReallyEditBecauseActive":
-      "Diese Grafik ist bereits aktiv. Änderungen werden in allen Artikel übernommen. Willst du diese Grafik wirklich bearbeiten?",
+      "Diese Grafik ist bereits aktiv. Änderungen werden in allen Artikel übernommen.",
+    "questionReallyEditBecauseActiveSub": " Willst du diese Grafik wirklich bearbeiten?",
     "confirmProceedToEditor": "Ja, weiter zum Editor",
     "cancelProceedToEditor": "Nein, abbrechen",
     "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",

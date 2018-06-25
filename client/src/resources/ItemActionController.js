@@ -66,6 +66,9 @@ export default class ItemActionController {
       viewModel: ConfirmDialog,
       model: {
         confirmQuestion: this.i18n.tr("editor.questionReallyEditBecauseActive"),
+        confirmQuestionSub: this.i18n.tr(
+          "editor.questionReallyEditBecauseActiveSub"
+        ),
         proceedText: this.i18n.tr("editor.confirmProceedToEditor"),
         cancelText: this.i18n.tr("editor.cancelProceedToEditor")
       }
