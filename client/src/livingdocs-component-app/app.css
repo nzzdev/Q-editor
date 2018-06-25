@@ -95,7 +95,7 @@ html {
 }
 
 .item-list-entry.selected {
-  background-color: var(--q-color-gray-2);
+  background-color: var(--q-color-gray-3);
 }
 
 .item-list-entry .tool-icon {
