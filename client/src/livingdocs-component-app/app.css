@@ -175,7 +175,7 @@ html {
   overflow: auto;
   display: flex;
   justify-content: center;
-  height: 80%;
+  height: 75%;
 }
 
 .livingdocs-component-item-preview__message {
@@ -186,7 +186,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 20%;
+  height: 25%;
 }
 
 .livingdocs-component-item-controls {
