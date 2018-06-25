@@ -216,7 +216,10 @@ export class Editor {
     const openDialogResult = await this.dialogService.open({
       viewModel: ConfirmDialog,
       model: {
-        confirmQuestion: this.i18n.tr("editor.questionLeaveWithUnsavedChanges")
+        confirmQuestion: this.i18n.tr("editor.questionLeaveWithUnsavedChanges"),
+        confirmQuestionSub: this.i18n.tr(
+          "editor.questionLeaveWithUnsavedChangesSub"
+        )
       }
     });
     const closeResult = await openDialogResult.closeResult;

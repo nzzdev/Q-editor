@@ -46,7 +46,8 @@
   "editor": {
     "title": "Entrez vos données",
     "questionLeaveWithUnsavedChanges":
-      "Des changements n'ont pas été sauvegardés, fermer quand même ?",
+      "Des changements n'ont pas été sauvegardés",
+    "questionLeaveWithUnsavedChangesSub": "fermer quand même ?",
     "questionReallyEditBecauseActive":
       "Ce graphique est actif. Les changements seront appliqués dans tous les articles.",
     "questionReallyEditBecauseActiveSub": "Voulez-vous vraiment éditer ce graphique ?",  

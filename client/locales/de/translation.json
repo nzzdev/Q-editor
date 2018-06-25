@@ -46,7 +46,8 @@
   "editor": {
     "title": "Gib deine Daten ein",
     "questionLeaveWithUnsavedChanges":
-      "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
+      "Es sind nicht alle Änderungen gespeichert.",
+    "questionLeaveWithUnsavedChangesSub": "trotzdem schliessen?",
     "questionReallyEditBecauseActive":
       "Diese Grafik ist bereits aktiv. Änderungen werden in allen Artikel übernommen.",
     "questionReallyEditBecauseActiveSub": " Willst du diese Grafik wirklich bearbeiten?",
