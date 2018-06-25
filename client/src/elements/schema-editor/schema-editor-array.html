@@ -32,7 +32,9 @@
       </button-secondary>
     </div>
   </div>
-  <button-primary class="schema-editor-array__button" repeat.for="arrayEntryOption of arrayEntryOptions" click.delegate="addElement(arrayEntryOption.schema)">
-    ${'editor.arrayEntryAdd' & t: arrayEntryOption}
-  </button-primary>
+  <div class="schema-editor-array__button-container">
+    <button-primary class="schema-editor-array__button" repeat.for="arrayEntryOption of arrayEntryOptions" click.delegate="addElement(arrayEntryOption.schema)">
+      ${'editor.arrayEntryAdd' & t: arrayEntryOption}
+    </button-primary>
+  </div>
 </template>
