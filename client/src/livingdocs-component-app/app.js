@@ -211,7 +211,11 @@ export class App {
       size: {
         width: [
           {
-            value: this.previewContainer.getBoundingClientRect().width,
+            value: Math.floor(
+              this.previewContainer.shadowRoot
+                .querySelector(".preview-element > *:first-child")
+                .getBoundingClientRect().width
+            ),
             comparison: "="
           }
         ]
