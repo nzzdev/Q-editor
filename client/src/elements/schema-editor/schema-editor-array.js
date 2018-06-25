@@ -171,6 +171,15 @@ export class SchemaEditorArray {
     }
   }
 
+  getArrayEntryOption(index) {
+    const schema = this.getSchemaForArrayEntryIndex(index);
+    return this.arrayEntryOptions
+      .filter(
+        arrayEntryOption => arrayEntryOption.schema.title === schema.title
+      )
+      .pop();
+  }
+
   calculateEntryLabels() {
     if (!this.data || !this.options) {
       return;

@@ -49,7 +49,7 @@ schema-editor-array {
 .schema-editor-array__button {
   margin: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 2)
     calc(var(--q-space-base) * 2) 0 !important;
-  width: 160px;
+  width: 200px;
 }
 
 .schema-editor-array__entry-actions {
