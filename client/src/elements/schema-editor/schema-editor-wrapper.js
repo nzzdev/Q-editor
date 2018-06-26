@@ -67,13 +67,29 @@ export class SchemaEditorWrapper {
   }
 
   async applyAvailability() {
+    if (!this.unavailableMessageElement) {
+      this.unavailableMessageElement = this.element.ownerDocument.createElement(
+        "div"
+      );
+      this.unavailableMessageElement.classList.add("q-text");
+    }
     const availability = await this.availabilityChecker.getAvailabilityInfo(
       this.options.availabilityChecks
     );
     if (availability.isAvailable) {
       this.element.style.display = "flex";
+      this.element.parentNode.removeChild(this.unavailableMessageElement);
     } else {
       this.element.style.display = "none";
+
+      if (availability.unavailableMessage) {
+        this.unavailableMessageElement.innerHTML =
+          availability.unavailableMessage;
+        this.element.parentNode.insertBefore(
+          this.unavailableMessageElement,
+          this.element
+        );
+      }
     }
   }
 }
