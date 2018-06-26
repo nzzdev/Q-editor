@@ -14,9 +14,3 @@ items-list {
   flex-grow: 1;
   flex-basis: 0;
 }
-
-.items-list--empty {
-  display: flex;
-  justify-content: center;
-  margin-top: calc(var(--q-space-base) * 16);
-}

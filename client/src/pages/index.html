@@ -25,12 +25,15 @@
     <items-filter filters.bind="availableFilters" change.call="filterChanged()"></items-filter>
 
     <items-list items.bind="items" ref="itemsListElement"></items-list>
+    <div class="index__empty-list-message" if.bind="items.length === 0">
+      <h4>${'itemsList.empty' & t}</h4>
+    </div>
     <q-loader if.bind="itemsLoading"></q-loader>
 
     <div class="index__statistics q-text-small q-text--ultralight" click.delegate="scrollToTop()">
       <span if.bind="!enoughNewItems && statsValues" t="statistics.tooFewNewGraphics" t-params.bind="statsValues"></span>
       <span if.bind="enoughNewItems && statsValues" t="statistics.enoughNewGraphics" t-params.bind="statsValues"></span>
     </div>
-    
+
   </main>
 </template>

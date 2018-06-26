@@ -96,3 +96,9 @@
   transform-origin: 100% 100%;
   cursor: pointer;
 }
+
+.index__empty-list-message {
+  display: flex;
+  justify-content: center;
+  margin-top: calc(var(--q-space-base) * 16);
+}
