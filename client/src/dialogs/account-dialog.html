@@ -4,8 +4,9 @@
     <button-tertiary class="q-dialog__close-button" icon="close" icon-size="medium" click.delegate="controller.cancel()"></button-tertiary>
     <div class="q-dialog__content">
       <h1 class="q-dialog-title">Konto</h1>
-      <p class="q-dialog-text">
-        Username: ${user.data.username}<br>
+      <p class="q-text--big">
+        Username: ${user.data.username}
+        <br>
       </p>
       <form class="q-form" ref="userForm">
         <div class="q-form__block">
@@ -58,15 +59,11 @@
         </div>
         <p class="q-text q-text--success" if.bind="userFormMessage">${userFormMessage}</p>
         <p class="q-text q-text--error" if.bind="userFormErrors">${userFormErrors}</p>
-        <button-primary
-          click.delegate="saveUser()"
-          icon="proceed">${'general.saveChanges' & t}</button-primary>
+        <button-primary click.delegate="saveUser()" icon="proceed">${'general.saveChanges' & t}</button-primary>
       </form>
     </div>
     <aside class="q-dialog__controls">
-      <button-secondary
-        click.trigger="logout()"
-        icon="logout">${'general.logout' & t}</button-primary>
+      <button-secondary click.trigger="logout()" icon="logout">${'general.logout' & t}</button-primary>
     </aside>
   </div>
 </template>

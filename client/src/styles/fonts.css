@@ -55,19 +55,19 @@ h6 {
   padding-bottom: 3px;
 }
 
+.q-text-small {
+  font-size: var(--q-text-small-size);
+  line-height: 1.58;
+}
+
 .q-text {
   font-size: var(--q-text-size);
-  line-height: 1.28;
+  line-height: 1.64;
 }
 
 .q-text--big {
   font-size: var(--q-text-big-size);
-  line-height: 1.28;
-}
-
-.q-text-small {
-  font-size: var(--q-text-small-size);
-  line-height: 1.33;
+  line-height: 1.625;
 }
 
 .q-text--light {
