@@ -51,7 +51,7 @@ tool-selection a {
   }
 }
 
-tool-selection a span {
+tool-selection a > span {
   padding-top: calc(var(--q-space-base) / 2);
 }
 
