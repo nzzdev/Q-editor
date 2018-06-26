@@ -1,6 +1,7 @@
 .item-overview-container {
   display: flex;
   margin-top: calc(var(--q-space-base) * 4);
+  min-width: 800px;
 }
 
 .item-overview__content {
