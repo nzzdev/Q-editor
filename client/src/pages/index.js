@@ -84,19 +84,7 @@ export class Index {
       }
     });
 
-    // this observer checks if we have any mutation in the items-list
-    // and lets the itemListScrollObserver observe the last item in the list
-    this.itemListModificationObserver = new MutationObserver(entries => {
-      const lastEntry = entries.pop();
-      this.itemListScrollObserver.observe(
-        lastEntry.target.children[lastEntry.target.children.length - 1]
-      );
-    });
-
-    // start observing the items-list
-    this.itemListModificationObserver.observe(this.itemsListElement, {
-      childList: true
-    });
+    this.itemListScrollObserver.observe(this.infiniteScrollingSentinel);
   }
 
   filterChanged() {
