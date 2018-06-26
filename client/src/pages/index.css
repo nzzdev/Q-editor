@@ -6,8 +6,6 @@
 }
 
 .index items-filter {
-  margin-left: calc((var(--q-space-base) / 4) * -1);
-  margin-right: calc((var(--q-space-base) / 4) * -1);
   margin-bottom: calc(var(--q-space-base) * 2);
 }
 

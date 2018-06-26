@@ -14,7 +14,3 @@ items-filter .items-filter-container > * {
   margin-left: var(--q-space-base);
   margin-right: var(--q-space-base);
 }
-
-items-filter .items-filter-container select {
-  /* margin: 0 calc(var(--q-space-base) / 2); */
-}
