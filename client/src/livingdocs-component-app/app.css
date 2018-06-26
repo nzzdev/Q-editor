@@ -1,5 +1,6 @@
 html {
   box-sizing: border-box;
+  --q-preview-padding: calc(var(--q-space-base) * 2);
 }
 
 *,

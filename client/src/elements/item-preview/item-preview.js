@@ -10,19 +10,22 @@ const log = LogManager.getLogger("Q");
 const defaultSizeOptions = [
   {
     value: 290,
+    min_height: 568,
     label_i18n_key: "preview.small"
   },
   {
     value: 560,
+    min_height: 568,
     label_i18n_key: "preview.medium"
   },
   {
     value: 800,
+    min_height: 568,
     label_i18n_key: "preview.large"
   }
 ];
 
-@inject(QTargets, QConfig, User, I18N)
+@inject(QTargets, QConfig, User, I18N, Element)
 export class ItemPreview {
   @bindable data;
   @bindable id;
@@ -32,11 +35,12 @@ export class ItemPreview {
   sizeOptions = [];
   errorMessage = "";
 
-  constructor(qTargets, qConfig, user, i18n) {
+  constructor(qTargets, qConfig, user, i18n, element) {
     this.qTargets = qTargets;
     this.qConfig = qConfig;
     this.user = user;
     this.i18n = i18n;
+    this.element = element;
 
     // we track the preview widths the user clicked
     // to hide the notification about checking all of them if he has done so
@@ -80,6 +84,7 @@ export class ItemPreview {
           const previewSize = previewSizes[previewSizeName];
           const sizeOption = {
             value: previewSize.value,
+            min_height: previewSize.min_height || 568,
             label_i18n_key: `preview.${previewSizeName}`
           };
           if (previewSize.label) {
@@ -137,6 +142,12 @@ export class ItemPreview {
 
   attached() {
     this.loadPreview();
+  }
+
+  getCurrentSizeOption() {
+    return this.sizeOptions.find(option => {
+      return option.value === this.previewWidthProxy.width;
+    });
   }
 
   dataChanged(newValue, oldValue) {
@@ -198,6 +209,11 @@ export class ItemPreview {
   handleSizeChange() {
     this.sizeOptionsChecked.push(this.previewWidthProxy.width);
     this.applyPreviewHint();
+    // set the min-height if configured;
+    this.element.style.setProperty(
+      "--q-preview-min-height",
+      `${this.getCurrentSizeOption().min_height}px`
+    );
     this.loadPreview();
   }
 

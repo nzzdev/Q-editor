@@ -29,7 +29,7 @@
   flex-grow: 0;
   flex-shrink: 0;
   margin-right: calc(var(--q-space-base) * 2);
-  overflow-y: scroll;
+  overflow-y: auto;
   --q-h1-size: 13px;
   --q-h2-size: 13px;
   --q-h3-size: 13px;

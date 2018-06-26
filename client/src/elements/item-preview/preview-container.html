@@ -5,13 +5,19 @@
       overflow-x: auto;
       overflow-y: var(--preview-container-overflow-y, auto);
       background-color: var(--q-color-gray-3);
+      box-sizing: border-box;
+      border: solid 1px var(--q-color-gray-4);
+    }
+
+    .preview-element-container * {
+      box-sizing: inherit;
     }
 
     .preview-element {
       margin: auto;
-      min-height: 350px;
+      min-height: calc(var(--q-preview-min-height) + 2 * var(--q-preview-padding) - 2px); /* minus 2px because of the border of the container */
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
-      padding: calc(var(--q-space-base) * 2);
+      padding: var(--q-preview-padding);
     }
 
     .preview-element__error-box {
@@ -19,7 +25,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: calc(350px - var(--q-space-base) * 15);
+      height: calc(var(--q-preview-min-height) - var(--q-space-base) * 15);
       color: var(--q-color-error);
       background-color: var(--q-color-gray-2);
       padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 6);

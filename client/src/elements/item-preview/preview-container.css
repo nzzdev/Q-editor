@@ -3,8 +3,5 @@ preview-container {
   display: block;
   overflow: auto;
   width: 100%;
-  margin-top: calc(var(--q-space-base) * 2);
   margin-right: calc(var(--q-space-base) * 2);
-  margin-bottom: calc(var(--q-space-base) * 2);
-  border: solid 1px var(--q-color-gray-4);
 }

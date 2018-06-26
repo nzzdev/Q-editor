@@ -1,7 +1,10 @@
 item-preview {
+  --q-preview-min-height: 568px;
+  --q-preview-padding: calc(var(--q-space-base) * 2);
+  --q-preview-settings-margin-bottom: calc(var(--q-space-base) * 2);
   display: block;
   position: relative;
-  min-height: 400px;
+  min-height: calc(var(--q-preview-min-height) + (2 * var(--q-preview-padding)) + 50px + var(--q-preview-settings-margin-bottom) + 20px);
 }
 
 .item-preview__holder {
@@ -18,6 +21,7 @@ item-preview {
   justify-content: space-between;
   flex-grow: 0;
   flex-shrink: 0;
+  margin-bottom: var(--q-preview-settings-margin-bottom);
 }
 
 .item-preview__settings > div {
