@@ -37,3 +37,7 @@ item-preview {
 .item-preview__notification {
   width: 180px;
 }
+
+.item-preview__notification notification {
+  margin-bottom: calc(var(--q-space-base) * 2);
+}

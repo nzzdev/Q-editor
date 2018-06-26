@@ -9,3 +9,7 @@ schema-editor-wrapper > :first-child {
 .schema-editor-wrapper--input {
   max-height: calc(var(--q-space-base) * 9);
 }
+
+schema-editor-wrapper > notification {
+  margin-top: 22px /* this is hacky but is the margin required to align the notification with the input element
+}
