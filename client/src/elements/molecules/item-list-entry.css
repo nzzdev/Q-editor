@@ -33,11 +33,6 @@ item-list-entry a > span:not(.item-list-entry__state-tag) {
   flex-basis: 0;
 }
 
-/* this margin is here to have space for the dropdown menu */
-item-list-entry:last-child {
-  margin-bottom: 160px;
-}
-
 .item-list-entry__state-tag {
   height: 20px;
   line-height: 20px !important;
@@ -55,4 +50,21 @@ item-list-entry:last-child {
 .item-list-entry__state-tag--inactive {
   background-color: var(--q-color-primary-1);
   color: var(--q-color-primary-2);
+}
+
+/* show the dropdown-menu on top for the last four items */
+item-list-entry:nth-last-child(-n + 4) > dropdown-menu > div:before {
+  top: 150px !important;
+  border-width: 10px 10px 0 10px !important;
+  border-color: var(--q-color-gray-3) transparent transparent transparent !important;
+}
+
+item-list-entry:nth-last-child(-n + 4) > dropdown-menu > div {
+  top: -160px !important;
+}
+
+item-list-entry:nth-last-child(-n + 4) > dropdown-menu > div:after {
+  top: 150px !important;
+  border-width: 8px 8px 0 8px !important;
+  border-color: var(--q-color-white) transparent transparent transparent !important;
 }
