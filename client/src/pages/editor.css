@@ -11,6 +11,7 @@
 .editor__preview {
   display: flex;
   flex-direction: row;
+  margin-top: calc(var(--q-space-base) * 2) !important;
 }
 
 .editor__preview-container {
