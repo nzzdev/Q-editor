@@ -10,6 +10,7 @@ export class ToolStatusBar {
   @bindable item;
   @bindable saveAction;
   @bindable activateAction;
+  @bindable lastSavedDate;
 
   message;
 

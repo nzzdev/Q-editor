@@ -177,6 +177,10 @@ export class Editor {
           this.toolEndpointChecker.setCurrentItem(item);
           this.currentItemProvider.setCurrentItem(item);
           this.item = item;
+
+          if (this.item.conf.updatedDate) {
+            this.lastSavedDate = new Date(this.item.conf.updatedDate);
+          }
         }
       });
 
@@ -280,6 +284,7 @@ export class Editor {
       .save()
       .then(() => {
         log.info("item saved", this.item);
+        this.lastSavedDate = new Date();
         // whenever we save the item, we need to reevaluate all the checks
         this.triggerReevaluations();
       })
