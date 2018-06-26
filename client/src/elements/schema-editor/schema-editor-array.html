@@ -15,25 +15,27 @@
         <div class="schema-editor-array__entry-actions">
           <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp($index)" size="small"></button-tertiary>
           <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown($index)" size="small"></button-tertiary>
+          <button-secondary class="schema-editor-array__button" click.delegate="deleteElement($index)">
+            ${'editor.arrayEntryRemove' & t: getArrayEntryOption($index)}
+          </button-secondary>
         </div>
+      </div>
+      <div class="schema-editor-array__entry-actions" if.bind="!options.expandable">
+        <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp($index)" size="small"></button-tertiary>
+        <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown($index)" size="small"></button-tertiary>
+        <button-secondary class="schema-editor-array__button" click.delegate="deleteElement($index)">
+          ${'editor.arrayEntryRemove' & t: getArrayEntryOption($index)}
+        </button-secondary>
       </div>
       <schema-editor-wrapper class="schema-editor-array__schema-editor-wrapper" if.bind="(collapsedStates[$index] === 'expanded' || !options.expandable) && isEntryAvailable($index) & async"
         schema.bind="dataItemsSchemas[$index]" data.two-way="data[$index]" change.bind="$parent.handleChange" no-object-title="true"
         notifications.bind="notifications" show-notifications.bind="showNotifications">
       </schema-editor-wrapper>
-      <div class="schema-editor-array__entry-actions" if.bind="!options.expandable">
-        <button-tertiary if.bind="!$first" icon="up" click.delegate="moveElementUp($index)" size="small"></button-tertiary>
-        <button-tertiary if.bind="!$last" icon="down" click.delegate="moveElementDown($index)" size="small"></button-tertiary>
-      </div>
-    </div>
-    <div class="schema-editor-array__button-container">
-      <button-secondary class="schema-editor-array__button" click.delegate="deleteElement($index)">
-        ${'editor.arrayEntryRemove' & t: getArrayEntryOption($index)}
-      </button-secondary>
     </div>
   </div>
   <div class="schema-editor-array__button-container">
-    <button-primary class="schema-editor-array__button" repeat.for="arrayEntryOption of arrayEntryOptions" click.delegate="addElement(arrayEntryOption.schema)">
+    <button-primary class="schema-editor-array__button schema-editor-array__add-button" repeat.for="arrayEntryOption of arrayEntryOptions"
+      click.delegate="addElement(arrayEntryOption.schema)">
       ${'editor.arrayEntryAdd' & t: arrayEntryOption}
     </button-primary>
   </div>

@@ -17,8 +17,8 @@ schema-editor-array {
 
 .schema-editor-array__entry-container {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  align-items: center;
 }
 
 .schema-editor-array__collapsecontrol {
@@ -47,18 +47,18 @@ schema-editor-array {
 }
 
 .schema-editor-array__button {
-  margin: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 2)
-    calc(var(--q-space-base) * 2) 0 !important;
+  min-width: 200px;
   width: 200px;
 }
 
+.schema-editor-array__add-button {
+  margin: calc(var(--q-space-base) * 2) 0 !important;
+}
+
 .schema-editor-array__entry-actions {
-  width: 150px;
-  flex-grow: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  align-self: flex-start;
   margin-left: auto;
 }
 
