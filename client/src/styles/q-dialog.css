@@ -22,6 +22,7 @@
 
 .q-dialog-subtitle--bold {
   font-weight: var(--q-h1-weight);
+  line-height: 1.5;
 }
 
 .q-dialog--bottom-controls {
