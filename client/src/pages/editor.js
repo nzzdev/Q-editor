@@ -299,14 +299,24 @@ export class Editor {
       // this triggers the HTML5 Form Validation in the browser
       this.formSubmitButton.click();
       valid = false;
+      this.addInvalidClass(this.form.elements);
     }
     if (this.optionsForm && !this.optionsForm.checkValidity()) {
       // this triggers the HTML5 Form Validation in the browser
       this.optionsFormSubmitButton.click();
       valid = false;
+      this.addInvalidClass(this.optionsForm.elements);
     }
     if (valid) {
       this.save();
+    }
+  }
+
+  addInvalidClass(elements) {
+    for (const element of elements) {
+      if (!element.checkValidity()) {
+        element.classList.add("q-form-input--invalid");
+      }
     }
   }
 }

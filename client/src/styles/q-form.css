@@ -28,14 +28,12 @@
   width: 100%;
 }
 
-.q-form input:invalid {
-  border: solid 1px var(--q-color-error);
-  box-shadow: 0 0 4px 0 var(--q-color-error-light);
+.q-form input:valid {
+  border-color: var(--q-color-gray-3) !important;
 }
 
-.q-form input:focus:invalid {
-  border: solid 1px var(--q-color-error);
-  box-shadow: 0 0 4px 0 var(--q-color-error-light);
+.q-form-input--invalid {
+  border: solid 1px var(--q-color-error) !important;
 }
 
 .q-form input:focus,
@@ -133,7 +131,8 @@
 .q-form select {
   height: calc(var(--q-space-base) * 4);
   margin: 0;
-  padding: calc(var(--q-space-base) / 2) calc(var(--q-space-base) / 2) calc(var(--q-space-base) / 2) calc(var(--q-space-base));
+  padding: calc(var(--q-space-base) / 2) calc(var(--q-space-base) / 2)
+    calc(var(--q-space-base) / 2) calc(var(--q-space-base));
   appearance: none;
   -webkit-appearance: none;
   border-radius: 0;
