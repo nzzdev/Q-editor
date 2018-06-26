@@ -60,7 +60,7 @@ item-list-entry:nth-last-child(-n + 4) > dropdown-menu > div:before {
 }
 
 item-list-entry:nth-last-child(-n + 4) > dropdown-menu > div {
-  top: -160px !important;
+  top: -164px !important;
 }
 
 item-list-entry:nth-last-child(-n + 4) > dropdown-menu > div:after {
