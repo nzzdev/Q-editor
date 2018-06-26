@@ -56,3 +56,8 @@
   background-color: var(--q-color-error);
   color: var(--q-color-white);
 }
+
+.notification ul {
+  padding-left: var(--q-space-base);
+  list-style-position: inside;
+}
