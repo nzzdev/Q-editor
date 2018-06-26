@@ -78,7 +78,11 @@ export class SchemaEditorWrapper {
     );
     if (availability.isAvailable) {
       this.element.style.display = "flex";
-      this.element.parentNode.removeChild(this.unavailableMessageElement);
+      if (
+        this.unavailableMessageElement.parentNode === this.element.parentNode
+      ) {
+        this.element.parentNode.removeChild(this.unavailableMessageElement);
+      }
     } else {
       this.element.style.display = "none";
 
