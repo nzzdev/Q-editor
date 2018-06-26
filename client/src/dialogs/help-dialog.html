@@ -8,7 +8,7 @@
       <section class="help-dialog__faq">
         <div class="help-dialog__faq__content" if.bind="faq">
           <div class="help-dialog__faq_q-and-a" repeat.for="qAndA of faq">
-            <h3 class="q-dialog-subsubtitle" innerhtml.bind="qAndA.question"></h3>
+            <h3 class="q-dialog-subtitle q-dialog-subtitle--bold" innerhtml.bind="qAndA.question"></h3>
             <p innerhtml.bind="qAndA.answer" class="q-text--big"></p>
           </div>
         </div>

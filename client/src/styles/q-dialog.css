@@ -20,6 +20,10 @@
   margin: calc(var(--q-space-base) * 3) 0;
 }
 
+.q-dialog-subtitle--bold {
+  font-weight: var(--q-h1-weight);
+}
+
 .q-dialog--bottom-controls {
   flex-direction: column;
 }
