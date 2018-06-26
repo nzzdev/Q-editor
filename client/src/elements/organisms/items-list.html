@@ -2,10 +2,16 @@
   <require from="./items-list.css"></require>
   <require from="../molecules/item-list-entry.js"></require>
   <require from="./items-list.css"></require>
-  <div class="items-list__header q-text-small">
-    <span>${'itemsList.title' & t}</span>
-    <span>${'itemsList.author' & t}</span>
-    <span>${'itemsList.updated' & t}</span>
+  <div show.bind="items.length > 0">
+    <div class="items-list__header q-text-small">
+      <span>${'itemsList.title' & t}</span>
+      <span>${'itemsList.author' & t}</span>
+      <span>${'itemsList.updated' & t}</span>
+    </div>
+    <item-list-entry repeat.for="item of items" item.bind="item"></item-list-entry>
+    <q-loader if.bind="itemsLoading"></q-loader>
   </div>
-  <item-list-entry repeat.for="item of items" item.bind="item"></item-list-entry>
+  <div class="items-list--empty" show.bind="items.length === 0">
+    <h4>${'itemsList.empty' & t}</h4>
+  </div>
 </template>

@@ -106,7 +106,9 @@
   "itemsList": {
     "title": "title",
     "author": "created by",
-    "updated": "last edited"
+    "updated": "last edited",
+    "empty":
+      "No graphics found. Try a different search term or reset the filter settings."
   },
   "livingdocsComponent": {
     "insert": "Use this graphic",

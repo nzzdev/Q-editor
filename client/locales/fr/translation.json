@@ -110,7 +110,9 @@
   "itemsList": {
     "title": "titre",
     "author": "créé par",
-    "updated": "dernière édition"
+    "updated": "dernière édition",
+    "empty":
+      "Aucun graphique trouvé. Essayez un terme de recherche différent ou réinitialisez les paramètres du filtre."
   },
   "livingdocsComponent": {
     "insert": "Utilisez ce graphique",

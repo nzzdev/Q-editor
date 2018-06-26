@@ -109,7 +109,9 @@
   "itemsList": {
     "title": "Titel",
     "author": "erstellt von",
-    "updated": "zuletzt bearbeitet"
+    "updated": "zuletzt bearbeitet",
+    "empty":
+      "Keine Grafiken gefunden. Versuche einen anderen Suchbegriff oder setze die Filtereinstellungen zurück."
   },
   "livingdocsComponent": {
     "insert": "Grafik verwenden",
