@@ -114,7 +114,8 @@
     "insert": "Use this graphic",
     "edit": "Edit in Q",
     "selectGraphic": "Select a graphic from the list",
-    "inactiveGraphic": "The graphic must first be activated in Q"
+    "inactiveGraphic": "The graphic must first be activated in Q",
+    "emptyList": "No graphics found. Try a different search term."
   },
   "notifications": {
     "failedLoadingEditorConfig": "Failed to load editor configuration",

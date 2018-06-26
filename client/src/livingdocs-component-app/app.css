@@ -84,6 +84,11 @@ html {
   margin: var(--q-space-base) auto;
 }
 
+.item-list__empty-message {
+  display: flex;
+  justify-content: center;
+}
+
 .item-list-entry {
   border-top: solid 1px var(--q-color-gray-3);
   padding: var(--q-space-base) 0;

@@ -112,7 +112,9 @@
     "author": "créé par",
     "updated": "dernière édition",
     "empty":
-      "Aucun graphique trouvé. Essayez un terme de recherche différent ou réinitialisez les paramètres du filtre."
+      "Aucun graphique trouvé. Essayez un terme de recherche différent ou réinitialisez les paramètres du filtre.",
+    "emptyList":
+      "Aucun graphique trouvé. Essayez un terme de recherche différent."
   },
   "livingdocsComponent": {
     "insert": "Utilisez ce graphique",

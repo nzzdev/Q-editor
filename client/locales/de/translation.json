@@ -117,7 +117,8 @@
     "insert": "Grafik verwenden",
     "edit": "In Q bearbeiten",
     "selectGraphic": "Wähle eine Grafik aus der Liste aus",
-    "inactiveGraphic": "Die Grafik muss zuerst in Q aktiviert werden"
+    "inactiveGraphic": "Die Grafik muss zuerst in Q aktiviert werden",
+    "emptyList": "Keine Grafiken gefunden. Versuche einen anderen Suchbegriff."
   },
   "notifications": {
     "failedLoadingEditorConfig":

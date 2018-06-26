@@ -42,6 +42,9 @@
           </div>
         </div>
       </div>
+      <div class="item-list__empty-message" if.bind="items.length === 0">
+        <h4>${'livingdocsComponent.emptyList' & t}</h4>
+      </div>
       <q-loader if.bind="itemsLoading"></q-loader>
       <button-secondary if.bind="moreItemsAvailable" class="livingdocs-component-search__load-more-button" click.delegate="loadMore()">
         <span>${'general.loadMore' & t}</span>
