@@ -17,12 +17,17 @@ export class DropdownMenu {
       dropdownMenus.map(dropdownMenu => {
         if (dropdownMenu.classList.contains("dropdown-menu--show")) {
           dropdownMenu.classList.remove("dropdown-menu--show");
+          dropdownMenu.classList.add("dropdown-menu--removed");
         }
       });
     }
   }
 
   toggleDropdownMenu() {
-    this.dropdownMenu.classList.toggle("dropdown-menu--show");
+    if (!this.dropdownMenu.classList.contains("dropdown-menu--removed")) {
+      this.dropdownMenu.classList.toggle("dropdown-menu--show");
+    } else {
+      this.dropdownMenu.classList.remove("dropdown-menu--removed");
+    }
   }
 }
