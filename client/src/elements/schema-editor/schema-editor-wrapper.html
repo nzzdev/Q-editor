@@ -79,5 +79,5 @@
     <require from="./schema-editor-files"></require>
     <schema-editor-files schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-files>
   </div>
-  <notification if.bind="showNotifications" notification.bind="visibleNotification"></notification>
+  <notification if.bind="showNotifications && visibleNotification" notification.bind="visibleNotification"></notification>
 </template>
