@@ -1,3 +1,6 @@
+# 3.0.1 (27.06.2018)
+- fix: user menu opens even if the user has no config stored yet
+
 # 3.0.0 (27.06.2018)
 - feat: notificationChecks, Q Editor can show notifications in the schema-editor to help the user enter correct data. These checks are configured in the tools schema.json
 - feat: tool-selection can no be configured by the user and the order can be based on the users usage (needs Q-server >= 5)

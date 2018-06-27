@@ -40,7 +40,7 @@ export default class User {
   }
 
   setUserConfig(key, value) {
-    if (!this.data.hasOwnProperty("config")) {
+    if (!this.data.hasOwnProperty("config") || !this.data.config) {
       this.data.config = {};
     }
     this.data.config[key] = value;
@@ -48,10 +48,14 @@ export default class User {
   }
 
   getUserConfig(key, defaultValue = undefined) {
+    if (!this.data) {
+      this.data = {};
+    }
+    if (!this.data.hasOwnProperty("config") || !this.data.config) {
+      this.data.config = {};
+    }
     if (
-      (!this.data ||
-        !this.data.hasOwnProperty("config") ||
-        !this.data.config.hasOwnProperty(key) ||
+      (!this.data.config.hasOwnProperty(key) ||
         this.data.config[key] === undefined) &&
       defaultValue !== undefined
     ) {
