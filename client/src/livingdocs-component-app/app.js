@@ -40,14 +40,17 @@ export class App {
     };
   }
 
-  activate() {
+  async activate() {
     this.selectedItems = [];
 
     const paramsQuery = /params=(.*)&?/.exec(window.location.search);
     const targetQuery = /target=([^&]*)/.exec(window.location.search);
 
     try {
-      this.selectedItems.push(JSON.parse(decodeURIComponent(paramsQuery[1])));
+      const selectedItem = JSON.parse(decodeURIComponent(paramsQuery[1]));
+      const item = await getItem(selectedItem.id);
+      selectedItem.active = item.conf.active;
+      this.selectedItems.push(selectedItem);
       this.selectedItemIndex = 0;
     } catch (e) {
       // nevermind an error here, if there is no valid config, we handle it like there is none at all
@@ -79,10 +82,7 @@ export class App {
   }
 
   async loadView() {
-    if (
-      this.selectedItemIndex !== undefined &&
-      this.selectedItems[this.selectedItemIndex].active
-    ) {
+    if (this.selectedItemIndex !== undefined) {
       const item = await getItem(this.selectedItems[this.selectedItemIndex].id);
       this.title = item.conf.title;
 
