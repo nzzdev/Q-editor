@@ -40,7 +40,7 @@ export class App {
     };
   }
 
-  activate() {
+  async activate() {
     this.selectedItems = [];
 
     const paramsQuery = /params=(.*)&?/.exec(window.location.search);
