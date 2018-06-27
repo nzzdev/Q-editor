@@ -15,6 +15,11 @@ export function resolveDynamicEnum() {
       originalUnbind = target.prototype.unbind;
     }
 
+    let originalSchemaChanged;
+    if (target.prototype.schemaChanged) {
+      originalSchemaChanged = target.prototype.schemaChanged;
+    }
+
     async function getDynamicEnum(schema) {
       if (schema["Q:options"].dynamicEnum.type !== "ToolEndpoint") {
         throw new Error(
@@ -54,6 +59,13 @@ export function resolveDynamicEnum() {
     }
 
     let reevaluateCallbackId;
+
+    target.prototype.schemaChanged = function(schema) {
+      resolve.apply(this);
+      if (originalSchemaChanged) {
+        originalSchemaChanged.apply(this, [schema]);
+      }
+    };
 
     target.prototype.bind = async function(bindingContext, overrideContext) {
       // if there is an original bind lifecycle method implemented, call it here
