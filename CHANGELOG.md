@@ -1,6 +1,11 @@
-# 3.0.0 (xx.xx.xxxx)
-- ...
+# 3.0.0 (27.06.2018)
+- feat: notificationChecks, Q Editor can show notifications in the schema-editor to help the user enter correct data. These checks are configured in the tools schema.json
+- feat: tool-selection can no be configured by the user and the order can be based on the users usage (needs Q-server >= 5)
+- feat: item-list on index page contains a menu per item to delete/edit/blueprint directly
+- improvement: item-preview widths are now configurable together with min-height per width
+- refresh the overall visual appearance
 - fix: schema-editor-table allows to copy 10000 rows now
+- breaking: some CSS custom property names changed, translations for tools and editor are separated (reflected in Q-server@5)
 
 # 2.3.0 (29.05.2018)
 - feat: schema-editor-table minRows is now configurable via Q:options in schema.json
