@@ -5,7 +5,9 @@
 - improvement: item-preview widths are now configurable together with min-height per width
 - refresh the overall visual appearance
 - fix: schema-editor-table allows to copy 10000 rows now
-- breaking: some CSS custom property names changed, translations for tools and editor are separated (reflected in Q-server@5)
+- breaking: some CSS custom property names changed
+- breaking: translations for tools and editor config are separated (reflected in Q-server@5)
+- breaking: tool schema translation strings need to be in the group `schema` in the tools translation.json files
 
 # 2.3.0 (29.05.2018)
 - feat: schema-editor-table minRows is now configurable via Q:options in schema.json
