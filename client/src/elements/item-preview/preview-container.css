@@ -1,26 +1,7 @@
 preview-container {
   position: relative;
   display: block;
-  margin-top: calc(var(--q-space-base) + 9px);
-  margin-bottom: calc(var(--q-space-base) + 9px);
-
-  padding: var(--q-space-base) calc(var(--q-space-base) * 2);
-}
-
-preview-container::before, preview-container::after {
-  content: '';
-  display: block;
-  height: 9px;
+  overflow: auto;
   width: 100%;
-  background-repeat: repeat-x;
-  position: absolute;
-  left: 0;
-}
-
-preview-container::before {
-  top: -9px;
-}
-
-preview-container::after {
-  bottom: -9px;
+  margin-right: calc(var(--q-space-base) * 2);
 }

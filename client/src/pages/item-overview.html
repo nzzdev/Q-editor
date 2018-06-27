@@ -2,13 +2,13 @@
   <require from="elements/item-preview/item-preview"></require>
   <require from="./item-overview.css"></require>
 
-  <q-bar if.bind="user.isLoggedIn" router.bind="router">
+  <q-bar if.bind="user.isLoggedIn" router.bind="router" class="q-bar--no-logo">
     <a slot="back-button" class="q-bar__back" route-href="route: index">
       <button-secondary icon="back" icon-size="medium"></button-secondary>
     </a>
+    <language-switcher slot="language-switcher"></language-switcher>
   </q-bar>
   <main class="item-overview">
-    <q-messages></q-messages>
     <div class="item-overview-container">
       <div class="item-overview__content">
         <item-preview if.bind="itemId" id.bind="itemId" target.two-way="currentTarget"></item-preview>
@@ -30,26 +30,26 @@
             <br> ${ 'general.by' & t } ${item.conf.updatedBy}</div>
         </div>
 
-        <button-secondary if.bind="!item.conf.active" click.delegate="activateItem()" icon="activate">
+        <button-secondary if.bind="isToolAvailable" click.delegate="itemActionController.edit(item)" icon="edit">
+          <span t="item.edit"></span>
+        </button-secondary>
+
+        <button-secondary if.bind="!item.conf.active" click.delegate="itemActionController.activate(item)" icon="activate">
           <span t="item.activate"></span>
         </button-secondary>
 
-        <button-secondary if.bind="item.conf.active" click.delegate="deactivateItem()" icon="deactivate">
+        <button-secondary if.bind="item.conf.active" click.delegate="itemActionController.deactivate(item)" icon="deactivate">
           <span t="item.deactivate"></span>
         </button-secondary>
 
         <embed-code item.bind="item" target.bind="currentTarget"></embed-code>
 
-        <button-secondary if.bind="isToolAvailable" click.delegate="blueprint()" icon="blueprint">
+        <button-secondary if.bind="isToolAvailable" click.delegate="itemActionController.blueprint(item)" icon="blueprint">
           <span t="item.blueprint"></span>
         </button-secondary>
 
-        <button-secondary if.bind="isToolAvailable" click.delegate="edit()" icon="edit">
-          <span t="item.edit"></span>
-        </button-secondary>
-
-        <button-secondary click.delegate="back()" icon="leave">
-          <span t="general.goToOverview"></span>
+        <button-secondary if.bind="isToolAvailable" click.delegate="deleteItem()" icon="delete">
+          <span t="item.delete"></span>
         </button-secondary>
 
       </aside>

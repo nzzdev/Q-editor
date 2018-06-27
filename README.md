@@ -25,7 +25,6 @@ You have three options for deployment:
     - `LOGIN_MESSAGE`: defaults to `null`, a string that is displayed on the login screen
     - `DEV_LOGGING`: defaults to `false`, if `true` lots of console log messages will appear
     - `PUSH_STATE`: defaults to `true`, if `true` the editor will use nice urls without `#` but needs server support (so it's only used for production, for development `#` is used)
-    - `MAPZEN_API_KEY`: defaults to `null`, only needed if the geocoding is used in one of your tools. Get one at https://mapzen.com
 
 #### Build your own docker images / deploy using another technology
 If you choose to build your own docker image or deploy it some other way make sure that you run `cd client && npm install && jspm install && gulp export` to build the client.
@@ -111,7 +110,32 @@ const editorConfig = {
       q: '', // played/paused if user types Shift+Q
       bondTheme: '' // played if user types Shift+0 Shift+0 Shift+7
     }
+  },
+  previewSizes: {
+    // The previewSizes object allows to define custom sizes for the preview. The size object defines the width in px (value) and the localized label names (label_locales)
+    small: {
+      value: 290,
+      label_locales: {
+        de: "Mobile",
+        en: "Mobile"
+      }
+    },
+    medium: {
+      value: 560,
+      label_locales: {
+        de: "Artikelbreite",
+        en: "Content"
+      }
+    },
+    large: {
+      value: 800,
+      label_locales: {
+        de: "Volle Breite",
+        en: "Full"
+      }
+    }
   }
+}
 ```
 
 Q Editor uses the tools configuration from the Q Server to search for items of the configured tools in the database and check their availability using availabilityChecks to e.g. make a tool available only for specific roles like configured below. This is what you can configure in the `editor` property of any tool configured in `config.tools` of your Q Server config:
@@ -130,6 +154,40 @@ Q Editor uses the tools configuration from the Q Server to search for items of t
     icon: 'svg string used as the tool icon'
   }
 ```
+
+Q Editor allows to display notifications to support users while creating charts. A notification is triggered by a notification-check (see `client/src/resources/notification-checks` for more details). In order to show a notification a configuration in the following form needs to be added to the tool's schema:
+```json
+{
+  "title": "Daten",
+  "type": "array",
+  "Q:type": "table",
+  "Q:options": {
+    "notificationChecks": [
+      {
+        "type": "EmptyData",
+        "data": ["data"],
+        "priority": {
+          "type": "low",
+          "value": 1
+        }
+      },
+      {
+        "type": "ToolEndpoint",
+        "endpoint": "notification/shouldBeBarChart",
+        "data": ["data", "options.chartType"],
+        "priority": {
+          "type": "medium",
+          "value": 3
+        },
+        "options": {
+          "limit": 2
+        }
+      }
+    ]
+  }
+}
+```
+
 
 ## Development
 
@@ -170,6 +228,6 @@ Start one locally or use your staging environment. You probably do not want to d
 
 
 ## License
-Copyright (c) 2017 Neue Zürcher Zeitung. All rights reserved.
+Copyright (c) 2018 Neue Zürcher Zeitung. All rights reserved.
 
 This software is published under the MIT license.

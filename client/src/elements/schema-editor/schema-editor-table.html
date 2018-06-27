@@ -2,7 +2,11 @@
   <require from="./schema-editor-table.css"></require>
   <label>
     ${schema["title"]}
+    <span show.bind="required">
+      <span>- </span>
+      <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
+    </span>
     <div ref="tableContainerElement"></div>
   </label>
-  <button-secondary if.bind="options.allowTranspose" click.delegate="transpose()" icon="transpose" style="width: 36px;"></button-secondary>
+  <button-secondary if.bind="options.allowTranspose" click.delegate="transpose()" style="width: 250px;">${ 'editor.transpose' & t }</button-secondary>
 </template>

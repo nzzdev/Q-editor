@@ -1,5 +1,5 @@
 <template>
-  <require from="https://fonts.googleapis.com/css?family=Inconsolata|Roboto!css"></require>
+  <require from="https://fonts.googleapis.com/css?family=Roboto!css"></require>
   <require from="../styles/config.css"></require>
   <require from="../styles/layout.css"></require>
   <require from="../styles/fonts.css"></require>
@@ -12,72 +12,81 @@
   <div class="livingdocs-component">
     <div class="livingdocs-component-search">
       <div class="search">
-        <input t="[placeholder]livingdocsComponent.searchLabel" input.delegate="reloadItems() & debounce" value.two-way="currentSearchString">
+        <input t="[placeholder]general.searchLabel" input.delegate="filterChanged() & debounce" value.two-way="currentSearchString">
         <svg viewBox="0 0 34 32" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.5 21.23a9.73 9.73 0 1 1 0-19.46c5.374 0 9.73 4.356 9.73 9.73 0 5.374-4.356 9.73-9.73 9.73zM13.782 19A11.455 11.455 0 0 1 11 11.5C11 5.149 16.149 0 22.5 0S34 5.149 34 11.5 28.851 23 22.5 23a11.455 11.455 0 0 1-7.5-2.782v2.496l-9.71 8.014c-.853.705-2.175.643-2.958-.132l-.914-.906c-.782-.774-.728-1.974.123-2.676L11.25 19h2.532z" fill-rule="evenodd"/>
+          <path d="M22.5 21.23a9.73 9.73 0 1 1 0-19.46c5.374 0 9.73 4.356 9.73 9.73 0 5.374-4.356 9.73-9.73 9.73zM13.782 19A11.455 11.455 0 0 1 11 11.5C11 5.149 16.149 0 22.5 0S34 5.149 34 11.5 28.851 23 22.5 23a11.455 11.455 0 0 1-7.5-2.782v2.496l-9.71 8.014c-.853.705-2.175.643-2.958-.132l-.914-.906c-.782-.774-.728-1.974.123-2.676L11.25 19h2.532z"
+            fill-rule="evenodd" />
         </svg>
       </div>
       <div class="item-list">
-        <div class="item-list-entry ${item.conf.active ? 'active' : 'inactive'} ${item.conf._id === selectedItems[selectedItemIndex].id ? 'selected' : ''}" click.delegate="selectItem(item)" repeat.for="item of items">
+        <div class="item-list-entry ${item.conf._id === selectedItems[selectedItemIndex].id ? 'selected' : ''}" click.delegate="selectItem(item)"
+          repeat.for="item of items">
           <div class="item-list-entry-title">
-            <box-icon if.bind="item.conf.icon" code.bind="item.conf.icon" size="medium" class="tool-icon"></box-icon>
-            <span class="q-text item-title">${item.conf.title}</span>
+            <box-icon if.bind="item.conf.icon" code.bind="item.conf.icon" size="big" class="tool-icon"></box-icon>
+            <span class="q-text">${item.conf.title}</span>
           </div>
           <div class="item-list-entry-info">
-            <span class="q-text item-date ${item.conf.active ? '' : 'q-text--light'}" if.bind="item.conf.updatedDate">
+            <span class="q-text item-date" if.bind="item.conf.updatedDate">
               ${item.conf.updatedDate & timeAgo:7*24*60*60}
             </span>
-            <span class="q-text item-date ${item.conf.active ? '' : 'q-text--light'}" if.bind="!item.conf.updatedDate">
+            <span class="q-text item-date" if.bind="!item.conf.updatedDate">
               ${item.conf.createdDate & timeAgo:7*24*60*60}
             </span>
-            <span class="q-text ${item.conf.active ? '' : 'q-text--light'}">
+            <span class="q-text">
               ${item.conf.createdBy}
             </span>
+            <div class="item-list-entry__state-tag-container">
+              <span if.bind="item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--active">${'item.active' & t}</span>
+              <span if.bind="!item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--inactive">${'item.inactive' & t}</span>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="item-list__empty-message" if.bind="items.length === 0">
+        <h4>${'livingdocsComponent.emptyList' & t}</h4>
       </div>
       <q-loader if.bind="itemsLoading"></q-loader>
       <button-secondary if.bind="moreItemsAvailable" class="livingdocs-component-search__load-more-button" click.delegate="loadMore()">
-        <span t="general.loadMore"></span>
+        <span>${'general.loadMore' & t}</span>
       </button-secondary>
     </div>
     <div class="livingdocs-component-item-container">
-      <div class="livingdocs-component-item-title">
-        <span class="q-text-small q-text--light" t="livingdocsComponent.titleLabel" if.bind="title"></span>
-        <span class="q-text-small q-text--light" if.bind="title">${title}</span>
-      </div>
       <div class="livingdocs-component-item-preview">
-        <preview-container
-          ref="previewContainer"
-          id="preview-container"
-          width.bind="previewWidth"
-          rendering-info.bind="renderingInfo"
-          target.bind="target"
-          no-rendering-info-text="${'livingdocsComponent.selectGraphic' & t}">
-        </preview-container>
-      </div>
-      <div class="livingdocs-component-item-options">
-        <div if.bind="selectedItemIndex !== undefinded">
-          <form class="q-form">
-            <div class="q-form__checkbox" if.bind="displayOptionsSchema.properties" repeat.for="optionKey of displayOptionsSchema.properties | keys">
-              <label>
-                <input type="checkbox" checked.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions[optionKey]" change.delegate="loadPreview()">
-                <span>${displayOptionsSchema.properties[optionKey].title}</span>
-              </label>
-            </div>
-          </form>
+        <div show.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
+          <div class="livingdocs-component-item-title">
+            <h2 if.bind="title">${title}</h2>
+          </div>
+          <preview-container ref="previewContainer" id="preview-container" width.bind="previewWidth" rendering-info.bind="renderingInfo"
+            target.bind="target">
+          </preview-container>
         </div>
+        <h2 class="livingdocs-component-item-preview__message" show.bind="selectedItemIndex === undefined">${'livingdocsComponent.selectGraphic' & t}</h2>
+        <h2 class="livingdocs-component-item-preview__message" show.bind="selectedItemIndex !== undefined && !selectedItems[selectedItemIndex].active">${'livingdocsComponent.inactiveGraphic' & t}</h2>
       </div>
-      <div class="livingdocs-component-item-controls">
-        <div class="item-edit">
-          <a href="#/editor/${tool}/${selectedItems[selectedItemIndex].id}" target="_blank">
-            <button-secondary size="big" icon="edit"></button-secondary>
-          </a>
-          <span class="q-text-small q-text--light" t="livingdocsComponent.edit"></span>
+      <div class="livingdocs-component-item-controls-container">
+        <div class="livingdocs-component-item-options">
+          <div if.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
+            <form class="q-form">
+              <div class="q-form__checkbox" show.bind="displayOptionsSchema.properties" repeat.for="optionKey of displayOptionsSchema.properties | keys">
+                <label>
+                  <input type="checkbox" checked.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions[optionKey]" change.delegate="loadPreview()">
+                  <span class="q-text">${displayOptionsSchema.properties[optionKey].title}</span>
+                </label>
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="item-insert">
-          <button-primary click.delegate="insertItem()" size="big" icon="deactivate"></button-primary>
-          <span class="q-text-small q-text--light" t="livingdocsComponent.insert"></span>
+        <div class="livingdocs-component-item-controls">
+          <div class="item-edit">
+            <a href="#/editor/${tool}/${selectedItems[selectedItemIndex].id}" target="_blank">
+              <button-secondary size="big" icon="edit"></button-secondary>
+            </a>
+            <span class="q-text">${'livingdocsComponent.edit' & t}</span>
+          </div>
+          <div class="item-insert">
+            <button-primary click.delegate="insertItem()" size="big" icon="deactivate"></button-primary>
+            <span class="q-text">${'livingdocsComponent.insert' & t}</span>
+          </div>
         </div>
       </div>
     </div>

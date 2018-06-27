@@ -11,8 +11,9 @@ import { ConfirmDialog } from "dialogs/confirm-dialog.js";
 
 import qEnv from "resources/qEnv.js";
 import ItemStore from "resources/ItemStore.js";
-import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
-import SchemaEditorInputAvailabilityChecker from "resources/SchemaEditorInputAvailabilityChecker.js";
+import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
+import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
+import NotificationChecker from "resources/checkers/NotificationChecker.js";
 import ToolsInfo from "resources/ToolsInfo.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
@@ -31,6 +32,14 @@ function getTranslatedSchema(schema, toolName, i18n) {
   schema = JSON.parse(JSON.stringify(schema));
   if (schema.title) {
     schema.title = i18n.tr(`${toolName}:${schema.title}`);
+  }
+  if (
+    schema.hasOwnProperty("Q:options") &&
+    schema["Q:options"].hasOwnProperty("placeholder")
+  ) {
+    schema["Q:options"].placeholder = i18n.tr(
+      `${toolName}:${schema["Q:options"].placeholder}`
+    );
   }
   if (schema.hasOwnProperty("items")) {
     if (schema.items.hasOwnProperty("oneOf")) {
@@ -67,7 +76,8 @@ function getTranslatedSchema(schema, toolName, i18n) {
   ItemStore,
   Notification,
   ToolEndpointChecker,
-  SchemaEditorInputAvailabilityChecker,
+  AvailabilityChecker,
+  NotificationChecker,
   ToolsInfo,
   CurrentItemProvider,
   ObjectFromSchemaGenerator,
@@ -81,7 +91,8 @@ export class Editor {
     itemStore,
     notification,
     toolEndpointChecker,
-    schemaEditorInputAvailabilityChecker,
+    availabilityChecker,
+    notificationChecker,
     toolsInfo,
     currentItemProvider,
     objectFromSchemaGenerator,
@@ -93,7 +104,8 @@ export class Editor {
     this.itemStore = itemStore;
     this.notification = notification;
     this.toolEndpointChecker = toolEndpointChecker;
-    this.schemaEditorInputAvailabilityChecker = schemaEditorInputAvailabilityChecker;
+    this.availabilityChecker = availabilityChecker;
+    this.notificationChecker = notificationChecker;
     this.toolsInfo = toolsInfo;
     this.currentItemProvider = currentItemProvider;
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
@@ -101,6 +113,11 @@ export class Editor {
     this.i18n = i18n;
     this.eventAggregator = eventAggregator;
     this.taskQueue = taskQueue;
+
+    // used to hold all the notifications appearing in
+    // the schema-editor tree
+    this.optionsNotifications = [];
+    this.editorNotifications = [];
   }
 
   async activate(routeParams) {
@@ -163,11 +180,15 @@ export class Editor {
         if (item) {
           // set the toolName and the current item to toolEndpointChecker
           // whenever we activate the editor. The toolEndpointChecker is used
-          // in the SchemaEditorInputAvailabilityChecker to send requests to the current tool
+          // in the AvailabilityChecker and NotificationChecker to send requests to the current tool
           this.toolEndpointChecker.setCurrentToolName(this.toolName);
           this.toolEndpointChecker.setCurrentItem(item);
           this.currentItemProvider.setCurrentItem(item);
           this.item = item;
+
+          if (this.item.conf.updatedDate) {
+            this.lastSavedDate = new Date(this.item.conf.updatedDate);
+          }
         }
       });
 
@@ -207,7 +228,10 @@ export class Editor {
     const openDialogResult = await this.dialogService.open({
       viewModel: ConfirmDialog,
       model: {
-        confirmQuestion: this.i18n.tr("editor.questionLeaveWithUnsavedChanges")
+        confirmQuestion: this.i18n.tr("editor.questionLeaveWithUnsavedChanges"),
+        confirmQuestionSub: this.i18n.tr(
+          "editor.questionLeaveWithUnsavedChangesSub"
+        )
       }
     });
     const closeResult = await openDialogResult.closeResult;
@@ -243,13 +267,22 @@ export class Editor {
     }
   }
 
+  triggerReevaluations() {
+    // emtpy the notifications as we will get new ones
+    this.editorNotifications = [];
+    this.optionsNotifications = [];
+    this.availabilityChecker.triggerReevaluation();
+    this.notificationChecker.triggerReevaluation();
+    this.toolEndpointChecker.triggerReevaluation();
+  }
+
   handleChange() {
     this.taskQueue.queueMicroTask(() => {
       this.item.changed();
 
-      // whenever we have a change in data, we need to reevaluate all the checks
-      this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
-      this.toolEndpointChecker.triggerReevaluation();
+      // whenever we have a change in data, we need to reevaluate all the checks...
+      this.triggerReevaluations();
+      // ... and update thte previewData to fetch new renderingInfo from the tool
       this.previewData = JSON.parse(JSON.stringify(this.item.conf));
     });
   }
@@ -259,9 +292,9 @@ export class Editor {
       .save()
       .then(() => {
         log.info("item saved", this.item);
+        this.lastSavedDate = new Date();
         // whenever we save the item, we need to reevaluate all the checks
-        this.schemaEditorInputAvailabilityChecker.triggerReevaluation();
-        this.toolEndpointChecker.triggerReevaluation();
+        this.triggerReevaluations();
       })
       .catch(error => {
         log.error(error);
@@ -279,14 +312,24 @@ export class Editor {
       // this triggers the HTML5 Form Validation in the browser
       this.formSubmitButton.click();
       valid = false;
+      this.addInvalidClass(this.form.elements);
     }
     if (this.optionsForm && !this.optionsForm.checkValidity()) {
       // this triggers the HTML5 Form Validation in the browser
       this.optionsFormSubmitButton.click();
       valid = false;
+      this.addInvalidClass(this.optionsForm.elements);
     }
     if (valid) {
       this.save();
+    }
+  }
+
+  addInvalidClass(elements) {
+    for (const element of elements) {
+      if (!element.checkValidity()) {
+        element.classList.add("q-form-input--invalid");
+      }
     }
   }
 }

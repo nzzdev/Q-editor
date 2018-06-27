@@ -1,0 +1,191 @@
+{
+  "general": {
+    "yes": "Oui",
+    "no": "Non",
+    "createLabel": "Créer un graphique",
+    "searchEditLabel": "Rechercher et modifier",
+    "showAllTools": "Montrer tous les outils",
+    "showLessTools": "Afficher uniquement mes favoris",
+    "searchLabel": "Chercher un graphique",
+    "login": "Se connecter",
+    "logout": "Se déconnecter",
+    "username": "Identifiant",
+    "password": "Mot de passe",
+    "back": "Retour",
+    "saveChanges": "Sauvegarder les changements",
+    "created": "créé",
+    "edited": "édité",
+    "by": "par",
+    "only": "seulement",
+    "graphic": "graphique",
+    "graphic_plural": "graphiques",
+    "browserSupportMessage":
+      "Q est optimisé pour Chrome et peut ne pas fonctionner dans votre navigateur.",
+    "changesSaved": "Changements sauvegardés.",
+    "failedToSaveChanges": "Impossible de sauvegarder les changements.",
+    "loginFailed": "Votre identifiant ou mot de passe est incorrect.",
+    "serverConnectionFailed": "Impossible de se connecter au serveur.",
+    "articlesWithThisGraphic": "Articles avec ce graphique",
+    "loadMore": "Charger plus"
+  },
+  "userConfig": {
+    "initials": "initiales",
+    "toolSelection": "sélection d'outil",
+    "toolsToShowInitially": "Outils sur la page d'accueil",
+    "toolSelectionType": {
+      "byUsage": "montrer ceux que j'utilise le plus souvent",
+      "byConfig": "Je voudrais décider pour moi-même lequel je vois"
+    }
+  },
+  "statistics": {
+    "tooFewNewGraphics":
+      "{{count}} nouvellement activés $t(general.graphic) lors des derniers {{days}} jours. Total: {{totalActiveCount}} activés.",
+    "enoughNewGraphics":
+      "{{count}} nouvellement activés $t(general.graphic) lors des derniers {{days}} jours. Total: {{totalActiveCount}} activés."
+  },
+  "editor": {
+    "title": "Entrez vos données",
+    "questionLeaveWithUnsavedChanges":
+      "Des changements n'ont pas été sauvegardés",
+    "questionLeaveWithUnsavedChangesSub": "Fermer quand même ?",
+    "questionReallyEditBecauseActive":
+      "Ce graphique est actif. Les changements seront appliqués dans tous les articles.",
+    "questionReallyEditBecauseActiveSub":
+      "Voulez-vous vraiment éditer ce graphique ?",
+    "confirmProceedToEditor": "Oui, édition",
+    "cancelProceedToEditor": "Non, annuler",
+    "arrayEntryAdd": "Ajouter {{ arrayEntryLabel }}",
+    "arrayEntryRemove": "Supprimer {{ arrayEntryLabel }}",
+    "activatingEditorTakesTooLong":
+      "L'éditeur met trop de temps à charger, quelque chose s'est mal passé.",
+    "failedToSave": "Impossible de sauvegarder",
+    "conflictOnSave": "Impossible de sauvegarder en raison d'un conflit",
+    "failedToLoadEditorPart":
+      "L'éditeur ne peut être chargé en raison de cet élément",
+    "noAutosaveBecauseActive":
+      "La sauvegarde automatique est désactivée car ce graphique est déjà actif",
+    "required": "requis",
+    "transpose": "Echange de lignes et de colonnes"
+  },
+  "metaEditor": {
+    "title": "Informations pour usage interne",
+    "annotations": "Annotations",
+    "annotationPlaceholder":
+      "Ici vous pouvez capturer des mots-clés supplémentaires qui facilitent la recherche du graphique",
+    "publication": "Publication",
+    "shortname": "Raccourcis Auteur",
+    "department": "Département"
+  },
+  "item": {
+    "save": "Sauvegarder",
+    "active": "activement",
+    "inactive": "inactif",
+    "activate": "Activer",
+    "deactivate": "Désactiver",
+    "blueprint": "Utiliser comme modèle",
+    "blueprintTitlePrefix": "Copie de ",
+    "edit": "Modifier",
+    "failedToLoadItem": "Impossible de charger le graphique.",
+    "failedToBlueprintItem":
+      "Impossible de préparer le graphique à partir du modèle.",
+    "delete": "Supprimer",
+    "questionDeleteItem": "Supprimer le graphique?",
+    "questionDeleteItemSub":
+      "Voulez-vous vraiment supprimer <strong>{{graphicTitle}}</strong>?",
+    "confirmDeleteItem": "Oui, supprimer",
+    "cancelDeleteItem": "Abandonner",
+    "lastSaved": "dernier enregistré"
+  },
+  "itemsFilter": {
+    "allGraphics": "tous les graphiques",
+    "byAll": "par tous",
+    "byMe": "par moi",
+    "allDepartments": "tous",
+    "myDepartment": "mon service",
+    "allPublications": "toutes",
+    "allStates": "tous",
+    "onlyActive": "actifs",
+    "onlyInactive": "inactifs"
+  },
+  "itemsList": {
+    "title": "titre",
+    "author": "créé par",
+    "updated": "dernière édition",
+    "empty":
+      "Aucun graphique trouvé. Essayez un terme de recherche différent ou réinitialisez les paramètres du filtre.",
+    "emptyList":
+      "Aucun graphique trouvé. Essayez un terme de recherche différent."
+  },
+  "livingdocsComponent": {
+    "insert": "Utilisez ce graphique",
+    "edit": "Modifier dans Q",
+    "selectGraphic": "Sélectionnez un graphique dans la liste",
+    "inactiveGraphic": "Le graphique doit d'abord être activé en Q"
+  },
+  "notifications": {
+    "failedLoadingEditorConfig":
+      "Impossible de charger la configuration de l'éditeur",
+    "graphicNeedsATitle": "Ce graphique a besoin d'un titre",
+    "failedLoadingItems": "Impossible de charger ces graphiques",
+    "failedToLoadItem": "Impossible de charger ce graphique.",
+    "toolNotAvailable": "Cet outil n'est pas disponible",
+    "maxNumberOfFilesExceed": "Vous ne pouvez pas envoyer plus de fichiers",
+    "isValueMissing": {
+      "title": "Champ obligatoire",
+      "body": "Ce champ doit être rempli."
+    },
+    "emptyData": {
+      "title": "Entrer les données",
+      "body":
+        "Vous pouvez entrer des données directement ou copier à partir d'Excel. Sélectionnez la cellule A1 et collez-la avec Ctrl / Cmd + V."
+    },
+    "hasColumnTitles": {
+      "title": "Oubliez les en-têtes de colonnes?",
+      "body": "Chaque colonne devrait avoir un titre dans la rangée 1."
+    },
+    "tooManyColumns": {
+      "title": "De très nombreuses colonnes",
+      "body":
+        "Cliquez sur «Echange de lignes et de colonnes». Vraisemblablement, le graphique est plus clair après."
+    }
+  },
+  "dropzone": {
+    "dictDefaultMessage": "Déposez ici les fichiers à envoyer",
+    "dictDefaultMessageSingleFile": "Déposez ici le fichier à envoyer",
+    "dictFallbackMessage":
+      "Votre navigateur ne permet pas les envois de fichiers par glisser-déposer.",
+    "dictFallbackText":
+      "Merci d'utiliser le formulaire ci-dessous pour envoyer vos fichiers comme à l'ancienne époque.",
+    "dictFileTooBig":
+      "Le fichier est trop gros ({{filesize}}MiB). Taille max : {{maxFilesize}}MiB.",
+    "dictInvalidFileType": "Vous ne pouvez pas envoyer de fichiers de ce type.",
+    "dictResponseError": "Le serveur a répondu avec le code {{statusCode}}.",
+    "dictCancelUpload": "Annuler l'envoi",
+    "dictCancelUploadConfirmation":
+      "Êtes-vous certain de vouloir annuler cet envoi ?",
+    "dictRemoveFile": "Supprimer ce fichier",
+    "dictMaxFilesExceeded": "Vous ne pouvez pas envoyer plus de fichiers."
+  },
+  "preview": {
+    "title": "Modifier ta graphique",
+    "small": "Petit",
+    "medium": "Moyens",
+    "large": "Grand",
+    "sizeLabel": "Taille",
+    "error": "Le graphique ne peut pas être affiché",
+    "hint": {
+      "title": "Toutes les tailles contrôlées?",
+      "body":
+        "S'il vous plaît vérifier si le graphique fonctionne bien dans toutes les tailles. Nos utilisateurs les verront sur des appareils très différents."
+    },
+    "generalError": {
+      "title": "Il y a un manque de données pour montrer l'aperçu",
+      "body": "S'il vous plaît remplir tous les champs obligatoires."
+    },
+    "technicalError": {
+      "title": "Un problème technique est survenu",
+      "body":
+        "Veuillez réessayer de sauvegarder le graphique et recharger Q. {{errorMessage}}"
+    }
+  }
+}

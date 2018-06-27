@@ -2,101 +2,183 @@
   "general": {
     "yes": "yes",
     "no": "no",
+    "createLabel": "Create a graphic",
+    "searchEditLabel": "Search and edit",
+    "showAllTools": "Show all tools",
+    "showLessTools": "Show only my favorites",
     "searchLabel": "Search for a graphic",
-    "login": "login",
-    "logout": "logout",
+    "login": "Login",
+    "logout": "Logout",
     "username": "Username",
     "password": "Password",
     "back": "back",
-    "loadMore": "load more",
-    "itemNotActivated": "Item is not activated",
     "saveChanges": "save changes",
-    "close": "close",
-    "goToOverview": "Overview",
     "created": "created",
     "edited": "edited",
     "by": "by",
     "only": "only",
     "graphic": "graphic",
     "graphic_plural": "graphics",
-    "browserSupportMessage": "Q is optimised for Chrome and may does not work in your browser.",
+    "browserSupportMessage":
+      "Q is optimised for Chrome and may does not work in your browser.",
     "changesSaved": "Changes saved.",
     "failedToSaveChanges": "Failed to save changes.",
     "loginFailed": "Your username or password is not correct.",
     "serverConnectionFailed": "Failed to connect to server.",
-    "preview": "Preview",
-    "previewTargetLabel": "Publication",
-    "previewSizeLabel": "Size",
-    "articlesWithThisGraphic": "Articles with this graphic"
+    "articlesWithThisGraphic": "Articles with this graphic",
+    "loadMore": "Load more"
+  },
+  "userConfig": {
+    "initials": "initials",
+    "toolSelection": "Tool selection",
+    "toolsToShowInitially": "Tools on the home page",
+    "toolSelectionType": {
+      "byUsage": "show those that I use most often",
+      "byConfig": "I would like to decide for myself which one I see"
+    }
   },
   "statistics": {
-    "tooFewNewGraphics": "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",
-    "enoughNewGraphics": "{{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active."
+    "tooFewNewGraphics":
+      "Only {{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active.",
+    "enoughNewGraphics":
+      "{{count}} new active $t(general.graphic) in the last {{days}} days. Total: {{totalActiveCount}} active."
   },
   "editor": {
-    "questionLeaveWithUnsavedChanges": "Not all changes are saved, close anyway?",
-    "questionReallyEditBecauseActive": "This graphic is already activ. Changes will be applied in all articles. Do you really want to edit this graphic?",
+    "title": "Enter your data",
+    "questionLeaveWithUnsavedChanges": "Not all changes are saved",
+    "questionLeaveWithUnsavedChangesSub": "Close anyway?",
+    "questionReallyEditBecauseActive":
+      "This graphic is already activ. Changes will be applied in all articles.",
+    "questionReallyEditBecauseActiveSub":
+      "Do you really want to edit this graphic?",
     "confirmProceedToEditor": "Yes, proceed to editor",
     "cancelProceedToEditor": "No, cancel",
-    "arrayEntryAdd": "add {{ arrayEntryLabel }}",
-    "activatingEditorTakesTooLong": "It takes too long to load the editor, something is wrong.",
+    "arrayEntryAdd": "Add {{ arrayEntryLabel }}",
+    "arrayEntryRemove": "Delete {{ arrayEntryLabel }}",
+    "activatingEditorTakesTooLong":
+      "It takes too long to load the editor, something is wrong.",
     "failedToSave": "Failed to save",
     "conflictOnSave": "Failed to save due to a conflict",
     "failedToLoadEditorPart": "failed to load the editor for this element",
-    "noAutosaveBecauseActive": "Automatic saving is deactivated because the graphic is already active"
+    "noAutosaveBecauseActive":
+      "Automatic saving is deactivated because the graphic is already active",
+    "required": "required",
+    "transpose": "Switch rows and columns"
   },
   "metaEditor": {
+    "title": "Metainfos for internal use",
     "annotations": "Annotations",
-    "publication": "Publication"
+    "annotationPlaceholder":
+      "Add tags to your graphic which help you to search for it",
+    "publication": "Publication",
+    "shortname": "Shortname",
+    "department": "Department"
   },
   "item": {
-    "save": "save",
-    "activate": "activate",
-    "deactivate": "deactivate",
-    "blueprint": "use as blueprint",
+    "save": "Save",
+    "active": "active",
+    "inactive": "inactive",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "blueprint": "Use as blueprint",
     "blueprintTitlePrefix": "Copy of ",
-    "edit": "edit",
-    "failedToLoadItem": "Failed to load the graphic.",
-    "failedToBlueprintItem": "Failed to blueprint the graphic."
+    "edit": "Edit",
+    "failedToBlueprintItem": "Failed to blueprint the graphic.",
+    "delete": "Delete",
+    "questionDeleteItem": "Delete graphic?",
+    "questionDeleteItemSub":
+      "Do you really want to delete <strong>{{graphicTitle}}</strong>?",
+    "confirmDeleteItem": "Yes, delete",
+    "cancelDeleteItem": "Cancel",
+    "lastSaved": "Last saved"
   },
   "itemsFilter": {
     "allGraphics": "all graphics",
     "byAll": "by all",
     "byMe": "by me",
-    "allDepartments": "all departments",
-    "myDepartment": "my department only",
-    "allPublications": "all publications",
-    "allStates": "all states",
-    "onlyActive": "active only",
-    "onlyInactive": "inactive only"
+    "allDepartments": "all",
+    "myDepartment": "my department",
+    "allPublications": "all",
+    "allStates": "all",
+    "onlyActive": "active",
+    "onlyInactive": "inactive"
+  },
+  "itemsList": {
+    "title": "title",
+    "author": "created by",
+    "updated": "last edited",
+    "empty":
+      "No graphics found. Try a different search term or reset the filter settings."
   },
   "livingdocsComponent": {
-    "insert": "use Q element",
-    "edit": "edit in Q",
-    "titleLabel": "title Q element: ",
-    "selectGraphic": "please select a Q element from the list",
-    "searchLabel": "Search for a Q element"
+    "insert": "Use this graphic",
+    "edit": "Edit in Q",
+    "selectGraphic": "Select a graphic from the list",
+    "inactiveGraphic": "The graphic must first be activated in Q",
+    "emptyList": "No graphics found. Try a different search term."
   },
   "notifications": {
-    "previewBadRequest": "There is data missing to show the preview",
     "failedLoadingEditorConfig": "Failed to load editor configuration",
     "graphicNeedsATitle": "Graphic needs a title",
     "failedLoadingItems": "Failed loading graphics",
     "failedToLoadItem": "Failed to load the graphic.",
     "toolNotAvailable": "This tool is not available",
-    "maxNumberOfFilesExceed": "You are not allowed to upload more files"
+    "maxNumberOfFilesExceed": "You are not allowed to upload more files",
+    "isValueMissing": {
+      "title": "Required field",
+      "body": "This field must be filled out."
+    },
+    "emptyData": {
+      "title": "Fill in your data",
+      "body":
+        "Enter your data or copy directly from Excel. Select cell A1 and copy/paste using Ctrl/Cmd + V."
+    },
+    "hasColumnTitles": {
+      "title": "No column header defined",
+      "body": "Please add a header for each column in the first row."
+    },
+    "tooManyColumns": {
+      "title": "Data contains many columns",
+      "body":
+        "Click on the «Switch rows and columns» button. Your graphic will probably be more clear."
+    }
   },
   "dropzone": {
     "dictDefaultMessage": "Drop files here to upload",
     "dictDefaultMessageSingleFile": "Drop file here to upload",
-    "dictFallbackMessage": "Your browser does not support drag'n'drop file uploads.",
-    "dictFallbackText": "Please use the fallback form below to upload your files like in the olden days.",
-    "dictFileTooBig": "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
+    "dictFallbackMessage":
+      "Your browser does not support drag'n'drop file uploads.",
+    "dictFallbackText":
+      "Please use the fallback form below to upload your files like in the olden days.",
+    "dictFileTooBig":
+      "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
     "dictInvalidFileType": "You can't upload files of this type.",
     "dictResponseError": "Server responded with {{statusCode}} code.",
     "dictCancelUpload": "Cancel upload",
-    "dictCancelUploadConfirmation": "Are you sure you want to cancel this upload?",
+    "dictCancelUploadConfirmation":
+      "Are you sure you want to cancel this upload?",
     "dictRemoveFile": "Remove file",
     "dictMaxFilesExceeded": "You cannot upload any more files."
+  },
+  "preview": {
+    "title": "Customize your chart",
+    "small": "Small",
+    "medium": "Medium",
+    "large": "Large",
+    "sizeLabel": "Preview for...",
+    "error": "The graphic can not be displayed",
+    "hint": {
+      "title": "Please check the graphic on all sizes",
+      "body": "The graphic should be well readable on all sizes."
+    },
+    "generalError": {
+      "title": "Please fill out all required fields",
+      "body":
+        "In order to show the preview all required fields need to be filled out."
+    },
+    "technicalError": {
+      "title": "Technical error occurred",
+      "body": "Please try to save the graphic and reload Q. {{errorMessage}}"
+    }
   }
 }

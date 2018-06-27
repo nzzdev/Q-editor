@@ -1,21 +1,18 @@
 <template>
   <require from="../styles/q-dialog.css"></require>
   <div class="q-dialog help-dialog">
+    <button-tertiary class="q-dialog__close-button" icon="close" icon-size="medium" click.delegate="controller.cancel()"></button-tertiary>
     <div class="q-dialog__content">
       <h1 class="q-dialog-title">Hilfe</h1>
-      <p innerhtml.bind="intro" class="q-dialog-text"></p>
-      <h2 class="q-dialog-subtitle">FAQ</h2>
+      <p innerhtml.bind="intro" class="q-text--big"></p>
       <section class="help-dialog__faq">
         <div class="help-dialog__faq__content" if.bind="faq">
           <div class="help-dialog__faq_q-and-a" repeat.for="qAndA of faq">
-            <h3 class="q-dialog-subsubtitle" innerhtml.bind="qAndA.question"></h3>
-            <p innerhtml.bind="qAndA.answer" class="q-dialog-text"></p>
+            <h3 class="q-dialog-subtitle q-dialog-subtitle--bold" innerhtml.bind="qAndA.question"></h3>
+            <p innerhtml.bind="qAndA.answer" class="q-text--big"></p>
           </div>
         </div>
       </section>
     </div>
-    <aside class="q-dialog__controls">
-      <button-secondary click.delegate="controller.cancel()" icon="leave"><span t="general.close"></span></button-secondary>
-    </aside>
   </div>
 </template>

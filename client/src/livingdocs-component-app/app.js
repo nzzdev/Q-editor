@@ -35,6 +35,9 @@ export class App {
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.i18n = i18n;
     this.previewWidth = 290;
+    this.displayOptionsSchema = {
+      properties: {}
+    };
   }
 
   activate() {
@@ -53,14 +56,14 @@ export class App {
     try {
       this.targetKey = decodeURIComponent(targetQuery[1]);
     } catch (e) {
-      // todo: error message of missing target
+      console.log(e);
     }
   }
 
   async attached() {
     this.tools = await this.getTools();
     await this.loadTarget();
-    await this.reloadItems();
+    await this.filterChanged();
     this.loadView();
   }
 
@@ -76,7 +79,10 @@ export class App {
   }
 
   async loadView() {
-    if (this.selectedItemIndex !== undefined) {
+    if (
+      this.selectedItemIndex !== undefined &&
+      this.selectedItems[this.selectedItemIndex].active
+    ) {
       const item = await getItem(this.selectedItems[this.selectedItemIndex].id);
       this.title = item.conf.title;
 
@@ -102,6 +108,7 @@ export class App {
     } else {
       this.selectedItems.push({
         id: item.conf._id,
+        active: item.conf.active,
         toolRuntimeConfig: {
           displayOptions: {}
         }
@@ -127,7 +134,7 @@ export class App {
     window.parent.postMessage(message, "*");
   }
 
-  async reloadItems() {
+  async filterChanged() {
     this.items = [];
     try {
       const result = await this.loadItems(this.currentSearchString);
@@ -211,7 +218,11 @@ export class App {
       size: {
         width: [
           {
-            value: this.previewContainer.getBoundingClientRect().width,
+            value: Math.floor(
+              this.previewContainer.shadowRoot
+                .querySelector(".preview-element > *:first-child")
+                .getBoundingClientRect().width
+            ),
             comparison: "="
           }
         ]

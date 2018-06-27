@@ -2,99 +2,190 @@
   "general": {
     "yes": "Ja",
     "no": "Nein",
+    "createLabel": "Neu erstellen",
+    "searchEditLabel": "Suchen und bearbeiten",
+    "showAllTools": "Alle Tools anzeigen",
+    "showLessTools": "nur meine Favoriten anzeigen",
     "searchLabel": "Eine Grafik suchen",
-    "login": "anmelden",
-    "logout": "abmelden",
+    "login": "Anmelden",
+    "logout": "Abmelden",
     "username": "Benutzername",
     "password": "Passwort",
     "back": "zurück",
-    "loadMore": "mehr laden",
-    "itemNotActivated": "Grafik ist noch nicht aktiviert",
     "saveChanges": "Änderungen speichern",
-    "close": "schliessen",
-    "goToOverview": "zur Übersicht",
     "created": "erstellt",
     "edited": "bearbeitet",
     "by": "von",
     "only": "nur",
     "graphic": "Grafik",
     "graphic_plural": "Grafiken",
-    "browserSupportMessage": "Q ist für Chrome optimiert und funktioniert in Ihrem Browser evtl. nicht.",
+    "browserSupportMessage":
+      "Q ist für Chrome optimiert und funktioniert in Ihrem Browser evtl. nicht.",
     "changesSaved": "Die Änderungen wurden gespeichert.",
     "failedToSaveChanges": "Die Änderung konnten nicht gespeichert werden.",
     "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt.",
     "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen.",
-    "preview": "Vorschau",
-    "previewTargetLabel": "Publikation",
-    "previewSizeLabel": "Angezeigte Grösse",
-    "articlesWithThisGraphic": "Artikel mit dieser Grafik"
+    "articlesWithThisGraphic": "Artikel mit dieser Grafik",
+    "loadMore": "Mehr laden"
+  },
+  "userConfig": {
+    "initials": "Initialen",
+    "toolSelection": "Tool Auswahl",
+    "toolsToShowInitially": "Tools auf der Startseite",
+    "toolSelectionType": {
+      "byUsage": "zeige jene, die ich am häufigsten einsetzt",
+      "byConfig": "ich möchte selber festlegen, welche ich sehe"
+    }
   },
   "statistics": {
-    "tooFewNewGraphics": "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",
-    "enoughNewGraphics": "{{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive."
+    "tooFewNewGraphics":
+      "Nur {{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive.",
+    "enoughNewGraphics":
+      "{{count}} neue aktive $t(general.graphic) in den letzten {{days}} Tagen. Total {{totalActiveCount}} aktive."
   },
   "editor": {
-    "questionLeaveWithUnsavedChanges": "Es sind nicht alle Änderungen gespeichert, trotzdem schliessen?",
-    "questionReallyEditBecauseActive": "Diese Grafik ist bereits aktiv. Änderungen werden in allen Artikel übernommen. Willst du diese Grafik wirklich bearbeiten?",
+    "title": "Gib deine Daten ein",
+    "questionLeaveWithUnsavedChanges":
+      "Es sind nicht alle Änderungen gespeichert.",
+    "questionLeaveWithUnsavedChangesSub": "Trotzdem schliessen?",
+    "questionReallyEditBecauseActive":
+      "Diese Grafik ist bereits aktiv. Änderungen werden in allen Artikeln übernommen.",
+    "questionReallyEditBecauseActiveSub":
+      "Willst du diese Grafik wirklich bearbeiten?",
     "confirmProceedToEditor": "Ja, weiter zum Editor",
     "cancelProceedToEditor": "Nein, abbrechen",
     "arrayEntryAdd": "{{ arrayEntryLabel }} hinzufügen",
-    "activatingEditorTakesTooLong": "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
+    "arrayEntryRemove": "{{ arrayEntryLabel }} löschen",
+    "activatingEditorTakesTooLong":
+      "Es dauert zu lange den Editor zu laden, irgendwas ist schief gelaufen.",
     "failedToSave": "Speichern ist fehlgeschlagen",
     "conflictOnSave": "Speichern ist fehlgeschlagen weil ein Konflikt besteht",
-    "failedToLoadEditorPart": "Der Editor für dieses Element konnte nicht geladen werden",
-    "noAutosaveBecauseActive": "Automatisches speichern ist deaktiviert da die Grafik bereits aktiv ist"
+    "failedToLoadEditorPart":
+      "Der Editor für dieses Element konnte nicht geladen werden",
+    "noAutosaveBecauseActive":
+      "Automatisches speichern ist deaktiviert da die Grafik bereits aktiv ist",
+    "required": "erforderlich",
+    "transpose": "Zeilen und Spalten tauschen"
   },
   "metaEditor": {
+    "title": "Metainfos für den internen Gebrauch",
     "annotations": "Notizen",
-    "publication": "Publikation"
+    "annotationPlaceholder":
+      "Hier kannst du zusätzliche Schlagwörter erfassen, mit denen die Grafik einfacher gefunden werden kann",
+    "publication": "Medium",
+    "shortname": "Autorenkürzel",
+    "department": "Ressort"
   },
   "item": {
-    "save": "speichern",
-    "activate": "aktivieren",
-    "deactivate": "deaktivieren",
-    "blueprint": "als Vorlage benutzen",
+    "save": "Speichern",
+    "active": "aktiv",
+    "inactive": "inaktiv",
+    "activate": "Aktivieren",
+    "deactivate": "Deaktivieren",
+    "blueprint": "Als Vorlage benutzen",
     "blueprintTitlePrefix": "Kopie von ",
-    "edit": "bearbeiten",
-    "failedToBlueprintItem": "Die Grafik konnte nicht als Vorlage verwendet werden."
+    "edit": "Bearbeiten",
+    "failedToBlueprintItem":
+      "Die Grafik konnte nicht als Vorlage verwendet werden.",
+    "delete": "Löschen",
+    "questionDeleteItem": "Grafik löschen?",
+    "questionDeleteItemSub":
+      "Bist du sicher, dass du die Grafik <strong>{{graphicTitle}}</strong> löschen willst?",
+    "confirmDeleteItem": "Ja, löschen",
+    "cancelDeleteItem": "Abbrechen",
+    "lastSaved": "Zuletzt gespeichert"
   },
   "itemsFilter": {
     "allGraphics": "alle Grafiken",
-    "byAll": "von allen",
-    "byMe": "von mir",
-    "allDepartments": "alle Ressorts",
-    "myDepartment": "nur mein Ressort",
-    "allPublications": "alle Publikationen",
-    "allStates": "alle Zustände",
-    "onlyActive": "nur aktive",
-    "onlyInactive": "nur inaktive"
+    "byAll": "Von allen",
+    "byMe": "Von mir",
+    "allDepartments": "Alle Ressorts",
+    "myDepartment": "Mein Ressort",
+    "allPublications": "Alle",
+    "allStates": "Alle",
+    "onlyActive": "Aktive",
+    "onlyInactive": "Inaktive"
+  },
+  "itemsList": {
+    "title": "Titel",
+    "author": "erstellt von",
+    "updated": "zuletzt bearbeitet",
+    "empty":
+      "Keine Grafiken gefunden. Versuche einen anderen Suchbegriff oder setze die Filtereinstellungen zurück."
   },
   "livingdocsComponent": {
-    "insert": "Q Element verwenden",
-    "edit": "in Q bearbeiten",
-    "titleLabel": "Titel des Q Elements: ",
-    "selectGraphic": "bitte ein Q Element aus der Liste auswählen",
-    "searchLabel": "Ein Q Element suchen"
+    "insert": "Grafik verwenden",
+    "edit": "In Q bearbeiten",
+    "selectGraphic": "Wähle eine Grafik aus der Liste aus",
+    "inactiveGraphic": "Die Grafik muss zuerst in Q aktiviert werden",
+    "emptyList": "Keine Grafiken gefunden. Versuche einen anderen Suchbegriff."
   },
   "notifications": {
-    "previewBadRequest": "Es fehlen einige Daten um die Vorschau anzuzeigen",
-    "failedLoadingEditorConfig": "Die Editorkonfiguration konnte nicht geladen werden",
+    "failedLoadingEditorConfig":
+      "Die Editorkonfiguration konnte nicht geladen werden",
     "graphicNeedsATitle": "Grafik braucht einen Titel",
     "failedLoadingItems": "Grafiken konnten nicht geladen werden",
     "failedToLoadItem": "Die Grafik konnte nicht geladen werden.",
     "toolNotAvailable": "Dieses Tool steht nicht zur Verfügung",
-    "maxNumberOfFilesExceed": "Es können keine weiteren Dateien hochgeladen werden"
+    "maxNumberOfFilesExceed":
+      "Es können keine weiteren Dateien hochgeladen werden",
+    "isValueMissing": {
+      "title": "Pflichtfeld",
+      "body": "Dieses Feld muss zwingend ausgefüllt sein."
+    },
+    "emptyData": {
+      "title": "Daten eingeben",
+      "body":
+        "Du kannst Daten direkt eintragen oder aus Excel kopieren. Dafür die Zelle A1 anwählen und per Ctrl/Cmd + V einfügen."
+    },
+    "hasColumnTitles": {
+      "title": "Spaltenüberschriften vergessen?",
+      "body": "Jede Spalte sollte in Zeile 1 eine Überschrift haben."
+    },
+    "tooManyColumns": {
+      "title": "Sehr viele Spalten",
+      "body":
+        "Klicke mal auf «Zeilen und Spalten tauschen». Vermutlich ist die Grafik danach klarer."
+    }
   },
   "dropzone": {
-    "dictDefaultMessage": "Anklicken oder Bilder hierhin ziehen, um sie hochzuladen",
-    "dictDefaultMessageSingleFile": "Anklicken oder Bild hierhin ziehen, um es hochzuladen",
-    "dictFallbackMessage": "Ihr Browser unterstützt Drag&Drop Dateiuploads nicht",
+    "dictDefaultMessage":
+      "Anklicken oder Bilder hierhin ziehen, um sie hochzuladen",
+    "dictDefaultMessageSingleFile":
+      "Anklicken oder Bild hierhin ziehen, um es hochzuladen",
+    "dictFallbackMessage":
+      "Ihr Browser unterstützt Drag&Drop Dateiuploads nicht",
     "dictFallbackText": "Benutzen Sie das Formular um Ihre Dateien hochzuladen",
-    "dictFileTooBig": "Die Datei ist zu gross. Die maximale Dateigrösse beträgt {{maxFileSize}}MB",
-    "dictInvalidFileType": "Eine Datei dieses Typs kann nicht hochgeladen werden",
-    "dictResponseError": "Der Server hat ihre Anfrage mit Status {{statusCode}} abgelehnt",
+    "dictFileTooBig":
+      "Die Datei ist zu gross. Die maximale Dateigrösse beträgt {{maxFileSize}}MB",
+    "dictInvalidFileType":
+      "Eine Datei dieses Typs kann nicht hochgeladen werden",
+    "dictResponseError":
+      "Der Server hat ihre Anfrage mit Status {{statusCode}} abgelehnt",
     "dictCancelUpload": "Hochladen abbrechen",
     "dictRemoveFile": "Datei entfernen",
     "dictMaxFilesExceeded": "Sie können keine weiteren Dateien mehr hochladen"
+  },
+  "preview": {
+    "title": "Bearbeite deine Grafik",
+    "small": "Klein",
+    "medium": "Mittel",
+    "large": "Gross",
+    "sizeLabel": "Vorschau für...",
+    "error": "Die Grafik kann nicht angezeigt werden",
+    "hint": {
+      "title": "Alle Grössen kontrolliert?",
+      "body":
+        "Bitte kontrolliere, ob die Grafik in allen Grössen gut funktioniert. Unsere Nutzer werden sie auf ganz unterschiedlichen Geräten sehen."
+    },
+    "generalError": {
+      "title": "Es fehlen einige Daten um die Vorschau anzuzeigen",
+      "body": "Bitte alle Pflichtfelder ausfüllen."
+    },
+    "technicalError": {
+      "title": "Ein technisches Problem ist aufgetreten",
+      "body":
+        "Bitte versuch die Grafik erneut zu speichern und Q neu zu laden. {{errorMessage}}"
+    }
   }
 }

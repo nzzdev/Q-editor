@@ -1,19 +1,43 @@
 item-preview {
+  --q-preview-min-height: 568px;
+  --q-preview-padding: calc(var(--q-space-base) * 2);
+  --q-preview-settings-margin-bottom: calc(var(--q-space-base) * 2);
   display: block;
+  position: relative;
+  min-height: calc(var(--q-preview-min-height) + (2 * var(--q-preview-padding)) + 50px + var(--q-preview-settings-margin-bottom) + 20px);
 }
 
-item-preview > div {
-  max-width: 560px;
+.item-preview__holder {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .item-preview__settings {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-bottom: var(--q-preview-settings-margin-bottom);
 }
 
 .item-preview__settings > div {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
+}
+
+.item-preview__container {
+  display: flex;
+}
+
+.item-preview__notification {
+  width: 180px;
+}
+
+.item-preview__notification notification {
+  margin-bottom: calc(var(--q-space-base) * 2);
 }

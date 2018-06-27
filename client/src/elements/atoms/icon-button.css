@@ -7,7 +7,6 @@ icon-button {
 icon-button button {
   padding: 0;
   margin: 0;
-  background: none;
   width: 100%;
 
   cursor: pointer;
@@ -16,8 +15,6 @@ icon-button button {
   line-height: inherit;
   font-size: 14px;
   color: inherit;
-
-  background-color: var(--q-color-primary-1);
 
   border-width: 1px;
   border-style: solid;
@@ -39,12 +36,13 @@ icon-button button:focus {
   height: 34px;
 }
 
-.icon-button__icon:empty {
-  display: none;
-}
-
 .icon-button__text {
   min-width: 34px;
+  padding-right: var(--q-space-base);
+}
+
+.icon-button__text:first-child {
+  padding-left: var(--q-space-base);
 }
 
 .icon-button__text:empty {
@@ -77,5 +75,19 @@ icon-button.size-big .icon-button__icon {
 icon-button.size-big button {
   height: 48px;
   border-radius: 24px;
+}
+
+icon-button.size-huge {
+  height: 80px;
+}
+
+icon-button.size-huge .icon-button__icon {
+  height: 78px;
+  width: 78px;
+}
+
+icon-button.size-huge button {
+  height: 80px;
+  border-radius: 40px;
 }
 

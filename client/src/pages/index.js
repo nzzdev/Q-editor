@@ -74,6 +74,19 @@ export class Index {
     this.initialised = true;
   }
 
+  attached() {
+    // this observer will always observe the last item in the item list
+    // it checks if the observed element is within the viewport
+    // if so, we load more items
+    this.itemListScrollObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && this.moreItemsAvailable !== false) {
+        this.loadMore();
+      }
+    });
+
+    this.itemListScrollObserver.observe(this.infiniteScrollingSentinel);
+  }
+
   filterChanged() {
     this.reloadItems();
 
@@ -164,12 +177,20 @@ export class Index {
     }
   }
 
-  showAccountModal() {
-    this.dialogService.open({
+  async showAccountModal() {
+    const openDialogResult = await this.dialogService.open({
       viewModel: AccountDialog,
       model: {
         router: this.router
       }
     });
+    const closeResult = await openDialogResult.closeResult;
+    if (closeResult.wasCancelled === false) {
+      this.router.navigateToRoute("index", { replace: true });
+    }
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }
 }

@@ -1,8 +1,8 @@
 tool-status-bar {
   display: flex;
   align-items: center;
-  margin-left: var(--q-space-base);
-  padding-right: calc(var(--q-space-base) / 2);
+  margin-left: calc(var(--q-space-base) * 2);
+  padding-right: var(--q-space-base);
   border-right: solid 1px var(--q-color-gray-4);
 }
 
@@ -12,7 +12,7 @@ tool-status-bar {
 }
 
 .tool-status-bar__item {
-  margin-right: calc(var(--q-space-base) / 2);
+  margin-right: var(--q-space-base);
 }
 
 .tool-status-bar__button {
@@ -27,4 +27,3 @@ tool-status-bar {
     min-width: 0px;
   }
 }
-

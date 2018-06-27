@@ -1,12 +1,14 @@
 <template>
   <require from="../styles/q-dialog.css"></require>
-  <div class="q-dialog q-dialog--bottom-controls">
+  <div class="q-dialog q-dialog--small q-dialog--centered q-dialog--bottom-controls">
+    <button-tertiary class="q-dialog__close-button" icon="close" icon-size="medium" click.delegate="controller.cancel()"></button-tertiary>
     <div class="q-dialog__content">
       <h1 class="q-dialog-title">${config.confirmQuestion}</h1>
+      <p class="q-dialog-subtitle q-text--big" if.bind="config.confirmQuestionSub" innerhtml.bind="config.confirmQuestionSub"></p>
     </div>
     <div class="q-dialog__controls">
-      <button-yes click.delegate="controller.ok()">${config.proceedText}</button-yes>
-      <button-no click.delegate="controller.cancel()">${config.cancelText}</button-yes>
+      <button-secondary click.delegate="controller.cancel()">${config.cancelText}</button-secondary>
+      <button-primary click.delegate="controller.ok()">${config.proceedText}</button-primary>
     </div>
   </div>
 </template>

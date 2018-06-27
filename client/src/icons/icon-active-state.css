@@ -5,9 +5,9 @@ icon-active-state {
 }
 
 icon-active-state svg.state-active {
-  fill: var(--q-color-yes-5);
+  fill: var(--q-color-success);
 }
 
 icon-active-state svg.state-inactive {
-  fill: var(--q-color-no-5);
+  fill: var(--q-color-error);
 }

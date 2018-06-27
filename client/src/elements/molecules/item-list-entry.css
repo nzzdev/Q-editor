@@ -1,27 +1,20 @@
 item-list-entry {
-  background: var(--q-color-primary-2);
-
-  padding: calc(var(--q-space-base) / 4);
-  margin-bottom: calc(var(--q-space-base) / 4);
-
   display: flex;
-
+  border-top: solid 1px var(--q-color-gray-3);
+  padding: var(--q-space-base) 0;
   transition: transform 0.2s ease-in;
 }
 
 item-list-entry:hover {
   cursor: pointer;
-}
-
-item-list-entry.inactive {
-  background: var(--q-color-primary-1);
-  border: 1px dashed var(--q-color-primary-2);
+  background-color: var(--q-color-gray-2);
 }
 
 item-list-entry .tool-icon {
   width: 26px;
   height: 26px;
-  color: var(--q-color-gray-6);
+  color: var(--q-color-primary-3);
+  margin-right: var(--q-space-base);
 }
 
 item-list-entry > a {
@@ -29,27 +22,49 @@ item-list-entry > a {
   text-decoration: none !important;
   color: black !important;
   align-items: center;
-  width: 100%; 
+  width: 100%;
 }
 
-item-list-entry a > span {
+item-list-entry a > span:not(.item-list-entry__state-tag) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex-grow: 1;
+  flex-basis: 0;
 }
 
-item-list-entry a > span:nth-of-type(1) {
-  width: calc((100% - (2 * 26px)) / 10 * 4);
+.item-list-entry__state-tag {
+  height: 20px;
+  line-height: 20px !important;
+  min-width: calc(var(--q-space-base) * 7);
+  border-radius: 10px;
+  margin-right: calc(var(--q-space-base) * 2);
+  text-align: center;
 }
 
-item-list-entry a > span:nth-of-type(2) {
-  width: calc((100% - (2 * 26px)) / 10 * 2);
+.item-list-entry__state-tag--active {
+  background-color: var(--q-color-primary-2);
+  color: var(--q-color-white);
 }
 
-item-list-entry a > span:nth-of-type(3) {
-  width: calc((100% - (2 * 26px)) / 10 * 4);
+.item-list-entry__state-tag--inactive {
+  background-color: var(--q-color-primary-1);
+  color: var(--q-color-primary-2);
 }
 
-item-list-entry delete-button {
-  margin-left: auto;
+/* show the dropdown-menu on top for the last four items */
+item-list-entry:nth-last-child(-n + 5) > dropdown-menu > div:before {
+  top: 200px !important;
+  border-width: 10px 10px 0 10px !important;
+  border-color: var(--q-color-gray-3) transparent transparent transparent !important;
+}
+
+item-list-entry:nth-last-child(-n + 5) > dropdown-menu > div {
+  top: -214px !important;
+}
+
+item-list-entry:nth-last-child(-n + 5) > dropdown-menu > div:after {
+  top: 200px !important;
+  border-width: 8px 8px 0 8px !important;
+  border-color: var(--q-color-white) transparent transparent transparent !important;
 }

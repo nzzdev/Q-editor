@@ -3,10 +3,10 @@ q-bar {
   flex-direction: row;
   align-items: center;
   background: var(--q-color-gray-1);
-  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.05);
   position: fixed;
   width: 100%;
-  height: calc(var(--q-space-base) * 3.5);
+  height: calc(var(--q-space-base) * 7);
   top: 0px;
   z-index: 500;
 }
@@ -14,30 +14,39 @@ q-bar {
 .q-bar__left {
   width: 45%;
   display: flex;
-  flex-flow: row wrap;
-  padding-left: calc(var(--q-space-base) * 1.5);
+  padding-left: calc(var(--q-space-base) * 3);
+}
+
+.q-bar__left:emtpy {
+  display: none;
 }
 
 .q-bar__center {
   width: 10%;
   display: flex;
-  flex-flow: row wrap;
   justify-content: center;
 }
 
-.q-bar__center > * {
-  width: 40px;
-  height: 40px;
+.q-bar__center:empty {
+  display: none;
 }
 
 .q-bar__right {
   width: 45%;
   display: flex;
-  flex-flow: row wrap;
   justify-content: flex-end;
-  padding-right: calc(var(--q-space-base) * 1.5);
+  padding-right: calc(var(--q-space-base) * 3);
 }
 
-.q-bar__help {
-  padding-left: var(--q-space-base);
+.q-bar__right:empty {
+  display: none;
+}
+
+.q-bar__right > * {
+  margin-left: calc(var(--q-space-base) * 2);
+}
+
+.q-bar--no-logo .q-bar__left, .q-bar--no-logo .q-bar__right{
+  flex-grow: 1;
+  width: auto;
 }

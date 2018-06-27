@@ -27,6 +27,7 @@ export class App {
     config.title = "NZZ Q";
     config.addPreActivateStep(ConfigAvailableCheckStep);
     config.addAuthorizeStep(AuthorizeStep); // Add a route filter to the authorize extensibility point.
+    config.addPipelineStep("postcomplete", ScrollToTopStep);
 
     let routerMap = [
       {
@@ -180,5 +181,15 @@ class ConfigAvailableCheckStep {
     } catch (e) {
       return next.cancel(new Redirect("server-unavailable"));
     }
+  }
+}
+
+class ScrollToTopStep {
+  run(instruction, next) {
+    if (!instruction.config.settings.noScrollToTop) {
+      window.scrollTo(0, 0);
+    }
+
+    return next();
   }
 }

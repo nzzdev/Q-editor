@@ -1,17 +1,16 @@
 import { bindable, inject } from "aurelia-framework";
-import { Router } from "aurelia-router";
-import User from "resources/User";
 import ToolsInfo from "resources/ToolsInfo";
-
-@inject(Element, ToolsInfo, User, Router)
+import User from "resources/User";
+import ItemActionController from "resources/ItemActionController";
+@inject(ToolsInfo, Element, User, ItemActionController)
 export class ItemListEntry {
   @bindable item;
 
-  constructor(element, toolsInfo, user, router) {
-    this.element = element;
+  constructor(toolsInfo, element, user, itemActionController) {
     this.toolsInfo = toolsInfo;
+    this.element = element;
     this.user = user;
-    this.router = router;
+    this.itemActionController = itemActionController;
   }
 
   itemChanged() {
@@ -26,12 +25,15 @@ export class ItemListEntry {
     });
   }
 
-  deleteItem() {
-    this.item.delete().then(() => {
+  async deleteItem() {
+    try {
+      await this.itemActionController.delete(this.item);
       this.element.addEventListener("transitionend", () => {
         this.element.parentNode.removeChild(this.element);
       });
       this.element.style.transform = "scale(0)";
-    });
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

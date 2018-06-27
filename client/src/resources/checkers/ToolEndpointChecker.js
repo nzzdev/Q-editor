@@ -36,7 +36,28 @@ export default class ToolEndpointChecker {
     if (resp.status !== 200) {
       throw new Error(resp.statusMessage);
     }
-    return await resp.json();
+    try {
+      return await resp.json();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async fetchWithData(endpoint, data) {
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${this.toolName}`;
+    const resp = await fetch(`${toolRequestBaseUrl}/${endpoint}`, {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+    if (resp.status !== 200) {
+      throw new Error(resp.statusMessage);
+    }
+    try {
+      return await resp.json();
+    } catch (e) {
+      return null;
+    }
   }
 
   async fetchWithItem(endpoint) {
@@ -49,6 +70,10 @@ export default class ToolEndpointChecker {
     if (resp.status !== 200) {
       throw new Error(resp.statusMessage);
     }
-    return await resp.json();
+    try {
+      return await resp.json();
+    } catch (e) {
+      return null;
+    }
   }
 }

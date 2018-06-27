@@ -1,5 +1,4 @@
 import { bindable, inject, Loader } from "aurelia-framework";
-import { checkAvailability } from "resources/schemaEditorDecorators.js";
 import array2d from "array2d";
 
 function hasNonNullInArray(arr) {
@@ -44,12 +43,12 @@ function emptyToNull(data) {
   return data;
 }
 
-@checkAvailability()
 @inject(Loader)
 export class SchemaEditorTable {
   @bindable schema;
   @bindable data;
   @bindable change;
+  @bindable required;
 
   options = {
     allowTranspose: true,
@@ -97,6 +96,7 @@ export class SchemaEditorTable {
       contextMenu: false,
       stretchH: "all",
       rowHeights: 23,
+      copyRowsLimit: 10000,
       afterChange: (changes, source) => {
         if (source !== "loadData") {
           this.data = trimNull(emptyToNull(this.hot.getData()));
@@ -174,6 +174,9 @@ export class SchemaEditorTable {
   transpose() {
     this.hot.loadData(array2d.transpose(this.hot.getData()));
     this.data = trimNull(emptyToNull(this.hot.getData()));
+    this.hot.updateSettings({
+      height: this.getGridHeight()
+    });
     this.change();
   }
 }

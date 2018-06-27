@@ -4,7 +4,7 @@
 }
 
 .feed main {
-  padding: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 3);
+  padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 6);
   flex-grow: 1;
 }
 

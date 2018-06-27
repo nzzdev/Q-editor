@@ -1,5 +1,5 @@
 .q-form button-primary {
-  margin-top: calc(var(--q-space-base) * 2);
+  margin-top: calc(var(--q-space-base) * 4);
 }
 
 .q-form ::placeholder {
@@ -18,18 +18,22 @@
   font-family: Roboto, sans-serif;
   font-size: 14px;
   line-height: 18px;
-  padding: calc(var(--q-space-base) / 2);
+  padding: var(--q-space-base);
 
   background-color: var(--q-color-white);
   border: 1px solid var(--q-color-gray-3);
-  caret-color: var(--q-color-primary-5);
+  caret-color: var(--q-color-primary-2);
 
   display: block;
   width: 100%;
 }
 
-.q-form input:invalid {
-  border-color: var(--q-color-error-light);
+.q-form input:valid {
+  border-color: var(--q-color-gray-3) !important;
+}
+
+.q-form-input--invalid {
+  border: solid 1px var(--q-color-error) !important;
 }
 
 .q-form input:focus,
@@ -37,7 +41,7 @@
 .q-form select:focus {
   border-color: var(--q-color-gray-4);
   outline: none;
-  box-shadow: 0px 0px 5px 1px var(--q-color-gray-4);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 .q-form .disabled,
@@ -59,7 +63,7 @@
 
 .q-form__block {
   display: block;
-  margin-bottom: calc(var(--q-space-base) / 2);
+  margin-bottom: var(--q-space-base);
 }
 
 /*
@@ -98,24 +102,25 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 18px;
-  height: 18px;
+  width: calc(var(--q-space-base) * 2);
+  height: calc(var(--q-space-base) * 2);
   background: var(--q-color-gray-1);
   border: 1px solid var(--q-color-gray-4);
 }
 
-.q-form__checkbox input[type="checkbox"]:focus + span::before {
-  box-shadow: 0px 0px 5px 1px var(--q-color-gray-4);
+.q-form__checkbox input[type="checkbox"] + span:hover::before {
+  border-color: var(--q-color-primary-2);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 .q-form__checkbox input[type="checkbox"]:checked + span::before {
-  content: "\2713";
-  font-size: 16px;
+  content: "\2714";
+  font-size: calc(var(--q-space-base) + var(--q-space-base) / 2);
   color: white;
   text-align: center;
-  line-height: 18px;
-  border-color: var(--q-color-primary-5);
-  background: var(--q-color-primary-5);
+  line-height: calc(var(--q-space-base) * 2);
+  background: var(--q-color-primary-2);
+  border: 0;
 }
 
 /*
@@ -124,11 +129,13 @@
 
 */
 .q-form select {
-  height: 2.4375rem;
+  height: calc(var(--q-space-base) * 4);
   margin: 0;
-  padding: calc(var(--q-space-base) / 2);
+  padding: calc(var(--q-space-base) / 2) calc(var(--q-space-base) / 2)
+    calc(var(--q-space-base) / 2) calc(var(--q-space-base));
   appearance: none;
   -webkit-appearance: none;
+  -moz-appearance: none;
   border-radius: 0;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
   background-origin: content-box;
@@ -146,7 +153,7 @@
   radio
 
 */
-.q-form input[type="radio"] {
+.q-form__radio input[type="radio"] {
   opacity: 0;
   position: absolute;
   margin: 0px;
@@ -155,7 +162,7 @@
   height: 2em;
 }
 
-.q-form input[type="radio"] + label {
+.q-form__radio input[type="radio"] + label {
   line-height: 2em;
   position: relative;
   display: flex;
@@ -165,10 +172,10 @@
   cursor: pointer;
 }
 
-.q-form input[type="radio"] + label::before {
+.q-form__radio input[type="radio"] + label::before {
   content: "";
-  width: 1.4em;
-  height: 1.4em;
+  width: calc(var(--q-space-base) * 2);
+  height: calc(var(--q-space-base) * 2);
   margin-right: 5px;
   position: relative;
   background-color: var(--q-color-gray-2);
@@ -178,17 +185,17 @@
   cursor: pointer;
 }
 
-.q-form input[type="radio"] + label:hover::before {
-  border-color: var(--q-color-primary-5);
-  background-color: var(--q-color-primary-1);
+.q-form__radio input[type="radio"] + label:hover::before {
+  border-color: var(--q-color-primary-2);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
-.q-form input[type="radio"]:checked + label::before {
-  background-color: var(--q-color-primary-5);
-  border-color: var(--q-color-primary-5);
-}
-
-.q-form input[type="radio"]:active + label::before,
-.q-form input[type="radio"]:focus + label::before {
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
+.q-form__radio input[type="radio"]:checked + label::before {
+  width: calc(var(--q-space-base) - 2px);
+  height: calc(var(--q-space-base) - 2px);
+  margin-right: calc(var(--q-space-base) + 2px);
+  margin-left: calc(var(--q-space-base) - 3px);
+  background-color: white;
+  box-shadow: 0 0 0 calc(var(--q-space-base) - 3px) var(--q-color-primary-2);
+  border: 0;
 }

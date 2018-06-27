@@ -1,7 +1,5 @@
 import { bindable } from "aurelia-framework";
-import { checkAvailability } from "resources/schemaEditorDecorators.js";
 
-@checkAvailability()
 export class SchemaEditorLink {
   @bindable data;
   @bindable schema;
@@ -21,9 +19,11 @@ export class SchemaEditorLink {
   }
 
   handleUrlChange() {
-    if (this.urlInput.validity.valid) {
+    if (this.urlInput.value !== "" && this.urlInput.validity.valid) {
       // todo, use a cors proxy / Q Server to test if the link is really valid.
       this.data.isValid = true;
+    } else {
+      this.data.isValid = false;
     }
     this.change();
   }

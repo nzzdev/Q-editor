@@ -1,20 +1,16 @@
-html {
-  height: 100%;
+body {
+  margin: 0;
+  background-color: var(--q-color-gray-1);
   box-sizing: border-box;
 }
 
-body {
-  height: 100%;
-  margin: 0;
-  background-color: var(--q-color-gray-1);
-}
-
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
 .q-container {
-  height: 100%;
   max-width: 100vw;
   overflow-y: hidden;
   display: flex;
@@ -26,7 +22,7 @@ body {
 }
 
 .q-container--playground::before {
-  content: '';
+  content: "";
   display: block;
   width: 5px;
   position: absolute;
@@ -41,19 +37,18 @@ body {
 q-screen {
   flex-grow: 1;
   transition: opacity 0.2s ease-out;
-  margin-top: calc(var(--q-space-base) * 3.5);
+  margin-top: calc(var(--q-space-base) * 7);
 }
 
 q-screen.is-navigating {
   opacity: 0.5;
 }
 
-q-screen main {
-  height: 100%;
-  overflow-y: scroll;
-}
-
-main.index,
-main.item-overview {
-  padding: calc(var(--q-space-base) * 3);
+main.index > tool-selection,
+main.index > .search,
+main.index > items-filter,
+main.index > items-list,
+main.item-overview > * {
+  padding-left: calc(var(--q-space-base) * 6);
+  padding-right: calc(var(--q-space-base) * 6);
 }

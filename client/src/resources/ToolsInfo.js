@@ -1,13 +1,15 @@
 import { inject } from "aurelia-framework";
 import { Container } from "aurelia-dependency-injection";
+import { HttpClient } from "aurelia-fetch-client";
 import User from "resources/User.js";
 import qEnv from "resources/qEnv.js";
 
-@inject(User, Container)
+@inject(User, Container, HttpClient)
 export default class ToolsInfo {
-  constructor(user, diContainer) {
+  constructor(user, diContainer, httpClient) {
     this.user = user;
     this.diContainer = diContainer;
+    this.httpClient = httpClient;
     this.availableTools = this.loadAvailableTools();
   }
 
@@ -60,5 +62,59 @@ export default class ToolsInfo {
   async getAvailableToolsNames() {
     const tools = await this.getAvailableTools();
     return tools.map(tool => tool.name);
+  }
+
+  async getToolsOrderedForUser() {
+    const availableTools = await this.getAvailableTools();
+
+    await this.user.loaded;
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+
+    const response = await this.httpClient.fetch(
+      `${QServerBaseUrl}/editor/tools-ordered-by-user-usage`,
+      {
+        credentials: "include",
+        method: "GET"
+      }
+    );
+
+    if (!response.ok) {
+      throw response;
+    }
+
+    const toolsOrderedByUserUsage = await response.json();
+
+    return availableTools.slice(0).sort((a, b) => {
+      // if the user has never used any of the two tool order them by configuration tool order
+      if (
+        !toolsOrderedByUserUsage.includes(a.name) &&
+        !toolsOrderedByUserUsage.includes(b.name)
+      ) {
+        return this.sortByConfiguration(a, b, availableTools);
+      }
+      // if a is never used, put it last
+      if (!toolsOrderedByUserUsage.includes(a.name)) {
+        return 1;
+      }
+      // if b is never used, put it last
+      if (!toolsOrderedByUserUsage.includes(b.name)) {
+        return -1;
+      }
+      return (
+        toolsOrderedByUserUsage.indexOf(a.name) -
+        toolsOrderedByUserUsage.indexOf(b.name)
+      );
+    });
+  }
+
+  sortByConfiguration(a, b, availableTools) {
+    // otherwise keep the configured order
+    const configIndexA = availableTools.findIndex(tool => {
+      return tool.name === a.name;
+    });
+    const configIndexB = availableTools.findIndex(tool => {
+      return tool.name === b.name;
+    });
+    return configIndexA - configIndexB;
   }
 }

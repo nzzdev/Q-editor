@@ -1,6 +1,6 @@
 <template>
   <require from="./tool-status-bar.css"></require>
-
+  <span class="tool-status-bar__item q-text-small q-text--ultralight" if.bind="lastSavedDate">${'item.lastSaved' & t} ${lastSavedDate | timeAgo:7*24*60*60 & signal:'update-timeago'}</span>
   <div class="tool-status-bar__group">
     <icon-save-state class="tool-status-bar__item" is-saved.bind="item.isSaved"></icon-save-state>
     <button-secondary class="tool-status-bar__item tool-status-bar__button" icon="save" if.bind="saveAction" click.delegate="saveAction()">

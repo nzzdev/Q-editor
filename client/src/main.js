@@ -12,14 +12,15 @@ import EmbedCodeGenerator from "resources/EmbedCodeGenerator.js";
 import ItemStore from "resources/ItemStore.js";
 import Statistics from "resources/Statistics.js";
 import ToolsInfo from "resources/ToolsInfo.js";
-import SchemaEditorInputAvailabilityChecker from "resources/SchemaEditorInputAvailabilityChecker.js";
-import ToolEndpointChecker from "resources/ToolEndpointChecker.js";
+import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
+import NotificationChecker from "resources/checkers/NotificationChecker.js";
+import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
+import ItemActionController from "resources/ItemActionController.js";
 import IdGenerator from "resources/IdGenerator.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 import qEnv from "resources/qEnv.js";
 import { registerEastereggs } from "eastereggs.js";
-
 import Backend from "i18next-fetch-backend";
 
 export async function configure(aurelia) {
@@ -30,12 +31,14 @@ export async function configure(aurelia) {
   aurelia.use.singleton(ItemStore);
   aurelia.use.singleton(QTargets);
   aurelia.use.singleton(ToolsInfo);
-  aurelia.use.singleton(SchemaEditorInputAvailabilityChecker);
+  aurelia.use.singleton(AvailabilityChecker);
+  aurelia.use.singleton(NotificationChecker);
   aurelia.use.singleton(ToolEndpointChecker);
   aurelia.use.singleton(IdGenerator);
   aurelia.use.singleton(CurrentItemProvider);
   aurelia.use.singleton(ObjectFromSchemaGenerator);
   aurelia.use.singleton(User);
+  aurelia.use.singleton(ItemActionController);
 
   const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
@@ -46,6 +49,7 @@ export async function configure(aurelia) {
     .feature("elements/organisms")
     .feature("icons")
     .feature("resources/availability-checks")
+    .feature("resources/notification-checks")
     .feature("binding-behaviors")
     .feature("value-converters")
     .plugin("aurelia-dialog", config => {
@@ -82,8 +86,11 @@ export async function configure(aurelia) {
         backend: {
           loadPath: (lngs, namespaces) => {
             const namespace = namespaces[0];
-            if (namespace === "tools") {
+            if (namespace === "editorConfig") {
               return `${QServerBaseUrl}/editor/locales/{{lng}}/translation.json`;
+            }
+            if (namespace === "tools") {
+              return `${QServerBaseUrl}/editor/tools/locales/{{lng}}/translation.json`;
             }
             if (toolNames.indexOf(namespace) >= 0) {
               return `${QServerBaseUrl}/tools/${namespace}/locales/{{lng}}/translation.json`;
@@ -100,8 +107,9 @@ export async function configure(aurelia) {
         fallbackLng: "de",
         lng: availableLanguages[0],
         whitelist: availableLanguages,
-        ns: ["translation", "tools"].concat(toolNames),
-        defaultNS: "translation",
+        ns: ["translation", "tools", "editorConfig"].concat(toolNames),
+        defaultNS: "editorConfig",
+        fallbackNS: "translation",
         load: "languageOnly",
         debug: false
       });

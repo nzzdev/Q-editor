@@ -1,4 +1,4 @@
-import { bindable, inject, LogManager } from "aurelia-framework";
+import { bindable, observable, inject, LogManager } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import qEnv from "resources/qEnv.js";
 import QTargets from "resources/QTargets.js";
@@ -7,32 +7,44 @@ import User from "resources/User.js";
 
 const log = LogManager.getLogger("Q");
 
-@inject(QTargets, QConfig, User, I18N)
+const defaultSizeOptions = [
+  {
+    value: 290,
+    min_height: 568,
+    label_i18n_key: "preview.small"
+  },
+  {
+    value: 560,
+    min_height: 568,
+    label_i18n_key: "preview.medium"
+  },
+  {
+    value: 800,
+    min_height: 568,
+    label_i18n_key: "preview.large"
+  }
+];
+
+@inject(QTargets, QConfig, User, I18N, Element)
 export class ItemPreview {
   @bindable data;
   @bindable id;
   @bindable target;
+  @observable error = false;
 
-  sizeOptions = [
-    {
-      value: 290,
-      icon: "mobile"
-    },
-    {
-      value: 560,
-      icon: "tablet"
-    },
-    {
-      value: 800,
-      icon: "widescreen"
-    }
-  ];
+  sizeOptions = [];
+  errorMessage = "";
 
-  constructor(qTargets, qConfig, user, i18n) {
+  constructor(qTargets, qConfig, user, i18n, element) {
     this.qTargets = qTargets;
     this.qConfig = qConfig;
     this.user = user;
     this.i18n = i18n;
+    this.element = element;
+
+    // we track the preview widths the user clicked
+    // to hide the notification about checking all of them if he has done so
+    this.sizeOptionsChecked = [];
 
     // we use this proxy to catch any changes to the target and then load the preview after we have it
     this.targetProxy = new Proxy(
@@ -64,6 +76,26 @@ export class ItemPreview {
 
   async init() {
     try {
+      // set the preview size options
+      const previewSizes = await this.qConfig.get("previewSizes");
+      if (previewSizes) {
+        this.sizeOptions = [];
+        for (let previewSizeName in previewSizes) {
+          const previewSize = previewSizes[previewSizeName];
+          const sizeOption = {
+            value: previewSize.value,
+            min_height: previewSize.min_height || 568,
+            label_i18n_key: `preview.${previewSizeName}`
+          };
+          if (previewSize.label) {
+            sizeOption.label = previewSize.label;
+          }
+          this.sizeOptions.push(sizeOption);
+        }
+      } else {
+        this.sizeOptions = defaultSizeOptions;
+      }
+
       // set the default preview width to the most narrow variant
       this.previewWidthProxy.width = this.sizeOptions[0].value;
 
@@ -108,7 +140,19 @@ export class ItemPreview {
     }
   }
 
-  dataChanged() {
+  attached() {
+    this.loadPreview();
+  }
+
+  getCurrentSizeOption() {
+    return this.sizeOptions.find(option => {
+      return option.value === this.previewWidthProxy.width;
+    });
+  }
+
+  dataChanged(newValue, oldValue) {
+    this.sizeOptionsChecked = [this.previewWidthProxy.width];
+    this.applyPreviewHint();
     this.loadPreview();
   }
 
@@ -116,11 +160,60 @@ export class ItemPreview {
     this.loadPreview();
   }
 
-  attached() {
-    this.loadPreview();
+  errorChanged() {
+    if (this.error && this.errorMessage) {
+      this.notification = {
+        message: {
+          title: "preview.technicalError.title",
+          body: "preview.technicalError.body",
+          parameters: {
+            errorMessage: this.errorMessage
+          }
+        },
+        priority: {
+          type: "high",
+          value: 10
+        }
+      };
+    } else if (!this.error) {
+      this.applyPreviewHint();
+    }
+  }
+
+  areAllSizeOptionsChecked() {
+    for (const sizeOption of this.sizeOptions) {
+      if (!this.sizeOptionsChecked.includes(sizeOption.value)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  applyPreviewHint() {
+    if (!this.areAllSizeOptionsChecked()) {
+      this.notification = {
+        message: {
+          title: "preview.hint.title",
+          body: "preview.hint.body"
+        },
+        priority: {
+          type: "low",
+          value: 10
+        }
+      };
+    } else {
+      this.notification = null;
+    }
   }
 
   handleSizeChange() {
+    this.sizeOptionsChecked.push(this.previewWidthProxy.width);
+    this.applyPreviewHint();
+    // set the min-height if configured;
+    this.element.style.setProperty(
+      "--q-preview-min-height",
+      `${this.getCurrentSizeOption().min_height}px`
+    );
     this.loadPreview();
   }
 
@@ -147,7 +240,6 @@ export class ItemPreview {
           )}`
         );
       } else if (this.data) {
-        this.data.tool = this.data.tool.replace(new RegExp("-", "g"), "_");
         const body = {
           item: this.data,
           toolRuntimeConfig: toolRuntimeConfig
@@ -209,27 +301,21 @@ export class ItemPreview {
     if (!this.id && !this.data) {
       return;
     }
+    this.loadingStatus = "loading";
     this.fetchRenderingInfo()
       .then(renderingInfo => {
-        this.errorMessage = undefined;
         this.renderingInfo = renderingInfo;
+        this.error = undefined;
+        this.errorMessage = undefined;
+        this.loadingStatus = "loaded";
       })
       .catch(response => {
-        if (response.status === 400) {
-          this.errorMessage = this.i18n.tr("notifications.previewBadRequest");
-        } else {
+        if (![400, 500].includes(response.status)) {
           this.errorMessage = response.statusText;
         }
+        this.error = true;
         this.renderingInfo = {};
+        this.loadingStatus = "loaded";
       });
-  }
-
-  getTargetForKey(targetKey) {
-    for (let target of this.availableTargets) {
-      if (targetKey === target.key) {
-        return target;
-      }
-    }
-    return undefined;
   }
 }

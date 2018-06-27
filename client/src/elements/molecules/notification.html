@@ -1,0 +1,14 @@
+<template>
+  <require from="./notification.css"></require>
+  <div class="notification notification--${notification.priority.type}" show.bind="notification.message.title">
+    <div class="notification__icon-container" if.bind="hasIcon">
+      <span class="notification__icon notification__icon--${notification.priority.type}">
+        <box-icon icon.bind="iconName"></box-icon>
+      </span>
+    </div>
+    <div class="notification__content">
+      <h5 class="notification__title" innerhtml.bind="notification.message.title & t: notification.message.parameters"></h5>
+      <h6 class="notification__body" innerhtml.bind="notification.message.body & t: notification.message.parameters"></h6>
+    </div>
+  </div>
+</template>
