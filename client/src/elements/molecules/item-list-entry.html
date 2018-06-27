@@ -15,6 +15,7 @@
     </span>
   </a>
   <dropdown-menu>
+    <a click.delegate="itemActionController.edit(item)">${'item.edit' & t }</a>
     <a if.bind="!item.conf.active" click.delegate="itemActionController.activate(item)">${'item.activate' & t }</a>
     <a if.bind="item.conf.active" click.delegate="itemActionController.deactivate(item)">${'item.deactivate' & t }</a>
     <a click.delegate="itemActionController.blueprint(item)">${'item.blueprint' & t}</a>

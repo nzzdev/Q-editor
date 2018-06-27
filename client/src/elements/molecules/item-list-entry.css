@@ -53,18 +53,18 @@ item-list-entry a > span:not(.item-list-entry__state-tag) {
 }
 
 /* show the dropdown-menu on top for the last four items */
-item-list-entry:nth-last-child(-n + 4) > dropdown-menu > div:before {
-  top: 150px !important;
+item-list-entry:nth-last-child(-n + 5) > dropdown-menu > div:before {
+  top: 200px !important;
   border-width: 10px 10px 0 10px !important;
   border-color: var(--q-color-gray-3) transparent transparent transparent !important;
 }
 
-item-list-entry:nth-last-child(-n + 4) > dropdown-menu > div {
-  top: -164px !important;
+item-list-entry:nth-last-child(-n + 5) > dropdown-menu > div {
+  top: -214px !important;
 }
 
-item-list-entry:nth-last-child(-n + 4) > dropdown-menu > div:after {
-  top: 150px !important;
+item-list-entry:nth-last-child(-n + 5) > dropdown-menu > div:after {
+  top: 200px !important;
   border-width: 8px 8px 0 8px !important;
   border-color: var(--q-color-white) transparent transparent transparent !important;
 }
