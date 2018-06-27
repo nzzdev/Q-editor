@@ -1,3 +1,7 @@
+# 3.0.2 (27.06.2018)
+- fix: livingdocs-preview works correctly when opened with configured item
+- fix: dynamicEnum works for translated schema
+
 # 3.0.1 (27.06.2018)
 - fix: user menu opens even if the user has no config stored yet
 
