@@ -29,6 +29,10 @@ function getSchemaForSchemaEditor(schema) {
 }
 
 function getTranslatedSchema(schema, toolName, i18n) {
+  // quick fix: disabling translation because of problems with dynamic enums
+  return schema;
+
+  // todo: fix/refactor schema translations
   schema = JSON.parse(JSON.stringify(schema));
   if (schema.title) {
     schema.title = i18n.tr(`${toolName}:${schema.title}`);
