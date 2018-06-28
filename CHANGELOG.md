@@ -1,3 +1,6 @@
+# 3.0.3 (28.06.2018)
+- fix: disable schema translations because of problems with dynamic enums, needs proper fix
+
 # 3.0.2 (27.06.2018)
 - fix: livingdocs-preview works correctly when opened with configured item
 - fix: dynamicEnum works for translated schema
