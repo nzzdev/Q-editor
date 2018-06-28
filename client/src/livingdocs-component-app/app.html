@@ -42,7 +42,7 @@
           </div>
         </div>
       </div>
-      <div class="item-list__empty-message" if.bind="items.length === 0">
+      <div class="item-list__empty-message" if.bind="items.length === 0 && !itemsLoading">
         <h4>${'livingdocsComponent.emptyList' & t}</h4>
       </div>
       <q-loader if.bind="itemsLoading"></q-loader>
