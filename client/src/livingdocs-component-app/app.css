@@ -30,8 +30,7 @@ html {
 }
 
 .search {
-  width: 100%;
-  width: 80%;
+  width: 85%;
   margin: calc(var(--q-space-base) * 3) auto;
 
   display: flex;
@@ -87,6 +86,9 @@ html {
 .item-list__empty-message {
   display: flex;
   justify-content: center;
+  align-self: center;
+  text-align: center;
+  width: 85%;
 }
 
 .item-list-entry {
