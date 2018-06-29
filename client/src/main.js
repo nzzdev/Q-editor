@@ -4,6 +4,8 @@ window.clearTimeout(window.QLoadErrorTimeout);
 import { LogManager, Loader } from "aurelia-framework";
 import { ConsoleAppender } from "aurelia-logging-console";
 
+import { Backend } from "aurelia-i18n";
+
 import QConfig from "resources/QConfig.js";
 import QTargets from "resources/QTargets.js";
 import Auth from "resources/Auth.js";
@@ -21,7 +23,6 @@ import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 import qEnv from "resources/qEnv.js";
 import { registerEastereggs } from "eastereggs.js";
-import Backend from "i18next-fetch-backend";
 
 export async function configure(aurelia) {
   aurelia.use.singleton(QConfig);
@@ -60,7 +61,7 @@ export async function configure(aurelia) {
     })
     .plugin("aurelia-i18n", async instance => {
       // register backend plugin
-      instance.i18next.use(Backend);
+      instance.i18next.use(Backend.with(aurelia.loader));
 
       let availableLanguages = ["de", "en"];
       try {

@@ -2,7 +2,7 @@
   <require from="./schema-editor-wrapper"></require>
   <require from="./schema-editor-array.css"></require>
   <legend>
-    ${schema.title}
+    ${schema.title & toolT}
   </legend>
   <div if.bind="data" repeat.for="entry of data" class="schema-editor-array__entry" style="z-index: ${data.length - $index}">
     <div class="schema-editor-array__entry-container">
