@@ -2,6 +2,7 @@
 - fix: schema translation properly works
 - fix: "no items" message is not shown while loading
 - fix: items do not appear twice in items list for search with few results
+- fix: properly support new object in schema that is not defined in existing item data
 
 # 3.0.3 (28.06.2018)
 - fix: disable schema translations because of problems with dynamic enums, needs proper fix
