@@ -23,6 +23,7 @@ import { AccountDialog } from "dialogs/account-dialog";
 export class Index {
   enoughNewItems = true;
   initialised = false;
+  moreItemsAvailable = false;
 
   constructor(
     itemStore,
@@ -48,13 +49,18 @@ export class Index {
     return this.user.loaded;
   }
 
-  activate() {
-    if (this.initialised) {
-      this.reloadItems();
-      this.loadStatistics();
-      return;
+  async attached() {
+    if (!this.initialised) {
+      this.applyUserDefinedFilters();
     }
 
+    await this.reloadItems();
+    this.loadStatistics();
+    this.attachItemListScrollObserver();
+    this.initialised = true;
+  }
+
+  applyUserDefinedFilters() {
     // load filter defaults
     this.availableFilters = this.itemStore.getFilters();
 
@@ -68,13 +74,9 @@ export class Index {
         });
       }
     }
-
-    this.reloadItems();
-    this.loadStatistics();
-    this.initialised = true;
   }
 
-  attached() {
+  attachItemListScrollObserver() {
     // this observer will always observe the last item in the item list
     // it checks if the observed element is within the viewport
     // if so, we load more items
@@ -130,8 +132,7 @@ export class Index {
     const result = await this.loadItems(this.currentSearchString);
     this.items = result.items;
     this.bookmark = result.bookmark;
-    this.updateMoreItemsAvailableState(result);
-
+    this.moreItemsAvailable = result.moreItemsAvailable;
     return this.items;
   }
 
@@ -142,12 +143,8 @@ export class Index {
     );
     this.items = this.items.concat(result.items);
     this.bookmark = result.bookmark;
-    this.updateMoreItemsAvailableState(result);
-    return this.items;
-  }
-
-  updateMoreItemsAvailableState(result) {
     this.moreItemsAvailable = result.moreItemsAvailable;
+    return this.items;
   }
 
   async loadStatistics() {
