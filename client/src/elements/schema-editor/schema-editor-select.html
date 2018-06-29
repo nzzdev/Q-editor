@@ -1,13 +1,13 @@
 <template class="schema-editor-input">
   <label>
-    ${schema["title"]}
+    ${schema["title"] & toolT}
     <select value.bind="data" change.delegate="change()" if.bind="selectType === 'select'">
-      <option repeat.for="option of schema.enum" model.bind="option">${optionLabels[$index]}</option>
+      <option repeat.for="option of schema.enum" model.bind="option">${optionLabels[$index] & toolT}</option>
     </select>
     <div if.bind="selectType === 'radio'">
       <div repeat.for="option of schema.enum" class="q-form__radio">
         <input id="option-${option}" type="radio" name.bind="$parent.schema.title" model.bind="option" checked.bind="$parent.data" change.delegate="change()"></input>
-        <label for="option-${option}">${optionLabels[$index]}</label>
+        <label for="option-${option}">${optionLabels[$index] & toolT}</label>
       </div>
     </div>
   </label>
