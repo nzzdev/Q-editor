@@ -80,9 +80,9 @@ export class Index {
     // this observer will always observe the last item in the item list
     // it checks if the observed element is within the viewport
     // if so, we load more items
-    this.itemListScrollObserver = new IntersectionObserver(async entries => {
+    this.itemListScrollObserver = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && this.moreItemsAvailable !== false) {
-        await this.loadMore();
+        this.loadMore();
       }
     });
 
