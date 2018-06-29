@@ -29,6 +29,8 @@ async function getItem(id) {
 @singleton()
 @inject(ItemStore, QTargets, ObjectFromSchemaGenerator, I18N)
 export class App {
+  moreItemsAvailable = false;
+
   constructor(itemStore, qTargets, objectFromSchemaGenerator, i18n) {
     this.itemStore = itemStore;
     this.qTargets = qTargets;
@@ -152,7 +154,7 @@ export class App {
       });
 
       this.bookmark = result.bookmark;
-      this.updateMoreItemsAvailableState(result);
+      this.moreItemsAvailable = result.moreItemsAvailable;
     } catch (e) {
       // todo: error handling
     }
@@ -195,7 +197,7 @@ export class App {
         return item;
       });
       this.bookmark = result.bookmark;
-      this.updateMoreItemsAvailableState(result);
+      this.moreItemsAvailable = result.moreItemsAvailable;
     } catch (e) {
       // todo: error handling
     }
@@ -207,10 +209,6 @@ export class App {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
     const toolResponse = await fetch(`${QServerBaseUrl}/editor/tools`);
     return toolResponse.json();
-  }
-
-  updateMoreItemsAvailableState(result) {
-    this.moreItemsAvailable = result.moreItemsAvailable;
   }
 
   fetchRenderingInfo() {
