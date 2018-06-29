@@ -1,11 +1,11 @@
 <template>
   <label>
-    ${schema.properties.url["title"] || ''}
+    ${schema.properties.url["title"] || '' & toolT}
     <span show.bind="required">
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
-    <input type="url" placeholder.to-view="options.placeholder || ''" required.bind="required" value.bind="data.url" ref="urlInput"
+    <input type="url" placeholder.to-view="options.placeholder || '' & toolT" required.bind="required" value.bind="data.url" ref="urlInput"
       keyup.delegate="handleUrlChange() & debounce:800">
     <label>
 </template>

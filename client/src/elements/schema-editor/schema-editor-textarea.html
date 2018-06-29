@@ -1,10 +1,10 @@
 <template class="schema-editor-input">
   <label>
-    ${schema["title"]}
+    ${schema["title"] & toolT}
     <span show.bind="required">
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
-    <textarea value.bind="data" placeholder.to-view="options.placeholder || ''" required.bind="required" input.delegate="change() & debounce:800"></textarea>
+    <textarea value.bind="data" placeholder.to-view="options.placeholder || '' & toolT" required.bind="required" input.delegate="change() & debounce:800"></textarea>
   </label>
 </template>

@@ -1,11 +1,11 @@
 <template class="schema-editor-input">
   <label>
-    ${schema["title"]}
+    ${schema["title"] & toolT}
     <span show.bind="required">
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
-    <input type="number" placeholder.to-view="options.placeholder || ''" required.bind="required" value.bind="data | forceNumber"
+    <input type="number" placeholder.to-view="options.placeholder || '' & toolT" required.bind="required" value.bind="data | forceNumber"
       step.bind="options.step" keyup.delegate="change() & debounce:800">
     <label>
 </template>

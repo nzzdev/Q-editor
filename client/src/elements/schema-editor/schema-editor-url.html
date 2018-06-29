@@ -1,10 +1,10 @@
 <template>
   <label>
-    ${schema["title"]}
+    ${schema["title"] & toolT}
     <span show.bind="required">
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
-    <input type="url" placeholder.to-view="options.placeholder || ''" required.bind="required" value.bind="data" keyup.delegate="change() & debounce:800">
+    <input type="url" placeholder.to-view="options.placeholder || '' & toolT" required.bind="required" value.bind="data" keyup.delegate="change() & debounce:800">
     <label>
 </template>

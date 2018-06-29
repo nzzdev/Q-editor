@@ -26,7 +26,7 @@
 
     <items-list items.bind="items" ref="itemsListElement"></items-list>
     <div class="infitite-scrolling-sentinel" ref="infiniteScrollingSentinel"></div>
-    <div class="index__empty-list-message" if.bind="items.length === 0">
+    <div class="index__empty-list-message" if.bind="items.length === 0 && !itemsLoading">
       <h4>${'itemsList.empty' & t}</h4>
     </div>
     <q-loader if.bind="itemsLoading"></q-loader>

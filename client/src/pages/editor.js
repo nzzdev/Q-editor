@@ -18,62 +18,21 @@ import ToolsInfo from "resources/ToolsInfo.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 
-function getSchemaForSchemaEditor(schema) {
-  if (schema.properties.hasOwnProperty("options")) {
-    let newSchema = JSON.parse(JSON.stringify(schema));
-    delete newSchema.properties.options;
-    return newSchema;
+function getEditorSchema(fullSchema) {
+  if (fullSchema.properties.hasOwnProperty("options")) {
+    const schema = JSON.parse(JSON.stringify(fullSchema));
+    delete schema.properties.options;
+    return schema;
   }
-
-  return schema;
+  return fullSchema;
 }
 
-function getTranslatedSchema(schema, toolName, i18n) {
-  // quick fix: disabling translation because of problems with dynamic enums
-  return schema;
-
-  // todo: fix/refactor schema translations
-  // schema = JSON.parse(JSON.stringify(schema));
-  // if (schema.title) {
-  //   schema.title = i18n.tr(`${toolName}:${schema.title}`);
-  // }
-  // if (
-  //   schema.hasOwnProperty("Q:options") &&
-  //   schema["Q:options"].hasOwnProperty("placeholder")
-  // ) {
-  //   schema["Q:options"].placeholder = i18n.tr(
-  //     `${toolName}:${schema["Q:options"].placeholder}`
-  //   );
-  // }
-  // if (schema.hasOwnProperty("items")) {
-  //   if (schema.items.hasOwnProperty("oneOf")) {
-  //     schema.items.oneOf = schema.items.oneOf.map(oneOfSchema =>
-  //       getTranslatedSchema(oneOfSchema, toolName, i18n)
-  //     );
-  //   } else {
-  //     schema.items = getTranslatedSchema(schema.items, toolName, i18n);
-  //   }
-  // }
-  // if (schema.hasOwnProperty("properties")) {
-  //   Object.keys(schema.properties).forEach(propertyName => {
-  //     schema.properties[propertyName] = getTranslatedSchema(
-  //       schema.properties[propertyName],
-  //       toolName,
-  //       i18n
-  //     );
-  //   });
-  // }
-  // if (
-  //   schema.hasOwnProperty("Q:options") &&
-  //   schema["Q:options"].hasOwnProperty("enum_titles")
-  // ) {
-  //   schema["Q:options"].enum_titles = schema["Q:options"].enum_titles.map(
-  //     title => {
-  //       return i18n.tr(`${toolName}:${title}`);
-  //     }
-  //   );
-  // }
-  // return schema;
+function getOptionsSchema(fullSchema) {
+  if (fullSchema.properties.hasOwnProperty("options")) {
+    const schema = JSON.parse(JSON.stringify(fullSchema.properties.options));
+    return schema;
+  }
+  return undefined;
 }
 
 @inject(
@@ -153,20 +112,10 @@ export class Editor {
         }
         throw response;
       })
-      .then(schema => {
-        this.fullSchema = schema;
-        this.setTranslatedEditorAndOptionsSchema(
-          this.fullSchema,
-          this.toolName
-        );
-
-        // whenever there is a language change, we calculate the schema and translate all title properties
-        this.eventAggregator.subscribe("i18n:locale:changed", () => {
-          this.setTranslatedEditorAndOptionsSchema(
-            this.fullSchema,
-            this.toolName
-          );
-        });
+      .then(fullSchema => {
+        this.fullSchema = fullSchema;
+        this.schema = getEditorSchema(this.fullSchema);
+        this.optionsSchema = getOptionsSchema(this.fullSchema);
       })
       .then(() => {
         if (routeParams.hasOwnProperty("id") && routeParams.id !== undefined) {
@@ -199,18 +148,6 @@ export class Editor {
     return Promise.race([timeoutPromise, allLoaded]).then(() => {
       clearTimeout(showMessageTimeout);
     });
-  }
-
-  setTranslatedEditorAndOptionsSchema(fullSchema, toolName) {
-    const schemaForEditor = getSchemaForSchemaEditor(fullSchema);
-    this.schema = getTranslatedSchema(schemaForEditor, toolName, this.i18n);
-    if (fullSchema.properties.hasOwnProperty("options")) {
-      this.optionsSchema = getTranslatedSchema(
-        fullSchema.properties.options,
-        toolName,
-        this.i18n
-      );
-    }
   }
 
   attached() {

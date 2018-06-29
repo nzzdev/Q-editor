@@ -1,6 +1,6 @@
 <template class="schema-editor-input">
   <label>
-    ${schema["title"]}
+    ${schema["title"] & toolT}
     <span show.bind="required">
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
