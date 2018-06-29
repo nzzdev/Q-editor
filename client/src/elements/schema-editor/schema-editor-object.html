@@ -1,7 +1,7 @@
 <template>
     <require from="./schema-editor-wrapper"></require>
     <legend if.bind="!noObjectTitle">
-      ${schema.title}
+      ${schema.title & toolT}
     </legend>
     <div if.bind="schema.properties" repeat.for="propertyName of schema.properties | keys">
       <fieldset if.bind="noFieldsets || getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'" class="${isCompact($parent.schema.properties[propertyName]) ? 'compact' : ''}">

@@ -3,5 +3,6 @@ export function configure(frameworkConfiguration) {
     .globalResources("./ForceNumberValueConverter.js")
     .globalResources("./JsonValueConverter.js")
     .globalResources("./KeysValueConverter.js")
-    .globalResources("./TimeAgoValueConverter.js");
+    .globalResources("./TimeAgoValueConverter.js")
+    .globalResources("./ToolTValueConverter.js");
 }
