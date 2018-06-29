@@ -1,3 +1,8 @@
+# 3.0.4 (29.06.2018)
+- fix: schema translation properly works
+- fix: "no items" message is not shown while loading
+- fix: items do not appear twice in items list for search with few results
+
 # 3.0.3 (28.06.2018)
 - fix: disable schema translations because of problems with dynamic enums, needs proper fix
 

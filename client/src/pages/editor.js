@@ -33,47 +33,47 @@ function getTranslatedSchema(schema, toolName, i18n) {
   return schema;
 
   // todo: fix/refactor schema translations
-  schema = JSON.parse(JSON.stringify(schema));
-  if (schema.title) {
-    schema.title = i18n.tr(`${toolName}:${schema.title}`);
-  }
-  if (
-    schema.hasOwnProperty("Q:options") &&
-    schema["Q:options"].hasOwnProperty("placeholder")
-  ) {
-    schema["Q:options"].placeholder = i18n.tr(
-      `${toolName}:${schema["Q:options"].placeholder}`
-    );
-  }
-  if (schema.hasOwnProperty("items")) {
-    if (schema.items.hasOwnProperty("oneOf")) {
-      schema.items.oneOf = schema.items.oneOf.map(oneOfSchema =>
-        getTranslatedSchema(oneOfSchema, toolName, i18n)
-      );
-    } else {
-      schema.items = getTranslatedSchema(schema.items, toolName, i18n);
-    }
-  }
-  if (schema.hasOwnProperty("properties")) {
-    Object.keys(schema.properties).forEach(propertyName => {
-      schema.properties[propertyName] = getTranslatedSchema(
-        schema.properties[propertyName],
-        toolName,
-        i18n
-      );
-    });
-  }
-  if (
-    schema.hasOwnProperty("Q:options") &&
-    schema["Q:options"].hasOwnProperty("enum_titles")
-  ) {
-    schema["Q:options"].enum_titles = schema["Q:options"].enum_titles.map(
-      title => {
-        return i18n.tr(`${toolName}:${title}`);
-      }
-    );
-  }
-  return schema;
+  // schema = JSON.parse(JSON.stringify(schema));
+  // if (schema.title) {
+  //   schema.title = i18n.tr(`${toolName}:${schema.title}`);
+  // }
+  // if (
+  //   schema.hasOwnProperty("Q:options") &&
+  //   schema["Q:options"].hasOwnProperty("placeholder")
+  // ) {
+  //   schema["Q:options"].placeholder = i18n.tr(
+  //     `${toolName}:${schema["Q:options"].placeholder}`
+  //   );
+  // }
+  // if (schema.hasOwnProperty("items")) {
+  //   if (schema.items.hasOwnProperty("oneOf")) {
+  //     schema.items.oneOf = schema.items.oneOf.map(oneOfSchema =>
+  //       getTranslatedSchema(oneOfSchema, toolName, i18n)
+  //     );
+  //   } else {
+  //     schema.items = getTranslatedSchema(schema.items, toolName, i18n);
+  //   }
+  // }
+  // if (schema.hasOwnProperty("properties")) {
+  //   Object.keys(schema.properties).forEach(propertyName => {
+  //     schema.properties[propertyName] = getTranslatedSchema(
+  //       schema.properties[propertyName],
+  //       toolName,
+  //       i18n
+  //     );
+  //   });
+  // }
+  // if (
+  //   schema.hasOwnProperty("Q:options") &&
+  //   schema["Q:options"].hasOwnProperty("enum_titles")
+  // ) {
+  //   schema["Q:options"].enum_titles = schema["Q:options"].enum_titles.map(
+  //     title => {
+  //       return i18n.tr(`${toolName}:${title}`);
+  //     }
+  //   );
+  // }
+  // return schema;
 }
 
 @inject(
