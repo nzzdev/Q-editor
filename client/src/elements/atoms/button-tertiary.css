@@ -5,7 +5,7 @@ button-tertiary {
 
 button-tertiary icon-button button {
   border-color: transparent;
-  background-color: var(--q-color-white);
+  background-color: transparent;
 }
 
 button-tertiary icon-button button:hover {
@@ -29,5 +29,5 @@ button-tertiary icon-button button:active {
 button-tertiary icon-button button[disabled] {
   color: var(--q-color-gray-5);
   border-color: transparent;
-  background-color: var(--q-color-white);
+  background-color: transparent;
 }
