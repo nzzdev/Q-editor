@@ -3,17 +3,17 @@
   <span class="tool-status-bar__item q-text-small q-text--ultralight" if.bind="lastSavedDate">${'item.lastSaved' & t} ${lastSavedDate | timeAgo:7*24*60*60 & signal:'update-timeago'}</span>
   <div class="tool-status-bar__group">
     <icon-save-state class="tool-status-bar__item" is-saved.bind="item.isSaved"></icon-save-state>
-    <button-secondary class="tool-status-bar__item tool-status-bar__button" icon="save" if.bind="saveAction" click.delegate="saveAction()">
+    <button-secondary class="tool-status-bar__item tool-status-bar__button" icon="save" if.bind="saveAction" click.bind="saveAction" disabled.bind="item.isSaving">
       <span class="tool-status-bar__button-text" t="item.save"></span>
     </button-secondary>
   </div>
 
   <div class="tool-status-bar__group">
     <icon-active-state is-active.bind="item.conf.active" class="tool-status-bar__item"></icon-active-state>
-    <button-secondary if.bind="item.conf.active" class="tool-status-bar__item tool-status-bar__button" icon="deactivate" click.delegate="onDeactivateClick()">
+    <button-secondary if.bind="item.conf.active" class="tool-status-bar__item tool-status-bar__button" icon="deactivate" click.bind="onDeactivateClick" disabled.bind="item.isSaving">
       <span class="tool-status-bar__button-text" t="item.deactivate"></span>
     </button-secondary>
-    <button-secondary if.bind="!item.conf.active" class="tool-status-bar__item tool-status-bar__button" icon="activate" click.delegate="onActivateClick()">
+    <button-secondary if.bind="!item.conf.active" class="tool-status-bar__item tool-status-bar__button" icon="activate" click.bind="onActivateClick" disabled.bind="item.isSaving">
       <span class="tool-status-bar__button-text" t="item.activate"></span>
     </button-secondary>
   </div>

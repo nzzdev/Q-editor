@@ -1,4 +1,4 @@
-<template bindable="icon, code, size, iconSize, tabindex" class="button">
+<template bindable="click, icon, code, size, iconSize, tabindex, disabled" class="button">
   <require from="./button-tertiary.css"></require>
-  <icon-button icon.bind="icon" code.bind="code" size.bind="size" icon-size.bind="iconSize" tabindex.bind="tabindex" type.bind="type"><slot></slot></icon-button>
+  <icon-button click.bind="click", icon.bind="icon" code.bind="code" size.bind="size" icon-size.bind="iconSize" tabindex.bind="tabindex" type.bind="type" disabled.bind="disabled"><slot></slot></icon-button>
 </template>

@@ -1,3 +1,8 @@
 .icon {
   display: block;
 }
+
+/* this is here to make the buttons inside links not trigger events that may make the click handler for any route binding not work */
+a .button, a button {
+  pointer-events: none;
+}
