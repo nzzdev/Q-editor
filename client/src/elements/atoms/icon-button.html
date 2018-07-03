@@ -1,6 +1,6 @@
 <template class="size-${size}">
   <require from="./icon-button.css"></require>
-  <button tabindex.bind="tabindex" type.bind="type" disabled.bind="disabled" click.trigger="click ? click() : null">
+  <button tabindex.bind="tabindex" type.bind="type" disabled.bind="disabled" click.trigger="click ? click() : true">
     <span class="icon-button__icon" if.bind="code || icon">
       <box-icon code.bind="code" icon.bind="icon" size="${iconSize || size}"></box-icon>
     </span>
