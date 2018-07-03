@@ -10,7 +10,9 @@ export class ToolTValueConverter {
   }
 
   toView(value, options) {
-    const item = this.currentItemProvider.getCurrentItem();
-    return this.service.tr(`${item.conf.tool}:${value}`, options);
+    if (value !== undefined) {
+      const item = this.currentItemProvider.getCurrentItem();
+      return this.service.tr(`${item.conf.tool}:${value}`, options);
+    }
   }
 }
