@@ -9,8 +9,4 @@ export class IconButton {
   @bindable tabindex;
   @bindable disabled;
   @bindable type = "button";
-
-  handleClick(event) {
-    debugger;
-  }
 }
