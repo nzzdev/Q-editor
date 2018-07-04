@@ -238,6 +238,10 @@ export class Editor {
         this.triggerReevaluations();
       })
       .catch(error => {
+        if (error.message === "isSaving") {
+          // this is fine, we do not show an error in this case
+          return;
+        }
         log.error(error);
         if (error.status === 409) {
           this.notification.warning("editor.conflictOnSave");

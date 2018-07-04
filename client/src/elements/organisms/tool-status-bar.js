@@ -19,6 +19,9 @@ export class ToolStatusBar {
     this.notification = notification;
     this.dialogService = dialogService;
     this.bindingSignaler = bindingSignaler;
+
+    this.onDeactivateClick = this.deactivateItem.bind(this);
+    this.onActivateClick = this.activateItem.bind(this);
   }
 
   created() {
@@ -38,7 +41,7 @@ export class ToolStatusBar {
     clearInterval(this.updateTimeAgoIntervalId);
   }
 
-  onActivateClick() {
+  activateItem() {
     if (
       !this.item ||
       this.item.conf.title === undefined ||
@@ -58,7 +61,7 @@ export class ToolStatusBar {
     }
   }
 
-  onDeactivateClick() {
+  deactivateItem() {
     this.item.deactivate();
   }
 

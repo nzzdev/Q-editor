@@ -61,13 +61,19 @@ export default class Item {
   }
 
   async blueprint() {
+    const oldConf = JSON.parse(JSON.stringify(this.conf));
     this.conf._id = undefined;
     this.conf._rev = undefined;
     this.conf.active = false;
     await this.setDepartmentToUserDepartment();
     await this.setPublicationToUserPublication();
     await this.setAcronymToUserAcronym();
-    return this.save();
+    try {
+      return this.save();
+    } catch (e) {
+      this.conf = oldConf;
+      throw e;
+    }
   }
 
   addConf(conf) {
@@ -75,22 +81,43 @@ export default class Item {
     return this;
   }
 
-  activate() {
+  async activate() {
     this.conf.active = true;
-    return this.save();
+    try {
+      await this.save();
+    } catch (e) {
+      this.conf.active = false;
+      throw e;
+    }
   }
 
-  deactivate() {
+  async deactivate() {
     this.conf.active = false;
-    return this.save();
+    try {
+      await this.save();
+    } catch (e) {
+      this.conf.active = true;
+      throw e;
+    }
   }
 
-  delete() {
+  async delete() {
     this.conf._deleted = true;
-    return this.save();
+    try {
+      await this.save();
+    } catch (e) {
+      delete this.conf._deleted;
+      throw e;
+    }
   }
 
   async save() {
+    if (this.isSaving === true) {
+      console.log("isSaving already");
+      throw new Error("isSaving");
+    }
+    this.isSaving = true;
+
     // per default we use POST to store a new item
     let method = "POST";
 
@@ -107,17 +134,20 @@ export default class Item {
     });
 
     if (!response.ok) {
+      this.isSaving = false;
       throw response;
     }
 
     const body = await response.json();
 
     if (body.error) {
+      this.isSaving = false;
       throw body;
     }
 
     // we get new properties as a response to the save and assign them the the conf
     this.conf = Object.assign(this.conf, body);
+    this.isSaving = false;
     this.isSaved = true;
   }
 
