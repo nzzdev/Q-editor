@@ -1,3 +1,7 @@
+# 3.0.5 (05.07.2018)
+- fix: do not allow two concurrent save requests
+- fix: do not translate undefined for schema-editor strings
+
 # 3.0.4 (29.06.2018)
 - fix: schema translation properly works
 - fix: "no items" message is not shown while loading
