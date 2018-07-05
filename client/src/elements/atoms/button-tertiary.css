@@ -4,13 +4,8 @@ button-tertiary {
 }
 
 button-tertiary icon-button button {
+  border-color: transparent;
   background-color: transparent;
-  border-color: transparent;
-}
-
-button-tertiary icon-button button[disabled] {
-  color: var(--q-color-gray-5);
-  border-color: transparent;
 }
 
 button-tertiary icon-button button:hover {
@@ -29,4 +24,10 @@ button-tertiary icon-button button:active {
   color: var(--q-color-black);
   background-color: var(--q-color-gray-3);
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.25);
+}
+
+button-tertiary icon-button button[disabled] {
+  color: var(--q-color-gray-5);
+  border-color: transparent;
+  background-color: transparent;
 }

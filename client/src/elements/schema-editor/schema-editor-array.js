@@ -70,6 +70,7 @@ export class SchemaEditorArray {
   addElement(schema) {
     if (this.data === undefined) {
       this.data = [];
+      this.dataItemsSchemas = [];
     }
     const entry = this.objectFromSchemaGenerator.generateFromSchema(schema);
 
