@@ -20,6 +20,11 @@ function handler(request, h) {
 module.exports = [
   {
     method: "GET",
+    path: "/",
+    handler: handler
+  },
+  {
+    method: "GET",
     path: "/index.html",
     handler: handler
   },
