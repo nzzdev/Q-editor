@@ -87,11 +87,11 @@ export class App {
     if (this.selectedItemIndex !== undefined) {
       const item = await getItem(this.selectedItems[this.selectedItemIndex].id);
       this.title = item.conf.title;
+      await this.loadDisplayOptions();
 
       if (this.target) {
         this.loadPreview();
       }
-      this.loadDisplayOptions();
     }
   }
 
@@ -111,9 +111,7 @@ export class App {
       this.selectedItems.push({
         id: item.conf._id,
         active: item.conf.active,
-        toolRuntimeConfig: {
-          displayOptions: {}
-        }
+        toolRuntimeConfig: {}
       });
       this.selectedItemIndex = this.selectedItems.length - 1;
     }
@@ -291,7 +289,7 @@ export class App {
 
       let selectedItem = this.selectedItems[this.selectedItemIndex];
 
-      qEnv.QServerBaseUrl.then(QServerBaseUrl => {
+      await qEnv.QServerBaseUrl.then(QServerBaseUrl => {
         return fetch(
           `${QServerBaseUrl}/tools/${this.tool}/display-options-schema.json`
         );

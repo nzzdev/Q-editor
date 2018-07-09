@@ -1,3 +1,7 @@
+# 3.1.0 (09.07.2018)
+- feat: HEAD_MARKUP, BODY_START_MARKUP and BODY_END_MARKUP env variables can be used to inject markup into index.html
+- fix: livingdocs-preview correctly handles defaults defined in display-options-schema.json
+
 # 3.0.5 (05.07.2018)
 - fix: do not allow two concurrent save requests
 - fix: do not translate undefined for schema-editor strings

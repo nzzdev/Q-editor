@@ -1,17 +1,16 @@
 module.exports = {
-  method: 'GET',
-  path: '/{path*}',
+  method: "GET",
+  path: "/{path*}",
   config: {
     cache: {
       expiresIn: 365 * 24 * 60 * 60 * 1000,
-      privacy: 'public'
+      privacy: "public"
     }
   },
   handler: {
     directory: {
-      path: './client/export',
-      redirectToSlash: true,
-      index: true
+      path: "./client/export",
+      redirectToSlash: true
     }
   }
-}
+};
