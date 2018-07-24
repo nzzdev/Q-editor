@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   map: {
     "ajv": "npm:ajv@5.5.2",
     "array2d": "npm:array2d@0.0.5",
@@ -42,7 +43,7 @@ System.config({
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.37",
     "dropzone": "npm:dropzone@5.4.0",
-    "handsontable": "github:handsontable/handsontable@3.0.0",
+    "handsontable": "github:handsontable/handsontable@5.0.0",
     "heyman/leaflet-areaselect": "github:heyman/leaflet-areaselect@master",
     "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
     "leaflet": "github:Leaflet/Leaflet@1.3.1",
