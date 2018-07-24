@@ -1,5 +1,6 @@
 import { bindable, inject, Loader } from "aurelia-framework";
 import array2d from "array2d";
+import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 
 function getSchemaAtPath(schema, path) {
   if (path.includes(".")) {
@@ -53,9 +54,28 @@ function emptyToNull(data) {
   return data;
 }
 
+function hasNonEmptyProperty(obj, excludedProperties = []) {
+  return Object.keys(obj)
+    .filter(prop => !excludedProperties.includes(prop))
+    .some(prop => {
+      if (obj[prop] === undefined || obj[prop] === null) {
+        return false;
+      }
+      if (typeof obj[prop] === "object") {
+        return hasNonEmptyProperty(obj[prop]);
+      }
+      if (obj[prop] !== "") {
+        return true;
+      }
+      return false;
+    });
+}
+
 class MetaData {
-  constructor(initialMetaData) {
+  constructor(initialMetaData, metaDataSchemas, objectFromSchemaGenerator) {
     this.data = initialMetaData;
+    this.metaDataSchemas = metaDataSchemas;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     // set up the proxies
     if (this.data.cells) {
       this.setupCellsProxy();
@@ -65,7 +85,7 @@ class MetaData {
   setupCellsProxy() {
     const rowProxies = [];
     this.cells = new Proxy(rowProxies, {
-      get: (rowProxies, rowIndex, receiver) => {
+      get: (rowTarget, rowIndex, receiver) => {
         // here we fake the array of row indexes
         // and return a new Proxy for this row array if there is none already
 
@@ -76,22 +96,26 @@ class MetaData {
 
         if (!rowProxies[rowIndex]) {
           rowProxies[rowIndex] = new Proxy(this.data.cells, {
-            get: (target, colIndex) => {
+            get: (cellTarget, colIndex) => {
               // parse this to an int if its a string
               if (typeof colIndex === "string") {
                 colIndex = parseInt(colIndex, 10);
               }
               let cellMetaDataObject = this.data.cells.find(
-                cellMetaDataObject =>
-                  cellMetaDataObject.rowIndex === rowIndex &&
-                  cellMetaDataObject.colIndex === colIndex
+                cellMetaDataObjectCandidate =>
+                  cellMetaDataObjectCandidate.rowIndex === rowIndex &&
+                  cellMetaDataObjectCandidate.colIndex === colIndex
               );
+
+              // if there is no cellMetaData object yet for the selected cell, create it from the schema
               if (!cellMetaDataObject) {
-                cellMetaDataObject = {
-                  colIndex: colIndex,
-                  rowIndex: rowIndex,
-                  data: {}
-                };
+                cellMetaDataObject = this.objectFromSchemaGenerator.generateFromSchema(
+                  this.metaDataSchemas.cells
+                );
+                // set the selected indexes
+                cellMetaDataObject.rowIndex = rowIndex;
+                cellMetaDataObject.colIndex = colIndex;
+                // and push it to the array to store it with the item
                 this.data.cells.push(cellMetaDataObject);
               }
               return cellMetaDataObject;
@@ -108,23 +132,18 @@ class MetaData {
     const cleanedUpCells = [];
     // cleanup cells
     this.data.cells = this.data.cells.filter(cell => {
-      return Object.keys(cell.data).some(cellMetaDataProp => {
-        if (
-          cell.data[cellMetaDataProp] !== undefined &&
-          cell.data[cellMetaDataProp] !== ""
-        ) {
-          return true;
-        } else {
-          cleanedUpCells.push(cell);
-          return false;
-        }
-      });
+      // keep the cells that have at least one property besides the indexes that is not empty
+      if (hasNonEmptyProperty(cell, ["colIndex", "rowIndex"])) {
+        return true;
+      }
+      cleanedUpCells.push(cell);
+      return false;
     });
     return cleanedUpCells;
   }
 }
 
-@inject(Loader, Element)
+@inject(Loader, ObjectFromSchemaGenerator)
 export class SchemaEditorTable {
   @bindable schema;
   @bindable data;
@@ -136,19 +155,26 @@ export class SchemaEditorTable {
     minRowsDataTable: 8
   };
 
-  constructor(loader, element) {
+  constructor(loader, objectFromSchemaGenerator) {
     this.loader = loader;
-    this.element = element;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
   }
 
   enabledMetaDataEditor() {
     this.metaDataEditorEnabled = true;
-    this.metaEditorData = new MetaData(this.data.metaData);
 
     this.metaEditorSchema = getSchemaAtPath(
       this.schema,
       this.options.metaDataEditor.features.cells.propertyPath
     ).items;
+
+    this.metaEditorData = new MetaData(
+      this.data.metaData,
+      {
+        cells: this.metaEditorSchema
+      },
+      this.objectFromSchemaGenerator
+    );
   }
 
   setCellClassesFromMetaEditorState() {
@@ -178,7 +204,7 @@ export class SchemaEditorTable {
 
   setData(data) {
     if (this.metaDataEditorEnabled) {
-      this.data[this.options.metaData.dataPropertyName] = data;
+      this.data[this.options.metaDataEditor.dataPropertyName] = data;
     } else {
       this.data = data;
     }
@@ -187,9 +213,8 @@ export class SchemaEditorTable {
   getData() {
     if (this.metaDataEditorEnabled) {
       return this.data[this.options.metaDataEditor.dataPropertyName];
-    } else {
-      return this.data;
     }
+    return this.data;
   }
 
   async schemaChanged() {
@@ -280,9 +305,8 @@ export class SchemaEditorTable {
           // only if the cell metaData feature is enabled
           if (this.options.metaDataEditor.features.cells) {
             return this.showMetaDataEditorForCell(row, column);
-          } else {
-            return this.hideMetaDataEditor();
           }
+          return this.hideMetaDataEditor();
         }
       }
     });
@@ -309,6 +333,10 @@ export class SchemaEditorTable {
   }
 
   showMetaDataEditorForCell(rowIndex, colIndex) {
+    // if the selected cell is different than before, handle change to cleanup
+    if (this.selectedRow !== rowIndex || this.selectedColumn !== colIndex) {
+      this.handleMetaEditorChange();
+    }
     this.metaEditorWrapper.classList.remove(
       "schema-editor-table__meta-editor--hidden"
     );
