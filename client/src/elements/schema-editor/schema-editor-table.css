@@ -41,3 +41,66 @@ schema-editor-table .wtHolder tr:first-child td {
 schema-editor-table .wtHolder tr:last-child td {
   border-bottom-style: dotted;
 }
+
+schema-editor-table td {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+schema-editor-table td.schema-editor-table__cell--selected {
+  background-color: var(--q-color-primary-2);
+  color: white;
+}
+
+/* this is the table editor wrapper */
+schema-editor-table > label {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* this is the meta-editor wrapper */
+.schema-editor-table__meta-editor {
+  position: relative;
+  z-index: 2;
+  border-left: 1px solid var(--q-color-primary-2);
+  padding-left: var(--q-space-base);
+}
+
+.schema-editor-table__meta-editor--hidden {
+  display: none;
+}
+
+/* the line from the cell to the metaData editor, size and rotation angle are set in code */
+.schema-editor-table__meta-editor__guiding-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 1px;
+  height: 1px;
+  background: var(--q-color-primary-2);
+}
+
+/* the metaEditor should be more compact */
+.schema-editor-table__meta-editor schema-editor {
+  --q-space-base: 2px;
+}
+
+/* used to position the colored corner in the cell */
+.schema-editor-table__cell--has-meta {
+  position: relative;
+}
+
+/* the colored corner in cells with metadata */
+.schema-editor-table__cell--has-meta::after {
+  content:'';
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 5px 5px 0;
+  border-color: transparent var(--q-color-primary-2) transparent transparent;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+}
