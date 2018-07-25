@@ -86,12 +86,12 @@ schema-editor-table > label {
 }
 
 /* used to position the colored corner in the cell */
-.schema-editor-table__cell--has-meta {
+.metadata-editor-available .schema-editor-table__cell--has-meta {
   position: relative;
 }
 
 /* the colored corner in cells with metadata */
-.schema-editor-table__cell--has-meta::after {
+.metadata-editor-available .schema-editor-table__cell--has-meta::after {
   content:'';
   display: block;
   width: 0;

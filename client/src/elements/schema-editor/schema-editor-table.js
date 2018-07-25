@@ -1,6 +1,7 @@
 import { bindable, inject, Loader } from "aurelia-framework";
 import array2d from "array2d";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
+import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
 
 function getSchemaAtPath(schema, path) {
   if (path.includes(".")) {
@@ -80,6 +81,10 @@ class MetaData {
     if (this.data.cells) {
       this.setupCellsProxy();
     }
+
+    if (this.data.rows) {
+      this.setupRowsProxy();
+    }
   }
 
   setupCellsProxy() {
@@ -127,6 +132,37 @@ class MetaData {
     });
   }
 
+  setupRowsProxy() {
+    this.rows = new Proxy(this.data.rows, {
+      get: (rowTarget, rowIndex, receiver) => {
+        // here we fake the array of row indexes
+        // and return a new Proxy for this row array if there is none already
+
+        // parse this to an int if its a string
+        if (typeof rowIndex === "string") {
+          rowIndex = parseInt(rowIndex, 10);
+        }
+
+        let rowMetaDataObject = this.data.rows.find(
+          rowMetaDataObjectCandidate =>
+            rowMetaDataObjectCandidate.rowIndex === rowIndex
+        );
+
+        // if there is no cellMetaData object yet for the selected cell, create it from the schema
+        if (!rowMetaDataObject) {
+          rowMetaDataObject = this.objectFromSchemaGenerator.generateFromSchema(
+            this.metaDataSchemas.rows
+          );
+          // set the selected row index
+          rowMetaDataObject.rowIndex = rowIndex;
+          // and push it to the array to store it with the item
+          this.data.cells.push(rowMetaDataObject);
+        }
+        return rowMetaDataObject;
+      }
+    });
+  }
+
   // used to remove empty metadata objects
   cleanup() {
     const cleanedUpCells = [];
@@ -143,7 +179,7 @@ class MetaData {
   }
 }
 
-@inject(Loader, ObjectFromSchemaGenerator)
+@inject(Loader, ObjectFromSchemaGenerator, AvailabilityChecker)
 export class SchemaEditorTable {
   @bindable schema;
   @bindable data;
@@ -155,51 +191,10 @@ export class SchemaEditorTable {
     minRowsDataTable: 8
   };
 
-  constructor(loader, objectFromSchemaGenerator) {
+  constructor(loader, objectFromSchemaGenerator, availabilityChecker) {
     this.loader = loader;
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
-  }
-
-  enabledMetaDataEditor() {
-    this.metaDataEditorEnabled = true;
-
-    this.metaEditorSchema = getSchemaAtPath(
-      this.schema,
-      this.options.metaDataEditor.features.cells.propertyPath
-    ).items;
-
-    this.metaEditorData = new MetaData(
-      this.data.metaData,
-      {
-        cells: this.metaEditorSchema
-      },
-      this.objectFromSchemaGenerator
-    );
-  }
-
-  setCellClassesFromMetaEditorState() {
-    for (const cell of this.metaEditorData.data.cells) {
-      const cellElement = this.hot.getCell(cell.rowIndex, cell.colIndex);
-      if (cellElement) {
-        cellElement.classList.add("schema-editor-table__cell--has-meta");
-      }
-    }
-  }
-
-  handleMetaEditorChange() {
-    // cleanup on every change
-    const cleanedUpCells = this.metaEditorData.cleanup();
-    for (const cell of cleanedUpCells) {
-      const cellElement = this.hot.getCell(cell.rowIndex, cell.colIndex);
-      if (cellElement) {
-        cellElement.classList.remove("schema-editor-table__cell--has-meta");
-      }
-    }
-    this.setCellClassesFromMetaEditorState();
-    // call the bound change function if given
-    if (typeof this.change === "function") {
-      this.change();
-    }
+    this.availabilityChecker = availabilityChecker;
   }
 
   setData(data) {
@@ -232,7 +227,7 @@ export class SchemaEditorTable {
 
   async attached() {
     if (this.options.metaDataEditor) {
-      this.enabledMetaDataEditor();
+      await this.enableMetaDataEditorIfAvailable();
     }
 
     this.hotData = JSON.parse(JSON.stringify(this.getData()));
@@ -271,7 +266,7 @@ export class SchemaEditorTable {
       },
       afterSelectionEnd: (row, column, row2, column2, selectionLayerLevel) => {
         // if we do not have the medaDataEditor enabled, there is nothing to do here
-        if (!this.metaDataEditorEnabled) {
+        if (!this.metaDataEditorEnabled || !this.metaDataEditorAvailable) {
           return;
         }
 
@@ -316,6 +311,12 @@ export class SchemaEditorTable {
     if (this.metaDataEditorEnabled) {
       this.setCellClassesFromMetaEditorState();
     }
+  }
+
+  detached() {
+    this.availabilityChecker.unregisterReevaluateCallback(
+      this.reevaluateMetaDataEditorAvailabilityCallback
+    );
   }
 
   hideMetaDataEditor() {
@@ -373,6 +374,74 @@ export class SchemaEditorTable {
     this.metaEditorGuidingLine.style.width = Math.sqrt(a * a + b * b) + "px";
     this.metaEditorGuidingLine.style.transform = `rotate(${Math.atan(a / b) *
       -1}rad)`;
+  }
+
+  async enableMetaDataEditorIfAvailable() {
+    // if this has availabilityChecks, we need to check them first
+    if (Array.isArray(this.options.metaDataEditor.availabilityChecks)) {
+      await this.applyMetaDataEditorAvailability();
+
+      this.reevaluateMetaDataEditorAvailabilityCallback = this.applyMetaDataEditorAvailability.bind(
+        this
+      );
+      this.availabilityChecker.registerReevaluateCallback(() => {
+        this.reevaluateMetaDataEditorAvailabilityCallback;
+      });
+    } else {
+      // if there are not checks configured, the metaData editor is available
+      this.metaDataEditorAvailable = true;
+    }
+
+    this.metaDataEditorEnabled = true;
+
+    this.metaEditorSchema = getSchemaAtPath(
+      this.schema,
+      this.options.metaDataEditor.features.cells.propertyPath
+    ).items;
+
+    this.metaEditorData = new MetaData(
+      this.data.metaData,
+      {
+        cells: this.metaEditorSchema
+      },
+      this.objectFromSchemaGenerator
+    );
+  }
+
+  async applyMetaDataEditorAvailability() {
+    const availability = await this.availabilityChecker.getAvailabilityInfo(
+      this.options.metaDataEditor.availabilityChecks
+    );
+    if (availability.isAvailable) {
+      this.metaDataEditorAvailable = true;
+    } else {
+      this.metaDataEditorAvailable = false;
+    }
+  }
+
+  setCellClassesFromMetaEditorState() {
+    for (const cell of this.metaEditorData.data.cells) {
+      const cellElement = this.hot.getCell(cell.rowIndex, cell.colIndex);
+      if (cellElement) {
+        cellElement.classList.add("schema-editor-table__cell--has-meta");
+      }
+    }
+  }
+
+  handleMetaEditorChange() {
+    // cleanup on every change
+    const cleanedUpCells = this.metaEditorData.cleanup();
+    for (const cell of cleanedUpCells) {
+      const cellElement = this.hot.getCell(cell.rowIndex, cell.colIndex);
+      if (cellElement) {
+        cellElement.classList.remove("schema-editor-table__cell--has-meta");
+      }
+    }
+    this.setCellClassesFromMetaEditorState();
+    // call the bound change function if given
+    if (typeof this.change === "function") {
+      this.change();
+    }
   }
 
   getGridHeight() {

@@ -7,9 +7,9 @@
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
-    <div ref="tableContainerElement"></div>
+    <div ref="tableContainerElement" class="{{ metaDataEditorAvailable ? 'metadata-editor-available' : ''"></div>
   </label>
-  <div class="schema-editor-table__meta-editor schema-editor-table__meta-editor--hidden" ref="metaEditorWrapper" if.bind="metaDataEditorEnabled">
+  <div class="schema-editor-table__meta-editor schema-editor-table__meta-editor--hidden" ref="metaEditorWrapper" if.bind="metaDataEditorEnabled && metaDataEditorAvailable">
     <div ref="metaEditorGuidingLine" class="schema-editor-table__meta-editor__guiding-line"></div>
     <label>Metadaten <span if.bind="data.table[selectedRow][selectedColumn] && data.table[selectedRow][selectedColumn] !== ''">für ${data.table[selectedRow][selectedColumn]}</span></label>
     <schema-editor if.bind="selectedRow !== undefined && selectedColumn !== undefined" schema.bind="metaEditorSchema" data.bind="metaEditorData.cells[selectedRow][selectedColumn]" change.call="handleMetaEditorChange()"
