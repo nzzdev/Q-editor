@@ -81,10 +81,6 @@ class MetaData {
     if (this.data.cells) {
       this.setupCellsProxy();
     }
-
-    if (this.data.rows) {
-      this.setupRowsProxy();
-    }
   }
 
   setupCellsProxy() {
@@ -128,37 +124,6 @@ class MetaData {
           });
         }
         return rowProxies[rowIndex];
-      }
-    });
-  }
-
-  setupRowsProxy() {
-    this.rows = new Proxy(this.data.rows, {
-      get: (rowTarget, rowIndex, receiver) => {
-        // here we fake the array of row indexes
-        // and return a new Proxy for this row array if there is none already
-
-        // parse this to an int if its a string
-        if (typeof rowIndex === "string") {
-          rowIndex = parseInt(rowIndex, 10);
-        }
-
-        let rowMetaDataObject = this.data.rows.find(
-          rowMetaDataObjectCandidate =>
-            rowMetaDataObjectCandidate.rowIndex === rowIndex
-        );
-
-        // if there is no cellMetaData object yet for the selected cell, create it from the schema
-        if (!rowMetaDataObject) {
-          rowMetaDataObject = this.objectFromSchemaGenerator.generateFromSchema(
-            this.metaDataSchemas.rows
-          );
-          // set the selected row index
-          rowMetaDataObject.rowIndex = rowIndex;
-          // and push it to the array to store it with the item
-          this.data.cells.push(rowMetaDataObject);
-        }
-        return rowMetaDataObject;
       }
     });
   }
