@@ -321,24 +321,6 @@ export class SchemaEditorTable {
     this.selectedCellElement.classList.add(
       "schema-editor-table__cell--selected"
     );
-
-    // draw guiding line
-    // we need some triangle math for this
-    // first get the top/left position of the guidingline origin
-    const metaEditorLeft = this.metaEditorGuidingLine.parentNode.getBoundingClientRect()
-      .left;
-    const metaEditorTop = this.metaEditorGuidingLine.parentNode.getBoundingClientRect()
-      .top;
-    const selectedCellLeft = this.selectedCellElement.getBoundingClientRect()
-      .left;
-    const selectedCellBottom = this.selectedCellElement.getBoundingClientRect()
-      .bottom;
-
-    const a = metaEditorTop - selectedCellBottom;
-    const b = selectedCellLeft - metaEditorLeft;
-    this.metaEditorGuidingLine.style.width = Math.sqrt(a * a + b * b) + "px";
-    this.metaEditorGuidingLine.style.transform = `rotate(${Math.atan(a / b) *
-      -1}rad)`;
   }
 
   async enableMetaDataEditorIfAvailable() {

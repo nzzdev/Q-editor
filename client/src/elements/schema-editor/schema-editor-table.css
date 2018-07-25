@@ -62,7 +62,7 @@ schema-editor-table > label {
 .schema-editor-table__meta-editor {
   position: relative;
   z-index: 2;
-  border-left: 1px solid var(--q-color-primary-2);
+  border-left: 3px solid var(--q-color-primary-2);
   padding-left: var(--q-space-base);
 }
 
@@ -70,14 +70,10 @@ schema-editor-table > label {
   display: none;
 }
 
-/* the line from the cell to the metaData editor, size and rotation angle are set in code */
-.schema-editor-table__meta-editor__guiding-line {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform-origin: 0 1px;
-  height: 1px;
-  background: var(--q-color-primary-2);
+.schema-editor-table__meta-editor__title--highlight {
+  background-color: var(--q-color-primary-2);
+  color: white;
+  padding: 0 4px;
 }
 
 /* the metaEditor should be more compact */
