@@ -16,9 +16,14 @@
 
 .feed .feed-preview-block {
   margin: 10px;
+  width: 320px;
 }
 
 .q-bar__back {
   display: flex;
   align-items: center;
+}
+
+.feed .preview-element-container {
+  border: none !important;
 }
