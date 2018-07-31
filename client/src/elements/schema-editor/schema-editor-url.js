@@ -6,6 +6,8 @@ export class SchemaEditorUrl {
   @bindable change;
   @bindable required;
 
+  options = {};
+
   schemaChanged() {
     this.applyOptions();
   }
