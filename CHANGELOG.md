@@ -1,3 +1,7 @@
+# 3.2.0 (27.07.2018)
+- feat: bind minimum and maximum properties from schema on schema-editor-number input element
+- fix: improve the layout of /feed page
+
 # 3.1.0 (09.07.2018)
 - feat: HEAD_MARKUP, BODY_START_MARKUP and BODY_END_MARKUP env variables can be used to inject markup into index.html
 - fix: livingdocs-preview correctly handles defaults defined in display-options-schema.json
