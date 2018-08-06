@@ -2,10 +2,11 @@ import { bindable, inject, Loader, LogManager } from "aurelia-framework";
 import { Notification } from "aurelia-notification";
 import { I18N } from "aurelia-i18n";
 import qEnv from "resources/qEnv.js";
+import IdGenerator from "resources/IdGenerator.js";
 import { AuthService } from "aurelia-authentication";
 const log = LogManager.getLogger("Q");
 
-@inject(Loader, AuthService, Notification, I18N)
+@inject(Loader, AuthService, Notification, I18N, IdGenerator)
 export class SchemaEditorFiles {
   @bindable schema;
   @bindable data;
@@ -16,11 +17,12 @@ export class SchemaEditorFiles {
     maxFiles: null
   };
 
-  constructor(loader, authService, notification, i18n) {
+  constructor(loader, authService, notification, i18n, idGenerator) {
     this.loader = loader;
     this.authService = authService;
     this.notification = notification;
     this.i18n = i18n;
+    this.idGenerator = idGenerator;
   }
 
   schemaChanged() {
@@ -43,7 +45,7 @@ export class SchemaEditorFiles {
       try {
         window.Dropzone = await this.loader.loadModule("dropzone");
         this.loader.loadModule("npm:dropzone@5.4.0/dist/min/dropzone.min.css!");
-        this.uuid = uuid();
+        this.uuid = this.idGenerator.getId();
       } catch (e) {
         log.error(e);
       }
@@ -106,13 +108,13 @@ export class SchemaEditorFiles {
 
     this.dropzone.on("sending", (file, xhr, data) => {
       if (
-        this.options.pathPrefix !== null &&
-        this.options.pathPrefix !== undefined
+        this.options.keyPrefix !== null &&
+        this.options.keyPrefix !== undefined
       ) {
         if (file.fullPath) {
           data.append(
-            "fullPath",
-            `${this.options.pathPrefix}/${this.uuid}/${file.fullPath}`
+            "fileKey",
+            `${this.options.keyPrefix}/${this.uuid}/${file.fullPath}`
           );
         }
       }
@@ -209,27 +211,4 @@ export class SchemaEditorFiles {
       }
     });
   }
-}
-
-function uuid() {
-  return (
-    s4() +
-    s4() +
-    "-" +
-    s4() +
-    "-" +
-    s4() +
-    "-" +
-    s4() +
-    "-" +
-    s4() +
-    s4() +
-    s4()
-  );
-}
-
-function s4() {
-  return Math.floor((1 + Math.random()) * 0x10000)
-    .toString(16)
-    .substring(1);
 }
