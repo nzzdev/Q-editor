@@ -43,6 +43,7 @@ export class SchemaEditorFiles {
       try {
         window.Dropzone = await this.loader.loadModule("dropzone");
         this.loader.loadModule("npm:dropzone@5.4.0/dist/min/dropzone.min.css!");
+        this.uuid = uuid();
       } catch (e) {
         log.error(e);
       }
@@ -102,6 +103,20 @@ export class SchemaEditorFiles {
       this.dropzoneElement,
       this.dropzoneOptions
     );
+
+    this.dropzone.on("sending", (file, xhr, data) => {
+      if (
+        this.options.pathPrefix !== null &&
+        this.options.pathPrefix !== undefined
+      ) {
+        if (file.fullPath) {
+          data.append(
+            "fullPath",
+            `${this.options.pathPrefix}/${this.uuid}/${file.fullPath}`
+          );
+        }
+      }
+    });
 
     this.dropzone.on("success", (file, response) => {
       const newFile = {};
@@ -194,4 +209,27 @@ export class SchemaEditorFiles {
       }
     });
   }
+}
+
+function uuid() {
+  return (
+    s4() +
+    s4() +
+    "-" +
+    s4() +
+    "-" +
+    s4() +
+    "-" +
+    s4() +
+    "-" +
+    s4() +
+    s4() +
+    s4()
+  );
+}
+
+function s4() {
+  return Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1);
 }
