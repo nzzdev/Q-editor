@@ -23,6 +23,7 @@ export class SchemaEditorFiles {
     this.notification = notification;
     this.i18n = i18n;
     this.idGenerator = idGenerator;
+    this.uuid = idGenerator.getId();
   }
 
   schemaChanged() {
@@ -45,7 +46,6 @@ export class SchemaEditorFiles {
       try {
         window.Dropzone = await this.loader.loadModule("dropzone");
         this.loader.loadModule("npm:dropzone@5.4.0/dist/min/dropzone.min.css!");
-        this.uuid = this.idGenerator.getId();
       } catch (e) {
         log.error(e);
       }
