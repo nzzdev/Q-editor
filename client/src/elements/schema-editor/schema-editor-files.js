@@ -111,12 +111,13 @@ export class SchemaEditorFiles {
         this.options.keyPrefix !== null &&
         this.options.keyPrefix !== undefined
       ) {
-        if (file.fullPath) {
-          data.append(
-            "fileKey",
-            `${this.options.keyPrefix}/${this.uuid}/${file.fullPath}`
-          );
-        }
+        let fileKey = `${this.options.keyPrefix}/${this.uuid}/`;
+
+        file.fullPath === undefined
+          ? (fileKey = fileKey.concat(file.name))
+          : (fileKey = fileKey.concat(file.fullPath));
+
+        data.append("fileKey", fileKey);
       }
     });
 
