@@ -16,10 +16,14 @@ const log = LogManager.getLogger("Q");
   CurrentItemProvider
 )
 export class SchemaEditorFiles {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
-  @bindable required;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  required;
 
   options = {
     maxFiles: null
@@ -39,16 +43,6 @@ export class SchemaEditorFiles {
     this.i18n = i18n;
     this.idGenerator = idGenerator;
     this.currentItemProvider = currentItemProvider;
-
-    // get uuid from item or generate a new one
-    this.currentItem = this.currentItemProvider.getCurrentItem();
-    if (
-      this.currentItem.conf.uuid === undefined ||
-      this.currentItem.conf.uuid === null
-    ) {
-      this.currentItem.conf.uuid = idGenerator.getId();
-    }
-    this.currentItemProvider.setCurrentItem(this.currentItem);
   }
 
   schemaChanged() {
@@ -130,6 +124,21 @@ export class SchemaEditorFiles {
       this.dropzoneElement,
       this.dropzoneOptions
     );
+
+    if (
+      this.options.keyPrefix !== null &&
+      this.options.keyPrefix !== undefined
+    ) {
+      // get uuid from item or generate a new one
+      this.currentItem = this.currentItemProvider.getCurrentItem();
+      if (
+        this.currentItem.conf.uuid === undefined ||
+        this.currentItem.conf.uuid === null
+      ) {
+        this.currentItem.conf.uuid = this.idGenerator.getId();
+        this.currentItemProvider.setCurrentItem(this.currentItem);
+      }
+    }
 
     this.dropzone.on("sending", (file, xhr, data) => {
       if (
