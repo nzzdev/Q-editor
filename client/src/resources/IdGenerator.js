@@ -8,7 +8,20 @@ export default class IdGenerator {
   }
 
   getId() {
-    return Date.now() + "-" + (Math.random() * 10 ** 9).toFixed(0);
+    return (
+      s4() +
+      s4() +
+      "-" +
+      s4() +
+      "-" +
+      s4() +
+      "-" +
+      s4() +
+      "-" +
+      s4() +
+      s4() +
+      s4()
+    );
   }
 
   getIdWithCurrentItemId() {
@@ -19,4 +32,10 @@ export default class IdGenerator {
 
     return item.id + "-" + this.getId();
   }
+}
+
+function s4() {
+  return Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1);
 }
