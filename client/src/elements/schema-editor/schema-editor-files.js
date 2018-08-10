@@ -167,10 +167,10 @@ export class SchemaEditorFiles {
       this.notification.error("notifications.maxNumberOfFilesExceed");
     });
 
-    this.preloadExistingFiles();
+    await this.preloadExistingFiles();
   }
 
-  preloadExistingFiles() {
+  async preloadExistingFiles() {
     const files = [];
     if (this.data && this.schema.type === "object") {
       files.push(this.data);
@@ -179,35 +179,41 @@ export class SchemaEditorFiles {
       files.push(...this.data);
     }
     // preload images already uploaded
-    files.forEach((file, index) => {
+    files.forEach(async (file, index) => {
       if (file && file.url) {
-        const mockFile = {
-          name: file.url,
-          dataURL: file.url, // needed for dropzone to create the thumbnail in a canvas
-          size: 0,
-          accepted: true
-        };
+        const response = await fetch(file.url);
+        if (response.ok) {
+          const blob = await response.blob();
+          const mockFile = {
+            name: file.url,
+            dataURL: file.url, // needed for dropzone to create the thumbnail in a canvas
+            size: blob.size,
+            accepted: true
+          };
 
-        if (this.schema.type === "array") {
-          mockFile.dataArrayIndex = index; // the dataArrayIndex property is used when deleting a file to delete it as well from the data
+          if (this.schema.type === "array") {
+            mockFile.dataArrayIndex = index; // the dataArrayIndex property is used when deleting a file to delete it as well from the data
+          }
+
+          this.dropzone.files.push(mockFile);
+          this.dropzone.emit("addedfile", mockFile);
+          this.dropzone.createThumbnailFromUrl(
+            mockFile,
+            this.dropzoneOptions.thumbnailWidth,
+            this.dropzoneOptions.thumbnailHeight,
+            this.dropzoneOptions.thumbnailMethod,
+            false,
+            thumbnail => {
+              if (blob.type.match(/image.*/)) {
+                this.dropzone.emit("thumbnail", mockFile, thumbnail);
+              }
+              this.dropzone.emit("complete", mockFile);
+              this.dropzone.emit("accepted", mockFile);
+              this.dropzone._updateMaxFilesReachedClass();
+            },
+            "anonymous"
+          );
         }
-
-        this.dropzone.files.push(mockFile);
-        this.dropzone.emit("addedfile", mockFile);
-        this.dropzone.createThumbnailFromUrl(
-          mockFile,
-          this.dropzoneOptions.thumbnailWidth,
-          this.dropzoneOptions.thumbnailHeight,
-          this.dropzoneOptions.thumbnailMethod,
-          false,
-          thumbnail => {
-            this.dropzone.emit("thumbnail", mockFile, thumbnail);
-            this.dropzone.emit("complete", mockFile);
-            this.dropzone.emit("accepted", mockFile);
-            this.dropzone._updateMaxFilesReachedClass();
-          },
-          "anonymous"
-        );
       }
     });
   }
