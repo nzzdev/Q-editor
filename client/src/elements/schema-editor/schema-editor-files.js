@@ -3,26 +3,46 @@ import { Notification } from "aurelia-notification";
 import { I18N } from "aurelia-i18n";
 import qEnv from "resources/qEnv.js";
 import IdGenerator from "resources/IdGenerator.js";
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import { AuthService } from "aurelia-authentication";
 const log = LogManager.getLogger("Q");
 
-@inject(Loader, AuthService, Notification, I18N, IdGenerator)
+@inject(
+  Loader,
+  AuthService,
+  Notification,
+  I18N,
+  IdGenerator,
+  CurrentItemProvider
+)
 export class SchemaEditorFiles {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
-  @bindable required;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  required;
 
   options = {
     maxFiles: null
   };
 
-  constructor(loader, authService, notification, i18n, idGenerator) {
+  constructor(
+    loader,
+    authService,
+    notification,
+    i18n,
+    idGenerator,
+    currentItemProvider
+  ) {
     this.loader = loader;
     this.authService = authService;
     this.notification = notification;
     this.i18n = i18n;
     this.idGenerator = idGenerator;
+    this.currentItemProvider = currentItemProvider;
   }
 
   schemaChanged() {
@@ -45,7 +65,6 @@ export class SchemaEditorFiles {
       try {
         window.Dropzone = await this.loader.loadModule("dropzone");
         this.loader.loadModule("npm:dropzone@5.4.0/dist/min/dropzone.min.css!");
-        this.uuid = this.idGenerator.getId();
       } catch (e) {
         log.error(e);
       }
@@ -106,17 +125,35 @@ export class SchemaEditorFiles {
       this.dropzoneOptions
     );
 
+    if (
+      this.options.keyPrefix !== null &&
+      this.options.keyPrefix !== undefined
+    ) {
+      // get uuid from item or generate a new one
+      this.currentItem = this.currentItemProvider.getCurrentItem();
+      if (
+        this.currentItem.conf.uuid === undefined ||
+        this.currentItem.conf.uuid === null
+      ) {
+        this.currentItem.conf.uuid = this.idGenerator.getId();
+        this.currentItemProvider.setCurrentItem(this.currentItem);
+      }
+    }
+
     this.dropzone.on("sending", (file, xhr, data) => {
       if (
         this.options.keyPrefix !== null &&
         this.options.keyPrefix !== undefined
       ) {
-        if (file.fullPath) {
-          data.append(
-            "fileKey",
-            `${this.options.keyPrefix}/${this.uuid}/${file.fullPath}`
-          );
-        }
+        let fileKey = `${this.options.keyPrefix}/${
+          this.currentItem.conf.uuid
+        }/`;
+
+        file.fullPath === undefined
+          ? (fileKey = fileKey.concat(file.name))
+          : (fileKey = fileKey.concat(file.fullPath));
+
+        data.append("fileKey", fileKey);
       }
     });
 
