@@ -42,7 +42,7 @@ export class SchemaEditorFiles {
     if (!window.Dropzone) {
       try {
         window.Dropzone = await this.loader.loadModule("dropzone");
-        this.loader.loadModule("npm:dropzone@5.4.0/dist/min/dropzone.min.css!");
+        this.loader.loadModule("dropzone/dist/min/dropzone.min.css!");
       } catch (e) {
         log.error(e);
       }
@@ -92,7 +92,10 @@ export class SchemaEditorFiles {
         },
         thumbnailWidth: 120, // should keep aspect ratio,
         thumbnailHeight: null,
-        thumbnailMethod: "contain"
+        thumbnailMethod: "contain",
+        renameFile: file => {
+          return file.fullPath || file.name;
+        }
       },
       this.options,
       translations
