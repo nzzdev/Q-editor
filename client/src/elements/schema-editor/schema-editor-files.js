@@ -116,7 +116,12 @@ export class SchemaEditorFiles {
         // }
         // where url is the prop returned in the response and imageUrl is the prop of the data object to hold that value;
         // prop would be url in that example
-        newFile[this.options.fileProperties[prop]] = fileProperties[prop];
+        let value = fileProperties[prop];
+        if (prop === "name") {
+          // use the fullPath as the name if available
+          value = fileProperties.fullPath || fileProperties.name;
+        }
+        newFile[this.options.fileProperties[prop]] = value;
       }
       if (this.options.maxFiles && this.options.maxFiles === 1) {
         this.data = newFile;
