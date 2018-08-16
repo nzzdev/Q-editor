@@ -4,11 +4,16 @@ import qEnv from "resources/qEnv.js";
 @useShadowDOM()
 @inject(Element)
 export class PreviewContainer {
-  @bindable width;
-  @bindable renderingInfo;
-  @bindable loadingStatus;
-  @bindable target;
-  @bindable error;
+  @bindable
+  width;
+  @bindable
+  renderingInfo;
+  @bindable
+  loadingStatus;
+  @bindable
+  target;
+  @bindable
+  error;
 
   insertedElements = [];
   stylesheetRules = [];
@@ -63,6 +68,20 @@ export class PreviewContainer {
     while (this.insertedElements.length > 0) {
       let element = this.insertedElements.pop();
       element.parentNode.removeChild(element);
+    }
+
+    // load sophie modules
+    if (Array.isArray(renderingInfo.sophieModules)) {
+      const SophieBuildService = await qEnv.SophieBuildService;
+      const sophieModulesString = renderingInfo.sophieModules.reduce(
+        (acc, curr) => `${acc},${curr}`
+      );
+      let link = document.createElement("link");
+      link.type = "text/css";
+      link.rel = "stylesheet";
+      link.href = `${SophieBuildService}${sophieModulesString}.css`;
+      this.insertedElements.push(link);
+      this.element.shadowRoot.appendChild(link);
     }
 
     // load the stylesheets

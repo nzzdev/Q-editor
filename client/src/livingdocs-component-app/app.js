@@ -266,6 +266,16 @@ export class App {
             renderingInfo.scripts.push(script);
           });
         }
+
+        // add sophieModules for target preview if any
+        if (this.target.preview && this.target.preview.sophieModules) {
+          if (!renderingInfo.sophieModules) {
+            renderingInfo.sophieModules = [];
+          }
+          this.target.preview.sophieModules.forEach(sophieModule => {
+            renderingInfo.sophieModules.push(sophieModule);
+          });
+        }
         return renderingInfo;
       });
   }

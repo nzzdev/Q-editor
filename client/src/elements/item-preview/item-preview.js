@@ -27,10 +27,14 @@ const defaultSizeOptions = [
 
 @inject(QTargets, QConfig, User, I18N, Element)
 export class ItemPreview {
-  @bindable data;
-  @bindable id;
-  @bindable target;
-  @observable error = false;
+  @bindable
+  data;
+  @bindable
+  id;
+  @bindable
+  target;
+  @observable
+  error = false;
 
   sizeOptions = [];
   errorMessage = "";
@@ -287,6 +291,21 @@ export class ItemPreview {
           this.targetProxy.target.preview.scripts.forEach(script => {
             renderingInfo.scripts.push(script);
           });
+        }
+
+        // add sophieModules for target preview if any
+        if (
+          this.targetProxy.target.preview &&
+          this.targetProxy.target.preview.sophieModules
+        ) {
+          if (!renderingInfo.sophieModules) {
+            renderingInfo.sophieModules = [];
+          }
+          this.targetProxy.target.preview.sophieModules.forEach(
+            sophieModule => {
+              renderingInfo.sophieModules.push(sophieModule);
+            }
+          );
         }
         return renderingInfo;
       });
