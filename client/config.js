@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   map: {
     "ajv": "npm:ajv@5.5.2",
     "array2d": "npm:array2d@0.0.5",
@@ -41,7 +42,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.37",
-    "dropzone": "npm:dropzone@5.4.0",
+    "dropzone": "npm:dropzone@5.5.1",
     "handsontable": "github:handsontable/handsontable@3.0.0",
     "heyman/leaflet-areaselect": "github:heyman/leaflet-areaselect@master",
     "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
@@ -54,7 +55,7 @@ System.config({
       "assert": "npm:assert@1.4.1"
     },
     "github:jspm/nodelibs-buffer@0.1.1": {
-      "buffer": "npm:buffer@5.1.0"
+      "buffer": "npm:buffer@5.2.0"
     },
     "github:jspm/nodelibs-path@0.1.0": {
       "path-browserify": "npm:path-browserify@0.0.0"
@@ -278,9 +279,9 @@ System.config({
     "npm:babel-runtime@5.8.38": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:buffer@5.1.0": {
+    "npm:buffer@5.2.0": {
       "base64-js": "npm:base64-js@1.3.0",
-      "ieee754": "npm:ieee754@1.1.11"
+      "ieee754": "npm:ieee754@1.1.12"
     },
     "npm:core-js@1.2.7": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
@@ -288,7 +289,7 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
-    "npm:dropzone@5.4.0": {
+    "npm:dropzone@5.5.1": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:fast-json-stable-stringify@2.0.0": {
