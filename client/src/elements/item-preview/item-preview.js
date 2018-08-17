@@ -293,20 +293,6 @@ export class ItemPreview {
           });
         }
 
-        // add sophieModules for target preview if any
-        if (
-          this.targetProxy.target.preview &&
-          this.targetProxy.target.preview.sophieModules
-        ) {
-          if (!renderingInfo.sophieModules) {
-            renderingInfo.sophieModules = [];
-          }
-          this.targetProxy.target.preview.sophieModules.forEach(
-            sophieModule => {
-              renderingInfo.sophieModules.push(sophieModule);
-            }
-          );
-        }
         return renderingInfo;
       });
   }
