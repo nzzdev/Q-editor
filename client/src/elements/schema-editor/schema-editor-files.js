@@ -7,10 +7,14 @@ const log = LogManager.getLogger("Q");
 
 @inject(Loader, AuthService, Notification, I18N)
 export class SchemaEditorFiles {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
-  @bindable required;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  required;
 
   options = {
     maxFiles: null
@@ -174,8 +178,7 @@ export class SchemaEditorFiles {
       if (file && file.url) {
         const mockFile = {
           name: file.url,
-          dataURL: file.url, // needed for dropzone to create the thumbnail in a canvas
-          size: 0,
+          size: file.size || 0,
           accepted: true
         };
 
@@ -185,20 +188,27 @@ export class SchemaEditorFiles {
 
         this.dropzone.files.push(mockFile);
         this.dropzone.emit("addedfile", mockFile);
-        this.dropzone.createThumbnailFromUrl(
-          mockFile,
-          this.dropzoneOptions.thumbnailWidth,
-          this.dropzoneOptions.thumbnailHeight,
-          this.dropzoneOptions.thumbnailMethod,
-          false,
-          thumbnail => {
-            this.dropzone.emit("thumbnail", mockFile, thumbnail);
-            this.dropzone.emit("complete", mockFile);
-            this.dropzone.emit("accepted", mockFile);
-            this.dropzone._updateMaxFilesReachedClass();
-          },
-          "anonymous"
-        );
+        if (file.type.includes("image/")) {
+          mockFile.dataURL = file.url; // needed for dropzone to create the thumbnail in a canvas
+          this.dropzone.createThumbnailFromUrl(
+            mockFile,
+            this.dropzoneOptions.thumbnailWidth,
+            this.dropzoneOptions.thumbnailHeight,
+            this.dropzoneOptions.thumbnailMethod,
+            false,
+            thumbnail => {
+              this.dropzone.emit("thumbnail", mockFile, thumbnail);
+              this.dropzone.emit("complete", mockFile);
+              this.dropzone.emit("accepted", mockFile);
+              this.dropzone._updateMaxFilesReachedClass();
+            },
+            "anonymous"
+          );
+        } else {
+          this.dropzone.emit("complete", mockFile);
+          this.dropzone.emit("accepted", mockFile);
+          this.dropzone._updateMaxFilesReachedClass();
+        }
       }
     });
   }
