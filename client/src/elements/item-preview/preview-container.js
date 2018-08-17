@@ -1,20 +1,27 @@
 import { bindable, useShadowDOM, inject } from "aurelia-framework";
 import qEnv from "resources/qEnv.js";
+import QConfig from "resources/QConfig.js";
 
 @useShadowDOM()
-@inject(Element)
+@inject(Element, QConfig)
 export class PreviewContainer {
-  @bindable width;
-  @bindable renderingInfo;
-  @bindable loadingStatus;
-  @bindable target;
-  @bindable error;
+  @bindable
+  width;
+  @bindable
+  renderingInfo;
+  @bindable
+  loadingStatus;
+  @bindable
+  target;
+  @bindable
+  error;
 
   insertedElements = [];
   stylesheetRules = [];
 
-  constructor(element) {
+  constructor(element, qConfig) {
     this.element = element;
+    this.qConfig = qConfig;
     this.id = `preview-container-${Math.floor(Math.random() * 10 ** 9)}`;
     this.element.setAttribute("id", this.id);
   }
@@ -63,6 +70,22 @@ export class PreviewContainer {
     while (this.insertedElements.length > 0) {
       let element = this.insertedElements.pop();
       element.parentNode.removeChild(element);
+    }
+
+    // load sophie modules
+    if (Array.isArray(renderingInfo.sophieModules)) {
+      const sophieConfig = await this.qConfig.get("sophie");
+      if (sophieConfig && sophieConfig.buildServiceBaseUrl) {
+        const sophieModulesString = renderingInfo.sophieModules.join(",");
+        let link = document.createElement("link");
+        link.type = "text/css";
+        link.rel = "stylesheet";
+        link.href = `${
+          sophieConfig.buildServiceBaseUrl
+        }/bundle/${sophieModulesString}.css`;
+        this.insertedElements.push(link);
+        this.element.shadowRoot.appendChild(link);
+      }
     }
 
     // load the stylesheets
