@@ -83,10 +83,11 @@ export class PreviewContainer {
               Array.isArray(sophieModule.submodules) &&
               sophieModule.submodules.length > 0
             ) {
-              moduleString = `${moduleString}[${sophieModules.submodules.join(
+              moduleString = `${moduleString}[${sophieModule.submodules.join(
                 "+"
               )}]`;
             }
+            return moduleString;
           })
           .join(",");
         let link = document.createElement("link");
