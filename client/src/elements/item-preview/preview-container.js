@@ -76,7 +76,19 @@ export class PreviewContainer {
     if (Array.isArray(renderingInfo.sophieModules)) {
       const sophieConfig = await this.qConfig.get("sophie");
       if (sophieConfig && sophieConfig.buildServiceBaseUrl) {
-        const sophieModulesString = renderingInfo.sophieModules.join(",");
+        const sophieModulesString = renderingInfo.sophieModules
+          .map(sophieModule => {
+            let moduleString = sophieModule.name;
+            if (
+              Array.isArray(sophieModule.submodules) &&
+              sophieModule.submodules.length > 0
+            ) {
+              moduleString = `${moduleString}[${sophieModules.submodules.join(
+                "+"
+              )}]`;
+            }
+          })
+          .join(",");
         let link = document.createElement("link");
         link.type = "text/css";
         link.rel = "stylesheet";
