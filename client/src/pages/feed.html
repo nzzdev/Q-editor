@@ -1,7 +1,7 @@
 <template>
   <require from="./feed.css"></require>
   <require from="../elements/item-preview/preview-container"></require>
-  <q-bar if.bind="user.isLoggedIn" router.bind="router">
+  <q-bar if.bind="user.isLoggedIn" router.bind="router" class="q-bar--no-logo">
     <a slot="back-button" class="q-bar__back" route-href="route: index">
       <button-secondary icon="back" icon-size="big"></button-secondary>
     </a>
