@@ -1,4 +1,4 @@
-# 3.3.0 (xx.xx.2018)
+# 3.3.0 (28.08.2018)
 - feat: preview loader can load renderingInfo.sophieModules (configure sophie.buildServiceBaseUrl in editor config in your Q server instance, see https://github.com/nzzdev/sophie-build-service for details regarding Sophie)
 - feat: schema-editor-files sets the fullPath as the filename when uploading directories
 - fix: schema-editor-files loads thumbnail for existing files only for images
