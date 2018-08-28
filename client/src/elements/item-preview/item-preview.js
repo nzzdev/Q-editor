@@ -27,10 +27,14 @@ const defaultSizeOptions = [
 
 @inject(QTargets, QConfig, User, I18N, Element)
 export class ItemPreview {
-  @bindable data;
-  @bindable id;
-  @bindable target;
-  @observable error = false;
+  @bindable
+  data;
+  @bindable
+  id;
+  @bindable
+  target;
+  @observable
+  error = false;
 
   sizeOptions = [];
   errorMessage = "";
@@ -288,6 +292,7 @@ export class ItemPreview {
             renderingInfo.scripts.push(script);
           });
         }
+
         return renderingInfo;
       });
   }

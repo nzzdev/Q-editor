@@ -1,3 +1,10 @@
+# 3.3.0 (28.08.2018)
+- feat: preview loader can load renderingInfo.sophieModules (configure sophie.buildServiceBaseUrl in editor config in your Q server instance, see https://github.com/nzzdev/sophie-build-service for details regarding Sophie)
+- feat: schema-editor-files sets the fullPath as the filename when uploading directories
+- fix: schema-editor-files loads thumbnail for existing files only for images
+- fix: allow to copy 10000 rows and 100 columns from schema-editor-table handsontable
+- fix: do not fail if options for schema-editor-textarea and schema-editor-url are given in schema
+
 # 3.2.0 (27.07.2018)
 - feat: bind minimum and maximum properties from schema on schema-editor-number input element
 - fix: improve the layout of /feed page
