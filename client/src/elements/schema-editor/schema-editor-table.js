@@ -216,7 +216,10 @@ export class SchemaEditorTable {
       contextMenu: false,
       stretchH: "all",
       rowHeights: 23,
-      copyRowsLimit: 10000,
+      copyPaste: {
+        rowsLimit: 10000,
+        columnsLimit: 100
+      },
       afterChange: (changes, source) => {
         if (source !== "loadData") {
           this.setData(trimNull(emptyToNull(this.hot.getData())));

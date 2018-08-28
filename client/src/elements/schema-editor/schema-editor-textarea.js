@@ -6,6 +6,8 @@ export class SchemaEditorTextarea {
   @bindable change;
   @bindable required;
 
+  options = {};
+
   schemaChanged() {
     this.applyOptions();
   }

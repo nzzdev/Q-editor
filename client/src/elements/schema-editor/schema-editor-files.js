@@ -7,10 +7,14 @@ const log = LogManager.getLogger("Q");
 
 @inject(Loader, AuthService, Notification, I18N)
 export class SchemaEditorFiles {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
-  @bindable required;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  required;
 
   options = {
     maxFiles: null
@@ -42,7 +46,7 @@ export class SchemaEditorFiles {
     if (!window.Dropzone) {
       try {
         window.Dropzone = await this.loader.loadModule("dropzone");
-        this.loader.loadModule("npm:dropzone@5.4.0/dist/min/dropzone.min.css!");
+        this.loader.loadModule("dropzone/dist/min/dropzone.min.css!");
       } catch (e) {
         log.error(e);
       }
@@ -92,7 +96,10 @@ export class SchemaEditorFiles {
         },
         thumbnailWidth: 120, // should keep aspect ratio,
         thumbnailHeight: null,
-        thumbnailMethod: "contain"
+        thumbnailMethod: "contain",
+        renameFile: file => {
+          return file.fullPath || file.name;
+        }
       },
       this.options,
       translations
@@ -113,7 +120,12 @@ export class SchemaEditorFiles {
         // }
         // where url is the prop returned in the response and imageUrl is the prop of the data object to hold that value;
         // prop would be url in that example
-        newFile[this.options.fileProperties[prop]] = fileProperties[prop];
+        let value = fileProperties[prop];
+        if (prop === "name") {
+          // use the fullPath as the name if available
+          value = fileProperties.fullPath || fileProperties.name;
+        }
+        newFile[this.options.fileProperties[prop]] = value;
       }
       if (this.options.maxFiles && this.options.maxFiles === 1) {
         this.data = newFile;
@@ -166,8 +178,7 @@ export class SchemaEditorFiles {
       if (file && file.url) {
         const mockFile = {
           name: file.url,
-          dataURL: file.url, // needed for dropzone to create the thumbnail in a canvas
-          size: 0,
+          size: file.size || 0,
           accepted: true
         };
 
@@ -177,20 +188,27 @@ export class SchemaEditorFiles {
 
         this.dropzone.files.push(mockFile);
         this.dropzone.emit("addedfile", mockFile);
-        this.dropzone.createThumbnailFromUrl(
-          mockFile,
-          this.dropzoneOptions.thumbnailWidth,
-          this.dropzoneOptions.thumbnailHeight,
-          this.dropzoneOptions.thumbnailMethod,
-          false,
-          thumbnail => {
-            this.dropzone.emit("thumbnail", mockFile, thumbnail);
-            this.dropzone.emit("complete", mockFile);
-            this.dropzone.emit("accepted", mockFile);
-            this.dropzone._updateMaxFilesReachedClass();
-          },
-          "anonymous"
-        );
+        if (file.type.includes("image/")) {
+          mockFile.dataURL = file.url; // needed for dropzone to create the thumbnail in a canvas
+          this.dropzone.createThumbnailFromUrl(
+            mockFile,
+            this.dropzoneOptions.thumbnailWidth,
+            this.dropzoneOptions.thumbnailHeight,
+            this.dropzoneOptions.thumbnailMethod,
+            false,
+            thumbnail => {
+              this.dropzone.emit("thumbnail", mockFile, thumbnail);
+              this.dropzone.emit("complete", mockFile);
+              this.dropzone.emit("accepted", mockFile);
+              this.dropzone._updateMaxFilesReachedClass();
+            },
+            "anonymous"
+          );
+        } else {
+          this.dropzone.emit("complete", mockFile);
+          this.dropzone.emit("accepted", mockFile);
+          this.dropzone._updateMaxFilesReachedClass();
+        }
       }
     });
   }
