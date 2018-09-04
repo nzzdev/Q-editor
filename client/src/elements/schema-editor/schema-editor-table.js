@@ -90,7 +90,7 @@ class MetaData {
         // here we fake the array of row indexes
         // and return a new Proxy for this row array if there is none already
 
-        // parse this to an int if its a string
+        // parse the rowIndex to an int if its a string
         if (typeof rowIndex === "string") {
           rowIndex = parseInt(rowIndex, 10);
         }
@@ -146,10 +146,14 @@ class MetaData {
 
 @inject(Loader, ObjectFromSchemaGenerator, AvailabilityChecker)
 export class SchemaEditorTable {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
-  @bindable required;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  required;
 
   options = {
     allowTranspose: true,
@@ -259,7 +263,10 @@ export class SchemaEditorTable {
         }
 
         // a cell in the the first row is not valid as it contains the headers
-        if (row === 0) {
+        if (
+          row === 0 &&
+          this.options.metaDataEditor.features.cells.notForFirstRow === true
+        ) {
           return this.hideMetaDataEditor();
         }
 
