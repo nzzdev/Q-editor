@@ -7,7 +7,7 @@
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
-    <div ref="tableContainerElement" class="{{ metaDataEditorAvailable ? 'metadata-editor-available' : ''"></div>
+    <div ref="tableContainerElement" class="${ metaDataEditorAvailable ? 'metadata-editor-available' : ''}"></div>
   </label>
   <div class="schema-editor-table__meta-editor schema-editor-table__meta-editor--hidden" ref="metaEditorWrapper" if.bind="metaDataEditorEnabled && metaDataEditorAvailable">
     <div ref="metaEditorGuidingLine" class="schema-editor-table__meta-editor__guiding-line"></div>
