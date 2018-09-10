@@ -128,6 +128,12 @@ class MetaData {
     });
   }
 
+  hasMetaDataForCell(rowIndex, colIndex) {
+    return !!this.data.cells.find(cell => {
+      return cell.rowIndex === rowIndex && cell.colIndex === colIndex;
+    });
+  }
+
   // used to remove empty metadata objects
   cleanup() {
     const cleanedUpCells = [];
@@ -274,10 +280,22 @@ export class SchemaEditorTable {
         if (row === row2 && column === column2) {
           // only if the cell metaData feature is enabled
           if (this.options.metaDataEditor.features.cells) {
-            return this.showMetaDataEditorForCell(row, column);
+            const cellData = this.hot.getDataAtCell(row, column);
+            // only if the cell is not empty or there is already metaData for this cell
+            if (
+              (cellData !== undefined &&
+                cellData !== null &&
+                cellData.length > 0) ||
+              this.metaEditorData.hasMetaDataForCell(row, column)
+            ) {
+              return this.showMetaDataEditorForCell(row, column);
+            }
           }
           return this.hideMetaDataEditor();
         }
+
+        // any other case (multiple cells selected) leads to hiding the metadata editor
+        return this.hideMetaDataEditor();
       }
     });
     if (Array.isArray(this.hotData)) {
