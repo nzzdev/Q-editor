@@ -1,5 +1,17 @@
 import { bindable, inject, Loader } from "aurelia-framework";
 import array2d from "array2d";
+import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
+import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
+
+function getSchemaAtPath(schema, path) {
+  if (path.includes(".")) {
+    const pathParts = path.split(".");
+    const firstPathPart = pathParts.shift();
+    const remainingPath = pathParts.join(".");
+    return getSchemaAtPath(schema.properties[firstPathPart], remainingPath);
+  }
+  return schema.properties[path];
+}
 
 function hasNonNullInArray(arr) {
   for (let val of arr) {
@@ -43,24 +55,136 @@ function emptyToNull(data) {
   return data;
 }
 
-@inject(Loader)
+function hasNonEmptyProperty(obj, excludedProperties = []) {
+  return Object.keys(obj)
+    .filter(prop => !excludedProperties.includes(prop))
+    .some(prop => {
+      if (obj[prop] === undefined || obj[prop] === null) {
+        return false;
+      }
+      if (typeof obj[prop] === "object") {
+        return hasNonEmptyProperty(obj[prop]);
+      }
+      if (obj[prop] !== "") {
+        return true;
+      }
+      return false;
+    });
+}
+
+class MetaData {
+  constructor(initialMetaData, metaDataSchemas, objectFromSchemaGenerator) {
+    this.data = initialMetaData;
+    this.metaDataSchemas = metaDataSchemas;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
+    // set up the proxies
+    if (this.data.cells) {
+      this.setupCellsProxy();
+    }
+  }
+
+  setupCellsProxy() {
+    const rowProxies = [];
+    this.cells = new Proxy(rowProxies, {
+      get: (rowTarget, rowIndex, receiver) => {
+        // here we fake the array of row indexes
+        // and return a new Proxy for this row array if there is none already
+
+        // parse the rowIndex to an int if its a string
+        if (typeof rowIndex === "string") {
+          rowIndex = parseInt(rowIndex, 10);
+        }
+
+        if (!rowProxies[rowIndex]) {
+          rowProxies[rowIndex] = new Proxy(this.data.cells, {
+            get: (cellTarget, colIndex) => {
+              // parse this to an int if its a string
+              if (typeof colIndex === "string") {
+                colIndex = parseInt(colIndex, 10);
+              }
+              let cellMetaDataObject = this.data.cells.find(
+                cellMetaDataObjectCandidate =>
+                  cellMetaDataObjectCandidate.rowIndex === rowIndex &&
+                  cellMetaDataObjectCandidate.colIndex === colIndex
+              );
+
+              // if there is no cellMetaData object yet for the selected cell, create it from the schema
+              if (!cellMetaDataObject) {
+                cellMetaDataObject = this.objectFromSchemaGenerator.generateFromSchema(
+                  this.metaDataSchemas.cells
+                );
+                // set the selected indexes
+                cellMetaDataObject.rowIndex = rowIndex;
+                cellMetaDataObject.colIndex = colIndex;
+                // and push it to the array to store it with the item
+                this.data.cells.push(cellMetaDataObject);
+              }
+              return cellMetaDataObject;
+            }
+          });
+        }
+        return rowProxies[rowIndex];
+      }
+    });
+  }
+
+  hasMetaDataForCell(rowIndex, colIndex) {
+    return !!this.data.cells.find(cell => {
+      return cell.rowIndex === rowIndex && cell.colIndex === colIndex;
+    });
+  }
+
+  // used to remove empty metadata objects
+  cleanup() {
+    const cleanedUpCells = [];
+    // cleanup cells
+    this.data.cells = this.data.cells.filter(cell => {
+      // keep the cells that have at least one property besides the indexes that is not empty
+      if (hasNonEmptyProperty(cell, ["colIndex", "rowIndex"])) {
+        return true;
+      }
+      cleanedUpCells.push(cell);
+      return false;
+    });
+    return cleanedUpCells;
+  }
+}
+
+@inject(Loader, ObjectFromSchemaGenerator, AvailabilityChecker)
 export class SchemaEditorTable {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
-  @bindable required;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  required;
 
   options = {
     allowTranspose: true,
     minRowsDataTable: 8
   };
 
-  constructor(loader) {
+  constructor(loader, objectFromSchemaGenerator, availabilityChecker) {
     this.loader = loader;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
+    this.availabilityChecker = availabilityChecker;
   }
 
-  dataChanged() {
-    this.hotData = JSON.parse(JSON.stringify(this.data));
+  setData(data) {
+    if (this.metaDataEditorEnabled) {
+      this.data[this.options.metaDataEditor.dataPropertyName] = data;
+    } else {
+      this.data = data;
+    }
+  }
+
+  getData() {
+    if (this.metaDataEditorEnabled) {
+      return this.data[this.options.metaDataEditor.dataPropertyName];
+    }
+    return this.data;
   }
 
   async schemaChanged() {
@@ -77,6 +201,12 @@ export class SchemaEditorTable {
   }
 
   async attached() {
+    if (this.options.metaDataEditor) {
+      await this.enableMetaDataEditorIfAvailable();
+    }
+
+    this.hotData = JSON.parse(JSON.stringify(this.getData()));
+
     this.loader.loadModule("handsontable/dist/handsontable.full.css!");
     const Handsontable = await this.loader.loadModule(
       "handsontable/dist/handsontable.full.js"
@@ -102,7 +232,7 @@ export class SchemaEditorTable {
       },
       afterChange: (changes, source) => {
         if (source !== "loadData") {
-          this.data = trimNull(emptyToNull(this.hot.getData()));
+          this.setData(trimNull(emptyToNull(this.hot.getData())));
           this.change();
         }
         if (this.hot) {
@@ -111,10 +241,181 @@ export class SchemaEditorTable {
             height: this.getGridHeight()
           });
         }
+      },
+      afterSelectionEnd: (row, column, row2, column2, selectionLayerLevel) => {
+        // if we do not have the medaDataEditor enabled, there is nothing to do here
+        if (!this.metaDataEditorEnabled || !this.metaDataEditorAvailable) {
+          return;
+        }
+
+        // a column is selected
+        if (
+          column === column2 &&
+          row === 0 &&
+          row2 === this.hot.countRows() - 1
+        ) {
+          // todo: implement the column metadata editing
+          return this.hideMetaDataEditor();
+        }
+
+        // a row is selected
+        if (
+          row === row2 &&
+          column === 0 &&
+          column2 === this.hot.countCols() - 1
+        ) {
+          // todo: implement the row metadata editing
+          return this.hideMetaDataEditor();
+        }
+
+        // a cell in the the first row is not valid as it contains the headers
+        if (
+          row === 0 &&
+          this.options.metaDataEditor.features.cells.notForFirstRow === true
+        ) {
+          return this.hideMetaDataEditor();
+        }
+
+        // a single cell is selected
+        if (row === row2 && column === column2) {
+          // only if the cell metaData feature is enabled
+          if (this.options.metaDataEditor.features.cells) {
+            const cellData = this.hot.getDataAtCell(row, column);
+            // only if the cell is not empty or there is already metaData for this cell
+            if (
+              (cellData !== undefined &&
+                cellData !== null &&
+                cellData.length > 0) ||
+              this.metaEditorData.hasMetaDataForCell(row, column)
+            ) {
+              return this.showMetaDataEditorForCell(row, column);
+            }
+          }
+          return this.hideMetaDataEditor();
+        }
+
+        // any other case (multiple cells selected) leads to hiding the metadata editor
+        return this.hideMetaDataEditor();
       }
     });
     if (Array.isArray(this.hotData)) {
       this.hot.loadData(this.hotData);
+    }
+    if (this.metaDataEditorEnabled) {
+      this.setCellClassesFromMetaEditorState();
+    }
+  }
+
+  detached() {
+    this.availabilityChecker.unregisterReevaluateCallback(
+      this.reevaluateMetaDataEditorAvailabilityCallback
+    );
+  }
+
+  hideMetaDataEditor() {
+    this.metaEditorWrapper.classList.add(
+      "schema-editor-table__meta-editor--hidden"
+    );
+    this.selectedRow = undefined;
+    this.selectedColumn = undefined;
+    if (this.selectedCellElement) {
+      this.selectedCellElement.classList.remove(
+        "schema-editor-table__cell--selected"
+      );
+      this.selectedCellElement = undefined;
+    }
+  }
+
+  showMetaDataEditorForCell(rowIndex, colIndex) {
+    // if the selected cell is different than before, handle change to cleanup
+    if (this.selectedRow !== rowIndex || this.selectedColumn !== colIndex) {
+      this.handleMetaEditorChange();
+    }
+    this.metaEditorWrapper.classList.remove(
+      "schema-editor-table__meta-editor--hidden"
+    );
+    // remove selected class from any old cell
+    if (this.selectedCellElement) {
+      this.selectedCellElement.classList.remove(
+        "schema-editor-table__cell--selected"
+      );
+    }
+    this.selectedRow = rowIndex;
+    this.selectedColumn = colIndex;
+    this.selectedCellElement = this.hot.getCell(
+      this.selectedRow,
+      this.selectedColumn
+    );
+    this.selectedCellElement.classList.add(
+      "schema-editor-table__cell--selected"
+    );
+  }
+
+  async enableMetaDataEditorIfAvailable() {
+    // if this has availabilityChecks, we need to check them first
+    if (Array.isArray(this.options.metaDataEditor.availabilityChecks)) {
+      await this.applyMetaDataEditorAvailability();
+
+      this.reevaluateMetaDataEditorAvailabilityCallback = this.applyMetaDataEditorAvailability.bind(
+        this
+      );
+      this.availabilityChecker.registerReevaluateCallback(() => {
+        this.reevaluateMetaDataEditorAvailabilityCallback;
+      });
+    } else {
+      // if there are not checks configured, the metaData editor is available
+      this.metaDataEditorAvailable = true;
+    }
+
+    this.metaDataEditorEnabled = true;
+
+    this.metaEditorSchema = getSchemaAtPath(
+      this.schema,
+      this.options.metaDataEditor.features.cells.propertyPath
+    ).items;
+
+    this.metaEditorData = new MetaData(
+      this.data.metaData,
+      {
+        cells: this.metaEditorSchema
+      },
+      this.objectFromSchemaGenerator
+    );
+  }
+
+  async applyMetaDataEditorAvailability() {
+    const availability = await this.availabilityChecker.getAvailabilityInfo(
+      this.options.metaDataEditor.availabilityChecks
+    );
+    if (availability.isAvailable) {
+      this.metaDataEditorAvailable = true;
+    } else {
+      this.metaDataEditorAvailable = false;
+    }
+  }
+
+  setCellClassesFromMetaEditorState() {
+    for (const cell of this.metaEditorData.data.cells) {
+      const cellElement = this.hot.getCell(cell.rowIndex, cell.colIndex);
+      if (cellElement) {
+        cellElement.classList.add("schema-editor-table__cell--has-meta");
+      }
+    }
+  }
+
+  handleMetaEditorChange() {
+    // cleanup on every change
+    const cleanedUpCells = this.metaEditorData.cleanup();
+    for (const cell of cleanedUpCells) {
+      const cellElement = this.hot.getCell(cell.rowIndex, cell.colIndex);
+      if (cellElement) {
+        cellElement.classList.remove("schema-editor-table__cell--has-meta");
+      }
+    }
+    this.setCellClassesFromMetaEditorState();
+    // call the bound change function if given
+    if (typeof this.change === "function") {
+      this.change();
     }
   }
 
@@ -122,7 +423,7 @@ export class SchemaEditorTable {
     return (
       Math.min(
         280,
-        Math.max(this.options.minRowsDataTable, this.data.length) * 23
+        Math.max(this.options.minRowsDataTable, this.getData().length) * 23
       ) + 30
     );
   }
@@ -165,7 +466,7 @@ export class SchemaEditorTable {
 
       if (changed) {
         this.hot.loadData(newData);
-        this.data = trimNull(emptyToNull(this.hot.getData()));
+        this.setData(trimNull(emptyToNull(this.hot.getData())));
         this.change();
       }
     } catch (e) {
@@ -176,7 +477,7 @@ export class SchemaEditorTable {
 
   transpose() {
     this.hot.loadData(array2d.transpose(this.hot.getData()));
-    this.data = trimNull(emptyToNull(this.hot.getData()));
+    this.setData(trimNull(emptyToNull(this.hot.getData())));
     this.hot.updateSettings({
       height: this.getGridHeight()
     });

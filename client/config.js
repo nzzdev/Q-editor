@@ -43,7 +43,7 @@ System.config({
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.37",
     "dropzone": "npm:dropzone@5.5.1",
-    "handsontable": "github:handsontable/handsontable@3.0.0",
+    "handsontable": "github:handsontable/handsontable@5.0.2",
     "heyman/leaflet-areaselect": "github:heyman/leaflet-areaselect@master",
     "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
     "leaflet": "github:Leaflet/Leaflet@1.3.1",

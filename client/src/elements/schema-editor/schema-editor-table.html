@@ -1,12 +1,19 @@
 <template>
   <require from="./schema-editor-table.css"></require>
+  <require from="elements/schema-editor/schema-editor"></require>
   <label>
     ${schema["title"] & toolT}
     <span show.bind="required">
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
-    <div ref="tableContainerElement"></div>
+    <div ref="tableContainerElement" class="${ metaDataEditorAvailable ? 'metadata-editor-available' : ''}"></div>
   </label>
+  <div class="schema-editor-table__meta-editor schema-editor-table__meta-editor--hidden" ref="metaEditorWrapper" if.bind="metaDataEditorEnabled && metaDataEditorAvailable">
+    <label>Metadaten <span if.bind="data.table[selectedRow][selectedColumn] && data.table[selectedRow][selectedColumn] !== ''">für</span> <span class="schema-editor-table__meta-editor__title--highlight" if.bind="data.table[selectedRow][selectedColumn] && data.table[selectedRow][selectedColumn] !== ''">${data.table[selectedRow][selectedColumn]}</span></label>
+    <schema-editor if.bind="selectedRow !== undefined && selectedColumn !== undefined" schema.bind="metaEditorSchema" data.bind="metaEditorData.cells[selectedRow][selectedColumn]" change.call="handleMetaEditorChange()"
+      show-notifications.bind="false">
+    </schema-editor>
+  </div>
   <button-secondary if.bind="options.allowTranspose" click.delegate="transpose()" style="width: 250px;">${ 'editor.transpose' & t }</button-secondary>
 </template>

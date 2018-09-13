@@ -1,3 +1,6 @@
+# 3.4.0 (xx.xx.2018)
+- feat: meta editor in schema-editor-table: tool schema can enable and configure this in Q:options. The structure for the cell metadata is defined in a json-schema and will lead to a form visible when a cell is selected.
+
 # 3.3.0 (28.08.2018)
 - feat: preview loader can load renderingInfo.sophieModules (configure sophie.buildServiceBaseUrl in editor config in your Q server instance, see https://github.com/nzzdev/sophie-build-service for details regarding Sophie)
 - feat: schema-editor-files sets the fullPath as the filename when uploading directories
