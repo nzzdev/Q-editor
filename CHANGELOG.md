@@ -1,4 +1,4 @@
-# 3.4.0 (xx.xx.2018)
+# 3.4.0 (13.09.2018)
 - feat: meta editor in schema-editor-table: tool schema can enable and configure this in Q:options. The structure for the cell metadata is defined in a json-schema and will lead to a form visible when a cell is selected.
 
 # 3.3.0 (28.08.2018)
