@@ -55,9 +55,12 @@ export class ItemPreview {
       {},
       {
         set: (target, property, value, receiver) => {
-          target[property] = value;
-          this.target = value;
-          this.loadPreview();
+          // Only update value if it is different from previous value
+          if (target[property] !== value) {
+            target[property] = value;
+            this.target = value;
+            this.loadPreview();
+          }
           return true;
         }
       }
@@ -68,8 +71,11 @@ export class ItemPreview {
       {},
       {
         set: (target, property, value, receiver) => {
-          target[property] = value;
-          this.handleSizeChange();
+          // Only update value if it is different from previous value
+          if (target[property] !== value) {
+            target[property] = value;
+            this.handleSizeChange();
+          }
           return true;
         }
       }
