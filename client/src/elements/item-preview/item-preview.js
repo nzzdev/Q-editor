@@ -55,7 +55,7 @@ export class ItemPreview {
       {},
       {
         set: (target, property, value, receiver) => {
-          // Only update value if is different from previous value
+          // Only update value if it is different from previous value
           if (target[property] !== value) {
             target[property] = value;
             this.target = value;
@@ -71,7 +71,7 @@ export class ItemPreview {
       {},
       {
         set: (target, property, value, receiver) => {
-          // Only update value if is different from previous value
+          // Only update value if it is different from previous value
           if (target[property] !== value) {
             target[property] = value;
             this.handleSizeChange();
