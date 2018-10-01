@@ -304,7 +304,6 @@ export class ItemPreview {
   }
 
   loadPreview() {
-    console.error("load preview");
     // if we have no target, we cannot load the preview
     if (!this.targetProxy.target || !this.targetProxy.target.key) {
       return;
