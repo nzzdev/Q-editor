@@ -39,11 +39,9 @@ export default class ObjectFromSchemaGenerator {
           }
         }
       }
-      if (schema.default !== undefined) {
-        const defaultValue = this.getDefaultOrNull(schema);
-        if (defaultValue) {
-          array = defaultValue;
-        }
+      const defaultValue = this.getDefaultOrNull(schema);
+      if (defaultValue !== null) {
+        array = defaultValue;
       }
       return array;
     } else if (schema.type === "object") {
