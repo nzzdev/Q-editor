@@ -3,13 +3,18 @@ import Backend from "i18next-fetch-backend";
 import ToolsInfo from "resources/ToolsInfo.js";
 import qEnv from "resources/qEnv.js";
 
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
+import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
+
 export async function configure(aurelia) {
   aurelia.use.singleton(QConfig);
   aurelia.use.singleton(ToolsInfo);
-
+  aurelia.use.singleton(CurrentItemProvider);
+  aurelia.use.singleton(ToolEndpointChecker);
   aurelia.use
     .standardConfiguration()
     .feature("elements/atoms")
+    .feature("resources/availability-checks")
     .feature("binding-behaviors")
     .feature("value-converters")
     .plugin("aurelia-i18n", async instance => {
