@@ -237,6 +237,16 @@ export class Editor {
         // whenever we save the item, we need to reevaluate all the checks
         this.triggerReevaluations();
       })
+      .then(() => {
+        // ensure url includes the item id (it does not before first save for a new item)
+        if (!window.location.href.includes(this.item.id)) {
+          window.history.replaceState(
+            null,
+            "",
+            `${window.location.href}/${this.item.id}`
+          );
+        }
+      })
       .catch(error => {
         if (error.message === "isSaving") {
           // this is fine, we do not show an error in this case
