@@ -35,7 +35,7 @@ export default class ObjectFromSchemaGenerator {
         for (let i = 0; i < schema.minItems; i++) {
           let value = this.generateFromSchema(schema.items);
           if (value) {
-            array.push();
+            array.push(value);
           }
         }
       }
