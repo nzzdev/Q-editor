@@ -1,4 +1,5 @@
-import { inject } from "aurelia-framework";
+import { inject, LogManager } from "aurelia-framework";
+const log = LogManager.getLogger("Q");
 import IdGenerator from "./IdGenerator.js";
 import Ajv from "ajv";
 const ajv = new Ajv();
@@ -85,7 +86,7 @@ export default class ObjectFromSchemaGenerator {
       if (itemPart === undefined) {
         return undefined;
       }
-      console.error(e);
+      log.error(e);
       return undefined;
     }
     // if the current itemPart is an object, we remove the properties that are not defined in the schema
@@ -164,10 +165,10 @@ export default class ObjectFromSchemaGenerator {
     }
     const possibleSchemas = this.getPossibleItemSchemas(schema);
     if (possibleSchemas) {
-      for (const schema of possibleSchemas) {
-        const validate = ajv.compile(schema);
+      for (const possibleSchema of possibleSchemas) {
+        const validate = ajv.compile(possibleSchema);
         if (validate(data)) {
-          return schema;
+          return possibleSchema;
         }
       }
       return null;
