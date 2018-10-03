@@ -82,13 +82,11 @@
         <div class="livingdocs-component-item-controls">
           <div class="item-edit">
             <a href="#/editor/${tool}/${selectedItems[selectedItemIndex].id}" target="_blank">
-              <button-secondary size="big" icon="edit"></button-secondary>
+              <button-secondary icon="edit">${'livingdocsComponent.edit' & t}</button-secondary>
             </a>
-            <span class="q-text">${'livingdocsComponent.edit' & t}</span>
           </div>
           <div class="item-insert">
-            <button-primary click.delegate="insertItem()" size="big" icon="deactivate"></button-primary>
-            <span class="q-text">${'livingdocsComponent.insert' & t}</span>
+            <button-primary click.delegate="insertItem()" icon="deactivate">${'livingdocsComponent.insert' & t}</button-primary>
           </div>
         </div>
       </div>

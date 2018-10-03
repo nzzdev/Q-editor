@@ -229,19 +229,5 @@ html {
   border-top: 1px solid var(--q-color-gray-4);
   display: flex;
   justify-content: space-around;
-}
-
-.livingdocs-component-item-controls > div {
-  text-align: center;
-}
-
-.livingdocs-component-item-controls > div button-secondary,
-.livingdocs-component-item-controls > div button-primary,
-.livingdocs-component-item-controls > div span {
-  margin: 0 auto;
-}
-
-.livingdocs-component-item-controls button-primary,
-.livingdocs-component-item-controls button-secondary {
-  width: 48px;
+  min-height: 45px;
 }
