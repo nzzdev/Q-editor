@@ -5,15 +5,17 @@ import { I18N } from "aurelia-i18n";
 import { DialogService } from "aurelia-dialog";
 import { ConfirmDialog } from "dialogs/confirm-dialog.js";
 import QConfig from "resources/QConfig.js";
+import ItemStore from "resources/ItemStore";
 
-@inject(Router, Notification, I18N, DialogService, QConfig)
+@inject(Router, Notification, I18N, DialogService, QConfig, ItemStore)
 export default class ItemActionController {
-  constructor(router, notification, i18n, dialogService, qConfig) {
+  constructor(router, notification, i18n, dialogService, qConfig, itemStore) {
     this.router = router;
     this.notification = notification;
     this.i18n = i18n;
     this.dialogService = dialogService;
     this.qConfig = qConfig;
+    this.itemStore = itemStore;
   }
 
   activate(item) {
@@ -103,9 +105,10 @@ export default class ItemActionController {
 
   async blueprint(item) {
     try {
-      await item.blueprint();
-      item.conf.title = this.i18n.tr("item.blueprintTitlePrefix");
-      this.router.navigate(`/editor/${item.conf.tool}/${item.conf._id}`);
+      const blueprintedItem = await this.itemStore.getBlueprintedItem(item.id);
+      this.router.navigate(
+        `/editor/${blueprintedItem.getToolName()}/${blueprintedItem.id}`
+      );
     } catch (e) {
       this.notification.error("notification.failedToLoadItem");
     }
