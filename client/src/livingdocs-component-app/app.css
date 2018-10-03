@@ -178,6 +178,10 @@ html {
   margin: var(--q-space-base) auto 0 auto;
 }
 
+.livingdocs-component-item-options-container {
+  width: 200px;
+}
+
 .livingdocs-component-item-preview {
   margin-top: 0;
   overflow: auto;

@@ -4,6 +4,8 @@ import ItemStore from "resources/ItemStore.js";
 import QTargets from "resources/QTargets.js";
 import qEnv from "resources/qEnv.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
+import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
 let loadedItems = [];
 
@@ -27,11 +29,25 @@ async function getItem(id) {
 }
 
 @singleton()
-@inject(ItemStore, QTargets, ObjectFromSchemaGenerator, I18N)
+@inject(
+  ItemStore,
+  QTargets,
+  ObjectFromSchemaGenerator,
+  I18N,
+  ToolEndpointChecker,
+  CurrentItemProvider
+)
 export class App {
   moreItemsAvailable = false;
 
-  constructor(itemStore, qTargets, objectFromSchemaGenerator, i18n) {
+  constructor(
+    itemStore,
+    qTargets,
+    objectFromSchemaGenerator,
+    i18n,
+    toolEndpointChecker,
+    currentItemProvider
+  ) {
     this.itemStore = itemStore;
     this.qTargets = qTargets;
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
@@ -40,6 +56,8 @@ export class App {
     this.displayOptionsSchema = {
       properties: {}
     };
+    this.toolEndpointChecker = toolEndpointChecker;
+    this.currentItemProvider = currentItemProvider;
   }
 
   async activate() {
@@ -61,6 +79,7 @@ export class App {
     try {
       this.targetKey = decodeURIComponent(targetQuery[1]);
     } catch (e) {
+      this.targetKey = "nzz_ch";
       console.log(e);
     }
   }
@@ -86,6 +105,12 @@ export class App {
   async loadView() {
     if (this.selectedItemIndex !== undefined) {
       const item = await getItem(this.selectedItems[this.selectedItemIndex].id);
+      // set the toolName and the current item to toolEndpointChecker
+      // whenever we activate the editor. The toolEndpointChecker is used
+      // in the AvailabilityChecker to send requests to the current tool
+      this.toolEndpointChecker.setCurrentToolName(item.conf.tool);
+      this.toolEndpointChecker.setCurrentItem(item);
+      this.currentItemProvider.setCurrentItem(item);
       this.title = item.conf.title;
       await this.loadDisplayOptions();
 
