@@ -8,6 +8,7 @@
   <require from="./app.css"></require>
   <require from="../elements/atoms/box-icon.html"></require>
   <require from="../elements/item-preview/preview-container"></require>
+  <require from="../elements/schema-editor/schema-editor"></require>
 
   <div class="livingdocs-component">
     <div class="livingdocs-component-search">
@@ -19,8 +20,8 @@
         </svg>
       </div>
       <div class="item-list">
-        <div class="item-list-entry ${item.conf._id === selectedItems[selectedItemIndex].id ? 'selected' : ''}" click.delegate="selectItem(item)"
-          repeat.for="item of items">
+        <div class="item-list-entry ${item.conf._id === selectedItems[selectedItemIndex].id ? 'selected' : ''}"
+          click.delegate="selectItem(item)" repeat.for="item of items">
           <div class="item-list-entry-title">
             <box-icon if.bind="item.conf.icon" code.bind="item.conf.icon" size="big" class="tool-icon"></box-icon>
             <span class="q-text">${item.conf.title}</span>
@@ -36,8 +37,10 @@
               ${item.conf.createdBy}
             </span>
             <div class="item-list-entry__state-tag-container">
-              <span if.bind="item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--active">${'item.active' & t}</span>
-              <span if.bind="!item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--inactive">${'item.inactive' & t}</span>
+              <span if.bind="item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--active">${'item.active'
+                & t}</span>
+              <span if.bind="!item.conf.active" class="q-text-small item-list-entry__state-tag item-list-entry__state-tag--inactive">${'item.inactive'
+                & t}</span>
             </div>
           </div>
         </div>
@@ -46,7 +49,8 @@
         <h4>${'livingdocsComponent.emptyList' & t}</h4>
       </div>
       <q-loader if.bind="itemsLoading"></q-loader>
-      <button-secondary if.bind="moreItemsAvailable" class="livingdocs-component-search__load-more-button" click.delegate="loadMore()">
+      <button-secondary if.bind="moreItemsAvailable" class="livingdocs-component-search__load-more-button"
+        click.delegate="loadMore()">
         <span>${'general.loadMore' & t}</span>
       </button-secondary>
     </div>
@@ -56,23 +60,22 @@
           <div class="livingdocs-component-item-title">
             <h2 if.bind="title">${title}</h2>
           </div>
-          <preview-container ref="previewContainer" id="preview-container" width.bind="previewWidth" rendering-info.bind="renderingInfo"
-            target.bind="target">
+          <preview-container ref="previewContainer" id="preview-container" width.bind="previewWidth"
+            rendering-info.bind="renderingInfo" target.bind="target">
           </preview-container>
         </div>
-        <h2 class="livingdocs-component-item-preview__message" show.bind="selectedItemIndex === undefined">${'livingdocsComponent.selectGraphic' & t}</h2>
-        <h2 class="livingdocs-component-item-preview__message" show.bind="selectedItemIndex !== undefined && !selectedItems[selectedItemIndex].active">${'livingdocsComponent.inactiveGraphic' & t}</h2>
+        <h2 class="livingdocs-component-item-preview__message" show.bind="selectedItemIndex === undefined">${'livingdocsComponent.selectGraphic'
+          & t}</h2>
+        <h2 class="livingdocs-component-item-preview__message" show.bind="selectedItemIndex !== undefined && !selectedItems[selectedItemIndex].active">${'livingdocsComponent.inactiveGraphic'
+          & t}</h2>
       </div>
       <div class="livingdocs-component-item-controls-container">
         <div class="livingdocs-component-item-options">
-          <div if.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
+          <div class="livingdocs-component-item-options-container" if.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
             <form class="q-form">
-              <div class="q-form__checkbox" show.bind="displayOptionsSchema.properties" repeat.for="optionKey of displayOptionsSchema.properties | keys">
-                <label>
-                  <input type="checkbox" checked.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions[optionKey]" change.delegate="loadPreview()">
-                  <span class="q-text">${displayOptionsSchema.properties[optionKey].title}</span>
-                </label>
-              </div>
+              <schema-editor schema.bind="displayOptionsSchema" data.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions"
+                change.call="loadPreview()">
+              </schema-editor>
             </form>
           </div>
         </div>
