@@ -76,8 +76,6 @@ export default class ObjectFromSchemaGenerator {
     return undefined;
   }
 
-  // TODO: Do not apply all the values from existing item to the new one but use the schema do define what should be added.
-  // everything else meta things and id and all that will come from somewhere else.
   generateFromItemAndSchema(itemPart, schema, idForIdGenerator) {
     // clone to not overwrite original
     try {
@@ -89,6 +87,7 @@ export default class ObjectFromSchemaGenerator {
       log.error(e);
       return undefined;
     }
+
     // if the current itemPart is an object, we remove the properties that are not defined in the schema
     // this is especially to get rid of any metaproperties that will be added outside of the scope of this function.
     if (schema.type === "object") {
@@ -120,11 +119,12 @@ export default class ObjectFromSchemaGenerator {
             arrayItem,
             schema
           );
-          return this.generateFromItemAndSchema(
+          const value = this.generateFromItemAndSchema(
             arrayItem,
             arrayItemSchema,
             idForIdGenerator
           );
+          return value;
         })
         .concat(newArrayItems);
     } else if (schema.type === "object") {

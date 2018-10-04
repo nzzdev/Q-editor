@@ -163,19 +163,33 @@ export default class ItemStore {
     // create a new one to hold the blueprinted data
     const blueprintedItem = this.getNewItem();
 
-    // set the tool, we need to know what schema to load blueprint
-    blueprintedItem.conf.tool = item.conf.tool;
-
     // set the title, otherwise we cannot save it
     blueprintedItem.conf.title = `${this.i18n.tr(
       "item.blueprintTitlePrefix"
     )} ${item.conf.title}`;
 
+    // set the tool, we need to know what schema to load blueprint
+    blueprintedItem.conf.tool = item.conf.tool;
+
+    // generate the new conf based on the original item and the schema
+    // use a tmp id here as we will do another generation run after this is saved and we have a valid id for this new doc
+    let blueprintedItemConf = this.objectFromSchemaGenerator.generateFromItemAndSchema(
+      item.conf,
+      await item.getSchema(),
+      `tmp-id-${Math.random()}`
+    );
+
+    // remove the title from the new conf, this is a little hacky, but we set the title already before to be able to save
+    delete blueprintedItemConf.title;
+
+    // add the blueprinted conf to the new item
+    blueprintedItem.addConf(blueprintedItemConf);
+
     // save to get a new id
     await blueprintedItem.save();
 
-    // generate the new conf based on the original item and the schema
-    const blueprintedItemConf = this.objectFromSchemaGenerator.generateFromItemAndSchema(
+    // generate the new conf again, this time with the correct id to regenerate and generated ids again
+    blueprintedItemConf = this.objectFromSchemaGenerator.generateFromItemAndSchema(
       item.conf,
       await item.getSchema(),
       blueprintedItem.id
