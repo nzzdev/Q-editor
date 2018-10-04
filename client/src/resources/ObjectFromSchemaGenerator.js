@@ -92,8 +92,24 @@ export default class ObjectFromSchemaGenerator {
     // this is especially to get rid of any metaproperties that will be added outside of the scope of this function.
     if (schema.type === "object") {
       Object.keys(itemPart).forEach(propertyName => {
-        if (!schema.properties.hasOwnProperty(propertyName)) {
+        // if we do not have properties on an object, this is a special schema-editor.
+        // so we need to handle them
+        if (!schema.hasOwnProperty("properties")) {
+          if (schema.hasOwnProperty["Q:type"]) {
+            // there are certain special types that are allowed to have no additional properties defined in the schema.
+            // if it is one of these, we return here to keep the data in the copied item
+            if (["files", "json"].includes(schema["Q:type"])) {
+              return;
+            }
+          }
+        }
+        // if the schema has no properties or doesn't include a property we delete it from the data
+        if (
+          !schema.hasOwnProperty("properties") ||
+          !schema.properties.hasOwnProperty(propertyName)
+        ) {
           delete itemPart[propertyName];
+          return;
         }
       });
     }

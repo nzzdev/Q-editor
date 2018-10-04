@@ -1,4 +1,4 @@
-import { inject } from "aurelia-framework";
+import { inject, LogManager } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Notification } from "aurelia-notification";
 import { I18N } from "aurelia-i18n";
@@ -6,6 +6,8 @@ import { DialogService } from "aurelia-dialog";
 import { ConfirmDialog } from "dialogs/confirm-dialog.js";
 import QConfig from "resources/QConfig.js";
 import ItemStore from "resources/ItemStore";
+
+const log = LogManager.getLogger("Q");
 
 @inject(Router, Notification, I18N, DialogService, QConfig, ItemStore)
 export default class ItemActionController {
@@ -110,6 +112,7 @@ export default class ItemActionController {
         `/editor/${blueprintedItem.getToolName()}/${blueprintedItem.id}`
       );
     } catch (e) {
+      log.error(e);
       this.notification.error("notification.failedToLoadItem");
     }
   }
