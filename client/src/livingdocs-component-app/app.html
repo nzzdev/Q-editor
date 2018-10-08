@@ -55,8 +55,8 @@
       </button-secondary>
     </div>
     <div class="livingdocs-component-item-container">
-      <div class="livingdocs-component-item-preview">
-        <div show.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
+      <div class="livingdocs-component-item-preview-container">
+        <div class="livingdocs-component-item-preview" show.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
           <div class="livingdocs-component-item-title">
             <h2 if.bind="title">${title}</h2>
           </div>
@@ -64,20 +64,20 @@
             rendering-info.bind="renderingInfo" target.bind="target">
           </preview-container>
         </div>
-        <h2 class="livingdocs-component-item-preview__message" show.bind="selectedItemIndex === undefined">${'livingdocsComponent.selectGraphic'
-          & t}</h2>
-        <h2 class="livingdocs-component-item-preview__message" show.bind="selectedItemIndex !== undefined && !selectedItems[selectedItemIndex].active">${'livingdocsComponent.inactiveGraphic'
-          & t}</h2>
+        <div class="livingdocs-component-item-preview-message-container">
+          <h2 show.bind="selectedItemIndex === undefined">${'livingdocsComponent.selectGraphic'
+            & t}</h2>
+          <h2 show.bind="selectedItemIndex !== undefined && !selectedItems[selectedItemIndex].active">${'livingdocsComponent.inactiveGraphic'
+            & t}</h2>
+        </div>
       </div>
       <div class="livingdocs-component-item-controls-container">
-        <div class="livingdocs-component-item-options">
-          <div class="livingdocs-component-item-options-container" if.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
-            <form class="q-form">
-              <schema-editor schema.bind="displayOptionsSchema" data.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions"
-                change.call="loadPreview()">
-              </schema-editor>
-            </form>
-          </div>
+        <div class="livingdocs-component-item-options-container" if.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
+          <form class="q-form livingdocs-component-item-options">
+            <schema-editor schema.bind="displayOptionsSchema" data.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions"
+              change.call="loadPreview()">
+            </schema-editor>
+          </form>
         </div>
         <div class="livingdocs-component-item-controls">
           <div class="item-edit">
