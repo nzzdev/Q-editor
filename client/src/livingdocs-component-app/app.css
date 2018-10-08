@@ -177,10 +177,6 @@ html {
   margin: var(--q-space-base) auto 0 auto;
 }
 
-.livingdocs-component-item-options-container {
-  overflow-y: auto;
-}
-
 .livingdocs-component-item-options {
   width: 200px;
 }
@@ -188,6 +184,8 @@ html {
 .livingdocs-component-item-preview-container {
   margin-top: 0;
   display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
   justify-content: center;
 }
 
@@ -195,14 +193,14 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 30%;
 }
 
 .livingdocs-component-item-controls-container {
   display: flex;
   flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
   justify-content: flex-end;
-  margin-top: 0;
 }
 
 .livingdocs-component-item-controls {
@@ -218,7 +216,6 @@ html {
   flex-direction: column;
   width: 100%;
   height: auto;
-  max-height: 450px;
   margin-top: 0;
 }
 

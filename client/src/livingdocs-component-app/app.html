@@ -72,7 +72,7 @@
         </div>
       </div>
       <div class="livingdocs-component-item-controls-container">
-        <div class="livingdocs-component-item-options-container" if.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
+        <div if.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
           <form class="q-form livingdocs-component-item-options">
             <schema-editor schema.bind="displayOptionsSchema" data.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions"
               change.call="loadPreview()">
