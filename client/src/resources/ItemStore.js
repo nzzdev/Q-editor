@@ -1,22 +1,42 @@
 import { inject } from "aurelia-framework";
 import { BindingEngine } from "aurelia-binding";
 import { HttpClient } from "aurelia-fetch-client";
+import { I18N } from "aurelia-i18n";
 import qEnv from "resources/qEnv.js";
 import User from "resources/User.js";
 import Item from "resources/Item.js";
 import ToolsInfo from "resources/ToolsInfo.js";
 import QConfig from "resources/QConfig.js";
+import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator";
 
-@inject(User, ToolsInfo, QConfig, BindingEngine, HttpClient)
+@inject(
+  User,
+  ToolsInfo,
+  QConfig,
+  ObjectFromSchemaGenerator,
+  BindingEngine,
+  HttpClient,
+  I18N
+)
 export default class ItemStore {
   items = {};
 
-  constructor(user, toolsInfo, qConfig, bindingEngine, httpClient) {
+  constructor(
+    user,
+    toolsInfo,
+    qConfig,
+    objectFromSchemaGenerator,
+    bindingEngine,
+    httpClient,
+    i18n
+  ) {
     this.user = user;
     this.toolsInfo = toolsInfo;
     this.qConfig = qConfig;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.bindingEngine = bindingEngine;
     this.httpClient = httpClient;
+    this.i18n = i18n;
 
     this.initFilters();
   }
@@ -134,6 +154,58 @@ export default class ItemStore {
     }
     await this.items[id].load(id);
     return this.items[id];
+  }
+
+  async getBlueprintedItem(id) {
+    // get the original
+    const item = await this.getItem(id);
+
+    // create a new one to hold the blueprinted data
+    const blueprintedItem = this.getNewItem();
+
+    // set the title, otherwise we cannot save it
+    blueprintedItem.conf.title = `${this.i18n.tr(
+      "item.blueprintTitlePrefix"
+    )} ${item.conf.title}`;
+
+    // set the tool, we need to know what schema to load blueprint
+    blueprintedItem.conf.tool = item.conf.tool;
+
+    // generate the new conf based on the original item and the schema
+    // use a tmp id here as we will do another generation run after this is saved and we have a valid id for this new doc
+    let blueprintedItemConf = this.objectFromSchemaGenerator.generateFromItemAndSchema(
+      item.conf,
+      await item.getSchema(),
+      `tmp-id-${Math.random()}`
+    );
+
+    // remove the title from the new conf, this is a little hacky, but we set the title already before to be able to save
+    delete blueprintedItemConf.title;
+
+    // add the blueprinted conf to the new item
+    blueprintedItem.addConf(blueprintedItemConf);
+
+    // save to get a new id
+    await blueprintedItem.save();
+
+    // generate the new conf again, this time with the correct id to regenerate and generated ids again
+    blueprintedItemConf = this.objectFromSchemaGenerator.generateFromItemAndSchema(
+      item.conf,
+      await item.getSchema(),
+      blueprintedItem.id
+    );
+
+    // remove the title from the new conf, this is a little hacky, but we set the title already before to be able to save
+    delete blueprintedItemConf.title;
+
+    // add the blueprinted conf to the new item
+    blueprintedItem.addConf(blueprintedItemConf);
+
+    // save again
+    await blueprintedItem.save();
+
+    this.items[blueprintedItem.id] = blueprintedItem;
+    return this.items[blueprintedItem.id];
   }
 
   async getSearchUrl(searchString, limit, bookmark, onlyTools) {

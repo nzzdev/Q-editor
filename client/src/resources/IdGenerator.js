@@ -13,10 +13,18 @@ export default class IdGenerator {
 
   getIdWithCurrentItemId() {
     const item = this.currentItemProvider.getCurrentItem();
+    return this.getIdWithItemId(item);
+  }
+
+  getIdWithItemId(item) {
     if (!item.id) {
       return null;
     }
 
-    return item.id + "-" + this.getId();
+    return this.getIdWithId(item.id);
+  }
+
+  getIdWithId(id) {
+    return id + "-" + this.getId();
   }
 }

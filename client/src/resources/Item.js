@@ -60,22 +60,6 @@ export default class Item {
     this.conf = Object.assign(this.conf, doc);
   }
 
-  async blueprint() {
-    const oldConf = JSON.parse(JSON.stringify(this.conf));
-    this.conf._id = undefined;
-    this.conf._rev = undefined;
-    this.conf.active = false;
-    await this.setDepartmentToUserDepartment();
-    await this.setPublicationToUserPublication();
-    await this.setAcronymToUserAcronym();
-    try {
-      return this.save();
-    } catch (e) {
-      this.conf = oldConf;
-      throw e;
-    }
-  }
-
   addConf(conf) {
     Object.assign(this.conf, conf);
     return this;
@@ -157,5 +141,20 @@ export default class Item {
     }
 
     return true;
+  }
+
+  async getSchema() {
+    if (this.schema) {
+      return this.schema;
+    }
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    const response = await this.httpClient.fetch(
+      `${QServerBaseUrl}/tools/${this.getToolName()}/schema.json`
+    );
+    if (response.ok) {
+      this.schema = await response.json();
+      return this.schema;
+    }
+    return null;
   }
 }

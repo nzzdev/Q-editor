@@ -1,5 +1,8 @@
-import { inject } from "aurelia-framework";
+import { inject, LogManager } from "aurelia-framework";
+const log = LogManager.getLogger("Q");
 import IdGenerator from "./IdGenerator.js";
+import Ajv from "ajv";
+const ajv = new Ajv();
 
 @inject(IdGenerator)
 export default class ObjectFromSchemaGenerator {
@@ -35,15 +38,13 @@ export default class ObjectFromSchemaGenerator {
         for (let i = 0; i < schema.minItems; i++) {
           let value = this.generateFromSchema(schema.items);
           if (value) {
-            array.push();
+            array.push(value);
           }
         }
       }
-      if (schema.default !== undefined) {
-        const defaultValue = this.getDefaultOrNull(schema);
-        if (defaultValue) {
-          array = defaultValue;
-        }
+      const defaultValue = this.getDefaultOrNull(schema);
+      if (defaultValue !== null) {
+        array = defaultValue;
       }
       return array;
     } else if (schema.type === "object") {
@@ -73,5 +74,132 @@ export default class ObjectFromSchemaGenerator {
       return defaultValue;
     }
     return undefined;
+  }
+
+  generateFromItemAndSchema(itemPart, schema, idForIdGenerator) {
+    // clone to not overwrite original
+    try {
+      itemPart = JSON.parse(JSON.stringify(itemPart));
+    } catch (e) {
+      if (itemPart === undefined) {
+        return undefined;
+      }
+      log.error(e);
+      return undefined;
+    }
+
+    // if the current itemPart is an object, we remove the properties that are not defined in the schema
+    // this is especially to get rid of any metaproperties that will be added outside of the scope of this function.
+    if (schema.type === "object") {
+      Object.keys(itemPart).forEach(propertyName => {
+        // if we do not have properties on an object, this is a special schema-editor.
+        // so we need to handle them
+        if (!schema.hasOwnProperty("properties")) {
+          if (schema.hasOwnProperty["Q:type"]) {
+            // there are certain special types that are allowed to have no additional properties defined in the schema.
+            // if it is one of these, we return here to keep the data in the copied item
+            if (["files", "json"].includes(schema["Q:type"])) {
+              return;
+            }
+          }
+        }
+        // if the schema has no properties or doesn't include a property we delete it from the data
+        if (
+          !schema.hasOwnProperty("properties") ||
+          !schema.properties.hasOwnProperty(propertyName)
+        ) {
+          delete itemPart[propertyName];
+          return;
+        }
+      });
+    }
+
+    if (schema.type === "array") {
+      // add new elements to the array if we do not meet minItems
+      const newArrayItems = [];
+      if (schema.minItems !== undefined) {
+        if (itemPart.length < schema.minItems) {
+          const numberOfArrayItemsToAdd = schema.minItems - itemPart.length;
+          for (let i = 0; i < numberOfArrayItemsToAdd; i++) {
+            const defaultValue = this.getDefaultOrNull(schema);
+            if (defaultValue !== null) {
+              newArrayItems.push(defaultValue);
+            }
+          }
+        }
+      }
+      // loop over all existing array items to handle them and concat with any new ones generated above
+      return itemPart
+        .map(arrayItem => {
+          const arrayItemSchema = this.getArrayItemSchemaForData(
+            arrayItem,
+            schema
+          );
+          const value = this.generateFromItemAndSchema(
+            arrayItem,
+            arrayItemSchema,
+            idForIdGenerator
+          );
+          return value;
+        })
+        .concat(newArrayItems);
+    } else if (schema.type === "object") {
+      if (!schema.hasOwnProperty("properties")) {
+        return undefined;
+      }
+      Object.keys(schema.properties).forEach(propertyName => {
+        let value = this.generateFromItemAndSchema(
+          itemPart[propertyName],
+          schema.properties[propertyName],
+          idForIdGenerator
+        );
+        if (value !== undefined) {
+          itemPart[propertyName] = value;
+        }
+      });
+      return itemPart;
+    }
+    // if this itemPart is a generatedId, we regenerate the id
+    if (schema.hasOwnProperty("Q:default")) {
+      if (schema["Q:default"] === "generatedId") {
+        const id = this.idGenerator.getIdWithId(idForIdGenerator);
+        if (id === undefined || id === null) {
+          throw new Error(
+            "failed to generate id with item id as item has no id yet"
+          );
+        }
+        return id;
+      }
+    }
+    // in all other cases, we return the existing value
+    return itemPart;
+  }
+
+  getArrayItemSchemaForData(data, schema) {
+    if (schema.items.type) {
+      return schema.items;
+    }
+    const possibleSchemas = this.getPossibleItemSchemas(schema);
+    if (possibleSchemas) {
+      for (const possibleSchema of possibleSchemas) {
+        const validate = ajv.compile(possibleSchema);
+        if (validate(data)) {
+          return possibleSchema;
+        }
+      }
+      return null;
+    }
+  }
+
+  getPossibleItemSchemas(schema) {
+    let possibleSchemas;
+    if (schema.items.oneOf) {
+      possibleSchemas = schema.items.oneOf;
+    } else if (schema.items.anyOf) {
+      possibleSchemas = schema.items.anyOf;
+    } else if (schema.items.allOf) {
+      possibleSchemas = schema.items.allOf;
+    }
+    return possibleSchemas;
   }
 }

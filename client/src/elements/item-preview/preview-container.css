@@ -4,4 +4,5 @@ preview-container {
   overflow: auto;
   width: 100%;
   margin-right: calc(var(--q-space-base) * 2);
+  border: solid 1px var(--q-color-gray-4);
 }

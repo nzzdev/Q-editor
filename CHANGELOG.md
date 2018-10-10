@@ -1,3 +1,8 @@
+# 3.5.0 (10.10.2018)
+- feat: Livingdocs Component now uses schema-editor for the displayOptions form. This means that you can use all the same features in the displayOptions schema. One Exception: The UserRole availability check is not available as the user is not authenticated in this screen.
+- feat: When a new graphic is saved for the first time, the id gets appended to the URL.
+- fix: When an item that has generated ids in it's data ('Q:defaults': 'generateId' in schema) the id gets properly regenerated when the item is used as a blueprint.
+
 # 3.4.0 (13.09.2018)
 - feat: meta editor in schema-editor-table: tool schema can enable and configure this in Q:options. The structure for the cell metadata is defined in a json-schema and will lead to a form visible when a cell is selected.
 
