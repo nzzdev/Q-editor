@@ -5,13 +5,20 @@ import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
 
 @inject(NotificationChecker, AvailabilityChecker, Element)
 export class SchemaEditorWrapper {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
-  @bindable required;
-  @bindable notifications;
-  @bindable showNotifications;
-  @bindable noObjectTitle;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  required;
+  @bindable
+  notifications;
+  @bindable
+  showNotifications;
+  @bindable
+  noObjectTitle;
 
   options = {};
 
@@ -22,7 +29,7 @@ export class SchemaEditorWrapper {
     this.getType = getType;
   }
 
-  async attached() {
+  async schemaChanged() {
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }

@@ -1,3 +1,6 @@
+# 3.5.1 (10.10.2018)
+- fix: availability-checks should run when ever the schema changes
+
 # 3.5.0 (10.10.2018)
 - feat: Livingdocs Component now uses schema-editor for the displayOptions form. This means that you can use all the same features in the displayOptions schema. One Exception: The UserRole availability check is not available as the user is not authenticated in this screen.
 - feat: When a new graphic is saved for the first time, the id gets appended to the URL.
