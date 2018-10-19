@@ -4,6 +4,8 @@ import IdGenerator from "./IdGenerator.js";
 import Ajv from "ajv";
 const ajv = new Ajv();
 
+const objectTypesWithImplicitProperties = ["files", "json"];
+
 @inject(IdGenerator)
 export default class ObjectFromSchemaGenerator {
   constructor(idGenerator) {
@@ -95,10 +97,10 @@ export default class ObjectFromSchemaGenerator {
         // if we do not have properties on an object, this is a special schema-editor.
         // so we need to handle them
         if (!schema.hasOwnProperty("properties")) {
-          if (schema.hasOwnProperty["Q:type"]) {
+          if (schema.hasOwnProperty("Q:type")) {
             // there are certain special types that are allowed to have no additional properties defined in the schema.
             // if it is one of these, we return here to keep the data in the copied item
-            if (["files", "json"].includes(schema["Q:type"])) {
+            if (objectTypesWithImplicitProperties.includes(schema["Q:type"])) {
               return;
             }
           }
@@ -144,9 +146,21 @@ export default class ObjectFromSchemaGenerator {
         })
         .concat(newArrayItems);
     } else if (schema.type === "object") {
+      // handle the special types by returning the complete copy of the itemPart
+      if (
+        schema.hasOwnProperty("Q:type") &&
+        objectTypesWithImplicitProperties.includes(schema["Q:type"])
+      ) {
+        return itemPart;
+      }
+
+      // if it is not a special type handled above and we have no properties defined, we return undefined here
+      // as we do not want any objects that do not follow the current schema in the copy
       if (!schema.hasOwnProperty("properties")) {
         return undefined;
       }
+
+      // generate the values for all the properties based on the schema
       Object.keys(schema.properties).forEach(propertyName => {
         let value = this.generateFromItemAndSchema(
           itemPart[propertyName],
