@@ -1,12 +1,10 @@
 import { inject, LogManager } from "aurelia-framework";
 import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
+import get from "get-value";
+import set from "set-value";
 
 const log = LogManager.getLogger("Q");
-
-function getDescendantProperty(obj, path) {
-  return path.split(".").reduce((acc, part) => acc && acc[part], obj);
-}
 @inject(ToolEndpointChecker, CurrentItemProvider)
 export default class ToolEndpointAvailabilityCheck {
   constructor(toolEndpointChecker, currentItemProvider) {
@@ -34,12 +32,14 @@ export default class ToolEndpointAvailabilityCheck {
       availabilityCheck.data.length > 0
     ) {
       const item = this.currentItemProvider.getCurrentItem().conf;
-      const data = availabilityCheck.data.map(property =>
-        getDescendantProperty(item, property)
-      );
+      const dataForEndpoint = {};
+      for (let property of availabilityCheck.data) {
+        set(dataForEndpoint, property, get(item, property));
+      }
+
       const availability = await this.toolEndpointChecker.fetchWithData(
         availabilityCheck.endpoint,
-        data
+        dataForEndpoint
       );
       return availability.available;
     }

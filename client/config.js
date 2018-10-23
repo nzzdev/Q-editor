@@ -6,7 +6,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-
   map: {
     "ajv": "npm:ajv@5.5.2",
     "array2d": "npm:array2d@0.0.5",
@@ -43,6 +42,7 @@ System.config({
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.37",
     "dropzone": "npm:dropzone@5.5.1",
+    "get-value": "npm:get-value@3.0.1",
     "handsontable": "github:handsontable/handsontable@5.0.2",
     "heyman/leaflet-areaselect": "github:heyman/leaflet-areaselect@master",
     "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
@@ -50,6 +50,7 @@ System.config({
     "leaflet-geocoder-mapzen": "npm:leaflet-geocoder-mapzen@1.8.0",
     "leaflet-search": "npm:leaflet-search@2.3.7",
     "moment": "npm:moment@2.22.0",
+    "set-value": "npm:set-value@3.0.0",
     "text": "github:systemjs/plugin-text@0.0.8",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
@@ -295,6 +296,9 @@ System.config({
     "npm:fast-json-stable-stringify@2.0.0": {
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
+    "npm:get-value@3.0.1": {
+      "isobject": "npm:isobject@3.0.1"
+    },
     "npm:i18next-fetch-backend@0.0.1": {
       "i18next-xhr-backend": "npm:i18next-xhr-backend@1.5.1"
     },
@@ -306,6 +310,9 @@ System.config({
     },
     "npm:intl@1.2.5": {
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:is-plain-object@2.0.4": {
+      "isobject": "npm:isobject@3.0.1"
     },
     "npm:json-schema-traverse@0.3.1": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
@@ -332,6 +339,9 @@ System.config({
     },
     "npm:punycode@1.3.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:set-value@3.0.0": {
+      "is-plain-object": "npm:is-plain-object@2.0.4"
     },
     "npm:url@0.10.3": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
