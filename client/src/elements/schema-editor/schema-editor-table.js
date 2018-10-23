@@ -48,7 +48,7 @@ function trimNull(data) {
 
 function emptyToNull(data) {
   array2d.eachCell(data, (cell, i, j) => {
-    if (cell === "" || cell === undefined) {
+    if (cell === "" || cell === undefined || cell.trim() === "") {
       data[i][j] = null;
     }
   });
