@@ -46,9 +46,18 @@ function trimNull(data) {
   );
 }
 
+function trimAllStrings(data) {
+  array2d.eachCell(data, (cell, i, j) => {
+    if (typeof data[i][j] === "string") {
+      data[i][j] = cell.trim();
+    }
+  });
+  return data;
+}
+
 function emptyToNull(data) {
   array2d.eachCell(data, (cell, i, j) => {
-    if (cell === "" || cell === undefined || cell.trim() === "") {
+    if (cell === "" || cell === undefined) {
       data[i][j] = null;
     }
   });
@@ -232,7 +241,9 @@ export class SchemaEditorTable {
       },
       afterChange: (changes, source) => {
         if (source !== "loadData") {
-          this.setData(trimNull(emptyToNull(this.hot.getData())));
+          this.setData(
+            trimNull(emptyToNull(trimAllStrings(this.hot.getData())))
+          );
           this.change();
         }
         if (this.hot) {
