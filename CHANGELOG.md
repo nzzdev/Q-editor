@@ -1,4 +1,7 @@
 
+# 3.5.3 (23.10.2018)
+- fix: trim all cells in schema-editor-table when data is pasted or edited by hand
+
 # 3.5.2 (19.10.2018)
 - fix: blueprinting of items with arrays of objects with types using implicit properties (`files`) works now.
 
