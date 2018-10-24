@@ -18,6 +18,7 @@ export default class ToolEndpointAvailabilityCheck {
       );
       return false;
     }
-    return await this.toolEndpointChecker.check(availabilityCheck).available;
+    const result = await this.toolEndpointChecker.check(availabilityCheck);
+    return result.available;
   }
 }
