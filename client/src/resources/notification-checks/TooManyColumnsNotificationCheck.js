@@ -1,6 +1,17 @@
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
+import { inject } from "aurelia-framework";
+
+@inject(CurrentItemProvider)
 export default class TooManyColumnsNotificationCheck {
-  getNotification(notificationCheck, data) {
-    if (data[0][0] && data[0][0].length > notificationCheck.options.limit) {
+  constructor(currentItemProvider) {
+    this.currentItemProvider = currentItemProvider;
+  }
+
+  getNotification(notificationCheck) {
+    const item = this.currentItemProvider.getCurrentItemByFields(
+      notificationCheck.fields
+    );
+    if (item.data[0] && item.data[0].length > notificationCheck.options.limit) {
       return {
         message: {
           title: "notifications.tooManyColumns.title",
