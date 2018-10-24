@@ -2,13 +2,7 @@ import { inject, LogManager } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import { Container } from "aurelia-dependency-injection";
 
-import CurrentItemProvider from "resources/CurrentItemProvider.js";
-
 const log = LogManager.getLogger("Q");
-
-function getDescendantProperty(obj, path) {
-  return path.split(".").reduce((acc, part) => acc && acc[part], obj);
-}
 
 function getNotificationTypeValue(type) {
   if (type === "high") {
@@ -64,25 +58,9 @@ export default class NotificationChecker {
           const checker = this.diContainer.get(
             notificationCheck.type + "NotificationCheck"
           );
-          const item = this.currentItemProvider.getCurrentItem().conf;
-
-          // if the data property is given and defines some data to send to the checker
-          // we gather an array containing only the properties needed by the checker
-          let data;
-          if (
-            Array.isArray(notificationCheck.data) &&
-            notificationCheck.data.length > 0
-          ) {
-            data = notificationCheck.data.map(property =>
-              getDescendantProperty(item, property)
-            );
-          }
 
           // get the notification from the checker or null
-          const notification = await checker.getNotification(
-            notificationCheck,
-            data
-          );
+          const notification = await checker.getNotification(notificationCheck);
 
           // a notification needs to have at least a message object
           if (!notification || typeof notification.message !== "object") {

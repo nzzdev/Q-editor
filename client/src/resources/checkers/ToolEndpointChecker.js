@@ -1,4 +1,6 @@
 import qEnv from "resources/qEnv.js";
+import get from "get-value";
+import set from "set-value";
 
 export default class ToolEndpointChecker {
   reevaluateCallbacks = [];
@@ -29,49 +31,39 @@ export default class ToolEndpointChecker {
     this.item = item;
   }
 
-  async fetch(endpoint) {
+  async check(checkConfig) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
     const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${this.toolName}`;
-    const resp = await fetch(`${toolRequestBaseUrl}/${endpoint}`);
-    if (resp.status !== 200) {
-      throw new Error(resp.statusMessage);
-    }
-    try {
-      return await resp.json();
-    } catch (e) {
-      return null;
-    }
-  }
+    const options = {
+      method: "GET"
+    };
 
-  async fetchWithData(endpoint, data) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${this.toolName}`;
-    const resp = await fetch(`${toolRequestBaseUrl}/${endpoint}`, {
-      method: "POST",
-      body: JSON.stringify(data)
-    });
-    if (resp.status !== 200) {
-      throw new Error(resp.statusMessage);
+    if (checkConfig.withData) {
+      options.method = "POST";
+      options.body = JSON.stringify(this.item.conf);
+    } else if (
+      Array.isArray(checkConfig.fields) &&
+      checkConfig.fields.length > 0
+    ) {
+      const item = {};
+      for (let property of checkConfig.fields) {
+        set(item, property, get(this.item.conf, property));
+      }
+      const dataForEndpoint = {
+        item: item
+      };
+      options.method = "POST";
+      if (checkConfig.hasOwnProperty("options")) {
+        dataForEndpoint.options = checkConfig.options;
+      }
+      options.body = JSON.stringify(dataForEndpoint);
+    }
+    const response = await fetch(`${toolRequestBaseUrl}/${endpoint}`, options);
+    if (response.status !== 200) {
+      throw new Error(response.statusMessage);
     }
     try {
-      return await resp.json();
-    } catch (e) {
-      return null;
-    }
-  }
-
-  async fetchWithItem(endpoint) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${this.toolName}`;
-    const resp = await fetch(`${toolRequestBaseUrl}/${endpoint}`, {
-      method: "POST",
-      body: JSON.stringify(this.item.conf)
-    });
-    if (resp.status !== 200) {
-      throw new Error(resp.statusMessage);
-    }
-    try {
-      return await resp.json();
+      return await response.json();
     } catch (e) {
       return null;
     }

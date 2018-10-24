@@ -23,14 +23,7 @@ export function resolveDynamicEnum() {
           } is not implemented as dynamicEnum type`
         );
       }
-      if (schema["Q:options"].dynamicEnum.withData) {
-        return await toolEndpointChecker.fetchWithItem(
-          schema["Q:options"].dynamicEnum.endpoint
-        );
-      }
-      return await toolEndpointChecker.fetch(
-        schema["Q:options"].dynamicEnum.endpoint
-      );
+      return await toolEndpointChecker.check(schema["Q:options"].dynamicEnum);
     }
 
     async function resolve() {
