@@ -1,9 +1,14 @@
+import { inject } from "aurelia-framework";
 import qEnv from "resources/qEnv.js";
-import get from "get-value";
-import set from "set-value";
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
+@inject(CurrentItemProvider)
 export default class ToolEndpointChecker {
   reevaluateCallbacks = [];
+
+  constructor(currentItemProvider) {
+    this.currentItemProvider = currentItemProvider;
+  }
 
   triggerReevaluation() {
     for (let cb of this.reevaluateCallbacks) {
@@ -23,34 +28,24 @@ export default class ToolEndpointChecker {
     }
   }
 
-  setCurrentToolName(toolName) {
-    this.toolName = toolName;
-  }
-
-  setCurrentItem(item) {
-    this.item = item;
-  }
-
   async check(checkConfig) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${this.toolName}`;
+    const item = this.currentItemProvider.getCurrentItem().conf;
+    const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${item.tool}`;
     const options = {
       method: "GET"
     };
-
     if (checkConfig.withData) {
       options.method = "POST";
-      options.body = JSON.stringify(this.item.conf);
+      options.body = JSON.stringify(item);
     } else if (
       Array.isArray(checkConfig.fields) &&
       checkConfig.fields.length > 0
     ) {
-      const item = {};
-      for (let property of checkConfig.fields) {
-        set(item, property, get(this.item.conf, property));
-      }
       const dataForEndpoint = {
-        item: item
+        item: this.currentItemProvider.getCurrentItemByFields(
+          checkConfig.fields
+        )
       };
       options.method = "POST";
       if (checkConfig.hasOwnProperty("options")) {
@@ -58,7 +53,11 @@ export default class ToolEndpointChecker {
       }
       options.body = JSON.stringify(dataForEndpoint);
     }
-    const response = await fetch(`${toolRequestBaseUrl}/${endpoint}`, options);
+    const response = await fetch(
+      `${toolRequestBaseUrl}/${checkConfig.endpoint}`,
+      options
+    );
+
     if (response.status !== 200) {
       throw new Error(response.statusMessage);
     }

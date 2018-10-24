@@ -1,6 +1,7 @@
 import { inject, LogManager } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import { Container } from "aurelia-dependency-injection";
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
 const log = LogManager.getLogger("Q");
 
@@ -23,14 +24,14 @@ function sortNotificationsByPriority(a, b) {
   );
 }
 
-@inject(CurrentItemProvider, I18N, Container)
+@inject(I18N, Container, CurrentItemProvider)
 export default class NotificationChecker {
   reevaluateCallbacks = [];
 
-  constructor(currentItemProvider, i18n, diContainer) {
-    this.currentItemProvider = currentItemProvider;
+  constructor(i18n, diContainer, currentItemProvider) {
     this.i18n = i18n;
     this.diContainer = diContainer;
+    this.currentItemProvider = currentItemProvider;
   }
 
   triggerReevaluation() {
@@ -74,6 +75,7 @@ export default class NotificationChecker {
 
           // add tool namespace to the message if this was ToolEndpoint check
           if (notificationCheck.type === "ToolEndpoint") {
+            const item = this.currentItemProvider.getCurrentItem().conf;
             notification.message.title = `${item.tool}:${
               notification.message.title
             }`;
