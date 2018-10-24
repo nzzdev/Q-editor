@@ -1,13 +1,11 @@
 import { inject, LogManager } from "aurelia-framework";
 import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
-import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
 const log = LogManager.getLogger("Q");
-@inject(ToolEndpointChecker, CurrentItemProvider)
+@inject(ToolEndpointChecker)
 export default class ToolEndpointAvailabilityCheck {
-  constructor(toolEndpointChecker, currentItemProvider) {
+  constructor(toolEndpointChecker) {
     this.toolEndpointChecker = toolEndpointChecker;
-    this.currentItemProvider = currentItemProvider;
   }
 
   async isAvailable(availabilityCheck) {
