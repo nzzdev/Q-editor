@@ -4,7 +4,7 @@ import { Container } from "aurelia-dependency-injection";
 function getConfig(dynamicEnumSchema) {
   const schema = JSON.parse(JSON.stringify(dynamicEnumSchema));
   if (schema.config) {
-    return check.config;
+    return schema.config;
   }
   delete schema.type;
   return schema;
