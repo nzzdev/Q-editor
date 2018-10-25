@@ -10,26 +10,32 @@ Q editor needs a modern browser with support for Shadow DOM, quite some ES2015 f
 Demo: https://editor.q.tools
 
 ## Setup
+
 ### Deployment
+
 We provide automatically built docker images for Q editor at https://hub.docker.com/r/nzzonline/q-editor/.
 You have three options for deployment:
+
 - use the provided images
 - build your own docker images
 - deploy the service using another technology
 
 #### Use the provided docker images
+
 1. Deploy `nzzonline/q-editor` to a docker environment
 2. You can set the following ENV variables
-    - `PORT`: defaults to `8080`, the port Q editor will be listening on
-    - `Q_SERVER_BASE_URL`: required, the url to a running [Q server](https://nzzdev.github.io/Q-server/)
-    - `LOGIN_MESSAGE`: defaults to `null`, a string that is displayed on the login screen
-    - `DEV_LOGGING`: defaults to `false`, if `true` lots of console log messages will appear
-    - `PUSH_STATE`: defaults to `true`, if `true` the editor will use nice urls without `#` but needs server support (so it's only used for production, for development `#` is used)
+   - `PORT`: defaults to `8080`, the port Q editor will be listening on
+   - `Q_SERVER_BASE_URL`: required, the url to a running [Q server](https://nzzdev.github.io/Q-server/)
+   - `LOGIN_MESSAGE`: defaults to `null`, a string that is displayed on the login screen
+   - `DEV_LOGGING`: defaults to `false`, if `true` lots of console log messages will appear
+   - `PUSH_STATE`: defaults to `true`, if `true` the editor will use nice urls without `#` but needs server support (so it's only used for production, for development `#` is used)
 
 #### Build your own docker images / deploy using another technology
+
 If you choose to build your own docker image or deploy it some other way make sure that you run `cd client && npm install && jspm install && gulp export` to build the client.
 
 ### Configuration
+
 Apart from the ENV variables mentioned above, Q editor gets its configuration from the Q server. You need a running [Q server](https://nzzdev.github.io/Q-server/) now so head over to https://nzzdev.github.io/Q-server/install.html if you haven't already. This is what you can configure in `config/editorConfig.js` of your Q server implementation:
 
 ```js
@@ -139,6 +145,7 @@ const editorConfig = {
 ```
 
 Q Editor uses the tools configuration from the Q Server to search for items of the configured tools in the database and check their availability using availabilityChecks to e.g. make a tool available only for specific roles like configured below. This is what you can configure in the `editor` property of any tool configured in `config.tools` of your Q Server config:
+
 ```js
   {
     label_locales: {
@@ -155,7 +162,10 @@ Q Editor uses the tools configuration from the Q Server to search for items of t
   }
 ```
 
+#### Notifications
+
 Q Editor allows to display notifications to support users while creating charts. A notification is triggered by a notification-check (see `client/src/resources/notification-checks` for more details). In order to show a notification a configuration in the following form needs to be added to the tool's schema:
+
 ```json
 {
   "title": "Daten",
@@ -165,7 +175,9 @@ Q Editor allows to display notifications to support users while creating charts.
     "notificationChecks": [
       {
         "type": "EmptyData",
-        "data": ["data"],
+        "config": {
+          "fields": ["data"]
+        },
         "priority": {
           "type": "low",
           "value": 1
@@ -173,14 +185,16 @@ Q Editor allows to display notifications to support users while creating charts.
       },
       {
         "type": "ToolEndpoint",
-        "endpoint": "notification/shouldBeBarChart",
-        "data": ["data", "options.chartType"],
+        "config": {
+          "endpoint": "notification/shouldBeBarChart",
+          "data": ["data", "options.chartType"],
+          "options": {
+            "limit": 2
+          }
+        },
         "priority": {
           "type": "medium",
           "value": 3
-        },
-        "options": {
-          "limit": 2
         }
       }
     ]
@@ -188,10 +202,100 @@ Q Editor allows to display notifications to support users while creating charts.
 }
 ```
 
+#### Availability Checks
+
+Q-Editor allows to hide certains editor elements based on checks. This is used for example in the charts tool. Only the options specific to a chart type (line, bar ect.) are shown and all other options are hidden.
+
+Hideing an editor element is triggered by an availability-check (see `client/src/resources/availability-checks` for more details). In order to hide an editor element a configuration in the following form needs to be added to the tool's schema:
+
+```json
+{
+  "title": "Allgemeine Optionen",
+  "type": "object",
+  "properties": {
+    "chartType": {
+      "title": "Diagrammtyp",
+      "type": "string",
+      "Q:options": {
+        "availabilityChecks": [
+          {
+            "type": "ToolEndpoint",
+            "config": {
+              "endpoint": "option-availability/chartType",
+              "fields": ["vegaSpec"]
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+There are three types of availability-checks:
+
+- UserHasRole: Used to hide editor elements based on a role save on the user object
+
+```json
+{
+  "type": "UserHasRole",
+  "config": {
+    "role": "expert-chart"
+  }
+}
+```
+
+- ItemHasId: Used to hide editor elements until an id is present on the item object:
+
+```json
+{
+  "type": "ItemHasId",
+  "config": {
+    "unavailableMessage": "Bitte speichere deinen Titel um fortzufahren."
+  }
+}
+```
+
+- ToolEndpoint: Used to perform an availability-check inside the tool
+  - `endpoint` defines which endpoint in the tool should be called
+  - `fields` defines which parts of the item should be sent as part of the request
+
+```json
+{
+  "type": "ToolEndpoint",
+  "config": {
+    "endpoint": "option-availability/chartType",
+    "fields": ["vegaSpec"]
+  }
+}
+```
+
+#### Dynamic Enums
+
+Dynamic Enums allow to create a selection element (select menu, radio button) based on dynamic data. This is for example used in the charts tool to select a column that should be highlighted. The titles in the select menu are based on the data entered by the user.
+
+A select element based on dynamic data can be created by adding the following configuration to the tool's schema:
+
+```json
+{
+  "title": "Hervorhebung",
+  "type": "number",
+  "Q:options": {
+    "dynamicEnum": {
+      "type": "ToolEndpoint",
+      "config": {
+        "endpoint": "dynamic-enum/highlightDataSeries",
+        "fields": ["data"]
+      }
+    }
+  }
+}
+```
 
 ## Development
 
 Q editor consists of two parts:
+
 - the server part
 - the client part
 
@@ -214,7 +318,9 @@ jspm install
 After that you can start a live reloading webserver by running `gulp watch` within the folder `client`.
 
 ### env
+
 See the file `client/env`. This is loaded for development only and "fakes" the environment served by the Q server part on production:
+
 ```
 {
   "QServerBaseUrl": "http://localhost:3001",
@@ -223,11 +329,12 @@ See the file `client/env`. This is loaded for development only and "fakes" the e
   "pushState": false
 }
 ```
+
 where `QServerBaseUrl` is a url to a running [Q server](https://github.com/nzzdev/Q-server).
 Start one locally or use your staging environment. You probably do not want to develop using your production Q server.
 
-
 ## License
+
 Copyright (c) 2018 Neue Zürcher Zeitung. All rights reserved.
 
 This software is published under the MIT license.
