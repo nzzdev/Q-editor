@@ -24,6 +24,9 @@ function sortNotificationsByPriority(a, b) {
   );
 }
 
+// This function transforms the existing check config to the new format
+// After all the tools adopted the new configuration format this is
+// not needed anymore
 function getConfig(notificationCheck) {
   const check = JSON.parse(JSON.stringify(notificationCheck));
   if (check.config) {

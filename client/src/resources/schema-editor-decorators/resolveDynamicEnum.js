@@ -1,6 +1,9 @@
 import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 import { Container } from "aurelia-dependency-injection";
 
+// This function transforms the existing check config to the new format
+// After all the tools adopted the new configuration format this is
+// not needed anymore
 function getConfig(dynamicEnumSchema) {
   const schema = JSON.parse(JSON.stringify(dynamicEnumSchema));
   if (schema.config) {

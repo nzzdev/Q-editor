@@ -1,6 +1,9 @@
 import { inject } from "aurelia-framework";
 import { Container } from "aurelia-dependency-injection";
 
+// This function transforms the existing check config to the new format
+// After all the tools adopted the new configuration format this is
+// not needed anymore
 function getConfig(availabilityCheck) {
   const check = JSON.parse(JSON.stringify(availabilityCheck));
   if (check.config) {
