@@ -1,6 +1,19 @@
 import { inject } from "aurelia-framework";
 import { Container } from "aurelia-dependency-injection";
 
+function getConfig(availabilityCheck) {
+  const check = JSON.parse(JSON.stringify(availabilityCheck));
+  if (check.config) {
+    return check.config;
+  }
+  delete check.type;
+  if (check.data) {
+    check.fields = check.data;
+    delete check.data;
+  }
+  return check;
+}
+
 @inject(Container)
 export default class AvailabilityChecker {
   reevaluateCallbacks = [];
@@ -33,7 +46,10 @@ export default class AvailabilityChecker {
         let checker = this.diContainer.get(
           availabilityCheck.type + "AvailabilityCheck"
         );
-        const available = await checker.isAvailable(availabilityCheck);
+
+        const available = await checker.isAvailable(
+          getConfig(availabilityCheck)
+        );
         if (!available) {
           const availabilityInfo = {
             isAvailable: false

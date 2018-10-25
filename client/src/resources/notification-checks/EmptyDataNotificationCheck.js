@@ -14,10 +14,8 @@ export default class EmptyDataNotificationCheck {
     this.currentItemProvider = currentItemProvider;
   }
 
-  getNotification(notificationCheck) {
-    const item = this.currentItemProvider.getCurrentItemByFields(
-      notificationCheck.fields
-    );
+  getNotification(config) {
+    const item = this.currentItemProvider.getCurrentItemByFields(config.fields);
     if (item.data.length === 0) {
       return notification;
     }

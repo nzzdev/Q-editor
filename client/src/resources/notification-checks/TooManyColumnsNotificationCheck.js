@@ -7,11 +7,9 @@ export default class TooManyColumnsNotificationCheck {
     this.currentItemProvider = currentItemProvider;
   }
 
-  getNotification(notificationCheck) {
-    const item = this.currentItemProvider.getCurrentItemByFields(
-      notificationCheck.fields
-    );
-    if (item.data[0] && item.data[0].length > notificationCheck.options.limit) {
+  getNotification(config) {
+    const item = this.currentItemProvider.getCurrentItemByFields(config.fields);
+    if (item.data[0] && item.data[0].length > config.options.limit) {
       return {
         message: {
           title: "notifications.tooManyColumns.title",

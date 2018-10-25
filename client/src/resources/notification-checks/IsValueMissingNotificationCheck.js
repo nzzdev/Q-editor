@@ -1,11 +1,11 @@
 export default class IsValueMissingNotificationCheck {
-  getNotification(notificationCheck) {
+  getNotification(config) {
     return null;
     // todo: refactor to use required attribute
     // or remove alltogether and push a notification if the value is required
     // const notificationResult = {
     //   showNotification: true,
-    //   priority: notificationCheck.priority
+    //   priority: config.priority
     // };
     // return notificationResult;
 

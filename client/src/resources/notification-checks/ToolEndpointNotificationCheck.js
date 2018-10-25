@@ -9,14 +9,14 @@ export default class ToolEndpointNotificationCheck {
     this.toolEndpointChecker = toolEndpointChecker;
   }
 
-  async getNotification(notificationCheck) {
-    if (!notificationCheck.endpoint) {
+  async getNotification(config) {
+    if (!config.endpoint) {
       log.error(
         "no endpoint defined for notificationCheck ToolEndpointNotificationCheck:",
-        notificationCheck
+        config
       );
       return false;
     }
-    return await this.toolEndpointChecker.check(notificationCheck);
+    return await this.toolEndpointChecker.check(config);
   }
 }

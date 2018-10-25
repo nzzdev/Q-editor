@@ -28,33 +28,28 @@ export default class ToolEndpointChecker {
     }
   }
 
-  async check(checkConfig) {
+  async check(config) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
     const item = this.currentItemProvider.getCurrentItem().conf;
     const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${item.tool}`;
     const options = {
       method: "GET"
     };
-    if (checkConfig.withData) {
+    if (config.withData) {
       options.method = "POST";
       options.body = JSON.stringify(item);
-    } else if (
-      Array.isArray(checkConfig.fields) &&
-      checkConfig.fields.length > 0
-    ) {
+    } else if (Array.isArray(config.fields) && config.fields.length > 0) {
       const dataForEndpoint = {
-        item: this.currentItemProvider.getCurrentItemByFields(
-          checkConfig.fields
-        )
+        item: this.currentItemProvider.getCurrentItemByFields(config.fields)
       };
       options.method = "POST";
-      if (checkConfig.hasOwnProperty("options")) {
-        dataForEndpoint.options = checkConfig.options;
+      if (config.hasOwnProperty("options")) {
+        dataForEndpoint.options = config.options;
       }
       options.body = JSON.stringify(dataForEndpoint);
     }
     const response = await fetch(
-      `${toolRequestBaseUrl}/${checkConfig.endpoint}`,
+      `${toolRequestBaseUrl}/${config.endpoint}`,
       options
     );
 

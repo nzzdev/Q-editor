@@ -8,15 +8,15 @@ export default class ToolEndpointAvailabilityCheck {
     this.toolEndpointChecker = toolEndpointChecker;
   }
 
-  async isAvailable(availabilityCheck) {
-    if (!availabilityCheck.endpoint) {
+  async isAvailable(config) {
+    if (!config.endpoint) {
       log.error(
         "no endpoint defined for availabilityCheck checkToolEndpoint:",
-        availabilityCheck
+        config
       );
       return false;
     }
-    const result = await this.toolEndpointChecker.check(availabilityCheck);
+    const result = await this.toolEndpointChecker.check(config);
     return result.available;
   }
 }

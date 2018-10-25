@@ -24,6 +24,20 @@ function sortNotificationsByPriority(a, b) {
   );
 }
 
+function getConfig(notificationCheck) {
+  const check = JSON.parse(JSON.stringify(notificationCheck));
+  if (check.config) {
+    return check.config;
+  }
+  delete check.type;
+  delete check.priority;
+  if (check.data) {
+    check.fields = check.data;
+    delete check.data;
+  }
+  return check;
+}
+
 @inject(I18N, Container, CurrentItemProvider)
 export default class NotificationChecker {
   reevaluateCallbacks = [];
@@ -61,7 +75,9 @@ export default class NotificationChecker {
           );
 
           // get the notification from the checker or null
-          const notification = await checker.getNotification(notificationCheck);
+          const notification = await checker.getNotification(
+            getConfig(notificationCheck)
+          );
 
           // a notification needs to have at least a message object
           if (!notification || typeof notification.message !== "object") {
@@ -118,7 +134,7 @@ export default class NotificationChecker {
     } else if (error) {
       notification = {};
     } else if (notificationChecks) {
-      notification = await this.getNotification(notificationChecks);
+      notification = await this.getNotification(getConfig(notificationChecks));
     } else {
       notification.priority = {
         type: "low",

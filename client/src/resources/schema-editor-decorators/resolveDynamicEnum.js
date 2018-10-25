@@ -1,6 +1,15 @@
 import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 import { Container } from "aurelia-dependency-injection";
 
+function getConfig(dynamicEnumSchema) {
+  const schema = JSON.parse(JSON.stringify(dynamicEnumSchema));
+  if (schema.config) {
+    return check.config;
+  }
+  delete schema.type;
+  return schema;
+}
+
 export function resolveDynamicEnum() {
   return function(target) {
     let container = Container.instance || new Container();
@@ -16,14 +25,13 @@ export function resolveDynamicEnum() {
     }
 
     async function getDynamicEnum(schema) {
-      if (schema["Q:options"].dynamicEnum.type !== "ToolEndpoint") {
+      const dynamicEnumSchema = schema["Q:options"].dynamicEnum;
+      if (dynamicEnumSchema.type !== "ToolEndpoint") {
         throw new Error(
-          `${
-            schema["Q:options"].dynamicEnum.type
-          } is not implemented as dynamicEnum type`
+          `${dynamicEnumSchema.type} is not implemented as dynamicEnum type`
         );
       }
-      return await toolEndpointChecker.check(schema["Q:options"].dynamicEnum);
+      return await toolEndpointChecker.check(getConfig(dynamicEnumSchema));
     }
 
     async function resolve() {

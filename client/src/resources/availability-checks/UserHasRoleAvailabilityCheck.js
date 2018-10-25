@@ -9,18 +9,14 @@ export default class UserHasRoleAvailabilityCheck {
     this.user = user;
   }
 
-  async isAvailable(availabilityCheck) {
-    if (!availabilityCheck.role) {
-      log.error(
-        "no role defined for availabilityCheck userHasRole:",
-        availabilityCheck
-      );
+  async isAvailable(config) {
+    if (!config.role) {
+      log.error("no role defined for availabilityCheck userHasRole:", config);
       return false;
     }
     await this.user.loaded;
     return (
-      Array.isArray(this.user.roles) &&
-      this.user.roles.includes(availabilityCheck.role)
+      Array.isArray(this.user.roles) && this.user.roles.includes(config.role)
     );
   }
 }
