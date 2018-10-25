@@ -18,6 +18,9 @@ export default class EmptyDataNotificationCheck {
     let item;
     if (config.data) {
       item = this.currentItemProvider.getCurrentItemByFields(config.data);
+      log.info(
+        "DEPRECATION NOTICE: In Q editor 4.0 you will have to rename data to fields. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
+      );
     } else {
       item = this.currentItemProvider.getCurrentItemByFields(config.fields);
     }

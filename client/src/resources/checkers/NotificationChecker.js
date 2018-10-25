@@ -34,6 +34,9 @@ function getConfig(notificationCheck) {
   }
   delete check.type;
   delete check.priority;
+  log.info(
+    "DEPRECATION NOTICE: In Q editor 4.0 you will have to configure the notificationCheck with a config property. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
+  );
   return check;
 }
 

@@ -10,6 +10,9 @@ function getConfig(dynamicEnumSchema) {
     return schema.config;
   }
   delete schema.type;
+  log.info(
+    "DEPRECATION NOTICE: In Q editor 4.0 you will have to configure the dynamicEnum with a config property. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
+  );
   return schema;
 }
 
