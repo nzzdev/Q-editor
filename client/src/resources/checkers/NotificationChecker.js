@@ -34,10 +34,6 @@ function getConfig(notificationCheck) {
   }
   delete check.type;
   delete check.priority;
-  if (check.data) {
-    check.fields = check.data;
-    delete check.data;
-  }
   return check;
 }
 

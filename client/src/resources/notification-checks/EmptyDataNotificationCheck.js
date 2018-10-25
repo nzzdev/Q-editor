@@ -15,7 +15,12 @@ export default class EmptyDataNotificationCheck {
   }
 
   getNotification(config) {
-    const item = this.currentItemProvider.getCurrentItemByFields(config.fields);
+    let item;
+    if (config.data) {
+      item = this.currentItemProvider.getCurrentItemByFields(config.data);
+    } else {
+      item = this.currentItemProvider.getCurrentItemByFields(config.fields);
+    }
     if (item.data.length === 0) {
       return notification;
     }

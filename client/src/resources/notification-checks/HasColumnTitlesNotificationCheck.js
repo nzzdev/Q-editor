@@ -9,7 +9,12 @@ export default class HasColumnTitlesNotificationCheck {
   }
 
   getNotification(config) {
-    const item = this.currentItemProvider.getCurrentItemByFields(config.fields);
+    let item;
+    if (config.data) {
+      item = this.currentItemProvider.getCurrentItemByFields(config.data);
+    } else {
+      item = this.currentItemProvider.getCurrentItemByFields(config.fields);
+    }
     if (item.data.length > 1) {
       // only check if there are at least two rows (one header and one data row)
       const hasColumnTitleState = [];

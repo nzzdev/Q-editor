@@ -10,10 +10,6 @@ function getConfig(availabilityCheck) {
     return check.config;
   }
   delete check.type;
-  if (check.data) {
-    check.fields = check.data;
-    delete check.data;
-  }
   return check;
 }
 

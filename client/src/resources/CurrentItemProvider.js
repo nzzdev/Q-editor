@@ -17,4 +17,12 @@ export default class CurrentItemProvider {
     }
     return item;
   }
+
+  getCurrentItemByData(fields) {
+    const data = [];
+    for (let field of fields) {
+      data.push(get(this.item.conf, field));
+    }
+    return data;
+  }
 }

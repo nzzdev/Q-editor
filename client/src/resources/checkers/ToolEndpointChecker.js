@@ -35,9 +35,19 @@ export default class ToolEndpointChecker {
     const options = {
       method: "GET"
     };
+
     if (config.withData) {
       options.method = "POST";
       options.body = JSON.stringify(item);
+    } else if (Array.isArray(config.data) && config.data.length > 0) {
+      const dataForEndpoint = {
+        data: this.currentItemProvider.getCurrentItemByData(config.data)
+      };
+      options.method = "POST";
+      if (config.hasOwnProperty("options")) {
+        dataForEndpoint.options = config.options;
+      }
+      options.body = JSON.stringify(dataForEndpoint);
     } else if (Array.isArray(config.fields) && config.fields.length > 0) {
       const dataForEndpoint = {
         item: this.currentItemProvider.getCurrentItemByFields(config.fields)
