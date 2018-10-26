@@ -131,11 +131,6 @@ export class Editor {
       })
       .then(item => {
         if (item) {
-          // set the toolName and the current item to toolEndpointChecker
-          // whenever we activate the editor. The toolEndpointChecker is used
-          // in the AvailabilityChecker and NotificationChecker to send requests to the current tool
-          this.toolEndpointChecker.setCurrentToolName(this.toolName);
-          this.toolEndpointChecker.setCurrentItem(item);
           this.currentItemProvider.setCurrentItem(item);
           this.item = item;
 

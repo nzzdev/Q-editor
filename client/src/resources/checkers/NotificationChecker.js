@@ -1,14 +1,9 @@
 import { inject, LogManager } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import { Container } from "aurelia-dependency-injection";
-
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
 const log = LogManager.getLogger("Q");
-
-function getDescendantProperty(obj, path) {
-  return path.split(".").reduce((acc, part) => acc && acc[part], obj);
-}
 
 function getNotificationTypeValue(type) {
   if (type === "high") {
@@ -29,14 +24,30 @@ function sortNotificationsByPriority(a, b) {
   );
 }
 
-@inject(CurrentItemProvider, I18N, Container)
+// This function transforms the existing check config to the new format
+// After all the tools adopted the new configuration format this is
+// not needed anymore
+function getConfig(notificationCheck) {
+  const check = JSON.parse(JSON.stringify(notificationCheck));
+  if (check.config) {
+    return check.config;
+  }
+  delete check.type;
+  delete check.priority;
+  log.info(
+    "DEPRECATION NOTICE: In Q editor 4.0 you will have to configure the notificationCheck with a config property. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
+  );
+  return check;
+}
+
+@inject(I18N, Container, CurrentItemProvider)
 export default class NotificationChecker {
   reevaluateCallbacks = [];
 
-  constructor(currentItemProvider, i18n, diContainer) {
-    this.currentItemProvider = currentItemProvider;
+  constructor(i18n, diContainer, currentItemProvider) {
     this.i18n = i18n;
     this.diContainer = diContainer;
+    this.currentItemProvider = currentItemProvider;
   }
 
   triggerReevaluation() {
@@ -64,24 +75,10 @@ export default class NotificationChecker {
           const checker = this.diContainer.get(
             notificationCheck.type + "NotificationCheck"
           );
-          const item = this.currentItemProvider.getCurrentItem().conf;
-
-          // if the data property is given and defines some data to send to the checker
-          // we gather an array containing only the properties needed by the checker
-          let data;
-          if (
-            Array.isArray(notificationCheck.data) &&
-            notificationCheck.data.length > 0
-          ) {
-            data = notificationCheck.data.map(property =>
-              getDescendantProperty(item, property)
-            );
-          }
 
           // get the notification from the checker or null
           const notification = await checker.getNotification(
-            notificationCheck,
-            data
+            getConfig(notificationCheck)
           );
 
           // a notification needs to have at least a message object
@@ -96,6 +93,7 @@ export default class NotificationChecker {
 
           // add tool namespace to the message if this was ToolEndpoint check
           if (notificationCheck.type === "ToolEndpoint") {
+            const item = this.currentItemProvider.getCurrentItem().conf;
             notification.message.title = `${item.tool}:${
               notification.message.title
             }`;
@@ -138,7 +136,7 @@ export default class NotificationChecker {
     } else if (error) {
       notification = {};
     } else if (notificationChecks) {
-      notification = await this.getNotification(notificationChecks);
+      notification = await this.getNotification(getConfig(notificationChecks));
     } else {
       notification.priority = {
         type: "low",

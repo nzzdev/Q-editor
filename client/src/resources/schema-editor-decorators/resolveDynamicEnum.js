@@ -1,6 +1,21 @@
 import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 import { Container } from "aurelia-dependency-injection";
 
+// This function transforms the existing check config to the new format
+// After all the tools adopted the new configuration format this is
+// not needed anymore
+function getConfig(dynamicEnumSchema) {
+  const schema = JSON.parse(JSON.stringify(dynamicEnumSchema));
+  if (schema.config) {
+    return schema.config;
+  }
+  delete schema.type;
+  log.info(
+    "DEPRECATION NOTICE: In Q editor 4.0 you will have to configure the dynamicEnum with a config property. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
+  );
+  return schema;
+}
+
 export function resolveDynamicEnum() {
   return function(target) {
     let container = Container.instance || new Container();
@@ -16,21 +31,13 @@ export function resolveDynamicEnum() {
     }
 
     async function getDynamicEnum(schema) {
-      if (schema["Q:options"].dynamicEnum.type !== "ToolEndpoint") {
+      const dynamicEnumSchema = schema["Q:options"].dynamicEnum;
+      if (dynamicEnumSchema.type !== "ToolEndpoint") {
         throw new Error(
-          `${
-            schema["Q:options"].dynamicEnum.type
-          } is not implemented as dynamicEnum type`
+          `${dynamicEnumSchema.type} is not implemented as dynamicEnum type`
         );
       }
-      if (schema["Q:options"].dynamicEnum.withData) {
-        return await toolEndpointChecker.fetchWithItem(
-          schema["Q:options"].dynamicEnum.endpoint
-        );
-      }
-      return await toolEndpointChecker.fetch(
-        schema["Q:options"].dynamicEnum.endpoint
-      );
+      return await toolEndpointChecker.check(getConfig(dynamicEnumSchema));
     }
 
     async function resolve() {
