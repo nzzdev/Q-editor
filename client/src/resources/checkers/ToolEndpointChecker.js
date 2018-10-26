@@ -1,6 +1,8 @@
-import { inject } from "aurelia-framework";
+import { inject, LogManager } from "aurelia-framework";
 import qEnv from "resources/qEnv.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
+
+const log = LogManager.getLogger("Q");
 
 @inject(CurrentItemProvider)
 export default class ToolEndpointChecker {

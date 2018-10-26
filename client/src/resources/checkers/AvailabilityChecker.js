@@ -1,5 +1,7 @@
-import { inject } from "aurelia-framework";
+import { inject, LogManager } from "aurelia-framework";
 import { Container } from "aurelia-dependency-injection";
+
+const log = LogManager.getLogger("Q");
 
 // This function transforms the existing check config to the new format
 // After all the tools adopted the new configuration format this is

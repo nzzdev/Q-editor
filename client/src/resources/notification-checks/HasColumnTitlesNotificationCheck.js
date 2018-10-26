@@ -1,6 +1,8 @@
+import { inject, LogManager } from "aurelia-framework";
 import array2d from "array2d";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
-import { inject } from "aurelia-framework";
+
+const log = LogManager.getLogger("Q");
 
 @inject(CurrentItemProvider)
 export default class HasColumnTitlesNotificationCheck {

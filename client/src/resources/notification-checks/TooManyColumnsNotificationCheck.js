@@ -1,5 +1,7 @@
+import { inject, LogManager } from "aurelia-framework";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
-import { inject } from "aurelia-framework";
+
+const log = LogManager.getLogger("Q");
 
 @inject(CurrentItemProvider)
 export default class TooManyColumnsNotificationCheck {
