@@ -1,5 +1,8 @@
+import { LogManager } from "aurelia-framework";
 import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 import { Container } from "aurelia-dependency-injection";
+
+const log = LogManager.getLogger("Q");
 
 // This function transforms the existing check config to the new format
 // After all the tools adopted the new configuration format this is
