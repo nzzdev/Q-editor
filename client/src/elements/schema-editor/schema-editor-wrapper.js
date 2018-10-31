@@ -84,7 +84,7 @@ export class SchemaEditorWrapper {
     this.notifications.push(newNotifications[0]);
   }
 
-  showRequiredNotification() {
+  showIsValueMissingNotification() {
     this.visibleNotification = {
       message: {
         title: "notifications.isValueMissing.title",

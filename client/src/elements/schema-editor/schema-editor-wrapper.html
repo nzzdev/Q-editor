@@ -8,7 +8,7 @@
 
 	<div if.bind="getType(schema) === 'string'" class="schema-editor-block">
 		<require from="./schema-editor-string"></require>
-		<schema-editor-string schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showRequiredNotification()"></schema-editor-string>
+		<schema-editor-string schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showIsValueMissingNotification()"></schema-editor-string>
 	</div>
 
 	<div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
