@@ -188,7 +188,7 @@ export class SchemaEditorFiles {
 
         this.dropzone.files.push(mockFile);
         this.dropzone.emit("addedfile", mockFile);
-        if (file.type.includes("image/")) {
+        if (file.type && file.type.includes("image/")) {
           mockFile.dataURL = file.url; // needed for dropzone to create the thumbnail in a canvas
           this.dropzone.createThumbnailFromUrl(
             mockFile,
