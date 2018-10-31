@@ -30,7 +30,14 @@ export class SchemaEditorWrapper {
   }
 
   dataChanged() {
-    this.visibleNotification = "";
+    // Clear visible notification if previous notification was of type isValueMissing
+    if (
+      this.visibleNotification &&
+      this.visibleNotification.message.title ===
+        "notifications.isValueMissing.title"
+    ) {
+      this.visibleNotification = "";
+    }
   }
 
   async schemaChanged() {
