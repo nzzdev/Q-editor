@@ -1,83 +1,85 @@
 <template>
-  <require from="./schema-editor-wrapper.css"></require>
-  <div if.bind="getType(schema) === 'object'" class="schema-editor-block">
-    <require from="./schema-editor-object"></require>
-    <schema-editor-object schema.bind="schema" data.two-way="data" change.bind="change" no-object-title.bind="noObjectTitle" notifications.bind="notifications" show-notifications.bind="showNotifications"></schema-editor-object>
-  </div>
+	<require from="./schema-editor-wrapper.css"></require>
+	<div if.bind="getType(schema) === 'object'" class="schema-editor-block">
+		<require from="./schema-editor-object"></require>
+		<schema-editor-object schema.bind="schema" data.two-way="data" change.bind="change" no-object-title.bind="noObjectTitle"
+		 notifications.bind="notifications" show-notifications.bind="showNotifications"></schema-editor-object>
+	</div>
 
-  <div if.bind="getType(schema) === 'string'" class="schema-editor-block">
-    <require from="./schema-editor-string"></require>
-    <schema-editor-string schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-string>
-  </div>
+	<div if.bind="getType(schema) === 'string'" class="schema-editor-block">
+		<require from="./schema-editor-string"></require>
+		<schema-editor-string schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showRequiredNotification()"></schema-editor-string>
+	</div>
 
-  <div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
-    <require from="./schema-editor-textarea"></require>
-    <schema-editor-textarea schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-textarea>
-  </div>
+	<div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
+		<require from="./schema-editor-textarea"></require>
+		<schema-editor-textarea schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-textarea>
+	</div>
 
-  <div if.bind="getType(schema) === 'boolean'" class="schema-editor-block">
-    <require from="./schema-editor-boolean"></require>
-    <schema-editor-boolean schema.bind="schema" data.two-way="data" change.bind="change"></schema-editor-boolean>
-  </div>
+	<div if.bind="getType(schema) === 'boolean'" class="schema-editor-block">
+		<require from="./schema-editor-boolean"></require>
+		<schema-editor-boolean schema.bind="schema" data.two-way="data" change.bind="change"></schema-editor-boolean>
+	</div>
 
-  <div if.bind="getType(schema) === 'url'" class="schema-editor-block">
-    <require from="./schema-editor-url"></require>
-    <schema-editor-url schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-url>
-  </div>
+	<div if.bind="getType(schema) === 'url'" class="schema-editor-block">
+		<require from="./schema-editor-url"></require>
+		<schema-editor-url schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-url>
+	</div>
 
-  <div if.bind="getType(schema) === 'link'" class="schema-editor-block">
-    <require from="./schema-editor-link"></require>
-    <schema-editor-link schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-link>
-  </div>
+	<div if.bind="getType(schema) === 'link'" class="schema-editor-block">
+		<require from="./schema-editor-link"></require>
+		<schema-editor-link schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-link>
+	</div>
 
-  <div if.bind="getType(schema) === 'number'" class="schema-editor-block">
-    <require from="./schema-editor-number"></require>
-    <schema-editor-number schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-number>
-  </div>
+	<div if.bind="getType(schema) === 'number'" class="schema-editor-block">
+		<require from="./schema-editor-number"></require>
+		<schema-editor-number schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-number>
+	</div>
 
-  <div if.bind="getType(schema) === 'date'" class="schema-editor-block">
-    <require from="./schema-editor-date"></require>
-    <schema-editor-date schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-color>
-  </div>
+	<div if.bind="getType(schema) === 'date'" class="schema-editor-block">
+		<require from="./schema-editor-date"></require>
+		<schema-editor-date schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required">
+			</schema-editor-color>
+	</div>
 
-  <div if.bind="getType(schema) === 'color'" class="schema-editor-block">
-    <require from="./schema-editor-color"></require>
-    <schema-editor-color schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-color>
-  </div>
+	<div if.bind="getType(schema) === 'color'" class="schema-editor-block">
+		<require from="./schema-editor-color"></require>
+		<schema-editor-color schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-color>
+	</div>
 
-  <div if.bind="getType(schema) === 'array'" class="schema-editor-block">
-    <require from="./schema-editor-array"></require>
-    <schema-editor-array schema.bind="schema" data.two-way="data" change.bind="change" notifications.bind="notifications" show-notifications.bind="showNotifications"></schema-editor-array>
-  </div>
+	<div if.bind="getType(schema) === 'array'" class="schema-editor-block">
+		<require from="./schema-editor-array"></require>
+		<schema-editor-array schema.bind="schema" data.two-way="data" change.bind="change" notifications.bind="notifications" show-notifications.bind="showNotifications"></schema-editor-array>
+	</div>
 
-  <div if.bind="getType(schema) === 'select'" class="schema-editor-block">
-    <require from="./schema-editor-select"></require>
-    <schema-editor-select schema.bind="schema" data.two-way="data" change.bind="change"></schema-editor-select>
-  </div>
+	<div if.bind="getType(schema) === 'select'" class="schema-editor-block">
+		<require from="./schema-editor-select"></require>
+		<schema-editor-select schema.bind="schema" data.two-way="data" change.bind="change"></schema-editor-select>
+	</div>
 
-  <div if.bind="getType(schema) === 'base64image'" class="schema-editor-block">
-    <require from="./schema-editor-base64image"></require>
-    <schema-editor-base64image schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-base64image>
-  </div>
+	<div if.bind="getType(schema) === 'base64image'" class="schema-editor-block">
+		<require from="./schema-editor-base64image"></require>
+		<schema-editor-base64image schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-base64image>
+	</div>
 
-  <div if.bind="getType(schema) === 'geojsonPoint'" class="schema-editor-block">
-    <require from="./schema-editor-geojson-point"></require>
-    <schema-editor-geojson-point schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-geojson-point>
-  </div>
+	<div if.bind="getType(schema) === 'geojsonPoint'" class="schema-editor-block">
+		<require from="./schema-editor-geojson-point"></require>
+		<schema-editor-geojson-point schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-geojson-point>
+	</div>
 
-  <div if.bind="getType(schema) === 'json'" class="schema-editor-block">
-    <require from="./schema-editor-json"></require>
-    <schema-editor-json schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-json>
-  </div>
+	<div if.bind="getType(schema) === 'json'" class="schema-editor-block">
+		<require from="./schema-editor-json"></require>
+		<schema-editor-json schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-json>
+	</div>
 
-  <div if.bind="getType(schema) === 'table'" class="schema-editor-block">
-    <require from="./schema-editor-table"></require>
-    <schema-editor-table schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-table>
-  </div>
+	<div if.bind="getType(schema) === 'table'" class="schema-editor-block">
+		<require from="./schema-editor-table"></require>
+		<schema-editor-table schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-table>
+	</div>
 
-  <div if.bind="getType(schema) === 'files'" class="schema-editor-block">
-    <require from="./schema-editor-files"></require>
-    <schema-editor-files schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-files>
-  </div>
-  <notification if.bind="showNotifications && visibleNotification" notification.bind="visibleNotification"></notification>
+	<div if.bind="getType(schema) === 'files'" class="schema-editor-block">
+		<require from="./schema-editor-files"></require>
+		<schema-editor-files schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-files>
+	</div>
+	<notification if.bind="showNotifications && visibleNotification" notification.bind="visibleNotification"></notification>
 </template>

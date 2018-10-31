@@ -29,6 +29,10 @@ export class SchemaEditorWrapper {
     this.getType = getType;
   }
 
+  dataChanged() {
+    this.visibleNotification = "";
+  }
+
   async schemaChanged() {
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
@@ -71,6 +75,19 @@ export class SchemaEditorWrapper {
     // the notifications array is passed down the schema-editor childs to hold all notifications
     // in the object tree
     this.notifications.push(newNotifications[0]);
+  }
+
+  showRequiredNotification() {
+    this.visibleNotification = {
+      message: {
+        title: "notifications.isValueMissing.title",
+        body: "notifications.isValueMissing.body"
+      },
+      priority: {
+        type: "high",
+        value: 1
+      }
+    };
   }
 
   async applyAvailability() {
