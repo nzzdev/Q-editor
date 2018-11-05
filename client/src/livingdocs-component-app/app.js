@@ -6,26 +6,6 @@ import qEnv from "resources/qEnv.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
-let loadedItems = [];
-
-async function getItem(id) {
-  if (!loadedItems.hasOwnProperty(id)) {
-    const response = await fetch(`${this.QServerBaseUrl}/item/${id}`);
-
-    if (!response.ok) {
-      throw response;
-    }
-
-    const doc = await response.json();
-    let item = {
-      id: id,
-      conf: doc
-    };
-    loadedItems[id] = item;
-  }
-  return loadedItems[id];
-}
-
 @singleton()
 @inject(
   ItemStore,
@@ -64,8 +44,9 @@ export class App {
 
     try {
       const selectedItem = JSON.parse(decodeURIComponent(paramsQuery[1]));
-      const item = await getItem(selectedItem.id);
+      const item = await this.getItem(selectedItem.id);
       selectedItem.active = item.conf.active;
+      selectedItem.tool = item.conf.tool;
       this.selectedItems.push(selectedItem);
       this.selectedItemIndex = 0;
     } catch (e) {
@@ -98,9 +79,24 @@ export class App {
     }
   }
 
+  async getItem(id) {
+    const response = await fetch(`${this.QServerBaseUrl}/item/${id}`);
+    if (!response.ok) {
+      throw response;
+    }
+
+    const doc = await response.json();
+    return {
+      id: id,
+      conf: doc
+    };
+  }
+
   async loadView() {
     if (this.selectedItemIndex !== undefined) {
-      const item = await getItem(this.selectedItems[this.selectedItemIndex].id);
+      const item = await this.getItem(
+        this.selectedItems[this.selectedItemIndex].id
+      );
       this.currentItemProvider.setCurrentItem(item);
       this.title = item.conf.title;
       await this.loadDisplayOptions();
@@ -127,6 +123,7 @@ export class App {
       this.selectedItems.push({
         id: item.conf._id,
         active: item.conf.active,
+        tool: item.conf.tool,
         toolRuntimeConfig: {}
       });
       this.selectedItemIndex = this.selectedItems.length - 1;
@@ -300,13 +297,12 @@ export class App {
 
   async loadDisplayOptions() {
     try {
-      const item = await getItem(this.selectedItems[this.selectedItemIndex].id);
-      this.tool = item.conf.tool;
-
       let selectedItem = this.selectedItems[this.selectedItemIndex];
       let displayOptionsSchema = {};
       const response = await fetch(
-        `${this.QServerBaseUrl}/tools/${this.tool}/display-options-schema.json`
+        `${this.QServerBaseUrl}/tools/${
+          selectedItem.tool
+        }/display-options-schema.json`
       );
       if (response.ok) {
         displayOptionsSchema = await response.json();
@@ -316,7 +312,7 @@ export class App {
       )) {
         if (value.title) {
           displayOptionsSchema.properties[key].title = this.i18n.tr(
-            `${this.tool}:${value.title}`
+            `${selectedItem.tool}:${value.title}`
           );
         }
       }
