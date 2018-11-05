@@ -217,8 +217,8 @@ export class App {
   }
 
   async getTools() {
-    const toolResponse = await fetch(`${this.QServerBaseUrl}/editor/tools`);
-    return toolResponse.json();
+    const response = await fetch(`${this.QServerBaseUrl}/editor/tools`);
+    return await response.json();
   }
 
   async fetchRenderingInfo() {
