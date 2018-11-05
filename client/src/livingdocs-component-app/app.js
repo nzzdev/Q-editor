@@ -328,7 +328,7 @@ export class App {
       }
     } catch (error) {
       this.displayOptionsSchema = {};
-      selectedItem.toolRuntimeConfig = {
+      this.selectedItems[this.selectedItemIndex].toolRuntimeConfig = {
         displayOptions: {}
       };
     }
