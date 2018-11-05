@@ -106,7 +106,7 @@ export class App {
       await this.loadDisplayOptions();
 
       if (this.target) {
-        this.loadPreview();
+        await this.loadPreview();
       }
     }
   }
@@ -225,7 +225,7 @@ export class App {
     return toolResponse.json();
   }
 
-  fetchRenderingInfo() {
+  async fetchRenderingInfo() {
     const toolRuntimeConfig = {
       size: {
         width: [
@@ -244,68 +244,60 @@ export class App {
       isPure: true
     };
 
-    return qEnv.QServerBaseUrl.then(QServerBaseUrl => {
-      if (this.selectedItemIndex !== undefined) {
-        return fetch(
-          `${QServerBaseUrl}/rendering-info/${
-            this.selectedItems[this.selectedItemIndex].id
-          }/${this.target.key}?toolRuntimeConfig=${encodeURI(
-            JSON.stringify(toolRuntimeConfig)
-          )}`
-        );
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    let renderingInfo = {};
+    if (this.selectedItemIndex !== undefined) {
+      const response = await fetch(
+        `${QServerBaseUrl}/rendering-info/${
+          this.selectedItems[this.selectedItemIndex].id
+        }/${this.target.key}?toolRuntimeConfig=${encodeURI(
+          JSON.stringify(toolRuntimeConfig)
+        )}`
+      );
+      if (response.ok) {
+        renderingInfo = await response.json();
       }
-      return {};
-    })
-      .then(res => {
-        if (res.ok && res.status >= 200 && res.status < 400) {
-          return res.json();
-        }
-        throw res.statusText;
-      })
-      .then(renderingInfo => {
-        // add stylesheets for target preview if any
-        if (this.target.preview && this.target.preview.stylesheets) {
-          if (!renderingInfo.stylesheets) {
-            renderingInfo.stylesheets = [];
-          }
-          this.target.preview.stylesheets.forEach(stylesheet => {
-            renderingInfo.stylesheets.push(stylesheet);
-          });
-        }
-
-        // add scripts for target preview if any
-        if (this.target.preview && this.target.preview.scripts) {
-          if (!renderingInfo.scripts) {
-            renderingInfo.scripts = [];
-          }
-          this.target.preview.scripts.forEach(script => {
-            renderingInfo.scripts.push(script);
-          });
-        }
-
-        // add sophieModules for target preview if any
-        if (this.target.preview && this.target.preview.sophieModules) {
-          if (!renderingInfo.sophieModules) {
-            renderingInfo.sophieModules = [];
-          }
-          this.target.preview.sophieModules.forEach(sophieModule => {
-            renderingInfo.sophieModules.push(sophieModule);
-          });
-        }
-        return renderingInfo;
+    }
+    // add stylesheets for target preview if any
+    if (this.target.preview && this.target.preview.stylesheets) {
+      if (!renderingInfo.stylesheets) {
+        renderingInfo.stylesheets = [];
+      }
+      this.target.preview.stylesheets.forEach(stylesheet => {
+        renderingInfo.stylesheets.push(stylesheet);
       });
+    }
+
+    // add scripts for target preview if any
+    if (this.target.preview && this.target.preview.scripts) {
+      if (!renderingInfo.scripts) {
+        renderingInfo.scripts = [];
+      }
+      this.target.preview.scripts.forEach(script => {
+        renderingInfo.scripts.push(script);
+      });
+    }
+
+    // add sophieModules for target preview if any
+    if (this.target.preview && this.target.preview.sophieModules) {
+      if (!renderingInfo.sophieModules) {
+        renderingInfo.sophieModules = [];
+      }
+      this.target.preview.sophieModules.forEach(sophieModule => {
+        renderingInfo.sophieModules.push(sophieModule);
+      });
+    }
+    return renderingInfo;
   }
 
-  loadPreview() {
-    this.fetchRenderingInfo()
-      .then(renderingInfo => {
-        this.errorMessage = undefined;
-        this.renderingInfo = renderingInfo;
-      })
-      .catch(errorMessage => {
-        this.errorMessage = errorMessage;
-        this.renderingInfo = {};
-      });
+  async loadPreview() {
+    try {
+      this.renderingInfo = await this.fetchRenderingInfo();
+      this.errorMessage = undefined;
+    } catch (error) {
+      this.renderingInfo = {};
+      this.errorMessage = error;
+    }
   }
 
   async loadDisplayOptions() {
@@ -314,54 +306,38 @@ export class App {
       this.tool = item.conf.tool;
 
       let selectedItem = this.selectedItems[this.selectedItemIndex];
+      const QServerBaseUrl = await qEnv.QServerBaseUrl;
+      let displayOptionsSchema = {};
+      const response = await fetch(
+        `${QServerBaseUrl}/tools/${this.tool}/display-options-schema.json`
+      );
+      if (response.ok) {
+        displayOptionsSchema = await response.json();
+      }
+      for (let [key, value] of Object.entries(
+        displayOptionsSchema.properties
+      )) {
+        if (value.title) {
+          displayOptionsSchema.properties[key].title = this.i18n.tr(
+            `${this.tool}:${value.title}`
+          );
+        }
+      }
+      this.displayOptionsSchema = displayOptionsSchema;
+      if (!selectedItem.toolRuntimeConfig) {
+        selectedItem.toolRuntimeConfig = {};
+      }
 
-      await qEnv.QServerBaseUrl.then(QServerBaseUrl => {
-        return fetch(
-          `${QServerBaseUrl}/tools/${this.tool}/display-options-schema.json`
+      if (!selectedItem.toolRuntimeConfig.displayOptions) {
+        selectedItem.toolRuntimeConfig.displayOptions = this.objectFromSchemaGenerator.generateFromSchema(
+          displayOptionsSchema
         );
-      })
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw response;
-        })
-        .then(schema => {
-          if (schema.hasOwnProperty("properties")) {
-            // we just accept one object containing simple boolean type properties
-            Object.keys(schema.properties).forEach(propertyName => {
-              // maybe delete all non boolean properties here??
-              let displayOption = schema.properties[propertyName];
-              if (displayOption.title) {
-                schema.properties[propertyName].title = this.i18n.tr(
-                  `${this.tool}:${displayOption.title}`
-                );
-              }
-            });
-          }
-          this.displayOptionsSchema = schema;
-          if (!selectedItem.toolRuntimeConfig) {
-            selectedItem.toolRuntimeConfig = {};
-          }
-
-          if (!selectedItem.toolRuntimeConfig.displayOptions) {
-            selectedItem.toolRuntimeConfig.displayOptions = this.objectFromSchemaGenerator.generateFromSchema(
-              schema
-            );
-          }
-        })
-        .catch(err => {
-          if (err.status === 404) {
-            this.displayOptionsSchema = {};
-            selectedItem.toolRuntimeConfig = {
-              displayOptions: {}
-            };
-          } else {
-            throw err;
-          }
-        });
-    } catch (e) {
-      throw new Error("no tool defined");
+      }
+    } catch (error) {
+      this.displayOptionsSchema = {};
+      selectedItem.toolRuntimeConfig = {
+        displayOptions: {}
+      };
     }
   }
 }
