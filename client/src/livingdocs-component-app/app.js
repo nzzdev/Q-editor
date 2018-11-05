@@ -10,8 +10,7 @@ let loadedItems = [];
 
 async function getItem(id) {
   if (!loadedItems.hasOwnProperty(id)) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const response = await fetch(`${QServerBaseUrl}/item/${id}`);
+    const response = await fetch(`${this.QServerBaseUrl}/item/${id}`);
 
     if (!response.ok) {
       throw response;
@@ -57,6 +56,7 @@ export class App {
   }
 
   async activate() {
+    this.QServerBaseUrl = await qEnv.QServerBaseUrl;
     this.selectedItems = [];
 
     const paramsQuery = /params=(.*)&?/.exec(window.location.search);
@@ -220,8 +220,7 @@ export class App {
   }
 
   async getTools() {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const toolResponse = await fetch(`${QServerBaseUrl}/editor/tools`);
+    const toolResponse = await fetch(`${this.QServerBaseUrl}/editor/tools`);
     return toolResponse.json();
   }
 
@@ -244,11 +243,10 @@ export class App {
       isPure: true
     };
 
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
     let renderingInfo = {};
     if (this.selectedItemIndex !== undefined) {
       const response = await fetch(
-        `${QServerBaseUrl}/rendering-info/${
+        `${this.QServerBaseUrl}/rendering-info/${
           this.selectedItems[this.selectedItemIndex].id
         }/${this.target.key}?toolRuntimeConfig=${encodeURI(
           JSON.stringify(toolRuntimeConfig)
@@ -306,10 +304,9 @@ export class App {
       this.tool = item.conf.tool;
 
       let selectedItem = this.selectedItems[this.selectedItemIndex];
-      const QServerBaseUrl = await qEnv.QServerBaseUrl;
       let displayOptionsSchema = {};
       const response = await fetch(
-        `${QServerBaseUrl}/tools/${this.tool}/display-options-schema.json`
+        `${this.QServerBaseUrl}/tools/${this.tool}/display-options-schema.json`
       );
       if (response.ok) {
         displayOptionsSchema = await response.json();
