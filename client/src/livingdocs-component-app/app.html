@@ -20,8 +20,8 @@
         </svg>
       </div>
       <div class="item-list">
-        <div class="item-list-entry ${item.conf._id === selectedItems[selectedItemIndex].id ? 'selected' : ''}"
-          click.delegate="selectItem(item)" repeat.for="item of items">
+        <div class="item-list-entry ${item.conf._id === selectedItem.id ? 'selected' : ''}" click.delegate="selectItem(item)"
+          repeat.for="item of items">
           <div class="item-list-entry-title">
             <box-icon if.bind="item.conf.icon" code.bind="item.conf.icon" size="big" class="tool-icon"></box-icon>
             <span class="q-text">${item.conf.title}</span>
@@ -56,7 +56,7 @@
     </div>
     <div class="livingdocs-component-item-container">
       <div class="livingdocs-component-item-preview-container">
-        <div class="livingdocs-component-item-preview" show.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
+        <div class="livingdocs-component-item-preview" show.bind="selectedItem !== undefined && selectedItem.conf.active">
           <div class="livingdocs-component-item-title">
             <h2 if.bind="title">${title}</h2>
           </div>
@@ -65,23 +65,22 @@
           </preview-container>
         </div>
         <div class="livingdocs-component-item-preview-message-container">
-          <h2 show.bind="selectedItemIndex === undefined">${'livingdocsComponent.selectGraphic'
-            & t}</h2>
-          <h2 show.bind="selectedItemIndex !== undefined && !selectedItems[selectedItemIndex].active">${'livingdocsComponent.inactiveGraphic'
+          <h2 show.bind="selectedItem === undefined">${'livingdocsComponent.selectGraphic' & t}</h2>
+          <h2 show.bind="selectedItem !== undefined && !selectedItem.conf.active">${'livingdocsComponent.inactiveGraphic'
             & t}</h2>
         </div>
       </div>
       <div class="livingdocs-component-item-controls-container">
-        <div if.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
+        <div if.bind="selectedItem !== undefined && selectedItem.conf.active">
           <form class="q-form livingdocs-component-item-options">
-            <schema-editor schema.bind="displayOptionsSchema" data.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions"
+            <schema-editor schema.bind="displayOptionsSchema" data.bind="selectedItem.toolRuntimeConfig.displayOptions"
               change.call="loadPreview()">
             </schema-editor>
           </form>
         </div>
         <div class="livingdocs-component-item-controls">
           <div class="item-edit">
-            <a href="#/editor/${tool}/${selectedItems[selectedItemIndex].id}" target="_blank">
+            <a href="#/editor/${tool}/${selectedItem.id}" target="_blank">
               <button-secondary icon="edit">${'livingdocsComponent.edit' & t}</button-secondary>
             </a>
           </div>
