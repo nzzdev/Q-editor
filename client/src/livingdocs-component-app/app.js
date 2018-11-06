@@ -15,8 +15,6 @@ import CurrentItemProvider from "resources/CurrentItemProvider.js";
   CurrentItemProvider
 )
 export class App {
-  moreItemsAvailable = false;
-
   constructor(
     itemStore,
     qTargets,
@@ -28,77 +26,47 @@ export class App {
     this.qTargets = qTargets;
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.i18n = i18n;
+    this.currentItemProvider = currentItemProvider;
     this.previewWidth = 290;
     this.displayOptionsSchema = {
       properties: {}
     };
-    this.currentItemProvider = currentItemProvider;
+    this.moreItemsAvailable = false;
+    this.items = [];
   }
 
   async activate() {
     try {
       this.QServerBaseUrl = await qEnv.QServerBaseUrl;
       const paramsQuery = /params=(.*)&?/.exec(window.location.search);
-      const targetQuery = /target=([^&]*)/.exec(window.location.search);
-      this.targetKey = decodeURIComponent(targetQuery[1]);
-      this.selectedItem = await this.getItem(
-        JSON.parse(decodeURIComponent(paramsQuery[1])).id
-      );
-    } catch (error) {
-      this.targetKey = "nzz_ch";
-    }
+      if (paramsQuery && paramsQuery[1]) {
+        this.selectedItem = await this.getItem(
+          JSON.parse(decodeURIComponent(paramsQuery[1])).id
+        );
+      }
+    } catch (error) {}
   }
 
   async attached() {
     this.tools = await this.getTools();
-    await this.loadTarget();
-    await this.filterChanged();
-    await this.loadView();
+    this.target = await this.getTarget();
+    this.items = await this.getItems();
+    if (this.selectedItem) {
+      await this.loadPreview();
+    }
   }
 
-  async loadTarget() {
+  async search() {
     try {
-      const targets = await this.qTargets.get("availableTargets");
-      this.target = targets.filter(target => {
-        return target.key === this.targetKey;
-      })[0];
-    } catch (error) {
-      // nevermind, we'll check if target exists before loading preview
-    }
+      this.items = await this.getItems(this.searchString);
+    } catch (error) {}
   }
 
-  async getItem(id) {
-    const response = await fetch(`${this.QServerBaseUrl}/item/${id}`);
-    if (!response.ok) {
-      throw response;
-    }
-
-    const doc = await response.json();
-    return {
-      id: id,
-      conf: doc
-    };
-  }
-
-  async loadView() {
-    if (this.selectedItem !== undefined) {
-      this.currentItemProvider.setCurrentItem(this.selectedItem);
-      this.title = this.selectedItem.conf.title;
-      await this.loadDisplayOptions();
-
-      if (this.target) {
-        await this.loadPreview();
-      }
-    }
-  }
-
-  async selectItem(item) {
-    this.selectedItem = {
-      id: item.conf._id,
-      conf: item.conf,
-      toolRuntimeConfig: {}
-    };
-    await this.loadView();
+  async loadMore() {
+    try {
+      const items = await this.getItems(this.searchString, this.bookmark);
+      this.items = this.items.concat(items);
+    } catch (error) {}
   }
 
   insertItem() {
@@ -117,81 +85,124 @@ export class App {
     window.parent.postMessage(message, "*");
   }
 
-  async filterChanged() {
-    this.items = [];
+  async getTarget() {
     try {
-      const result = await this.loadItems(this.currentSearchString);
-
-      this.items = result.items.map(item => {
-        let itemTool = this.tools.filter(tool => {
-          return tool.name === item.getToolName();
-        })[0];
-
-        if (itemTool) {
-          item.conf.icon = itemTool.icon;
-        }
-
-        return item;
+      const targets = await this.qTargets.get("availableTargets");
+      const targetQuery = /target=([^&]*)/.exec(window.location.search);
+      let targetKey = "nzz_ch";
+      if (targetQuery && targetQuery[1]) {
+        targetKey = decodeURIComponent(targetQuery[1]);
+      }
+      return targets.find(target => {
+        return target.key === targetKey;
       });
-
-      this.bookmark = result.bookmark;
-      this.moreItemsAvailable = result.moreItemsAvailable;
-    } catch (e) {
-      // todo: error handling
-    }
-
-    return this.items;
+    } catch (error) {}
   }
 
-  async loadItems(searchString, bookmark) {
+  async getTools() {
+    try {
+      const response = await fetch(`${this.QServerBaseUrl}/editor/tools`);
+      return await response.json();
+    } catch (error) {}
+  }
+
+  async getItem(id) {
+    try {
+      const response = await fetch(`${this.QServerBaseUrl}/item/${id}`);
+      const item = await response.json();
+      return {
+        id: id,
+        conf: item
+      };
+    } catch (error) {}
+  }
+
+  async getItems(searchString, bookmark) {
     this.itemsLoading = true;
     const numberOfItemsToLoadPerStep = 9;
-
     const availableToolNames = this.tools.map(tool => tool.name);
-    const result = await this.itemStore.getItems(
+    let result = await this.itemStore.getItems(
       searchString,
       numberOfItemsToLoadPerStep,
       availableToolNames,
       bookmark
     );
+
+    // sets tool icon to item
+    result.items = result.items.map(item => {
+      let tool = this.tools.find(tool => {
+        return tool.name === item.getToolName();
+      });
+
+      if (tool) {
+        item.conf.icon = tool.icon;
+      }
+
+      return item;
+    });
+    this.bookmark = result.bookmark;
+    this.moreItemsAvailable = result.moreItemsAvailable;
     this.itemsLoading = false;
-    return result;
+    return result.items;
   }
 
-  async loadMore() {
-    try {
-      const result = await this.loadItems(
-        this.currentSearchString,
-        this.bookmark
-      );
+  async selectItem(item) {
+    this.selectedItem = {
+      id: item.conf._id,
+      conf: item.conf,
+      toolRuntimeConfig: {}
+    };
+    await this.loadPreview();
+  }
 
-      this.items = this.items.concat(result.items);
-      this.items = this.items.map(item => {
-        let itemTool = this.tools.filter(tool => {
-          return tool.name === item.getToolName();
-        })[0];
-
-        if (itemTool) {
-          item.conf.icon = itemTool.icon;
-        }
-
-        return item;
-      });
-      this.bookmark = result.bookmark;
-      this.moreItemsAvailable = result.moreItemsAvailable;
-    } catch (e) {
-      // todo: error handling
+  async loadPreview() {
+    this.currentItemProvider.setCurrentItem(this.selectedItem);
+    this.title = this.selectedItem.conf.title;
+    this.displayOptionsSchema = await this.getDisplayOptionsSchema();
+    if (!this.selectedItem.toolRuntimeConfig.displayOptions) {
+      this.selectedItem.toolRuntimeConfig.displayOptions = await this.getDefaultDisplayOptions();
     }
 
-    return this.items;
+    if (this.target) {
+      this.renderingInfo = await this.getRenderingInfo();
+    }
   }
 
-  async getTools() {
-    const response = await fetch(`${this.QServerBaseUrl}/editor/tools`);
-    return await response.json();
+  async getDisplayOptionsSchema() {
+    try {
+      let displayOptionsSchema = {};
+      const response = await fetch(
+        `${this.QServerBaseUrl}/tools/${
+          this.selectedItem.conf.tool
+        }/display-options-schema.json`
+      );
+      if (response.ok) {
+        displayOptionsSchema = await response.json();
+      }
+
+      // translate displayOption titles
+      for (let [key, value] of Object.entries(
+        displayOptionsSchema.properties
+      )) {
+        if (value.title) {
+          displayOptionsSchema.properties[key].title = this.i18n.tr(
+            `${this.selectedItem.conf.tool}:${value.title}`
+          );
+        }
+      }
+      return displayOptionsSchema;
+    } catch (error) {}
   }
 
-  async fetchRenderingInfo() {
+  async getDefaultDisplayOptions() {
+    try {
+      return this.objectFromSchemaGenerator.generateFromSchema(
+        this.displayOptionsSchema
+      );
+    } catch (error) {}
+  }
+
+  async getRenderingInfo() {
     const toolRuntimeConfig = {
       size: {
         width: [
@@ -248,53 +259,5 @@ export class App {
       });
     }
     return renderingInfo;
-  }
-
-  async loadPreview() {
-    try {
-      this.renderingInfo = await this.fetchRenderingInfo();
-      this.errorMessage = undefined;
-    } catch (error) {
-      this.renderingInfo = {};
-      this.errorMessage = error;
-    }
-  }
-
-  async loadDisplayOptions() {
-    try {
-      let displayOptionsSchema = {};
-      const response = await fetch(
-        `${this.QServerBaseUrl}/tools/${
-          this.selectedItem.conf.tool
-        }/display-options-schema.json`
-      );
-      if (response.ok) {
-        displayOptionsSchema = await response.json();
-      }
-      for (let [key, value] of Object.entries(
-        displayOptionsSchema.properties
-      )) {
-        if (value.title) {
-          displayOptionsSchema.properties[key].title = this.i18n.tr(
-            `${this.selectedItem.conf.tool}:${value.title}`
-          );
-        }
-      }
-      this.displayOptionsSchema = displayOptionsSchema;
-      if (!this.selectedItem.toolRuntimeConfig) {
-        this.selectedItem.toolRuntimeConfig = {};
-      }
-
-      if (!this.selectedItem.toolRuntimeConfig.displayOptions) {
-        this.selectedItem.toolRuntimeConfig.displayOptions = this.objectFromSchemaGenerator.generateFromSchema(
-          displayOptionsSchema
-        );
-      }
-    } catch (error) {
-      this.displayOptionsSchema = {};
-      this.selectedItem.toolRuntimeConfig = {
-        displayOptions: {}
-      };
-    }
   }
 }
