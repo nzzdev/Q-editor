@@ -129,8 +129,8 @@ export class App {
 
     // sets tool icon to item
     result.items = result.items.map(item => {
-      let tool = this.tools.find(tool => {
-        return tool.name === item.getToolName();
+      let tool = this.tools.find(toolItem => {
+        return toolItem.name === item.getToolName();
       });
 
       if (tool) {
