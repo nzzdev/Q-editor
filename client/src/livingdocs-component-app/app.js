@@ -1,10 +1,12 @@
-import { inject, singleton } from "aurelia-framework";
+import { inject, singleton, LogManager } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import ItemStore from "resources/ItemStore.js";
 import QTargets from "resources/QTargets.js";
 import qEnv from "resources/qEnv.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
+
+const log = LogManager.getLogger("Q");
 
 @singleton()
 @inject(
@@ -49,14 +51,18 @@ export class App {
   async search() {
     try {
       this.items = await this.getItems(this.searchString);
-    } catch (error) {}
+    } catch (error) {
+      log.error(error);
+    }
   }
 
   async loadMore() {
     try {
       const items = await this.getItems(this.searchString, this.bookmark);
       this.items = this.items.concat(items);
-    } catch (error) {}
+    } catch (error) {
+      log.error(error);
+    }
   }
 
   async getInitialSelectedItem() {
@@ -67,7 +73,9 @@ export class App {
           JSON.parse(decodeURIComponent(paramsQuery[1])).id
         );
       }
-    } catch (error) {}
+    } catch (error) {
+      log.error(error);
+    }
   }
 
   async getTarget() {
@@ -81,14 +89,18 @@ export class App {
       return targets.find(target => {
         return target.key === targetKey;
       });
-    } catch (error) {}
+    } catch (error) {
+      log.error(error);
+    }
   }
 
   async getTools() {
     try {
       const response = await fetch(`${this.QServerBaseUrl}/editor/tools`);
       return await response.json();
-    } catch (error) {}
+    } catch (error) {
+      log.error(error);
+    }
   }
 
   async getItem(id) {
@@ -99,7 +111,9 @@ export class App {
         id: id,
         conf: item
       };
-    } catch (error) {}
+    } catch (error) {
+      log.error(error);
+    }
   }
 
   async getItems(searchString, bookmark) {
@@ -137,7 +151,9 @@ export class App {
       conf: item.conf,
       toolRuntimeConfig: {}
     };
-    await this.loadPreview();
+    if (this.selectedItem.conf.active) {
+      await this.loadPreview();
+    }
   }
 
   insertItem() {
@@ -192,7 +208,9 @@ export class App {
       }
 
       return displayOptionsSchema;
-    } catch (error) {}
+    } catch (error) {
+      log.error(error);
+    }
   }
 
   async getDefaultDisplayOptions() {
@@ -200,65 +218,71 @@ export class App {
       return this.objectFromSchemaGenerator.generateFromSchema(
         this.displayOptionsSchema
       );
-    } catch (error) {}
+    } catch (error) {
+      log.error(error);
+    }
   }
 
   async getRenderingInfo() {
-    const toolRuntimeConfig = {
-      size: {
-        width: [
-          {
-            value: Math.floor(
-              this.previewContainer.shadowRoot
-                .querySelector(".preview-element > *:first-child")
-                .getBoundingClientRect().width
-            ),
-            comparison: "="
-          }
-        ]
-      },
-      displayOptions: this.selectedItem.toolRuntimeConfig.displayOptions,
-      isPure: true
-    };
+    try {
+      const toolRuntimeConfig = {
+        size: {
+          width: [
+            {
+              value: Math.floor(
+                this.previewContainer.shadowRoot
+                  .querySelector(".preview-element > *:first-child")
+                  .getBoundingClientRect().width
+              ),
+              comparison: "="
+            }
+          ]
+        },
+        displayOptions: this.selectedItem.toolRuntimeConfig.displayOptions,
+        isPure: true
+      };
 
-    let renderingInfo = {};
-    const response = await fetch(
-      `${this.QServerBaseUrl}/rendering-info/${this.selectedItem.id}/${
-        this.target.key
-      }?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`
-    );
-    if (response.ok) {
-      renderingInfo = await response.json();
-    }
-    // add stylesheets for target preview if any
-    if (this.target.preview && this.target.preview.stylesheets) {
-      if (!renderingInfo.stylesheets) {
-        renderingInfo.stylesheets = [];
+      let renderingInfo = {};
+      const response = await fetch(
+        `${this.QServerBaseUrl}/rendering-info/${this.selectedItem.id}/${
+          this.target.key
+        }?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`
+      );
+      if (response.ok) {
+        renderingInfo = await response.json();
       }
-      this.target.preview.stylesheets.forEach(stylesheet => {
-        renderingInfo.stylesheets.push(stylesheet);
-      });
-    }
+      // add stylesheets for target preview if any
+      if (this.target.preview && this.target.preview.stylesheets) {
+        if (!renderingInfo.stylesheets) {
+          renderingInfo.stylesheets = [];
+        }
+        this.target.preview.stylesheets.forEach(stylesheet => {
+          renderingInfo.stylesheets.push(stylesheet);
+        });
+      }
 
-    // add scripts for target preview if any
-    if (this.target.preview && this.target.preview.scripts) {
-      if (!renderingInfo.scripts) {
-        renderingInfo.scripts = [];
+      // add scripts for target preview if any
+      if (this.target.preview && this.target.preview.scripts) {
+        if (!renderingInfo.scripts) {
+          renderingInfo.scripts = [];
+        }
+        this.target.preview.scripts.forEach(script => {
+          renderingInfo.scripts.push(script);
+        });
       }
-      this.target.preview.scripts.forEach(script => {
-        renderingInfo.scripts.push(script);
-      });
-    }
 
-    // add sophieModules for target preview if any
-    if (this.target.preview && this.target.preview.sophieModules) {
-      if (!renderingInfo.sophieModules) {
-        renderingInfo.sophieModules = [];
+      // add sophieModules for target preview if any
+      if (this.target.preview && this.target.preview.sophieModules) {
+        if (!renderingInfo.sophieModules) {
+          renderingInfo.sophieModules = [];
+        }
+        this.target.preview.sophieModules.forEach(sophieModule => {
+          renderingInfo.sophieModules.push(sophieModule);
+        });
       }
-      this.target.preview.sophieModules.forEach(sophieModule => {
-        renderingInfo.sophieModules.push(sophieModule);
-      });
+      return renderingInfo;
+    } catch (error) {
+      log.error(error);
     }
-    return renderingInfo;
   }
 }
