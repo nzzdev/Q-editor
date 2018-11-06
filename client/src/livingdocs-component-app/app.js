@@ -69,9 +69,8 @@ export class App {
     try {
       const paramsQuery = /params=(.*)&?/.exec(window.location.search);
       if (paramsQuery && paramsQuery[1]) {
-        return await this.getItem(
-          JSON.parse(decodeURIComponent(paramsQuery[1])).id
-        );
+        const params = JSON.parse(decodeURIComponent(paramsQuery[1]));
+        return await this.getItem(params);
       }
     } catch (error) {
       log.error(error);
@@ -103,14 +102,11 @@ export class App {
     }
   }
 
-  async getItem(id) {
+  async getItem(params) {
     try {
-      const response = await fetch(`${this.QServerBaseUrl}/item/${id}`);
-      const item = await response.json();
-      return {
-        id: id,
-        conf: item
-      };
+      const response = await fetch(`${this.QServerBaseUrl}/item/${params.id}`);
+      params.conf = await response.json();
+      return params;
     } catch (error) {
       log.error(error);
     }
@@ -164,7 +160,8 @@ export class App {
         delete displayOptions[displayOption];
       }
     });
-
+    // delete the conf property of the selectedItem before saving it with the item
+    delete this.selectedItem.conf;
     const message = {
       action: "update",
       params: this.selectedItem
