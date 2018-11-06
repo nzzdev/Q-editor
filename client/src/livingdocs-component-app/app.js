@@ -35,19 +35,9 @@ export class App {
     this.items = [];
   }
 
-  async activate() {
-    try {
-      this.QServerBaseUrl = await qEnv.QServerBaseUrl;
-      const paramsQuery = /params=(.*)&?/.exec(window.location.search);
-      if (paramsQuery && paramsQuery[1]) {
-        this.selectedItem = await this.getItem(
-          JSON.parse(decodeURIComponent(paramsQuery[1])).id
-        );
-      }
-    } catch (error) {}
-  }
-
   async attached() {
+    this.QServerBaseUrl = await qEnv.QServerBaseUrl;
+    this.selectedItem = await this.getInitialSelectedItem();
     this.tools = await this.getTools();
     this.target = await this.getTarget();
     this.items = await this.getItems();
@@ -69,20 +59,15 @@ export class App {
     } catch (error) {}
   }
 
-  insertItem() {
-    // delete all displayOptions set to false
-    let displayOptions = this.selectedItem.toolRuntimeConfig.displayOptions;
-    Object.keys(displayOptions).forEach(displayOption => {
-      if (!displayOptions[displayOption]) {
-        delete displayOptions[displayOption];
+  async getInitialSelectedItem() {
+    try {
+      const paramsQuery = /params=(.*)&?/.exec(window.location.search);
+      if (paramsQuery && paramsQuery[1]) {
+        return await this.getItem(
+          JSON.parse(decodeURIComponent(paramsQuery[1])).id
+        );
       }
-    });
-
-    const message = {
-      action: "update",
-      params: this.selectedItem
-    };
-    window.parent.postMessage(message, "*");
+    } catch (error) {}
   }
 
   async getTarget() {
@@ -155,6 +140,22 @@ export class App {
     await this.loadPreview();
   }
 
+  insertItem() {
+    // delete all displayOptions set to false
+    let displayOptions = this.selectedItem.toolRuntimeConfig.displayOptions;
+    Object.keys(displayOptions).forEach(displayOption => {
+      if (!displayOptions[displayOption]) {
+        delete displayOptions[displayOption];
+      }
+    });
+
+    const message = {
+      action: "update",
+      params: this.selectedItem
+    };
+    window.parent.postMessage(message, "*");
+  }
+
   async loadPreview() {
     this.currentItemProvider.setCurrentItem(this.selectedItem);
     this.title = this.selectedItem.conf.title;
@@ -178,18 +179,18 @@ export class App {
       );
       if (response.ok) {
         displayOptionsSchema = await response.json();
-      }
-
-      // translate displayOption titles
-      for (let [key, value] of Object.entries(
-        displayOptionsSchema.properties
-      )) {
-        if (value.title) {
-          displayOptionsSchema.properties[key].title = this.i18n.tr(
-            `${this.selectedItem.conf.tool}:${value.title}`
-          );
+        // translate displayOption titles
+        for (let [key, value] of Object.entries(
+          displayOptionsSchema.properties
+        )) {
+          if (value.title) {
+            displayOptionsSchema.properties[key].title = this.i18n.tr(
+              `${this.selectedItem.conf.tool}:${value.title}`
+            );
+          }
         }
       }
+
       return displayOptionsSchema;
     } catch (error) {}
   }
