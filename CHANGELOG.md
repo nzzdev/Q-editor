@@ -1,4 +1,6 @@
 
+# 3.6.0 (XX.11.2018)
+
 # 3.5.2 (19.10.2018)
 - fix: blueprinting of items with arrays of objects with types using implicit properties (`files`) works now.
 
