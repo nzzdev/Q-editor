@@ -1,5 +1,6 @@
 schema-editor-wrapper {
   display: flex;
+  position: relative;
 }
 
 schema-editor-wrapper > :first-child {
@@ -7,5 +8,11 @@ schema-editor-wrapper > :first-child {
 }
 
 schema-editor-wrapper > notification {
-  margin-top: 22px; /* this is hacky but is the margin required to align the notification with the input element
+  margin-top: 22px; /* this is hacky but is the margin required to align the notification with the input element */
+  position: absolute;
+  right: 0;
+}
+
+.schema-editor-notification-column {
+  margin-right: calc((180px + 2 * var(--q-space-base)));
 }
