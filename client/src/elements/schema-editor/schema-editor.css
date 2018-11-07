@@ -3,29 +3,6 @@ schema-editor {
   flex-direction: column;
 }
 
-schema-editor#schema-editor--main
-  > schema-editor-wrapper
-  > div
-  > schema-editor-object
-  > div
-  > schema-editor-wrapper
-  > div {
-  width: calc(100% - (180px + 2 * var(--q-space-base)));
-  margin-right: calc(var(--q-space-base) * 2);
-}
-
-schema-editor#schema-editor--main
-  > schema-editor-wrapper
-  > div
-  > schema-editor-object
-  > div
-  > fieldset
-  > schema-editor-wrapper
-  > div {
-  width: calc(100% - (180px + 2 * var(--q-space-base)));
-  margin-right: calc(var(--q-space-base) * 2);
-}
-
 schema-editor fieldset {
   border: none;
   padding: 0;

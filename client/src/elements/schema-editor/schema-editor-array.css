@@ -5,9 +5,12 @@ schema-editor-array {
 .schema-editor-array__entry {
   display: flex;
   flex-direction: column;
-  padding-top: calc(var(--q-space-base) * 2);
-  margin-top: calc(var(--q-space-base) * 2);
   position: relative;
+}
+
+.schema-editor-array__entry-border {
+  margin-top: calc(var(--q-space-base) * 2);
+  padding-top: calc(var(--q-space-base) * 2);
   border-top: 1px solid var(--q-color-gray-4);
 }
 
