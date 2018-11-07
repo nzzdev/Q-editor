@@ -196,6 +196,12 @@ export class SchemaEditorTable {
     return this.data;
   }
 
+  reloadHotData() {
+    if (this.hot) {
+      this.hot.loadData(JSON.parse(JSON.stringify(this.getData())));
+    }
+  }
+
   async schemaChanged() {
     this.applyOptions();
   }
@@ -213,8 +219,6 @@ export class SchemaEditorTable {
     if (this.options.metaDataEditor) {
       await this.enableMetaDataEditorIfAvailable();
     }
-
-    this.hotData = JSON.parse(JSON.stringify(this.getData()));
 
     this.loader.loadModule("handsontable/dist/handsontable.full.css!");
     const Handsontable = await this.loader.loadModule(
@@ -244,6 +248,7 @@ export class SchemaEditorTable {
           this.setData(
             trimNull(emptyToNull(trimAllStrings(this.hot.getData())))
           );
+          this.reloadHotData();
           this.change();
         }
         if (this.hot) {
@@ -309,9 +314,7 @@ export class SchemaEditorTable {
         return this.hideMetaDataEditor();
       }
     });
-    if (Array.isArray(this.hotData)) {
-      this.hot.loadData(this.hotData);
-    }
+    this.reloadHotData();
     if (this.metaDataEditorEnabled) {
       this.setCellClassesFromMetaEditorState();
     }
@@ -476,8 +479,8 @@ export class SchemaEditorTable {
       );
 
       if (changed) {
-        this.hot.loadData(newData);
-        this.setData(trimNull(emptyToNull(this.hot.getData())));
+        this.setData(trimNull(emptyToNull(trimAllStrings(newData))));
+        this.reloadHotData();
         this.change();
       }
     } catch (e) {
