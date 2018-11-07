@@ -36,28 +36,16 @@ export class App {
   }
 
   async activate() {
-    this.QServerBaseUrl = await qEnv.QServerBaseUrl;
-    this.selectedItems = [];
-
-    const paramsQuery = /params=(.*)&?/.exec(window.location.search);
-    const targetQuery = /target=([^&]*)/.exec(window.location.search);
-
     try {
-      const selectedItem = JSON.parse(decodeURIComponent(paramsQuery[1]));
-      const item = await this.getItem(selectedItem.id);
-      selectedItem.active = item.conf.active;
-      selectedItem.tool = item.conf.tool;
-      this.selectedItems.push(selectedItem);
-      this.selectedItemIndex = 0;
-    } catch (e) {
-      // nevermind an error here, if there is no valid config, we handle it like there is none at all
-    }
-
-    try {
+      this.QServerBaseUrl = await qEnv.QServerBaseUrl;
+      const paramsQuery = /params=(.*)&?/.exec(window.location.search);
+      const targetQuery = /target=([^&]*)/.exec(window.location.search);
       this.targetKey = decodeURIComponent(targetQuery[1]);
-    } catch (e) {
+      this.selectedItem = await this.getItem(
+        JSON.parse(decodeURIComponent(paramsQuery[1])).id
+      );
+    } catch (error) {
       this.targetKey = "nzz_ch";
-      console.log(e);
     }
   }
 
@@ -65,7 +53,7 @@ export class App {
     this.tools = await this.getTools();
     await this.loadTarget();
     await this.filterChanged();
-    this.loadView();
+    await this.loadView();
   }
 
   async loadTarget() {
@@ -74,7 +62,7 @@ export class App {
       this.target = targets.filter(target => {
         return target.key === this.targetKey;
       })[0];
-    } catch (e) {
+    } catch (error) {
       // nevermind, we'll check if target exists before loading preview
     }
   }
@@ -93,12 +81,9 @@ export class App {
   }
 
   async loadView() {
-    if (this.selectedItemIndex !== undefined) {
-      const item = await this.getItem(
-        this.selectedItems[this.selectedItemIndex].id
-      );
-      this.currentItemProvider.setCurrentItem(item);
-      this.title = item.conf.title;
+    if (this.selectedItem !== undefined) {
+      this.currentItemProvider.setCurrentItem(this.selectedItem);
+      this.title = this.selectedItem.conf.title;
       await this.loadDisplayOptions();
 
       if (this.target) {
@@ -107,33 +92,18 @@ export class App {
     }
   }
 
-  selectItem(item) {
-    this.loadSelectedItem(item);
-    this.loadView();
-  }
-
-  loadSelectedItem(item) {
-    this.title = item.conf.title;
-    const index = this.selectedItems.findIndex(selectedItem => {
-      return selectedItem.id === item.conf._id;
-    });
-    if (index > -1) {
-      this.selectedItemIndex = index;
-    } else {
-      this.selectedItems.push({
-        id: item.conf._id,
-        active: item.conf.active,
-        tool: item.conf.tool,
-        toolRuntimeConfig: {}
-      });
-      this.selectedItemIndex = this.selectedItems.length - 1;
-    }
+  async selectItem(item) {
+    this.selectedItem = {
+      id: item.conf._id,
+      conf: item.conf,
+      toolRuntimeConfig: {}
+    };
+    await this.loadView();
   }
 
   insertItem() {
     // delete all displayOptions set to false
-    let displayOptions = this.selectedItems[this.selectedItemIndex]
-      .toolRuntimeConfig.displayOptions;
+    let displayOptions = this.selectedItem.toolRuntimeConfig.displayOptions;
     Object.keys(displayOptions).forEach(displayOption => {
       if (!displayOptions[displayOption]) {
         delete displayOptions[displayOption];
@@ -142,7 +112,7 @@ export class App {
 
     const message = {
       action: "update",
-      params: this.selectedItems[this.selectedItemIndex]
+      params: this.selectedItem
     };
     window.parent.postMessage(message, "*");
   }
@@ -235,23 +205,18 @@ export class App {
           }
         ]
       },
-      displayOptions: this.selectedItems[this.selectedItemIndex]
-        .toolRuntimeConfig.displayOptions,
+      displayOptions: this.selectedItem.toolRuntimeConfig.displayOptions,
       isPure: true
     };
 
     let renderingInfo = {};
-    if (this.selectedItemIndex !== undefined) {
-      const response = await fetch(
-        `${this.QServerBaseUrl}/rendering-info/${
-          this.selectedItems[this.selectedItemIndex].id
-        }/${this.target.key}?toolRuntimeConfig=${encodeURI(
-          JSON.stringify(toolRuntimeConfig)
-        )}`
-      );
-      if (response.ok) {
-        renderingInfo = await response.json();
-      }
+    const response = await fetch(
+      `${this.QServerBaseUrl}/rendering-info/${this.selectedItem.id}/${
+        this.target.key
+      }?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`
+    );
+    if (response.ok) {
+      renderingInfo = await response.json();
     }
     // add stylesheets for target preview if any
     if (this.target.preview && this.target.preview.stylesheets) {
@@ -297,11 +262,10 @@ export class App {
 
   async loadDisplayOptions() {
     try {
-      let selectedItem = this.selectedItems[this.selectedItemIndex];
       let displayOptionsSchema = {};
       const response = await fetch(
         `${this.QServerBaseUrl}/tools/${
-          selectedItem.tool
+          this.selectedItem.conf.tool
         }/display-options-schema.json`
       );
       if (response.ok) {
@@ -312,23 +276,23 @@ export class App {
       )) {
         if (value.title) {
           displayOptionsSchema.properties[key].title = this.i18n.tr(
-            `${selectedItem.tool}:${value.title}`
+            `${this.selectedItem.conf.tool}:${value.title}`
           );
         }
       }
       this.displayOptionsSchema = displayOptionsSchema;
-      if (!selectedItem.toolRuntimeConfig) {
-        selectedItem.toolRuntimeConfig = {};
+      if (!this.selectedItem.toolRuntimeConfig) {
+        this.selectedItem.toolRuntimeConfig = {};
       }
 
-      if (!selectedItem.toolRuntimeConfig.displayOptions) {
-        selectedItem.toolRuntimeConfig.displayOptions = this.objectFromSchemaGenerator.generateFromSchema(
+      if (!this.selectedItem.toolRuntimeConfig.displayOptions) {
+        this.selectedItem.toolRuntimeConfig.displayOptions = this.objectFromSchemaGenerator.generateFromSchema(
           displayOptionsSchema
         );
       }
     } catch (error) {
       this.displayOptionsSchema = {};
-      this.selectedItems[this.selectedItemIndex].toolRuntimeConfig = {
+      this.selectedItem.toolRuntimeConfig = {
         displayOptions: {}
       };
     }
