@@ -13,7 +13,7 @@
 
 	<div if.bind="getType(schema) === 'textarea'" class="schema-editor-block">
 		<require from="./schema-editor-textarea"></require>
-		<schema-editor-textarea schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-textarea>
+		<schema-editor-textarea schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showIsValueMissingNotification()"></schema-editor-textarea>
 	</div>
 
 	<div if.bind="getType(schema) === 'boolean'" class="schema-editor-block">
@@ -23,28 +23,28 @@
 
 	<div if.bind="getType(schema) === 'url'" class="schema-editor-block">
 		<require from="./schema-editor-url"></require>
-		<schema-editor-url schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-url>
+		<schema-editor-url schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showIsValueMissingNotification()"></schema-editor-url>
 	</div>
 
 	<div if.bind="getType(schema) === 'link'" class="schema-editor-block">
 		<require from="./schema-editor-link"></require>
-		<schema-editor-link schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-link>
+		<schema-editor-link schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showIsValueMissingNotification()"></schema-editor-link>
 	</div>
 
 	<div if.bind="getType(schema) === 'number'" class="schema-editor-block">
 		<require from="./schema-editor-number"></require>
-		<schema-editor-number schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-number>
+		<schema-editor-number schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showIsValueMissingNotification()"></schema-editor-number>
 	</div>
 
 	<div if.bind="getType(schema) === 'date'" class="schema-editor-block">
 		<require from="./schema-editor-date"></require>
-		<schema-editor-date schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required">
+		<schema-editor-date schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showIsValueMissingNotification()">
 			</schema-editor-color>
 	</div>
 
 	<div if.bind="getType(schema) === 'color'" class="schema-editor-block">
 		<require from="./schema-editor-color"></require>
-		<schema-editor-color schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-color>
+		<schema-editor-color schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showIsValueMissingNotification()"></schema-editor-color>
 	</div>
 
 	<div if.bind="getType(schema) === 'array'" class="schema-editor-block">
@@ -59,17 +59,17 @@
 
 	<div if.bind="getType(schema) === 'base64image'" class="schema-editor-block">
 		<require from="./schema-editor-base64image"></require>
-		<schema-editor-base64image schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-base64image>
+		<schema-editor-base64image schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showIsValueMissingNotification()"></schema-editor-base64image>
 	</div>
 
 	<div if.bind="getType(schema) === 'geojsonPoint'" class="schema-editor-block">
 		<require from="./schema-editor-geojson-point"></require>
-		<schema-editor-geojson-point schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-geojson-point>
+		<schema-editor-geojson-point schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showIsValueMissingNotification()"></schema-editor-geojson-point>
 	</div>
 
 	<div if.bind="getType(schema) === 'json'" class="schema-editor-block">
 		<require from="./schema-editor-json"></require>
-		<schema-editor-json schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required"></schema-editor-json>
+		<schema-editor-json schema.bind="schema" data.two-way="data" change.bind="change" required.bind="required" invalid.capture="showIsValueMissingNotification()"></schema-editor-json>
 	</div>
 
 	<div if.bind="getType(schema) === 'table'" class="schema-editor-block">
