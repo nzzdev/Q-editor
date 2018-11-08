@@ -1,4 +1,4 @@
-<template class="schema-editor-input schema-editor-notification-column">
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-notification-column' : ''}">
   <label>
     ${schema["title"] & toolT}
     <select value.bind="data" change.delegate="change()" if.bind="selectType === 'select'">

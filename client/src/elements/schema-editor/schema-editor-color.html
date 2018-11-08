@@ -1,4 +1,4 @@
-<template class="schema-editor-input schema-editor-notification-column">
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-notification-column' : ''}">
   <require from="./schema-editor-color.css"></require>
   <label>
     ${schema["title"] & toolT}

@@ -4,9 +4,14 @@ import Ajv from "ajv";
 const ajv = new Ajv();
 
 export class SchemaEditorJson {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  showNotifications;
 
   constructor() {
     this.handleChange = () => {
