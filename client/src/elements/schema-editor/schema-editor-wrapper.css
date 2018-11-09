@@ -16,7 +16,3 @@ schema-editor-wrapper > notification {
 .schema-editor-notification-column {
   margin-right: calc((180px + 2 * var(--q-space-base)));
 }
-
-.schema-editor-notification-column textarea {
-  max-width: calc(100% - (180px + 2 * var(--q-space-base)));
-}
