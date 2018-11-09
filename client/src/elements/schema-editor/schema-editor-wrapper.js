@@ -30,11 +30,11 @@ export class SchemaEditorWrapper {
   }
 
   dataChanged() {
-    // Clear visible notification if previous notification was of type isValueMissing
+    // Clear visible notification if previous notification was of type Required
     if (
       this.visibleNotification &&
       this.visibleNotification.message.title ===
-        "notifications.isValueMissing.title"
+      "notifications.required.title"
     ) {
       this.visibleNotification = "";
     }
@@ -84,11 +84,11 @@ export class SchemaEditorWrapper {
     this.notifications.push(newNotifications[0]);
   }
 
-  showIsValueMissingNotification() {
+  showRequiredNotification() {
     this.visibleNotification = {
       message: {
-        title: "notifications.isValueMissing.title",
-        body: "notifications.isValueMissing.body"
+        title: "notifications.required.title",
+        body: "notifications.required.body"
       },
       priority: {
         type: "high",
