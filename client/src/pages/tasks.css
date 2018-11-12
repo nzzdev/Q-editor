@@ -1,0 +1,33 @@
+.tasks {
+  height: 100%;
+  display: flex;
+}
+
+.tasks main {
+  padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 6);
+  flex-grow: 1;
+}
+
+.tasks--input {
+  /* background-color: yellow; */
+  height: 100%;
+  width: 100%;
+}
+
+.tasks--output {
+  /* background-color: blue; */
+  height: 100%;
+  width: 100%;
+}
+
+.tasks--sidebar {
+  /* background-color: red; */
+  height: 100%;
+  width: 15%;
+}
+
+#tasks--listed {
+  list-style-type: none;
+  margin-left: 8px;
+  padding: 0;
+}
