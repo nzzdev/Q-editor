@@ -11,7 +11,11 @@ export class SchemaEditorJson {
   @bindable
   change;
   @bindable
+  required;
+  @bindable
   showNotifications;
+
+  options = {};
 
   constructor() {
     this.handleChange = () => {
@@ -25,6 +29,13 @@ export class SchemaEditorJson {
   schemaChanged() {
     if (this.schema) {
       this.ajvValidate = ajv.compile(this.schema);
+      this.applyOptions();
+    }
+  }
+
+  applyOptions() {
+    if (this.schema.hasOwnProperty("Q:options")) {
+      this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
   }
 
