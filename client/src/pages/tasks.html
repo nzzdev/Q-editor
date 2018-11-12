@@ -9,7 +9,7 @@
   <section class="tasks">
     <div class="tasks--sidebar">
       <ul id="tasks--listed">
-        <li>test</li>
+         <li repeat.for="task of tasks"><a click.delegate="executeTask(task)">${task.name}</a></li>
       </ul>
     </div>
     <div class="tasks--input">
