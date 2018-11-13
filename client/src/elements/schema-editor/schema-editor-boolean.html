@@ -1,4 +1,4 @@
-<template class="schema-editor-input">
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
   <div class="q-form__checkbox">
     <label>
       <input type="checkbox" checked.bind="data" change.delegate="change()">

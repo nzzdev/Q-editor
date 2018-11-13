@@ -1,4 +1,4 @@
-<template class="schema-editor-input">
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
   <label>
     ${schema["title"] & toolT}
     <span show.bind="required">
@@ -7,5 +7,5 @@
     </span>
     <input type="number" placeholder.to-view="options.placeholder || '' & toolT" required.bind="required" value.bind="data | forceNumber"
       step.bind="options.step" min.bind="schema.minimum" max.bind="schema.maximum" keyup.delegate="change() & debounce:800">
-    <label>
+  </label>
 </template>

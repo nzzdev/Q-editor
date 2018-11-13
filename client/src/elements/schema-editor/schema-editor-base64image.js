@@ -1,10 +1,16 @@
 import { bindable } from "aurelia-framework";
 
 export class SchemaEditorBase64image {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
-  @bindable required;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  required;
+  @bindable
+  showNotifications;
 
   handleChange(event) {
     let reader = new FileReader();

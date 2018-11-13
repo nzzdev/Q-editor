@@ -259,8 +259,6 @@ export class Editor {
   userSave() {
     let valid = true;
     if (!this.form.checkValidity()) {
-      // this triggers the HTML5 Form Validation in the browser
-      this.formSubmitButton.click();
       valid = false;
       this.addInvalidClass(this.form.elements);
     }

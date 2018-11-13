@@ -169,6 +169,8 @@ export class SchemaEditorTable {
   change;
   @bindable
   required;
+  @bindable
+  showNotifications;
 
   options = {
     allowTranspose: true,

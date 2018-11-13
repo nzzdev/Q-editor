@@ -15,6 +15,8 @@ export class SchemaEditorFiles {
   change;
   @bindable
   required;
+  @bindable
+  showNotifications;
 
   options = {
     maxFiles: null

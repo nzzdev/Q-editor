@@ -29,6 +29,17 @@ export class SchemaEditorWrapper {
     this.getType = getType;
   }
 
+  dataChanged() {
+    // Clear visible notification if previous notification was of type Required
+    if (
+      this.visibleNotification &&
+      this.visibleNotification.message.title ===
+      "notifications.required.title"
+    ) {
+      this.visibleNotification = "";
+    }
+  }
+
   async schemaChanged() {
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
@@ -71,6 +82,19 @@ export class SchemaEditorWrapper {
     // the notifications array is passed down the schema-editor childs to hold all notifications
     // in the object tree
     this.notifications.push(newNotifications[0]);
+  }
+
+  showRequiredNotification() {
+    this.visibleNotification = {
+      message: {
+        title: "notifications.required.title",
+        body: "notifications.required.body"
+      },
+      priority: {
+        type: "high",
+        value: 1
+      }
+    };
   }
 
   async applyAvailability() {
