@@ -1,10 +1,19 @@
-<template class="schema-editor-input ${showNotifications ? 'schema-editor-notification-column' : ''}">
+<template
+  class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}"
+>
   <label>
     ${schema["title"] & toolT}
     <span show.bind="required">
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
-    <textarea ref="inputElement" placeholder.to-view="options.placeholder || '' & toolT" value.bind="data | json" required.bind="required" change.delegate="validate()" input.delegate="handleChange() & debounce:800"></textarea>
+    <textarea
+      ref="inputElement"
+      placeholder.to-view="options.placeholder || '' & toolT"
+      value.bind="data | json"
+      required.bind="required"
+      change.delegate="validate()"
+      input.delegate="handleChange() & debounce:800"
+    ></textarea>
   </label>
 </template>

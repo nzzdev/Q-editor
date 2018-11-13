@@ -1,4 +1,4 @@
-<template class="schema-editor-input ${showNotifications ? 'schema-editor-notification-column' : ''}">
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
   <label>
     ${schema.properties.url["title"] || '' & toolT}
     <span show.bind="required">

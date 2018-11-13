@@ -1,4 +1,6 @@
-<template class="schema-editor-input ${showNotifications ? 'schema-editor-notification-column' : ''}">
+<template
+  class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}"
+>
   <require from="./schema-editor-color.css"></require>
   <label>
     ${schema["title"] & toolT}
@@ -6,6 +8,11 @@
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
-    <input type="color" value.bind="data" required.bind="required" change.delegate="change() & debounce:500">
+    <input
+      type="color"
+      value.bind="data"
+      required.bind="required"
+      change.delegate="change() & debounce:500"
+    />
   </label>
 </template>

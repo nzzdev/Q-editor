@@ -1,6 +1,6 @@
-<template class="schema-editor-input ${showNotifications ? 'schema-editor-notification-column' : ''}">
+<template
+  class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}"
+>
   <require from="./schema-editor-files.css"></require>
-  <div >
-    <div class="dropzone" ref="dropzoneElement"></div>
-  </div>
+  <div><div class="dropzone" ref="dropzoneElement"></div></div>
 </template>
