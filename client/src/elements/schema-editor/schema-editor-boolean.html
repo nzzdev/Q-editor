@@ -1,9 +1,7 @@
-<template
-  class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}"
->
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-notification-column' : ''}">
   <div class="q-form__checkbox">
     <label>
-      <input type="checkbox" checked.bind="data" change.delegate="change()" />
+      <input type="checkbox" checked.bind="data" change.delegate="change()">
       <span>${schema["title"] & toolT}</span>
     </label>
   </div>

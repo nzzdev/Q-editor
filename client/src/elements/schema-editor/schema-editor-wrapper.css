@@ -13,6 +13,6 @@ schema-editor-wrapper > notification {
   right: 0;
 }
 
-.schema-editor-input--with-notifications {
+.schema-editor-notification-column {
   margin-right: calc((180px + 2 * var(--q-space-base)));
 }

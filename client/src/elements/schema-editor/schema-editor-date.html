@@ -1,17 +1,10 @@
-<template
-  class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}"
->
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-notification-column' : ''}">
   <label>
     ${schema["title"] & toolT}
     <span show.bind="required">
       <span>- </span>
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
-    <input
-      type="date"
-      value.bind="data"
-      required.bind="required"
-      keyup.delegate="change() & debounce:800"
-    />
+    <input type="date" value.bind="data" required.bind="required" keyup.delegate="change() & debounce:800">
   </label>
 </template>
