@@ -8,12 +8,6 @@ schema-editor-array {
   position: relative;
 }
 
-.schema-editor-array__entry-border {
-  margin-top: calc(var(--q-space-base) * 2);
-  padding-top: calc(var(--q-space-base) * 2);
-  border-top: 1px solid var(--q-color-gray-4);
-}
-
 .schema-editor-array__entry:empty {
   display: none;
 }
@@ -22,6 +16,12 @@ schema-editor-array {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+}
+
+.schema-editor-array__control {
+  margin-top: calc(var(--q-space-base) * 2);
+  padding-top: calc(var(--q-space-base) * 2);
+  border-top: 1px solid var(--q-color-gray-4);
 }
 
 .schema-editor-array__collapsecontrol {
