@@ -10,6 +10,10 @@ export default class CurrentItemProvider {
     return this.item;
   }
 
+  unsetCurrentItem() {
+    this.item = undefined;
+  }
+
   getCurrentItemByFields(fields) {
     const item = {};
     for (let field of fields) {

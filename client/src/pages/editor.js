@@ -181,6 +181,7 @@ export class Editor {
   }
 
   deactivate() {
+    this.currentItemProvider.unsetCurrentItem();
     this.stopAutosave();
   }
 
