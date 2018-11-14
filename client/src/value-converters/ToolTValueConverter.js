@@ -25,9 +25,8 @@ export class ToolTValueConverter {
         return decodeHtmlEntities(
           this.service.tr(`${item.conf.tool}:${value}`, options)
         );
-      } else {
-        return decodeHtmlEntities(this.service.tr(`${value}`, options));
       }
+      return decodeHtmlEntities(this.service.tr(`${value}`, options));
     }
   }
 }
