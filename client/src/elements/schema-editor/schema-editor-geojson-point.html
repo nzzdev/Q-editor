@@ -2,14 +2,15 @@
   <require from="./schema-editor-object"></require>
   <require from="./schema-editor-geojson-point.css"></require>
   <p class="q-text q-text--error" if.bind="showLoadingError" t="editor.failedToLoadEditorPart"></p>
-  <div style="height: 400px;" ref="mapContainer"></div>
+  <div class="schema-editor-input--with-notifications" style="height: 400px;" ref="mapContainer"></div>
   <div>
     <schema-editor-object
       schema.bind="schema.properties.properties"
       data.two-way="data.properties"
-      change.bind="change"></schema-editor-object>
+      change.bind="change"
+      show-notifications.bind="showNotifications"></schema-editor-object>
 
-    <div class="lat-lng-input">
+    <div class="lat-lng-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
       <label>
         Latitude
         <input type="number" step="any" value.bind="data.geometry.coordinates[1] | forceNumber" input.delegate="updateMarker(true)" required.bind="isRequired(schema.properties.geometry, 'coordinates')">

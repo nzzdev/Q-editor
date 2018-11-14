@@ -7,7 +7,7 @@ export default class ItemHasIdAvailabilityCheck {
     this.currentItemProvider = currentItemProvider;
   }
 
-  async isAvailable(availabilityCheck) {
+  async isAvailable(config) {
     const item = this.currentItemProvider.getCurrentItem();
     return item && item.conf && item.conf._id;
   }

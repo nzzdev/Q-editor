@@ -2,12 +2,18 @@ import { bindable } from "aurelia-framework";
 import { getType, isRequired } from "./helpers.js";
 
 export class SchemaEditorObject {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
-  @bindable noObjectTitle;
-  @bindable notifications;
-  @bindable showNotifications;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  noObjectTitle;
+  @bindable
+  notifications;
+  @bindable
+  showNotifications;
 
   constructor() {
     this.getType = getType;

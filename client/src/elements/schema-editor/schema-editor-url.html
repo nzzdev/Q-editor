@@ -1,4 +1,4 @@
-<template>
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
   <label>
     ${schema["title"] & toolT}
     <span show.bind="required">
@@ -6,5 +6,5 @@
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
     <input type="url" placeholder.to-view="options.placeholder || '' & toolT" required.bind="required" value.bind="data" keyup.delegate="change() & debounce:800">
-    <label>
+  </label>
 </template>

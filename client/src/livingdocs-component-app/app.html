@@ -13,15 +13,15 @@
   <div class="livingdocs-component">
     <div class="livingdocs-component-search">
       <div class="search">
-        <input t="[placeholder]general.searchLabel" input.delegate="filterChanged() & debounce" value.two-way="currentSearchString">
+        <input t="[placeholder]general.searchLabel" input.delegate="search() & debounce" value.two-way="searchString">
         <svg viewBox="0 0 34 32" xmlns="http://www.w3.org/2000/svg">
           <path d="M22.5 21.23a9.73 9.73 0 1 1 0-19.46c5.374 0 9.73 4.356 9.73 9.73 0 5.374-4.356 9.73-9.73 9.73zM13.782 19A11.455 11.455 0 0 1 11 11.5C11 5.149 16.149 0 22.5 0S34 5.149 34 11.5 28.851 23 22.5 23a11.455 11.455 0 0 1-7.5-2.782v2.496l-9.71 8.014c-.853.705-2.175.643-2.958-.132l-.914-.906c-.782-.774-.728-1.974.123-2.676L11.25 19h2.532z"
             fill-rule="evenodd" />
         </svg>
       </div>
       <div class="item-list">
-        <div class="item-list-entry ${item.conf._id === selectedItems[selectedItemIndex].id ? 'selected' : ''}"
-          click.delegate="selectItem(item)" repeat.for="item of items">
+        <div class="item-list-entry ${item.conf._id === selectedItem.id ? 'selected' : ''}" click.delegate="selectItem(item)"
+          repeat.for="item of items">
           <div class="item-list-entry-title">
             <box-icon if.bind="item.conf.icon" code.bind="item.conf.icon" size="big" class="tool-icon"></box-icon>
             <span class="q-text">${item.conf.title}</span>
@@ -56,7 +56,7 @@
     </div>
     <div class="livingdocs-component-item-container">
       <div class="livingdocs-component-item-preview-container">
-        <div class="livingdocs-component-item-preview" show.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
+        <div class="livingdocs-component-item-preview" show.bind="selectedItem !== undefined && selectedItem.conf.active">
           <div class="livingdocs-component-item-title">
             <h2 if.bind="title">${title}</h2>
           </div>
@@ -65,23 +65,22 @@
           </preview-container>
         </div>
         <div class="livingdocs-component-item-preview-message-container">
-          <h2 show.bind="selectedItemIndex === undefined">${'livingdocsComponent.selectGraphic'
-            & t}</h2>
-          <h2 show.bind="selectedItemIndex !== undefined && !selectedItems[selectedItemIndex].active">${'livingdocsComponent.inactiveGraphic'
+          <h2 show.bind="selectedItem === undefined">${'livingdocsComponent.selectGraphic' & t}</h2>
+          <h2 show.bind="selectedItem !== undefined && !selectedItem.conf.active">${'livingdocsComponent.inactiveGraphic'
             & t}</h2>
         </div>
       </div>
       <div class="livingdocs-component-item-controls-container">
-        <div if.bind="selectedItemIndex !== undefined && selectedItems[selectedItemIndex].active">
+        <div if.bind="selectedItem !== undefined && selectedItem.conf.active">
           <form class="q-form livingdocs-component-item-options">
-            <schema-editor schema.bind="displayOptionsSchema" data.bind="selectedItems[selectedItemIndex].toolRuntimeConfig.displayOptions"
+            <schema-editor schema.bind="displayOptionsSchema" data.bind="selectedItem.toolRuntimeConfig.displayOptions"
               change.call="loadPreview()">
             </schema-editor>
           </form>
         </div>
         <div class="livingdocs-component-item-controls">
           <div class="item-edit">
-            <a href="#/editor/${tool}/${selectedItems[selectedItemIndex].id}" target="_blank">
+            <a href="#/editor/${selectedItem.conf.tool}/${selectedItem.id}" target="_blank">
               <button-secondary icon="edit">${'livingdocsComponent.edit' & t}</button-secondary>
             </a>
           </div>

@@ -1,12 +1,8 @@
-<template>
+<template class="${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
   <require from="./schema-editor-table.css"></require>
   <require from="elements/schema-editor/schema-editor"></require>
   <label>
     ${schema["title"] & toolT}
-    <span show.bind="required">
-      <span>- </span>
-      <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
-    </span>
     <div ref="tableContainerElement" class="${ metaDataEditorAvailable ? 'metadata-editor-available' : ''}"></div>
   </label>
   <div class="schema-editor-table__meta-editor schema-editor-table__meta-editor--hidden" ref="metaEditorWrapper" if.bind="metaDataEditorEnabled && metaDataEditorAvailable">

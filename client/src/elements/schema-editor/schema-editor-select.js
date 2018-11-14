@@ -3,9 +3,14 @@ import { resolveDynamicEnum } from "resources/schemaEditorDecorators.js";
 
 @resolveDynamicEnum()
 export class SchemaEditorSelect {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  showNotifications;
 
   schemaChanged(schema) {
     if (schema["Q:options"] && schema["Q:options"].enum_titles) {

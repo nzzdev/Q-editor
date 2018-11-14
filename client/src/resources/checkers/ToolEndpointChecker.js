@@ -1,7 +1,16 @@
+import { inject, LogManager } from "aurelia-framework";
 import qEnv from "resources/qEnv.js";
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
+const log = LogManager.getLogger("Q");
+
+@inject(CurrentItemProvider)
 export default class ToolEndpointChecker {
   reevaluateCallbacks = [];
+
+  constructor(currentItemProvider) {
+    this.currentItemProvider = currentItemProvider;
+  }
 
   triggerReevaluation() {
     for (let cb of this.reevaluateCallbacks) {
@@ -21,57 +30,52 @@ export default class ToolEndpointChecker {
     }
   }
 
-  setCurrentToolName(toolName) {
-    this.toolName = toolName;
-  }
-
-  setCurrentItem(item) {
-    this.item = item;
-  }
-
-  async fetch(endpoint) {
+  async check(config) {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${this.toolName}`;
-    const resp = await fetch(`${toolRequestBaseUrl}/${endpoint}`);
-    if (resp.status !== 200) {
-      throw new Error(resp.statusMessage);
+    const item = this.currentItemProvider.getCurrentItem().conf;
+    const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${item.tool}`;
+    const options = {
+      method: "GET"
+    };
+
+    if (config.withData) {
+      options.method = "POST";
+      options.body = JSON.stringify(item);
+      log.info(
+        "DEPRECATION NOTICE: In Q editor 4.0 you will have to adopt declaring the needed properties in fields as withData will be depricated. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
+      );
+    } else if (Array.isArray(config.data) && config.data.length > 0) {
+      const dataForEndpoint = {
+        data: this.currentItemProvider.getCurrentItemByData(config.data)
+      };
+      options.method = "POST";
+      if (config.hasOwnProperty("options")) {
+        dataForEndpoint.options = config.options;
+      }
+      options.body = JSON.stringify(dataForEndpoint);
+      log.info(
+        "DEPRECATION NOTICE: In Q editor 4.0 you will have to rename data to fields. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
+      );
+    } else if (Array.isArray(config.fields) && config.fields.length > 0) {
+      const dataForEndpoint = {
+        item: this.currentItemProvider.getCurrentItemByFields(config.fields)
+      };
+      options.method = "POST";
+      if (config.hasOwnProperty("options")) {
+        dataForEndpoint.options = config.options;
+      }
+      options.body = JSON.stringify(dataForEndpoint);
+    }
+    const response = await fetch(
+      `${toolRequestBaseUrl}/${config.endpoint}`,
+      options
+    );
+
+    if (response.status !== 200) {
+      throw new Error(response.statusMessage);
     }
     try {
-      return await resp.json();
-    } catch (e) {
-      return null;
-    }
-  }
-
-  async fetchWithData(endpoint, data) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${this.toolName}`;
-    const resp = await fetch(`${toolRequestBaseUrl}/${endpoint}`, {
-      method: "POST",
-      body: JSON.stringify(data)
-    });
-    if (resp.status !== 200) {
-      throw new Error(resp.statusMessage);
-    }
-    try {
-      return await resp.json();
-    } catch (e) {
-      return null;
-    }
-  }
-
-  async fetchWithItem(endpoint) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${this.toolName}`;
-    const resp = await fetch(`${toolRequestBaseUrl}/${endpoint}`, {
-      method: "POST",
-      body: JSON.stringify(this.item.conf)
-    });
-    if (resp.status !== 200) {
-      throw new Error(resp.statusMessage);
-    }
-    try {
-      return await resp.json();
+      return await response.json();
     } catch (e) {
       return null;
     }

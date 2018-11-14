@@ -1,10 +1,16 @@
 import { bindable } from "aurelia-framework";
 
 export class SchemaEditorLink {
-  @bindable data;
-  @bindable schema;
-  @bindable change;
-  @bindable required;
+  @bindable
+  data;
+  @bindable
+  schema;
+  @bindable
+  change;
+  @bindable
+  required;
+  @bindable
+  showNotifications;
 
   options = {};
 

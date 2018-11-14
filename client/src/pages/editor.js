@@ -131,11 +131,6 @@ export class Editor {
       })
       .then(item => {
         if (item) {
-          // set the toolName and the current item to toolEndpointChecker
-          // whenever we activate the editor. The toolEndpointChecker is used
-          // in the AvailabilityChecker and NotificationChecker to send requests to the current tool
-          this.toolEndpointChecker.setCurrentToolName(this.toolName);
-          this.toolEndpointChecker.setCurrentItem(item);
           this.currentItemProvider.setCurrentItem(item);
           this.item = item;
 
@@ -264,8 +259,6 @@ export class Editor {
   userSave() {
     let valid = true;
     if (!this.form.checkValidity()) {
-      // this triggers the HTML5 Form Validation in the browser
-      this.formSubmitButton.click();
       valid = false;
       this.addInvalidClass(this.form.elements);
     }

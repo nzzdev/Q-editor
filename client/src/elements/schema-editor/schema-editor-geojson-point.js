@@ -8,9 +8,14 @@ const iconPinSvg =
 
 @inject(QConfig, Loader)
 export class SchemaEditorGeojsonPoint {
-  @bindable schema;
-  @bindable data;
-  @bindable change;
+  @bindable
+  schema;
+  @bindable
+  data;
+  @bindable
+  change;
+  @bindable
+  showNotifications;
 
   options = {
     bbox: false

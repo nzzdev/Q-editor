@@ -1,32 +1,12 @@
-import { inject, singleton } from "aurelia-framework";
+import { inject, singleton, LogManager } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import ItemStore from "resources/ItemStore.js";
 import QTargets from "resources/QTargets.js";
 import qEnv from "resources/qEnv.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
-import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
-let loadedItems = [];
-
-async function getItem(id) {
-  if (!loadedItems.hasOwnProperty(id)) {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const response = await fetch(`${QServerBaseUrl}/item/${id}`);
-
-    if (!response.ok) {
-      throw response;
-    }
-
-    const doc = await response.json();
-    let item = {
-      id: id,
-      conf: doc
-    };
-    loadedItems[id] = item;
-  }
-  return loadedItems[id];
-}
+const log = LogManager.getLogger("Q");
 
 @singleton()
 @inject(
@@ -34,343 +14,272 @@ async function getItem(id) {
   QTargets,
   ObjectFromSchemaGenerator,
   I18N,
-  ToolEndpointChecker,
   CurrentItemProvider
 )
 export class App {
-  moreItemsAvailable = false;
-
   constructor(
     itemStore,
     qTargets,
     objectFromSchemaGenerator,
     i18n,
-    toolEndpointChecker,
     currentItemProvider
   ) {
     this.itemStore = itemStore;
     this.qTargets = qTargets;
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.i18n = i18n;
+    this.currentItemProvider = currentItemProvider;
     this.previewWidth = 290;
     this.displayOptionsSchema = {
       properties: {}
     };
-    this.toolEndpointChecker = toolEndpointChecker;
-    this.currentItemProvider = currentItemProvider;
-  }
-
-  async activate() {
-    this.selectedItems = [];
-
-    const paramsQuery = /params=(.*)&?/.exec(window.location.search);
-    const targetQuery = /target=([^&]*)/.exec(window.location.search);
-
-    try {
-      const selectedItem = JSON.parse(decodeURIComponent(paramsQuery[1]));
-      const item = await getItem(selectedItem.id);
-      selectedItem.active = item.conf.active;
-      this.selectedItems.push(selectedItem);
-      this.selectedItemIndex = 0;
-    } catch (e) {
-      // nevermind an error here, if there is no valid config, we handle it like there is none at all
-    }
-
-    try {
-      this.targetKey = decodeURIComponent(targetQuery[1]);
-    } catch (e) {
-      this.targetKey = "nzz_ch";
-      console.log(e);
-    }
+    this.moreItemsAvailable = false;
+    this.items = [];
   }
 
   async attached() {
+    this.QServerBaseUrl = await qEnv.QServerBaseUrl;
+    this.selectedItem = await this.getInitialSelectedItem();
     this.tools = await this.getTools();
-    await this.loadTarget();
-    await this.filterChanged();
-    this.loadView();
+    this.target = await this.getTarget();
+    this.items = await this.getItems();
+    if (this.selectedItem) {
+      await this.loadPreview();
+    }
   }
 
-  async loadTarget() {
+  async search() {
+    try {
+      this.items = await this.getItems(this.searchString);
+    } catch (error) {
+      log.error(error);
+    }
+  }
+
+  async loadMore() {
+    try {
+      const items = await this.getItems(this.searchString, this.bookmark);
+      this.items = this.items.concat(items);
+    } catch (error) {
+      log.error(error);
+    }
+  }
+
+  async getInitialSelectedItem() {
+    try {
+      const paramsQuery = /params=(.*)&?/.exec(window.location.search);
+      if (paramsQuery && paramsQuery[1]) {
+        const params = JSON.parse(decodeURIComponent(paramsQuery[1]));
+        return await this.getItem(params);
+      }
+    } catch (error) {
+      log.error(error);
+    }
+  }
+
+  async getTarget() {
     try {
       const targets = await this.qTargets.get("availableTargets");
-      this.target = targets.filter(target => {
-        return target.key === this.targetKey;
-      })[0];
-    } catch (e) {
-      // nevermind, we'll check if target exists before loading preview
-    }
-  }
-
-  async loadView() {
-    if (this.selectedItemIndex !== undefined) {
-      const item = await getItem(this.selectedItems[this.selectedItemIndex].id);
-      // set the toolName and the current item to toolEndpointChecker
-      // whenever we activate the editor. The toolEndpointChecker is used
-      // in the AvailabilityChecker to send requests to the current tool
-      this.toolEndpointChecker.setCurrentToolName(item.conf.tool);
-      this.toolEndpointChecker.setCurrentItem(item);
-      this.currentItemProvider.setCurrentItem(item);
-      this.title = item.conf.title;
-      await this.loadDisplayOptions();
-
-      if (this.target) {
-        this.loadPreview();
+      const targetQuery = /target=([^&]*)/.exec(window.location.search);
+      let targetKey = "nzz_ch";
+      if (targetQuery && targetQuery[1]) {
+        targetKey = decodeURIComponent(targetQuery[1]);
       }
-    }
-  }
-
-  selectItem(item) {
-    this.loadSelectedItem(item);
-    this.loadView();
-  }
-
-  loadSelectedItem(item) {
-    this.title = item.conf.title;
-    const index = this.selectedItems.findIndex(selectedItem => {
-      return selectedItem.id === item.conf._id;
-    });
-    if (index > -1) {
-      this.selectedItemIndex = index;
-    } else {
-      this.selectedItems.push({
-        id: item.conf._id,
-        active: item.conf.active,
-        toolRuntimeConfig: {}
+      return targets.find(target => {
+        return target.key === targetKey;
       });
-      this.selectedItemIndex = this.selectedItems.length - 1;
+    } catch (error) {
+      log.error(error);
     }
   }
 
-  insertItem() {
-    // delete all displayOptions set to false
-    let displayOptions = this.selectedItems[this.selectedItemIndex]
-      .toolRuntimeConfig.displayOptions;
-    Object.keys(displayOptions).forEach(displayOption => {
-      if (!displayOptions[displayOption]) {
-        delete displayOptions[displayOption];
-      }
-    });
-
-    const message = {
-      action: "update",
-      params: this.selectedItems[this.selectedItemIndex]
-    };
-    window.parent.postMessage(message, "*");
-  }
-
-  async filterChanged() {
-    this.items = [];
+  async getTools() {
     try {
-      const result = await this.loadItems(this.currentSearchString);
-
-      this.items = result.items.map(item => {
-        let itemTool = this.tools.filter(tool => {
-          return tool.name === item.getToolName();
-        })[0];
-
-        if (itemTool) {
-          item.conf.icon = itemTool.icon;
-        }
-
-        return item;
-      });
-
-      this.bookmark = result.bookmark;
-      this.moreItemsAvailable = result.moreItemsAvailable;
-    } catch (e) {
-      // todo: error handling
+      const response = await fetch(`${this.QServerBaseUrl}/editor/tools`);
+      return await response.json();
+    } catch (error) {
+      log.error(error);
     }
-
-    return this.items;
   }
 
-  async loadItems(searchString, bookmark) {
+  async getItem(params) {
+    try {
+      const response = await fetch(`${this.QServerBaseUrl}/item/${params.id}`);
+      params.conf = await response.json();
+      return params;
+    } catch (error) {
+      log.error(error);
+    }
+  }
+
+  async getItems(searchString, bookmark) {
     this.itemsLoading = true;
     const numberOfItemsToLoadPerStep = 9;
-
     const availableToolNames = this.tools.map(tool => tool.name);
-    const result = await this.itemStore.getItems(
+    let result = await this.itemStore.getItems(
       searchString,
       numberOfItemsToLoadPerStep,
       availableToolNames,
       bookmark
     );
+
+    // sets tool icon to item
+    result.items = result.items.map(item => {
+      let tool = this.tools.find(toolItem => {
+        return toolItem.name === item.getToolName();
+      });
+
+      if (tool) {
+        item.conf.icon = tool.icon;
+      }
+
+      return item;
+    });
+    this.bookmark = result.bookmark;
+    this.moreItemsAvailable = result.moreItemsAvailable;
     this.itemsLoading = false;
-    return result;
+    return result.items;
   }
 
-  async loadMore() {
-    try {
-      const result = await this.loadItems(
-        this.currentSearchString,
-        this.bookmark
-      );
+  async selectItem(item) {
+    this.selectedItem = {
+      id: item.conf._id,
+      conf: item.conf,
+      toolRuntimeConfig: {}
+    };
+    if (this.selectedItem.conf.active) {
+      await this.loadPreview();
+    }
+  }
 
-      this.items = this.items.concat(result.items);
-      this.items = this.items.map(item => {
-        let itemTool = this.tools.filter(tool => {
-          return tool.name === item.getToolName();
-        })[0];
+  insertItem() {
+    // delete all displayOptions set to false
+    let displayOptions = this.selectedItem.toolRuntimeConfig.displayOptions;
+    Object.keys(displayOptions).forEach(displayOption => {
+      if (!displayOptions[displayOption]) {
+        delete displayOptions[displayOption];
+      }
+    });
+    // delete the conf property of the selectedItem before saving it with the item
+    delete this.selectedItem.conf;
+    const message = {
+      action: "update",
+      params: this.selectedItem
+    };
+    window.parent.postMessage(message, "*");
+  }
 
-        if (itemTool) {
-          item.conf.icon = itemTool.icon;
-        }
-
-        return item;
-      });
-      this.bookmark = result.bookmark;
-      this.moreItemsAvailable = result.moreItemsAvailable;
-    } catch (e) {
-      // todo: error handling
+  async loadPreview() {
+    this.currentItemProvider.setCurrentItem(this.selectedItem);
+    this.title = this.selectedItem.conf.title;
+    this.displayOptionsSchema = await this.getDisplayOptionsSchema();
+    if (!this.selectedItem.toolRuntimeConfig.displayOptions) {
+      this.selectedItem.toolRuntimeConfig.displayOptions = await this.getDefaultDisplayOptions();
     }
 
-    return this.items;
+    if (this.target) {
+      this.renderingInfo = await this.getRenderingInfo();
+    }
   }
 
-  async getTools() {
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
-    const toolResponse = await fetch(`${QServerBaseUrl}/editor/tools`);
-    return toolResponse.json();
-  }
-
-  fetchRenderingInfo() {
-    const toolRuntimeConfig = {
-      size: {
-        width: [
-          {
-            value: Math.floor(
-              this.previewContainer.shadowRoot
-                .querySelector(".preview-element > *:first-child")
-                .getBoundingClientRect().width
-            ),
-            comparison: "="
-          }
-        ]
-      },
-      displayOptions: this.selectedItems[this.selectedItemIndex]
-        .toolRuntimeConfig.displayOptions,
-      isPure: true
-    };
-
-    return qEnv.QServerBaseUrl.then(QServerBaseUrl => {
-      if (this.selectedItemIndex !== undefined) {
-        return fetch(
-          `${QServerBaseUrl}/rendering-info/${
-            this.selectedItems[this.selectedItemIndex].id
-          }/${this.target.key}?toolRuntimeConfig=${encodeURI(
-            JSON.stringify(toolRuntimeConfig)
-          )}`
-        );
-      }
-      return {};
-    })
-      .then(res => {
-        if (res.ok && res.status >= 200 && res.status < 400) {
-          return res.json();
-        }
-        throw res.statusText;
-      })
-      .then(renderingInfo => {
-        // add stylesheets for target preview if any
-        if (this.target.preview && this.target.preview.stylesheets) {
-          if (!renderingInfo.stylesheets) {
-            renderingInfo.stylesheets = [];
-          }
-          this.target.preview.stylesheets.forEach(stylesheet => {
-            renderingInfo.stylesheets.push(stylesheet);
-          });
-        }
-
-        // add scripts for target preview if any
-        if (this.target.preview && this.target.preview.scripts) {
-          if (!renderingInfo.scripts) {
-            renderingInfo.scripts = [];
-          }
-          this.target.preview.scripts.forEach(script => {
-            renderingInfo.scripts.push(script);
-          });
-        }
-
-        // add sophieModules for target preview if any
-        if (this.target.preview && this.target.preview.sophieModules) {
-          if (!renderingInfo.sophieModules) {
-            renderingInfo.sophieModules = [];
-          }
-          this.target.preview.sophieModules.forEach(sophieModule => {
-            renderingInfo.sophieModules.push(sophieModule);
-          });
-        }
-        return renderingInfo;
-      });
-  }
-
-  loadPreview() {
-    this.fetchRenderingInfo()
-      .then(renderingInfo => {
-        this.errorMessage = undefined;
-        this.renderingInfo = renderingInfo;
-      })
-      .catch(errorMessage => {
-        this.errorMessage = errorMessage;
-        this.renderingInfo = {};
-      });
-  }
-
-  async loadDisplayOptions() {
+  async getDisplayOptionsSchema() {
     try {
-      const item = await getItem(this.selectedItems[this.selectedItemIndex].id);
-      this.tool = item.conf.tool;
-
-      let selectedItem = this.selectedItems[this.selectedItemIndex];
-
-      await qEnv.QServerBaseUrl.then(QServerBaseUrl => {
-        return fetch(
-          `${QServerBaseUrl}/tools/${this.tool}/display-options-schema.json`
-        );
-      })
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw response;
-        })
-        .then(schema => {
-          if (schema.hasOwnProperty("properties")) {
-            // we just accept one object containing simple boolean type properties
-            Object.keys(schema.properties).forEach(propertyName => {
-              // maybe delete all non boolean properties here??
-              let displayOption = schema.properties[propertyName];
-              if (displayOption.title) {
-                schema.properties[propertyName].title = this.i18n.tr(
-                  `${this.tool}:${displayOption.title}`
-                );
-              }
-            });
-          }
-          this.displayOptionsSchema = schema;
-          if (!selectedItem.toolRuntimeConfig) {
-            selectedItem.toolRuntimeConfig = {};
-          }
-
-          if (!selectedItem.toolRuntimeConfig.displayOptions) {
-            selectedItem.toolRuntimeConfig.displayOptions = this.objectFromSchemaGenerator.generateFromSchema(
-              schema
+      let displayOptionsSchema = {};
+      const response = await fetch(
+        `${this.QServerBaseUrl}/tools/${
+          this.selectedItem.conf.tool
+        }/display-options-schema.json`
+      );
+      if (response.ok) {
+        displayOptionsSchema = await response.json();
+        // translate displayOption titles
+        for (let [key, value] of Object.entries(
+          displayOptionsSchema.properties
+        )) {
+          if (value.title) {
+            displayOptionsSchema.properties[key].title = this.i18n.tr(
+              `${this.selectedItem.conf.tool}:${value.title}`
             );
           }
-        })
-        .catch(err => {
-          if (err.status === 404) {
-            this.displayOptionsSchema = {};
-            selectedItem.toolRuntimeConfig = {
-              displayOptions: {}
-            };
-          } else {
-            throw err;
-          }
+        }
+      }
+
+      return displayOptionsSchema;
+    } catch (error) {
+      log.error(error);
+    }
+  }
+
+  async getDefaultDisplayOptions() {
+    try {
+      return this.objectFromSchemaGenerator.generateFromSchema(
+        this.displayOptionsSchema
+      );
+    } catch (error) {
+      log.error(error);
+    }
+  }
+
+  async getRenderingInfo() {
+    try {
+      const toolRuntimeConfig = {
+        size: {
+          width: [
+            {
+              value: Math.floor(
+                this.previewContainer.shadowRoot
+                  .querySelector(".preview-element > *:first-child")
+                  .getBoundingClientRect().width
+              ),
+              comparison: "="
+            }
+          ]
+        },
+        displayOptions: this.selectedItem.toolRuntimeConfig.displayOptions,
+        isPure: true
+      };
+
+      let renderingInfo = {};
+      const response = await fetch(
+        `${this.QServerBaseUrl}/rendering-info/${this.selectedItem.id}/${
+          this.target.key
+        }?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`
+      );
+      if (response.ok) {
+        renderingInfo = await response.json();
+      }
+      // add stylesheets for target preview if any
+      if (this.target.preview && this.target.preview.stylesheets) {
+        if (!renderingInfo.stylesheets) {
+          renderingInfo.stylesheets = [];
+        }
+        this.target.preview.stylesheets.forEach(stylesheet => {
+          renderingInfo.stylesheets.push(stylesheet);
         });
-    } catch (e) {
-      throw new Error("no tool defined");
+      }
+
+      // add scripts for target preview if any
+      if (this.target.preview && this.target.preview.scripts) {
+        if (!renderingInfo.scripts) {
+          renderingInfo.scripts = [];
+        }
+        this.target.preview.scripts.forEach(script => {
+          renderingInfo.scripts.push(script);
+        });
+      }
+
+      // add sophieModules for target preview if any
+      if (this.target.preview && this.target.preview.sophieModules) {
+        if (!renderingInfo.sophieModules) {
+          renderingInfo.sophieModules = [];
+        }
+        this.target.preview.sophieModules.forEach(sophieModule => {
+          renderingInfo.sophieModules.push(sophieModule);
+        });
+      }
+      return renderingInfo;
+    } catch (error) {
+      log.error(error);
     }
   }
 }

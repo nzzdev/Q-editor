@@ -5,10 +5,7 @@ schema-editor-array {
 .schema-editor-array__entry {
   display: flex;
   flex-direction: column;
-  padding-top: calc(var(--q-space-base) * 2);
-  margin-top: calc(var(--q-space-base) * 2);
   position: relative;
-  border-top: 1px solid var(--q-color-gray-4);
 }
 
 .schema-editor-array__entry:empty {
@@ -19,6 +16,12 @@ schema-editor-array {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+}
+
+.schema-editor-array__control {
+  margin-top: calc(var(--q-space-base) * 2);
+  padding-top: calc(var(--q-space-base) * 2);
+  border-top: 1px solid var(--q-color-gray-4);
 }
 
 .schema-editor-array__collapsecontrol {

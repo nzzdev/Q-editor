@@ -1,4 +1,4 @@
-<template>
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
   <label>
     ${schema.properties.url["title"] || '' & toolT}
     <span show.bind="required">
@@ -7,5 +7,5 @@
     </span>
     <input type="url" placeholder.to-view="options.placeholder || '' & toolT" required.bind="required" value.bind="data.url" ref="urlInput"
       keyup.delegate="handleUrlChange() & debounce:800">
-    <label>
+  </label>
 </template>

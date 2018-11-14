@@ -1,11 +1,29 @@
+import { inject, LogManager } from "aurelia-framework";
 import array2d from "array2d";
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
+const log = LogManager.getLogger("Q");
+
+@inject(CurrentItemProvider)
 export default class HasColumnTitlesNotificationCheck {
-  getNotification(notificationCheck, data) {
-    if (data[0].length > 1) {
+  constructor(currentItemProvider) {
+    this.currentItemProvider = currentItemProvider;
+  }
+
+  getNotification(config) {
+    let item;
+    if (config.data) {
+      item = this.currentItemProvider.getCurrentItemByFields(config.data);
+      log.info(
+        "DEPRECATION NOTICE: In Q editor 4.0 you will have to rename data to fields. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
+      );
+    } else {
+      item = this.currentItemProvider.getCurrentItemByFields(config.fields);
+    }
+    if (item.data.length > 1) {
       // only check if there are at least two rows (one header and one data row)
       const hasColumnTitleState = [];
-      array2d.eachColumn(data[0], (column, index) => {
+      array2d.eachColumn(item.data, (column, index) => {
         hasColumnTitleState[index] = column.length > 1 && column[0] !== null;
       });
       const hasColumnTitles = hasColumnTitleState.reduce(
