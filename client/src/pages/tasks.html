@@ -1,5 +1,6 @@
 <template>
   <require from="./tasks.css"></require>
+  <require from="../elements/schema-editor/schema-editor"></require>
   <q-bar if.bind="user.isLoggedIn" router.bind="router">
     <icon-logo class="index__logo" if.bind="enoughNewItems" slot="logo" click.delegate="reloadItems()"></icon-logo>
     <icon-m class="index__logo" if.bind="!enoughNewItems" slot="logo" click.delegate="reloadItems()"></icon-m>
@@ -9,14 +10,15 @@
   <section class="tasks">
     <div class="tasks--sidebar">
       <ul id="tasks--listed">
-         <li repeat.for="task of tasks"><a click.delegate="executeTask(task)">${task.name}</a></li>
+         <li repeat.for="task of tasks"><a click.delegate="loadTask(task)">${task.name}</a></li>
       </ul>
     </div>
     <div class="tasks--input">
-      b
+      <h2>${selectedTask.name}</h2>
+      <button click.delegate="executeTask(task)">Ausführen</button>
     </div>
     <div class="tasks--output">
-      c
+      ${output}
     </div>
   </section>
 </template>
