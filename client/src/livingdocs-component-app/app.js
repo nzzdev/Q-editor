@@ -195,7 +195,7 @@ export class App {
       }
       const response = await fetch(
         `${this.QServerBaseUrl}/tools/${
-        this.selectedItem.conf.tool
+          this.selectedItem.conf.tool
         }/display-options-schema.json${queryString}`
       );
       if (response.ok) {
@@ -250,7 +250,7 @@ export class App {
       let renderingInfo = {};
       const response = await fetch(
         `${this.QServerBaseUrl}/rendering-info/${this.selectedItem.id}/${
-        this.target.key
+          this.target.key
         }?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`
       );
       if (response.ok) {
