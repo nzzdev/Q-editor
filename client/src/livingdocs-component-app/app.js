@@ -131,6 +131,7 @@ export class App {
 
       if (tool) {
         item.conf.icon = tool.icon;
+        item.conf.hasDynamicDisplayOptions = tool.hasDynamicDisplayOptions;
       }
 
       return item;
@@ -185,10 +186,17 @@ export class App {
   async getDisplayOptionsSchema() {
     try {
       let displayOptionsSchema = {};
+      let queryString = "";
+
+      // if the tool supports dynamic displayOptions the item should be appended to the request
+      // in order for the tool to extract the displayOptionsSchema from the item
+      if (this.selectedItem.conf.hasDynamicDisplayOptions) {
+        queryString = `?appendItemToPayload=${this.selectedItem.id}`;
+      }
       const response = await fetch(
         `${this.QServerBaseUrl}/tools/${
-          this.selectedItem.conf.tool
-        }/display-options-schema.json`
+        this.selectedItem.conf.tool
+        }/display-options-schema.json${queryString}`
       );
       if (response.ok) {
         displayOptionsSchema = await response.json();
@@ -242,7 +250,7 @@ export class App {
       let renderingInfo = {};
       const response = await fetch(
         `${this.QServerBaseUrl}/rendering-info/${this.selectedItem.id}/${
-          this.target.key
+        this.target.key
         }?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`
       );
       if (response.ok) {
