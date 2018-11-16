@@ -46,6 +46,17 @@
     ></schema-editor-boolean>
   </div>
 
+  <div if.bind="getType(schema) === 'code'" class="schema-editor-block">
+    <require from="./schema-editor-code"></require>
+    <schema-editor-code
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"
+      show-notifications.bind="showNotifications"
+    ></schema-editor-code>
+  </div>
+
   <div if.bind="getType(schema) === 'url'" class="schema-editor-block">
     <require from="./schema-editor-url"></require>
     <schema-editor-url
