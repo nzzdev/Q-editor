@@ -1,4 +1,7 @@
 
+# 3.6.1 (19.11.2018)
+- fix: fix inserting graphics from tools without displayOptions with livingdocs-component
+
 # 3.6.0 (14.11.2018)
 - feature: required notifications in editor are shown using the notification system instead of browser native notification
 - feature: availability-checks, notification-checks and dynamic-enum config format is unified (see README for examples)
