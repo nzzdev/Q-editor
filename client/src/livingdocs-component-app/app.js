@@ -157,13 +157,25 @@ export class App {
   }
 
   insertItem() {
-    // delete all displayOptions set to false
-    let displayOptions = this.selectedItem.toolRuntimeConfig.displayOptions;
-    Object.keys(displayOptions).forEach(displayOption => {
-      if (!displayOptions[displayOption]) {
-        delete displayOptions[displayOption];
-      }
-    });
+    // delete all displayOptions set to false if any
+    if (
+      this.selectedItem.toolRuntimeConfig.displayOptions &&
+      Object.keys(this.selectedItem.toolRuntimeConfig.displayOptions).length > 0
+    ) {
+      Object.keys(this.selectedItem.toolRuntimeConfig.displayOptions).forEach(
+        displayOptionName => {
+          if (
+            this.selectedItem.toolRuntimeConfig.displayOptions[
+              displayOptionName
+            ] === false
+          ) {
+            delete this.selectedItem.toolRuntimeConfig.displayOptions[
+              displayOptionName
+            ];
+          }
+        }
+      );
+    }
     // delete the conf and toolConfig properties of the selectedItem before saving it with the item
     delete this.selectedItem.conf;
     delete this.selectedItem.toolConfig;
