@@ -130,7 +130,10 @@ export class App {
       });
 
       if (tool) {
-        item.conf.icon = tool.icon;
+        item.toolConfig = {
+          icon: tool.icon,
+          hasDynamicDisplayOptions: tool.hasDynamicDisplayOptions
+        };
       }
 
       return item;
@@ -145,6 +148,7 @@ export class App {
     this.selectedItem = {
       id: item.conf._id,
       conf: item.conf,
+      toolConfig: item.toolConfig,
       toolRuntimeConfig: {}
     };
     if (this.selectedItem.conf.active) {
@@ -172,8 +176,9 @@ export class App {
         }
       );
     }
-    // delete the conf property of the selectedItem before saving it with the item
+    // delete the conf and toolConfig properties of the selectedItem before saving it with the item
     delete this.selectedItem.conf;
+    delete this.selectedItem.toolConfig;
     const message = {
       action: "update",
       params: this.selectedItem
@@ -197,10 +202,17 @@ export class App {
   async getDisplayOptionsSchema() {
     try {
       let displayOptionsSchema = {};
+      let queryString = "";
+
+      // if the tool supports dynamic displayOptions the item should be appended to the request
+      // in order for the tool to extract the displayOptionsSchema from the item
+      if (this.selectedItem.toolConfig.hasDynamicDisplayOptions) {
+        queryString = `?appendItemToPayload=${this.selectedItem.id}`;
+      }
       const response = await fetch(
         `${this.QServerBaseUrl}/tools/${
           this.selectedItem.conf.tool
-        }/display-options-schema.json`
+        }/display-options-schema.json${queryString}`
       );
       if (response.ok) {
         displayOptionsSchema = await response.json();

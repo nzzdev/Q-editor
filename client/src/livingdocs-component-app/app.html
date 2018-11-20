@@ -23,7 +23,7 @@
         <div class="item-list-entry ${item.conf._id === selectedItem.id ? 'selected' : ''}" click.delegate="selectItem(item)"
           repeat.for="item of items">
           <div class="item-list-entry-title">
-            <box-icon if.bind="item.conf.icon" code.bind="item.conf.icon" size="big" class="tool-icon"></box-icon>
+            <box-icon if.bind="item.toolConfig.icon" code.bind="item.toolConfig.icon" size="big" class="tool-icon"></box-icon>
             <span class="q-text">${item.conf.title}</span>
           </div>
           <div class="item-list-entry-info">
