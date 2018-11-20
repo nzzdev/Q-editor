@@ -40,10 +40,10 @@ export class App {
   async attached() {
     debugger;
     this.QServerBaseUrl = await qEnv.QServerBaseUrl;
-    this.selectedItem = await this.getInitialSelectedItem();
     this.tools = await this.getTools();
     this.target = await this.getTarget();
     this.items = await this.getItems();
+    this.selectedItem = await this.getInitialSelectedItem();
     if (this.selectedItem) {
       await this.loadPreview();
     }
@@ -107,6 +107,7 @@ export class App {
     try {
       const response = await fetch(`${this.QServerBaseUrl}/item/${params.id}`);
       params.conf = await response.json();
+      params.toolConfig = this.getToolConfig(params.conf);
       return params;
     } catch (error) {
       log.error(error);
@@ -124,25 +125,30 @@ export class App {
       bookmark
     );
 
-    // sets tool icon to item
+    // sets toolConfig to items
     result.items = result.items.map(item => {
-      let tool = this.tools.find(toolItem => {
-        return toolItem.name === item.getToolName();
-      });
-
-      if (tool) {
-        item.toolConfig = {
-          icon: tool.icon,
-          hasDynamicDisplayOptions: tool.hasDynamicDisplayOptions
-        };
-      }
-
+      item.toolConfig = this.getToolConfig(item.conf);
       return item;
     });
     this.bookmark = result.bookmark;
     this.moreItemsAvailable = result.moreItemsAvailable;
     this.itemsLoading = false;
     return result.items;
+  }
+
+  getToolConfig(itemConf) {
+    let toolConfig = {};
+    let tool = this.tools.find(toolItem => {
+      return toolItem.name === itemConf.tool;
+    });
+
+    if (tool) {
+      toolConfig = {
+        icon: tool.icon,
+        hasDynamicDisplayOptions: tool.hasDynamicDisplayOptions
+      };
+    }
+    return toolConfig;
   }
 
   async selectItem(item) {
