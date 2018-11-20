@@ -38,6 +38,7 @@ export class App {
   }
 
   async attached() {
+    debugger;
     this.QServerBaseUrl = await qEnv.QServerBaseUrl;
     this.selectedItem = await this.getInitialSelectedItem();
     this.tools = await this.getTools();
