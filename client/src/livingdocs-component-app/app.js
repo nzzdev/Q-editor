@@ -38,7 +38,6 @@ export class App {
   }
 
   async attached() {
-    debugger;
     this.QServerBaseUrl = await qEnv.QServerBaseUrl;
     this.tools = await this.getTools();
     this.target = await this.getTarget();
