@@ -42,20 +42,16 @@ export class SchemaEditorCode {
     if (!window.CodeMirror) {
       try {
         window.CodeMirror = await this.loader.loadModule("codemirror");
-        await this.loader.loadModule(
-          "npm:codemirror@5.41.0/lib/codemirror.css!"
-        );
-        await this.loader.loadModule(
-          "npm:codemirror@5.41.0/mode/javascript/javascript.js"
-        );
-        this.codeMirror = window.CodeMirror.fromTextArea(this.textareaElement, {
-          mode: this.options.mimeType,
-          lineNumbers: true
-        });
-        this.codeMirror.on("change", (codeMirror, change) => {
-          this.data = this.codeMirror.getValue();
-          this.change();
-        });
+        await Promise.all([
+          this.loader.loadModule("npm:codemirror@5.41.0/lib/codemirror.css!"),
+          this.loader.loadModule(
+            "npm:codemirror@5.41.0/mode/javascript/javascript.js"
+          ),
+          this.loader.loadModule(
+            "npm:codemirror@5.41.0/mode/htmlmixed/htmlmixed.js"
+          ),
+          this.loader.loadModule("npm:codemirror@5.41.0/mode/jinja2/jinja2.js")
+        ]);
       } catch (e) {
         log.error(e);
       }
@@ -65,5 +61,16 @@ export class SchemaEditorCode {
       this.showLoadingError = true;
       return;
     }
+
+    this.codeMirror = window.CodeMirror.fromTextArea(this.textareaElement, {
+      mode: this.options.mode || this.options.mimeType,
+      lineNumbers: true,
+      tabSize: 2,
+      lineWrapping: true
+    });
+    this.codeMirror.on("change", (codeMirror, change) => {
+      this.data = this.codeMirror.getValue();
+      this.change();
+    });
   }
 }
