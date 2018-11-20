@@ -15,6 +15,7 @@
     </div>
     <div class="tasks--input">
       <h2>${selectedTask.name}</h2>
+      <schema-editor schema.bind="selectedTask.schema || {}" data.bind="taskInput"></schema-editor>
       <button click.delegate="executeTask(task)">Ausführen</button>
     </div>
     <div class="tasks--output">

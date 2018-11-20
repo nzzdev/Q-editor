@@ -7,38 +7,24 @@ export default class Tasks {
   tasks = [];
   selectedTask = {};
   output = [];
-  taskInput = {
-    selectedItemId: ""
-  };
-  renderingInfoTask = {};
+  taskInput = {};
+  displaySchemaEditor = false;
 
   async activate() {
-    // get all tasks
-    this.renderingInfoTask = {
-      name: "Rendering Info",
-      endpoint: "tasks/renderingInfo",
-      schema: {
-        input: {
-          $schema: "http://json-schema.org/draft-04/schema#",
-          type: "string"
-        },
-        output: {}
-      }
-    };
-    this.tasks.push(this.renderingInfoTask);
+    this.getTasks();
   }
 
   loadTask(selectedTask) {
     this.selectedTask = selectedTask;
+    this.displaySchemaEditor = true;
   }
 
   executeTask() {
     return qEnv.QServerBaseUrl.then(QServerBaseUrl => {
-      return fetch(
-        `${QServerBaseUrl}/${this.selectedTask.endpoint}/${
-          this.taskInput.selectedItemId
-        }`
-      );
+      return fetch(`${QServerBaseUrl}/${this.selectedTask.endpoint}`, {
+        method: "POST",
+        body: JSON.stringify(this.taskInput)
+      });
     })
       .then(res => {
         if (res.ok && res.status >= 200 && res.status < 400) {
@@ -51,7 +37,18 @@ export default class Tasks {
       });
   }
 
-  handleChange() {
-    console.log("test");
+  getTasks() {
+    return qEnv.QServerBaseUrl.then(QServerBaseUrl => {
+      return fetch(`${QServerBaseUrl}/tasks`);
+    })
+      .then(res => {
+        if (res.ok && res.status >= 200 && res.status < 400) {
+          return res.json();
+        }
+        throw res;
+      })
+      .then(response => {
+        this.tasks = response.tasks;
+      });
   }
 }
