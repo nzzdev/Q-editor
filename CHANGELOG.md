@@ -1,4 +1,8 @@
 
+# 3.7.0 (21.11.2018)
+- feature: new schema-editor-code (`"Q:type": "code"`) using codemirror to show a code editor, currently supports javascript and html mime types.
+- feature: `appendItemToPayload` is used appended to the request for `display-options-schema.json` in livingdocs-component if tool config sets `hasDynamicDisplayOptions` to true.
+
 # 3.6.1 (19.11.2018)
 - fix: fix inserting graphics from tools without displayOptions with livingdocs-component
 
