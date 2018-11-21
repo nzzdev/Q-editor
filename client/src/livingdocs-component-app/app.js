@@ -39,10 +39,10 @@ export class App {
 
   async attached() {
     this.QServerBaseUrl = await qEnv.QServerBaseUrl;
-    this.selectedItem = await this.getInitialSelectedItem();
     this.tools = await this.getTools();
     this.target = await this.getTarget();
     this.items = await this.getItems();
+    this.selectedItem = await this.getInitialSelectedItem();
     if (this.selectedItem) {
       await this.loadPreview();
     }
@@ -106,6 +106,7 @@ export class App {
     try {
       const response = await fetch(`${this.QServerBaseUrl}/item/${params.id}`);
       params.conf = await response.json();
+      params.toolConfig = this.getToolConfig(params.conf);
       return params;
     } catch (error) {
       log.error(error);
@@ -123,16 +124,9 @@ export class App {
       bookmark
     );
 
-    // sets tool icon to item
+    // sets toolConfig to items
     result.items = result.items.map(item => {
-      let tool = this.tools.find(toolItem => {
-        return toolItem.name === item.getToolName();
-      });
-
-      if (tool) {
-        item.conf.icon = tool.icon;
-      }
-
+      item.toolConfig = this.getToolConfig(item.conf);
       return item;
     });
     this.bookmark = result.bookmark;
@@ -141,10 +135,26 @@ export class App {
     return result.items;
   }
 
+  getToolConfig(itemConf) {
+    let toolConfig = {};
+    let tool = this.tools.find(toolItem => {
+      return toolItem.name === itemConf.tool;
+    });
+
+    if (tool) {
+      toolConfig = {
+        icon: tool.icon,
+        hasDynamicDisplayOptions: tool.hasDynamicDisplayOptions
+      };
+    }
+    return toolConfig;
+  }
+
   async selectItem(item) {
     this.selectedItem = {
       id: item.conf._id,
       conf: item.conf,
+      toolConfig: item.toolConfig,
       toolRuntimeConfig: {}
     };
     if (this.selectedItem.conf.active) {
@@ -172,8 +182,9 @@ export class App {
         }
       );
     }
-    // delete the conf property of the selectedItem before saving it with the item
+    // delete the conf and toolConfig properties of the selectedItem before saving it with the item
     delete this.selectedItem.conf;
+    delete this.selectedItem.toolConfig;
     const message = {
       action: "update",
       params: this.selectedItem
@@ -197,10 +208,17 @@ export class App {
   async getDisplayOptionsSchema() {
     try {
       let displayOptionsSchema = {};
+      let queryString = "";
+
+      // if the tool supports dynamic displayOptions the item should be appended to the request
+      // in order for the tool to extract the displayOptionsSchema from the item
+      if (this.selectedItem.toolConfig.hasDynamicDisplayOptions) {
+        queryString = `?appendItemToPayload=${this.selectedItem.id}`;
+      }
       const response = await fetch(
         `${this.QServerBaseUrl}/tools/${
           this.selectedItem.conf.tool
-        }/display-options-schema.json`
+        }/display-options-schema.json${queryString}`
       );
       if (response.ok) {
         displayOptionsSchema = await response.json();
