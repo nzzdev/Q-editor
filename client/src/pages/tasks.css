@@ -8,19 +8,19 @@
   flex-grow: 1;
 }
 
-.tasks--input {
+#tasks--input {
   /* background-color: yellow; */
   height: 100%;
   width: 100%;
 }
 
-.tasks--output {
+#tasks--output {
   /* background-color: blue; */
   height: 100%;
   width: 100%;
 }
 
-.tasks--sidebar {
+#tasks--sidebar {
   /* background-color: red; */
   height: 100%;
   width: 28%;

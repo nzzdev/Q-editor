@@ -8,18 +8,25 @@
     <button-secondary slot="account-button" if.bind="user.isLoggedIn" click.delegate="showAccountModal()">${user.data.initials}</button-secondary>
   </q-bar>
   <section class="tasks">
-    <div class="tasks--sidebar">
+    <div id="tasks--sidebar">
       <ul id="tasks--listed">
          <li repeat.for="task of tasks"><a click.delegate="loadTask(task)">${task.name}</a></li>
       </ul>
     </div>
-    <div class="tasks--input">
+    <div id="tasks--input">
       <h2>${selectedTask.name}</h2>
       <schema-editor schema.bind="selectedTask.schema || {}" data.bind="taskInput"></schema-editor>
       <button click.delegate="executeTask(task)">Ausführen</button>
     </div>
-    <div class="tasks--output">
-      ${output}
+    <div id="tasks--output">
+      <div if.bind="output.type==='json'">
+        <div repeat.for="item of output.data">
+          <p>${item.label}</p>
+          <div>
+            <pre style="">${item.content | json:2}</pre>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
