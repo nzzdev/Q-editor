@@ -50,6 +50,11 @@ module.exports = [
   },
   {
     method: "GET",
+    path: "/tasks",
+    handler: handler
+  },
+  {
+    method: "GET",
     path: "/index/{path*}",
     handler: handler
   }
