@@ -1,6 +1,7 @@
 .tasks {
   height: 100%;
   display: flex;
+  align-items: flex-start;
 }
 
 .tasks main {
@@ -9,24 +10,28 @@
 }
 
 #tasks--input {
-  /* background-color: yellow; */
-  height: 100%;
-  width: 100%;
+  width: 20%;
 }
 
 #tasks--output {
-  /* background-color: blue; */
-  height: 100%;
-  width: 100%;
+  width: 65%;
+  margin-left: 5%;
+}
+
+.tasks--output--json {
+  width: 800px;
+  background-color: white;
+  border: 1px solid black;
+  padding: 8px;
+  white-space: pre-wrap; 
+  word-wrap: break-word;
 }
 
 #tasks--sidebar {
-  /* background-color: red; */
-  height: 100%;
-  width: 28%;
+  width: 15%;
 }
 
-#tasks--listed {
+#tasks--list {
   list-style-type: none;
   margin-left: 8px;
   padding: 0;

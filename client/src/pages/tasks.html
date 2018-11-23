@@ -9,21 +9,21 @@
   </q-bar>
   <section class="tasks">
     <div id="tasks--sidebar">
-      <ul id="tasks--listed">
-         <li repeat.for="task of tasks"><a click.delegate="loadTask(task)">${task.name}</a></li>
+      <ul id="tasks--list">
+         <li repeat.for="task of tasks"><a click.delegate="loadTask(task)" class="q-text-small">${task.name}</a></li>
       </ul>
     </div>
     <div id="tasks--input">
-      <h2>${selectedTask.name}</h2>
+      <p class="s-font-sans s-font-title">${selectedTask.name}</p>
       <schema-editor schema.bind="selectedTask.schema || {}" data.bind="taskInput"></schema-editor>
-      <button click.delegate="executeTask(task)">Ausführen</button>
+      <button-primary click.delegate="executeTask(task)" icon="">Ausführen</button-primary>
     </div>
     <div id="tasks--output">
       <div if.bind="output.type==='json'">
         <div repeat.for="item of output.data">
-          <p>${item.label}</p>
+          <p class="s-font-sans s-font-title">${item.label}</p>
           <div>
-            <pre style="">${item.content | json:2}</pre>
+            <pre class="tasks--output--json" style="">${item.content | json:2}</pre>
           </div>
         </div>
       </div>
