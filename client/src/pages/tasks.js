@@ -8,7 +8,6 @@ export default class Tasks {
   selectedTask = {};
   output = [];
   taskInput = {};
-  displaySchemaEditor = false;
 
   async activate(routeParams) {
     this.tasks = await this.getTasks();
@@ -17,11 +16,6 @@ export default class Tasks {
         element => element.id === routeParams.id
       );
     }
-  }
-
-  loadTask(selectedTask) {
-    this.selectedTask = selectedTask;
-    this.displaySchemaEditor = true;
   }
 
   executeTask() {
@@ -37,8 +31,8 @@ export default class Tasks {
         }
         throw res;
       })
-      .then(renderingInfo => {
-        this.output = renderingInfo;
+      .then(output => {
+        this.output = output;
       });
   }
 

@@ -22,10 +22,10 @@
     </div>
     <div id="tasks--output">
       <div if.bind="output.type==='json'">
-        <div repeat.for="item of output.data">
-          <h2>${item.label}</h2>
+        <div repeat.for="info of output.data">
+          <h2>${info.label}</h2>
           <div>
-            <pre class="tasks--output--json" style="">${item.content | json:2}</pre>
+            <pre class="tasks--output--json" style="">${info.content | json:2}</pre>
           </div>
         </div>
       </div>
