@@ -2,11 +2,7 @@
   height: 100%;
   display: flex;
   align-items: flex-start;
-}
-
-.tasks main {
   padding: calc(var(--q-space-base) * 4) calc(var(--q-space-base) * 6);
-  flex-grow: 1;
 }
 
 #tasks--input {
@@ -33,6 +29,5 @@
 
 #tasks--list {
   list-style-type: none;
-  margin-left: 8px;
   padding: 0;
 }
