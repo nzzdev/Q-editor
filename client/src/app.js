@@ -64,7 +64,7 @@ export class App {
         auth: true
       },
       {
-        route: ["tasks"],
+        route: ["tasks/:id?"],
         name: "tasks",
         moduleId: "pages/tasks",
         auth: true

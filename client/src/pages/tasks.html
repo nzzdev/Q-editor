@@ -13,7 +13,7 @@
   <section class="tasks">
     <div id="tasks--sidebar">
       <h2>Tasks</h2>
-      <a repeat.for="task of tasks" click.delegate="loadTask(task)" class="q-text-small">${task.name}</a>
+      <a repeat.for="task of tasks" route-href="route: tasks; params.bind: {id: task.id}" class="q-text-small">${task.name}</a>
     </div>
     <div id="tasks--input" if.bind="selectedTask.name !== undefined">
       <h2>${selectedTask.name}</h2>
