@@ -20,7 +20,7 @@ export default class Tasks {
 
   executeTask() {
     return qEnv.QServerBaseUrl.then(QServerBaseUrl => {
-      return fetch(`${QServerBaseUrl}/${this.selectedTask.endpoint}`, {
+      return fetch(`${QServerBaseUrl}${this.selectedTask.route.path}`, {
         method: "POST",
         body: JSON.stringify(this.taskInput)
       });
