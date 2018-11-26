@@ -1,8 +1,8 @@
-import { bindable } from "aurelia-framework";
+import { bindable, bindingMode } from "aurelia-framework";
 
 export class SchemaEditor {
   @bindable schema;
-  @bindable data;
+  @bindable({ defaultBindingMode: bindingMode.twoWay }) data;
   @bindable change;
   @bindable notifications;
   @bindable showNotifications;
