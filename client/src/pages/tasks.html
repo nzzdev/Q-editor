@@ -10,23 +10,21 @@
     <language-switcher slot="language-switcher"></language-switcher>
     <button-secondary slot="account-button" if.bind="user.isLoggedIn" click.delegate="showAccountModal()">${user.data.initials}</button-secondary>
   </q-bar>
-  <section class="tasks">
-    <div id="tasks--sidebar">
+  <section id="tasks">
+    <div id="tasks__sidebar">
       <h2>Tasks</h2>
       <a repeat.for="task of tasks" route-href="route: tasks; params.bind: {id: task.id}" class="q-text-small">${task.name}</a>
     </div>
-    <div id="tasks--input" if.bind="selectedTask.name !== undefined">
+    <div id="tasks__input" if.bind="selectedTask.name !== undefined">
       <h2>${selectedTask.name}</h2>
       <schema-editor schema.bind="selectedTask.schema || {}" data.bind="taskInput"></schema-editor>
       <button-primary click.delegate="executeTask(task)">Ausführen</button-primary>
     </div>
-    <div id="tasks--output">
-      <div if.bind="output.type==='json'">
-        <div repeat.for="info of output.data">
-          <h2>${info.label}</h2>
-          <div>
-            <pre class="tasks--output--json" style="">${info.content | json:2}</pre>
-          </div>
+    <div id="tasks__output">
+      <div if.bind="output.type === 'json'">
+        <div class="task__info" repeat.for="info of output.data">
+          <h2 class="task__title">${info.label}</h2>
+          <pre class="tasks__output-json"><code>${info.content | json:2 }</code></pre>
         </div>
       </div>
     </div>
