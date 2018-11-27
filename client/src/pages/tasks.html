@@ -13,17 +13,21 @@
   <section id="tasks">
     <div id="tasks__sidebar">
       <h2>Tasks</h2>
-      <a repeat.for="task of tasks" route-href="route: tasks; params.bind: {id: task.id}" class="q-text-small">${task.name}</a>
+      <ul id="tasks__list">
+        <li repeat.for="task of tasks">
+          <a route-href="route: tasks; params.bind: {id: task.id}" class="q-text-small">${task.name}</a>
+        </li>
+      </ul>
     </div>
     <div id="tasks__input" if.bind="selectedTask.name !== undefined">
       <h2>${selectedTask.name}</h2>
       <schema-editor schema.bind="selectedTask.schema || {}" data.bind="taskInput"></schema-editor>
-      <button-primary click.delegate="executeTask(task)">Ausführen</button-primary>
+      <button-primary click.delegate="executeTask(task)">${'tasks.run' & t}</button-primary>
     </div>
     <div id="tasks__output">
       <div if.bind="output.type === 'json'">
         <div class="task__info" repeat.for="info of output.data">
-          <h2 class="task__title">${info.label}</h2>
+          <h2 class="task__label">${info.label}</h2>
           <pre class="tasks__output-json"><code>${info.content | json:2 }</code></pre>
         </div>
       </div>
