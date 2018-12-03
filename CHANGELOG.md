@@ -1,4 +1,8 @@
 
+# 3.7.1 (03.12.2018)
+- fix: load css codemirror module
+- fix: fix default binding for objects on schema-editor to not fail if top level object is undefined (e.g. new options property on item)
+
 # 3.7.0 (21.11.2018)
 - feature: new schema-editor-code (`"Q:type": "code"`) using codemirror to show a code editor, currently supports javascript and html mime types.
 - feature: `appendItemToPayload` is used appended to the request for `display-options-schema.json` in livingdocs-component if tool config sets `hasDynamicDisplayOptions` to true.

@@ -50,7 +50,8 @@ export class SchemaEditorCode {
           this.loader.loadModule(
             "npm:codemirror@5.41.0/mode/htmlmixed/htmlmixed.js"
           ),
-          this.loader.loadModule("npm:codemirror@5.41.0/mode/jinja2/jinja2.js")
+          this.loader.loadModule("npm:codemirror@5.41.0/mode/jinja2/jinja2.js"),
+          this.loader.loadModule("npm:codemirror@5.41.0/mode/css/css.js")
         ]);
       } catch (e) {
         log.error(e);
