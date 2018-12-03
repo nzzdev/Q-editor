@@ -1,9 +1,13 @@
 import { inject } from "aurelia-framework";
+import { HttpClient } from "aurelia-fetch-client";
 import qEnv from "resources/qEnv.js";
 
-@inject()
+@inject(HttpClient)
 export default class Tasks {
-  constructor() {}
+  constructor(httpClient) {
+    this.httpClient = httpClient;
+  }
+
   tasks = [];
   selectedTask = {};
   output = [];
@@ -18,34 +22,31 @@ export default class Tasks {
     }
   }
 
-  executeTask() {
-    return qEnv.QServerBaseUrl.then(QServerBaseUrl => {
-      return fetch(`${QServerBaseUrl}${this.selectedTask.route.path}`, {
+  async executeTask() {
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    const response = await this.httpClient.fetch(
+      `${QServerBaseUrl}${this.selectedTask.route.path}`,
+      {
         method: "POST",
-        body: JSON.stringify(this.taskInput)
-      });
-    })
-      .then(res => {
-        if (res.ok && res.status >= 200 && res.status < 400) {
-          return res.json();
-        }
-        throw res;
-      })
-      .then(output => {
-        this.output = output;
-      });
+        body: JSON.stringify(this.taskInput),
+        credentials: "include"
+      }
+    );
+    if (!response.ok || response.status >= 400) {
+      return;
+    }
+    this.output = await response.json();
   }
 
-  getTasks() {
-    return qEnv.QServerBaseUrl.then(QServerBaseUrl => {
-      return fetch(`${QServerBaseUrl}/tasks`);
-    })
-      .then(res => {
-        if (res.ok && res.status >= 200 && res.status < 400) {
-          return res.json();
-        }
-        throw res;
-      })
-      .then(response => response.tasks);
+  async getTasks() {
+    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    const response = await this.httpClient.fetch(`${QServerBaseUrl}/tasks`, {
+      credentials: "include"
+    });
+    if (!response.ok || response.status >= 400) {
+      return;
+    }
+    const json = await response.json();
+    return json.tasks;
   }
 }
