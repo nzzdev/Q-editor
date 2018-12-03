@@ -19,10 +19,11 @@
         </li>
       </ul>
     </div>
-    <div id="tasks__input" if.bind="selectedTask.name !== undefined">
+    <form ref="form" class="q-form" id="tasks__input" validate>
       <h2>${selectedTask.name}</h2>
       <schema-editor schema.bind="selectedTask.schema || {}" data.bind="taskInput"></schema-editor>
-      <button-primary click.delegate="executeTask(task)">${'tasks.run' & t}</button-primary>
+      <button-primary type="submit" click.delegate="executeTask(task)">${'tasks.run' & t}</button-primary>
+    </form>
     </div>
     <div id="tasks__output">
       <div if.bind="output.type === 'json'">
