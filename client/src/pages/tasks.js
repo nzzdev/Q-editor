@@ -49,4 +49,6 @@ export default class Tasks {
     const json = await response.json();
     return json.tasks;
   }
+
+  handleChange() {}
 }

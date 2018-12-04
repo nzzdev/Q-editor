@@ -21,7 +21,7 @@
     </div>
     <form ref="form" class="q-form" id="tasks__input" validate>
       <h2>${selectedTask.name}</h2>
-      <schema-editor schema.bind="selectedTask.schema || {}" data.bind="taskInput"></schema-editor>
+      <schema-editor schema.bind="selectedTask.schema || {}" data.bind="taskInput" change.call="handleChange()"></schema-editor>
       <button-primary type="submit" click.delegate="executeTask(task)" if.bind="selectedTask.name !== undefined">${'tasks.run' & t}</button-primary>
     </form>
     </div>
