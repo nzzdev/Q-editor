@@ -1,0 +1,37 @@
+<template>
+  <require from="./tasks.css"></require>
+  <require from="../elements/schema-editor/schema-editor"></require>
+  <q-bar if.bind="user.isLoggedIn" router.bind="router">
+    <a slot="back-button" class="q-bar__back" route-href="route: index">
+      <button-secondary icon="back" icon-size="medium"></button-secondary>
+    </a>
+    <icon-logo class="index__logo" if.bind="enoughNewItems" slot="logo" click.delegate="reloadItems()"></icon-logo>
+    <icon-m class="index__logo" if.bind="!enoughNewItems" slot="logo" click.delegate="reloadItems()"></icon-m>
+    <language-switcher slot="language-switcher"></language-switcher>
+    <button-secondary slot="account-button" if.bind="user.isLoggedIn" click.delegate="showAccountModal()">${user.data.initials}</button-secondary>
+  </q-bar>
+  <section id="tasks">
+    <div id="tasks__sidebar">
+      <h2>Tasks</h2>
+      <ul id="tasks__list">
+        <li repeat.for="task of tasks">
+          <a route-href="route: tasks; params.bind: {id: task.id}" class="q-text-small">${task.name}</a>
+        </li>
+      </ul>
+    </div>
+    <form ref="form" class="q-form" id="tasks__input" validate>
+      <h2>${selectedTask.name}</h2>
+      <schema-editor schema.bind="selectedTask.schema || {}" data.bind="taskInput" change.call="handleChange()"></schema-editor>
+      <button-primary type="submit" click.delegate="executeTask(task)" if.bind="selectedTask.name !== undefined">${'tasks.run' & t}</button-primary>
+    </form>
+    </div>
+    <div id="tasks__output">
+      <div if.bind="output.type === 'json'">
+        <div class="task__info" repeat.for="info of output.data">
+          <h2 class="task__label">${info.label}</h2>
+          <pre class="tasks__output-json"><code>${info.content | json:2 }</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>

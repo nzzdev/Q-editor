@@ -2,9 +2,9 @@ import { valueConverter } from "aurelia-framework";
 
 @valueConverter("json")
 export class JsonValueConverter {
-  toView(obj) {
+  toView(obj, space) {
     if (typeof obj === "object") {
-      return JSON.stringify(obj);
+      return JSON.stringify(obj, null, space);
     } else if (typeof obj === "string") {
       return obj;
     }

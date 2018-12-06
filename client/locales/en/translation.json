@@ -163,5 +163,8 @@
       "title": "Technical error occurred",
       "body": "Please try to save the graphic and reload Q. {{errorMessage}}"
     }
+  },
+  "tasks": {
+    "run": "Run"
   }
 }
