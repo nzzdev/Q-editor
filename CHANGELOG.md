@@ -1,5 +1,5 @@
 
-# 3.8.0 (xx.12.2018)
+# 3.8.0 (17.12.2018)
 - feat: new page /tasks: Q server can configure tasks that take json schema based data as input to perform a task. This page provides the UI for this feature.
 
 # 3.7.1 (03.12.2018)
