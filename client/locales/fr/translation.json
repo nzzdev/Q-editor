@@ -164,5 +164,8 @@
       "title": "Un problème technique est survenu",
       "body": "Veuillez réessayer de sauvegarder le graphique et recharger Q. {{errorMessage}}"
     }
+  },
+  "tasks": {
+    "run": "Effectuer"
   }
 }

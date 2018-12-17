@@ -162,5 +162,8 @@
       "title": "Ein technisches Problem ist aufgetreten",
       "body": "Bitte versuch die Grafik erneut zu speichern und Q neu zu laden. {{errorMessage}}"
     }
+  },
+  "tasks": {
+    "run": "Ausführen"
   }
 }

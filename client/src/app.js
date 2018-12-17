@@ -64,6 +64,12 @@ export class App {
         auth: true
       },
       {
+        route: ["tasks/:id?"],
+        name: "tasks",
+        moduleId: "pages/tasks",
+        auth: true
+      },
+      {
         route: ["server-unavailable"],
         name: "server-unavailable",
         moduleId: "pages/server-unavailable",

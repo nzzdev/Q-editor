@@ -1,4 +1,7 @@
 
+# 3.8.0 (17.12.2018)
+- feat: new page /tasks: Q server can configure tasks that take json schema based data as input to perform a task. This page provides the UI for this feature.
+
 # 3.7.1 (03.12.2018)
 - fix: load css codemirror module
 - fix: fix default binding for objects on schema-editor to not fail if top level object is undefined (e.g. new options property on item)
