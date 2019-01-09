@@ -1,42 +1,56 @@
+# 3.8.1 (09.01.2019)
+
+- fix: fix showing unavailableMessage
 
 # 3.8.0 (17.12.2018)
+
 - feat: new page /tasks: Q server can configure tasks that take json schema based data as input to perform a task. This page provides the UI for this feature.
 
 # 3.7.1 (03.12.2018)
+
 - fix: load css codemirror module
 - fix: fix default binding for objects on schema-editor to not fail if top level object is undefined (e.g. new options property on item)
 
 # 3.7.0 (21.11.2018)
+
 - feature: new schema-editor-code (`"Q:type": "code"`) using codemirror to show a code editor, currently supports javascript and html mime types.
 - feature: `appendItemToPayload` is used appended to the request for `display-options-schema.json` in livingdocs-component if tool config sets `hasDynamicDisplayOptions` to true.
 
 # 3.6.1 (19.11.2018)
+
 - fix: fix inserting graphics from tools without displayOptions with livingdocs-component
 
 # 3.6.0 (14.11.2018)
+
 - feature: required notifications in editor are shown using the notification system instead of browser native notification
 - feature: availability-checks, notification-checks and dynamic-enum config format is unified (see README for examples)
 - fix: schema-editor-files handles thumbnail correctly if no file type is given
 - refactor: livingdocs-component code is now much cleaner
 
 # 3.5.3 (24.10.2018)
+
 - fix: trim all cells in schema-editor-table when data is pasted or edited by hand
 
 # 3.5.2 (19.10.2018)
+
 - fix: blueprinting of items with arrays of objects with types using implicit properties (`files`) works now.
 
 # 3.5.1 (10.10.2018)
+
 - fix: availability-checks should run when ever the schema changes
 
 # 3.5.0 (10.10.2018)
+
 - feat: Livingdocs Component now uses schema-editor for the displayOptions form. This means that you can use all the same features in the displayOptions schema. One Exception: The UserRole availability check is not available as the user is not authenticated in this screen.
 - feat: When a new graphic is saved for the first time, the id gets appended to the URL.
 - fix: When an item that has generated ids in it's data ('Q:defaults': 'generateId' in schema) the id gets properly regenerated when the item is used as a blueprint.
 
 # 3.4.0 (13.09.2018)
+
 - feat: meta editor in schema-editor-table: tool schema can enable and configure this in Q:options. The structure for the cell metadata is defined in a json-schema and will lead to a form visible when a cell is selected.
 
 # 3.3.0 (28.08.2018)
+
 - feat: preview loader can load renderingInfo.sophieModules (configure sophie.buildServiceBaseUrl in editor config in your Q server instance, see https://github.com/nzzdev/sophie-build-service for details regarding Sophie)
 - feat: schema-editor-files sets the fullPath as the filename when uploading directories
 - fix: schema-editor-files loads thumbnail for existing files only for images
@@ -44,34 +58,42 @@
 - fix: do not fail if options for schema-editor-textarea and schema-editor-url are given in schema
 
 # 3.2.0 (27.07.2018)
+
 - feat: bind minimum and maximum properties from schema on schema-editor-number input element
 - fix: improve the layout of /feed page
 
 # 3.1.0 (09.07.2018)
+
 - feat: HEAD_MARKUP, BODY_START_MARKUP and BODY_END_MARKUP env variables can be used to inject markup into index.html
 - fix: livingdocs-preview correctly handles defaults defined in display-options-schema.json
 
 # 3.0.5 (05.07.2018)
+
 - fix: do not allow two concurrent save requests
 - fix: do not translate undefined for schema-editor strings
 
 # 3.0.4 (29.06.2018)
+
 - fix: schema translation properly works
 - fix: "no items" message is not shown while loading
 - fix: items do not appear twice in items list for search with few results
 - fix: properly support new object in schema that is not defined in existing item data
 
 # 3.0.3 (28.06.2018)
+
 - fix: disable schema translations because of problems with dynamic enums, needs proper fix
 
 # 3.0.2 (27.06.2018)
+
 - fix: livingdocs-preview works correctly when opened with configured item
 - fix: dynamicEnum works for translated schema
 
 # 3.0.1 (27.06.2018)
+
 - fix: user menu opens even if the user has no config stored yet
 
 # 3.0.0 (27.06.2018)
+
 - feat: notificationChecks, Q Editor can show notifications in the schema-editor to help the user enter correct data. These checks are configured in the tools schema.json
 - feat: tool-selection can no be configured by the user and the order can be based on the users usage (needs Q-server >= 5)
 - feat: item-list on index page contains a menu per item to delete/edit/blueprint directly
@@ -83,6 +105,7 @@
 - breaking: translations for tools and editor config are separated (reflected in Q-server@5)
 
 # 2.3.0 (29.05.2018)
+
 - feat: schema-editor-table minRows is now configurable via Q:options in schema.json
 - fix: schema-editor takes the whole width and expands rows to do so
 - fix: schema-editor-table cells do not wrap the content
@@ -92,11 +115,13 @@
 - update several dependencies
 
 # 2.2.0 (04.05.2018)
+
 - feat: fixed navigation bar on top
 - feat: item list entries are now links and can be opened in a new tab
 - feat: schema-editor-table table header is shown and columns are resizable
 
 # 2.1.0 (23.04.2018)
+
 - feat: users can delete items they created (powerusers can still delete all items)
 - improvement: schema-editor-table uses handsontable 2.0.0, column-width is increased, scrollbar thumb is wider
 - fix: meta-editor annotation input change triggers unsaved state
@@ -104,29 +129,36 @@
 - update: node to 9.11.1, aurelia-pal to 1.8.0
 
 # 2.0.1 (10.04.2018)
+
 - fix: load dropzone stylesheet
 
 # 2.0.0 (06.04.2018)
+
 - feature: use new /search endpoint of Q-server instead of building lucene query in the editor (needs Q-server >= 5.0.0)
 - deprecated feature removed: schema-editor-lat-lng (use schema-editor-geojson-point)
 - deprecated feature removed: onlyRoles config in tool is removed (use availabilityChecks)
 - deprecated feature removed: publications need to be configured for the publication filter to work, publication filter is not built from configured targets anymore
 
 # 1.8.1 (01.03.2018)
+
 - fix: install node modules within Docker to not fail if built on another platform
 
 # 1.8.0 (01.03.2018)
+
 - update hapi to 17.2.1 and node to 9.6
 - feature: show a confirm dialog before editing if item is active (configurable in editorconfig delivered from server)
 - fix: make brotli compression work by depending on brok plugin
 
 # 1.7.2 (14.02.2018)
+
 - fix: do not try to parse the cookie to not fail on broken one as no cookie is needed
 
 # 1.7.1 (30.01.2018)
+
 - fix: display dropzone message in singular form if only one image is allowed
 
 # 1.7.0 (17.01.2018)
+
 - feat: schema-editor new type `files` using Q-server files plugin to upload files and store file information on item
 - feat: schema-editor input fields allow placeholder to be defined via Q:options in schema.json
 - feat: schema-editor-table allows to hide transpose button via Q:options configuration
@@ -139,40 +171,49 @@
 - updates: aurelia, hapi, node updated to latest versions
 
 # 1.6.0 (19.12.2017)
+
 - feat: item ID in /feed links to editor for this item
 - fix: scripts with document.getElementById work now in preview
 - fix: username input is focused on login page load
 - fix: all notifications are closable by click
 
 # 1.5.3 (6.11.2017)
+
 - fixes for json schema handling
 
 # 1.5.2 (2.11.2017)
+
 - fix: schema-editor-array does not fail if given data is not an Array
 
 # 1.5.1 (2.11.2017)
+
 - fix: meta-editor now uses translation files for ui strings
 - fix: schema-editor-array uses correct schema for array entry editor in case default value objects validate against multiple schemas
 - fix: preview container element gets more unique name to not clash with styles applied from target context
 
 # 1.5.0 (12.10.2017)
+
 - feat: publication filter. If any publications are configured on the Q-server, the editor now provides a publication filter in the item list and allows for publication selection in the preview screen by using the target defined as the `previewTarget` in the config.
 - feat: preview background color defaults to white and can be configured by target
 - feat: item list and item overview now shows the user that created an item next to the one who last edited it
 - fix: geojson-point editor handles required attributes on coordinates correctly
 
 # 1.4.0 (7.7.2017)
+
 - feat: search now looks in id and subtitle properties as well
 - fix: toolNotAvailable message is now correctly translated
 - fix: links to articles in item metadata list now open in new tab
 
 # 1.3.2 (29.6.2017)
+
 - fix: schema-editor-array makes data an array if undefined before trying to push (now really fixed)
 
 # 1.3.1 (27.6.2017)
+
 - fix: schema-editor-array makes data an array if undefined before trying to push
 
 # 1.3.0 (27.6.2017)
+
 - feat: show articles with item in item-overview if configured in server (new `editorConfig.metaInformation.articlesWithItem`)
 - feat: do not show item-dialog on activate but activate directly from tool-status-bar (new `editorConfig.uiBehavior.useItemDialogToActivate`)
 - fix: change in schema-editor-color triggers reload of preview
@@ -181,6 +222,7 @@
 - checkAvailability decorator uses WeakMap instead of obfuscated properties on the schema-editor-x element
 
 # 1.2.0 (9.6.2017)
+
 - feat: livingdocs-component app (view to select/configure/embed item within Livingdocs Editor)
 - feat: dynamicEnum option (asking remote endpoint for enums based on current data)
 - feat: availabilityChecks to show/hide properties in schema-editor (ItemHasId, UserHasRole, ToolEndpoint)
@@ -194,11 +236,13 @@
 - several other fixes and small improvements
 
 # 1.1.1 (29.3.2017)
+
 - fix: items filter translations
 - fix: schema-editor visual spacing
 - fix: preview translation
 
 # 1.1.0 (29.3.2017)
+
 - feature: adds geojson-point, json and textarea schema-editor types
 - feature: Handles oneOf in array schema-editor by providing different buttons per type
 - feature: translates tool schema titles and enum_titles if translation file provided by tool
@@ -216,7 +260,9 @@
 - some visual improvements
 
 # 1.0.1 (23.3.2017)
+
 - fix: correct required attribute handling for several schema-editor types
 
 # 1.0.0 (19.3.2017)
+
 - initial released version
