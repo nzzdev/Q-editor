@@ -47,20 +47,23 @@ export default class AvailabilityChecker {
   async getAvailabilityInfo(availabilityChecks) {
     try {
       for (let availabilityCheck of availabilityChecks) {
+        // The getConfig function transforms the existing check config to the new format
+        // After all the tools adopted the new configuration format this is
+        // not needed anymore
+        const availabilityCheckConfig = getConfig(availabilityCheck);
+
         let checker = this.diContainer.get(
           availabilityCheck.type + "AvailabilityCheck"
         );
 
-        const available = await checker.isAvailable(
-          getConfig(availabilityCheck)
-        );
+        const available = await checker.isAvailable(availabilityCheckConfig);
         if (!available) {
           const availabilityInfo = {
             isAvailable: false
           };
-          if (availabilityCheck.hasOwnProperty("unavailableMessage")) {
+          if (availabilityCheckConfig.hasOwnProperty("unavailableMessage")) {
             availabilityInfo.unavailableMessage =
-              availabilityCheck.unavailableMessage;
+              availabilityCheckConfig.unavailableMessage;
           }
           return availabilityInfo;
         }
