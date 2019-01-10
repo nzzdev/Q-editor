@@ -1,0 +1,24 @@
+dist: trusty
+sudo: true
+services:
+- docker
+language: node_js
+node_js:
+- '10'
+before_install:
+- jspm config registries.github.timeouts.lookup 120
+install:
+- npm install
+- cd client && npm install && node_modules/jspm/jspm.js install && node_modules/gulp/bin/gulp.js lint && node_modules/gulp/bin/gulp.js export && cd ..;
+before_script:
+- DOCKER_IMAGE_NAME="q-editor"
+- DOCKER_TAG=$TRAVIS_BRANCH
+script:
+- npm test
+- docker build -t $DOCKER_IMAGE_NAME:$DOCKER_TAG .;
+- echo $DOCKER_PASSWORD | docker login -u="$DOCKER_USERNAME" --password-stdin; docker tag $DOCKER_IMAGE_NAME:$DOCKER_TAG
+  nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; docker push nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG;
+- if [ $TRAVIS_BRANCH == "staging" ] && [ $TRAVIS_PULL_REQUEST == "false" ]; then docker run --rm -it -e RANCHER_URL -e
+  CATTLE_ACCESS_KEY -e CATTLE_SECRET_KEY etlweather/gaucho upgrade $RANCHER_SERVICE_ID_STAGING
+  --auto_complete --start_first --imageUuid="docker:nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG" || true;
+  fi
