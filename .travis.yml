@@ -6,27 +6,23 @@ language: node_js
 node_js:
 - '9'
 before_install:
-  before_install:
 - npm install -g jspm
+- npm install -g gulp
 - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
-- jspm config registries.github.timeouts.lookup 120
 install:
 - npm install
-- cd client && npm install && node_modules/jspm/jspm.js install && node_modules/gulp/bin/gulp.js
-  lint && node_modules/gulp/bin/gulp.js export && cd ..;
 before_script:
 - DOCKER_IMAGE_NAME="q-editor"
 - DOCKER_TAG=$TRAVIS_BRANCH
 script:
+- cd client
+- npm install && jspm install && gulp lint && gulp export 
+- cd .. ;
 - npm test
 - docker build -t $DOCKER_IMAGE_NAME:$DOCKER_TAG .;
-- echo $DOCKER_PASSWORD | docker login -u="$DOCKER_USERNAME" --password-stdin; docker
-  tag $DOCKER_IMAGE_NAME:$DOCKER_TAG nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; docker
-  push nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG;
-- if [ $TRAVIS_BRANCH == "staging" ] && [ $TRAVIS_PULL_REQUEST == "false" ]; then
-  docker run --rm -it -e RANCHER_URL -e CATTLE_ACCESS_KEY -e CATTLE_SECRET_KEY etlweather/gaucho
-  upgrade $RANCHER_SERVICE_ID_STAGING --auto_complete --start_first --imageUuid="docker:nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG"|| true; 
-  fi
+after_success:
+- echo $DOCKER_PASSWORD | docker login -u="$DOCKER_USERNAME" --password-stdin; docker tag $DOCKER_IMAGE_NAME:$DOCKER_TAG
+  nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; docker push nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG;
 env:
   global:
     secure: HcedkY+t4KqtxpBJmpI6JC9EaKGZaKalYCaCZxpdKl77fKCoKOMbqzuh17CVUP1xFQIorzz0uw/HhI8PWgoDf4s5GrSl3WrXkVgrzwtYcowOjqbtg249rfc0ZpFAyKSK+lMpw7rfw5JU8lgREAujoQVv7od7PLCFJz6i0hRFWlFACOnaD+1bAycbn5wXCfzFWqVHPogWy75NQyuOLSaosm5X3hj7qkpkvsiDY6EoqB7w51+lDBgsmo0CwHu/6oAqClD6YTp2mw8w66StBTM5ccneUAOBwlm9n3d1Tc4TJ8m+OkLMpAyeikAc1AXHqgUosKhIu42J0KPzAaaB2z8rIxxepvL7cql9cedAaixdtua9wsATEZL5Hq7Rlm1W1w2su2K/iqOeQKvYvtRiB87oq/GFZYAyLJg/a4+jX86ajWjVcmms5QfUHUWyG/14Y/iVWQ68krEEE540KrzfKac1h/aE0iEKiUYEtPbyyxnY6P1V0pAHTZqtNCiiD2y9NHFw7Uj4MBbzvBB9PJz+wEqzHjW3QYK0QfkZTD6a7xKMvTABuBflmLn2MScX2mhJnx1iQlJrgVMJiHbyv8RUwyj5RTdz1g8xvuWPvB0IJ1UqiW2GkgbeXAxdxn86R7hqO83qJZBab8nKNN9LrSP9MWdDtdHIbLzZ9hvb0+0FOI9VZFc=
