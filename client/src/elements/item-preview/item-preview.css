@@ -32,6 +32,7 @@ item-preview {
 
 .item-preview__container {
   display: flex;
+  height: 100%;
 }
 
 .item-preview__notification {
