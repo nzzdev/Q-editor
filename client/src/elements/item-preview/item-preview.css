@@ -4,7 +4,7 @@ item-preview {
   --q-preview-settings-margin-bottom: calc(var(--q-space-base) * 2);
   display: block;
   position: relative;
-  min-height: calc(var(--q-preview-min-height) + (2 * var(--q-preview-padding)) + 50px + var(--q-preview-settings-margin-bottom) + 20px);
+  min-height: calc(var(--q-preview-min-height) + (2 * var(--q-preview-padding)) + 50px + var(--q-preview-settings-margin-bottom));
 }
 
 .item-preview__holder {
