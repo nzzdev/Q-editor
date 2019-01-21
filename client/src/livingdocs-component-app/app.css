@@ -223,6 +223,8 @@ html {
   --preview-container-overflow-y: hidden;
   --preview-container-margin-top: 0px;
   margin: 0;
+  height: 1px; /* set a fixed height so the container doesn't grow infinitely but stays within the flex container */
+  flex-grow: 1; /* let the preview-container grow to the remaining space */
 }
 
 .livingdocs-component-item-controls {
