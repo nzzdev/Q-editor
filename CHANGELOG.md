@@ -1,3 +1,7 @@
+# 3.8.2 (22.01.2019)
+
+- fix: preview container doesn't grow in height across it's container anymore
+
 # 3.8.1 (09.01.2019)
 
 - fix: fix showing unavailableMessage
