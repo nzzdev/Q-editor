@@ -16,12 +16,16 @@ before_script:
 - DOCKER_TAG=$TRAVIS_BRANCH
 script:
 - cd client
-- npm install 
+- npm install
 - jspm install
-- gulp lint 
-- gulp export 
+- gulp lint
+- gulp export
 - cd .. ;
 - docker build -t $DOCKER_IMAGE_NAME:$DOCKER_TAG .;
 after_success:
-- echo $DOCKER_PASSWORD | docker login -u="$DOCKER_USERNAME" --password-stdin; docker tag $DOCKER_IMAGE_NAME:$DOCKER_TAG
-  nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; docker push nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG;
+- echo $DOCKER_PASSWORD | docker login -u="$DOCKER_USERNAME" --password-stdin; docker
+  tag $DOCKER_IMAGE_NAME:$DOCKER_TAG nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG; docker
+  push nzzonline/$DOCKER_IMAGE_NAME:$DOCKER_TAG;
+notifications:
+  slack:
+    secure: T+JafZ84LMrfQByeTRX6HeXSgs3QR7gIuY51KjpM0CSX3YoFaM8UJZNYp+JddBn5OViMB7A8UJkZMRm9KMShLuifWFywWF7bKKFTCQjachgj0b81xzvrxepQKZEWy4sZGpGen7ovwyusV72PNmfi4BgY12LnNNSGimnaxAYFgzba3dE95cVbwrMzCd3mG7ygOIlSL/p9wi+eDyrO+EH7lmEBEOR0KKuDuRSwnHl5ZQA9L/wI13b7HZDcyvCSbp0z6WcF/JJyWgSvRTAadJ9DNudBe9z8+avAUXndZaf9okN67bSwHXH3/HoXajAdyLgz60ERwVOIeW7l/N+Lnk7RPEZW71U8M63DysQHJI/yEZ2nUiGLDIZ5nWai6L4qVGuCfKU+nPuLhdZfuH49ycbFztIuahpoIbCfslkgeqY/4HKhaKfVvpmcFNDPcPj/90LbwV170siDUeuRl4Cp3lvk0sb41rpqnhL+pNY++5SrI1jj7bzBPIxzOThUlSVDDHTHuItednc8Cc0vUvEozHu8GmahIzJwh2MbiJY5Kgg2R3a9lqCjLB1wFsOJZrOZSbQru16ruOIDvo8WtdawLznTOQU3RU/1wMzBM+bxGY2Qt+mnPXDfxIxEGBeXlDMJ0PO/eJLfASG7s8UskiSFcLupesMqEzSM5rKyy2IFIDbD/HE=
