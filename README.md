@@ -1,4 +1,4 @@
-# Q Editor
+# Q Editor [![Build Status](https://travis-ci.com/nzzdev/Q-editor.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-editor) 
 
 **Maintainer**: [benib](https://github.com/benib)
 
@@ -335,6 +335,6 @@ Start one locally or use your staging environment. You probably do not want to d
 
 ## License
 
-Copyright (c) 2018 Neue Zürcher Zeitung. All rights reserved.
+Copyright (c) 2019 Neue Zürcher Zeitung. All rights reserved.
 
 This software is published under the MIT license.
