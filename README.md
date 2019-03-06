@@ -1,4 +1,4 @@
-# Q Editor
+# Q Editor [![Build Status](https://travis-ci.com/nzzdev/Q-editor.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-editor)
 
 **Maintainer**: [benib](https://github.com/benib)
 
@@ -9,32 +9,43 @@ Q editor needs a modern browser with support for Shadow DOM, quite some ES2015 f
 
 Demo: https://editor.q.tools
 
-## Setup
+## Table of contents
 
-### Deployment
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Development](#development)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [License](#license)
 
-We provide automatically built docker images for Q editor at https://hub.docker.com/r/nzzonline/q-editor/.
-You have three options for deployment:
+## Installation
 
-- use the provided images
-- build your own docker images
-- deploy the service using another technology
+```
+git clone git@github.com:nzzdev/Q-editor.git
+cd ./Q-editor
+npm install
+npm run build
+```
 
-#### Use the provided docker images
+## Configuration
 
-1. Deploy `nzzonline/q-editor` to a docker environment
-2. You can set the following ENV variables
-   - `PORT`: defaults to `8080`, the port Q editor will be listening on
-   - `Q_SERVER_BASE_URL`: required, the url to a running [Q server](https://nzzdev.github.io/Q-server/)
-   - `LOGIN_MESSAGE`: defaults to `null`, a string that is displayed on the login screen
-   - `DEV_LOGGING`: defaults to `false`, if `true` lots of console log messages will appear
-   - `PUSH_STATE`: defaults to `true`, if `true` the editor will use nice urls without `#` but needs server support (so it's only used for production, for development `#` is used)
+### env
 
-#### Build your own docker images / deploy using another technology
+See the file `client/env`. This is loaded for development only and "fakes" the environment served by the Q server part on production:
 
-If you choose to build your own docker image or deploy it some other way make sure that you run `cd client && npm install && jspm install && gulp export` to build the client.
+```
+{
+  "QServerBaseUrl": "http://localhost:3001",
+  "loginMessage": "some text to be shown on the login screen",
+  "devLogging": true,
+  "pushState": false
+}
+```
 
-### Configuration
+where `QServerBaseUrl` is a url to a running [Q server](https://github.com/nzzdev/Q-server).
+Start one locally or use your staging environment. You probably do not want to develop using your production Q server.
+
+### Configuration of features
 
 Apart from the ENV variables mentioned above, Q editor gets its configuration from the Q server. You need a running [Q server](https://nzzdev.github.io/Q-server/) now so head over to https://nzzdev.github.io/Q-server/install.html if you haven't already. This is what you can configure in `config/editorConfig.js` of your Q server implementation:
 
@@ -317,24 +328,39 @@ jspm install
 
 After that you can start a live reloading webserver by running `gulp watch` within the folder `client`.
 
-### env
+## Testing
 
-See the file `client/env`. This is loaded for development only and "fakes" the environment served by the Q server part on production:
+The `e2e`-tests for Q Editor are in [this repository](https://github.com/nzzdev/Q-automated-tests) and made with [Cypress](https://www.cypress.io/).
 
-```
-{
-  "QServerBaseUrl": "http://localhost:3001",
-  "loginMessage": "some text to be shown on the login screen",
-  "devLogging": true,
-  "pushState": false
-}
-```
+[to the top](#table-of-contents)
 
-where `QServerBaseUrl` is a url to a running [Q server](https://github.com/nzzdev/Q-server).
-Start one locally or use your staging environment. You probably do not want to develop using your production Q server.
+## Deployment
+
+We provide automatically built docker images for Q editor at https://hub.docker.com/r/nzzonline/q-editor/.
+You have three options for deployment:
+
+- use the provided images
+- build your own docker images
+- deploy the service using another technology
+
+### Use the provided docker images
+
+1. Deploy `nzzonline/q-editor` to a docker environment
+2. You can set the following ENV variables
+   - `PORT`: defaults to `8080`, the port Q editor will be listening on
+   - `Q_SERVER_BASE_URL`: required, the url to a running [Q server](https://nzzdev.github.io/Q-server/)
+   - `LOGIN_MESSAGE`: defaults to `null`, a string that is displayed on the login screen
+   - `DEV_LOGGING`: defaults to `false`, if `true` lots of console log messages will appear
+   - `PUSH_STATE`: defaults to `true`, if `true` the editor will use nice urls without `#` but needs server support (so it's only used for production, for development `#` is used)
+
+### Build your own docker images / deploy using another technology
+
+If you choose to build your own docker image or deploy it some other way make sure that you run `cd client && npm install && jspm install && gulp export` to build the client.
+
+[to the top](#table-of-contents)
 
 ## License
 
-Copyright (c) 2018 Neue Zürcher Zeitung. All rights reserved.
+Copyright (c) 2019 Neue Zürcher Zeitung. All rights reserved.
 
 This software is published under the MIT license.
