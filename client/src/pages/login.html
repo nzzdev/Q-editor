@@ -7,13 +7,13 @@
       <div class="q-form__block">
         <label>
           <span t="general.username"></span>
-          <input type="text" id="username" value.bind="username" ref="usernameInput">
+          <input type="text" id="username" value.bind="username" ref="usernameInput" autocomplete="username">
         </label>
       </div>
       <div class="q-form__block">
         <label>
           <span t="general.password"></span>
-          <input type="password" id="password" value.bind="password">
+          <input type="password" id="password" value.bind="password" autocomplete="current-password">
         </label>
       </div>
       <p class="q-text q-text--error" if.bind="loginError">
