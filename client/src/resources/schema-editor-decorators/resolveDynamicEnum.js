@@ -1,23 +1,5 @@
-import { LogManager } from "aurelia-framework";
 import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 import { Container } from "aurelia-dependency-injection";
-
-const log = LogManager.getLogger("Q");
-
-// This function transforms the existing check config to the new format
-// After all the tools adopted the new configuration format this is
-// not needed anymore
-function getConfig(dynamicEnumSchema) {
-  const schema = JSON.parse(JSON.stringify(dynamicEnumSchema));
-  if (schema.config) {
-    return schema.config;
-  }
-  delete schema.type;
-  log.info(
-    "DEPRECATION NOTICE: In Q editor 4.0 you will have to configure the dynamicEnum with a config property. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
-  );
-  return schema;
-}
 
 export function resolveDynamicEnum() {
   return function(target) {
@@ -40,7 +22,7 @@ export function resolveDynamicEnum() {
           `${dynamicEnumSchema.type} is not implemented as dynamicEnum type`
         );
       }
-      return await toolEndpointChecker.check(getConfig(dynamicEnumSchema));
+      return await toolEndpointChecker.check(dynamicEnumSchema.config);
     }
 
     async function resolve() {
