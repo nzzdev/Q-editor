@@ -21,8 +21,6 @@ export class Login {
     this.user = user;
     this.i18n = i18n;
     this.router = router;
-    this.isChrome =
-      /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
   }
 
   async canActivate() {

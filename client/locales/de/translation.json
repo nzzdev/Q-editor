@@ -19,7 +19,6 @@
     "only": "nur",
     "graphic": "Grafik",
     "graphic_plural": "Grafiken",
-    "browserSupportMessage": "Q ist für Chrome optimiert und funktioniert in Ihrem Browser evtl. nicht.",
     "changesSaved": "Die Änderungen wurden gespeichert.",
     "failedToSaveChanges": "Die Änderung konnten nicht gespeichert werden.",
     "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt.",

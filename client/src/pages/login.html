@@ -1,6 +1,5 @@
 <template>
 	<main class="login-page" style="max-width: 500px; margin-left: auto; margin-right: auto; overflow-y: auto;">
-		<div if.bind="!isChrome" style="text-align: center; color: #FF0000;" t="general.browserSupportMessage"></div>
 		<icon-logo style="width: 100px; height: 100px; margin: 50px auto 100px auto;"></icon-logo>
 		<form class="q-form">
 			<p class="q-text" if.bind="loginMessage" innerhtml.bind="loginMessage"></p>
