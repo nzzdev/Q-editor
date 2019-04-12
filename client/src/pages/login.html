@@ -1,25 +1,25 @@
 <template>
-  <main class="login-page" style="max-width: 500px; margin-left: auto; margin-right: auto; overflow-y: auto;">
-    <div if.bind="!isChrome" style="text-align: center; color: #FF0000;" t="general.browserSupportMessage"></div>
-    <icon-logo style="width: 100px; height: 100px; margin: 50px auto 100px auto;"></icon-logo>
-    <form class="q-form">
-      <p class="q-text" if.bind="loginMessage" innerhtml.bind="loginMessage"></p>
-      <div class="q-form__block">
-        <label>
-          <span t="general.username"></span>
-          <input type="text" id="username" value.bind="username" ref="usernameInput" autocomplete="username">
-        </label>
-      </div>
-      <div class="q-form__block">
-        <label>
-          <span t="general.password"></span>
-          <input type="password" id="password" value.bind="password" autocomplete="current-password">
-        </label>
-      </div>
-      <p class="q-text q-text--error" if.bind="loginError">
-        ${loginError}
-      </p>
-      <button-primary click.delegate="tryLogin()" type="submit"><span t="general.login"></span></button-primary>
-    </form>
-  </main>
+	<main class="login-page" style="max-width: 500px; margin-left: auto; margin-right: auto; overflow-y: auto;">
+		<div if.bind="!isChrome" style="text-align: center; color: #FF0000;" t="general.browserSupportMessage"></div>
+		<icon-logo style="width: 100px; height: 100px; margin: 50px auto 100px auto;"></icon-logo>
+		<form class="q-form">
+			<p class="q-text" if.bind="loginMessage" innerhtml.bind="loginMessage"></p>
+			<div class="q-form__block">
+				<label>
+					<span t="general.username"></span>
+					<input type="text" id="username" value.bind="username" ref="usernameInput" autocomplete="username">
+				</label>
+			</div>
+			<div class="q-form__block">
+				<label>
+					<span t="general.password"></span>
+					<input type="password" id="password" value.bind="password" autocomplete="current-password">
+				</label>
+			</div>
+			<p class="q-text q-text--error" if.bind="loginError">
+				${loginError}
+			</p>
+			<button-primary click.delegate="tryLogin()" type="submit"><span t="general.login"></span></button-primary>
+		</form>
+	</main>
 </template>
