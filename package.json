@@ -35,10 +35,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "boom": "^7.2.0",
-    "brok": "^3.0.0",
-    "hapi": "^17.5.2",
-    "hoek": "^5.0.3",
-    "inert": "^5.1.0"
+    "@hapi/hapi": "^18.3.1",
+    "@hapi/inert": "^5.2.0",
+    "brok": "^3.0.1"
   }
 }
