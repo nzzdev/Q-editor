@@ -16,7 +16,7 @@ install:
   - npm install
 before_script:
   - DOCKER_IMAGE_NAME="q-editor"
-  - DOCKER_TAG=${TRAVIS_BRANCH/\//_}
+  - DOCKER_TAG=${TRAVIS_BRANCH//\//_}
 script:
   - cd client
   - npm install
