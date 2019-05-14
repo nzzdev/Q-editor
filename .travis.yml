@@ -5,6 +5,9 @@ services:
 language: node_js
 node_js:
   - "9"
+cache:
+  directories:
+    - node_modules
 before_install:
   - npm install -g jspm
   - npm install -g gulp
@@ -13,7 +16,7 @@ install:
   - npm install
 before_script:
   - DOCKER_IMAGE_NAME="q-editor"
-  - DOCKER_TAG=${TRAVIS_BRANCH/\//_}
+  - DOCKER_TAG=${TRAVIS_BRANCH//[^a-zA-Z0-9\_\-\.]/_}
 script:
   - cd client
   - npm install
