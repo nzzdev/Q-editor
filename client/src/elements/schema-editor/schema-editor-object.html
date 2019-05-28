@@ -1,30 +1,37 @@
 <template style="display: block">
-    <require from="./schema-editor-wrapper"></require>
-    <legend if.bind="!noObjectTitle">
-      ${schema.title & toolT}
-    </legend>
-    <div if.bind="schema.properties" repeat.for="propertyName of schema.properties | keys">
-      <fieldset if.bind="noFieldsets || getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'" class="${isCompact($parent.schema.properties[propertyName]) ? 'compact' : ''}">
-        <schema-editor-wrapper
-            if.bind="!$parent.schema.properties[propertyName]['Q:options'] || !$parent.schema.properties[propertyName]['Q:options'].hideInEditor"
-            schema.bind="$parent.schema.properties[propertyName]"
-            data.two-way="$parent.data[propertyName]"
-            change.bind="$parent.change"
-            required.bind="isRequired($parent.schema, propertyName)"
-            notifications.bind="notifications"
-            show-notifications.bind="showNotifications">
-        </schema-editor-wrapper>
-      </fieldset>
-
+  <require from="./schema-editor-wrapper"></require>
+  <legend if.bind="!noObjectTitle">
+    ${schema.title & toolT}
+  </legend>
+  <div
+    if.bind="schema.properties"
+    repeat.for="propertyName of schema.properties | keys"
+  >
+    <fieldset
+      if.bind="noFieldsets || getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'"
+      class="${isCompact($parent.schema.properties[propertyName]) ? 'compact' : ''}"
+    >
       <schema-editor-wrapper
-        if.bind="(!$parent.schema.properties[propertyName]['Q:options'] || !$parent.schema.properties[propertyName]['Q:options'].hideInEditor) && getType($parent.schema.properties[propertyName]) !== 'object' && getType($parent.schema.properties[propertyName]) !== 'array'"
+        if.bind="!$parent.schema.properties[propertyName]['Q:options'] || !$parent.schema.properties[propertyName]['Q:options'].hideInEditor"
         schema.bind="$parent.schema.properties[propertyName]"
         data.two-way="$parent.data[propertyName]"
         change.bind="$parent.change"
         required.bind="isRequired($parent.schema, propertyName)"
         notifications.bind="notifications"
-        show-notifications.bind="showNotifications">
+        show-notifications.bind="showNotifications"
+      >
       </schema-editor-wrapper>
+    </fieldset>
 
-    </div>
+    <schema-editor-wrapper
+      if.bind="(!$parent.schema.properties[propertyName]['Q:options'] || !$parent.schema.properties[propertyName]['Q:options'].hideInEditor) && getType($parent.schema.properties[propertyName]) !== 'object' && getType($parent.schema.properties[propertyName]) !== 'array'"
+      schema.bind="$parent.schema.properties[propertyName]"
+      data.two-way="$parent.data[propertyName]"
+      change.bind="$parent.change"
+      required.bind="isRequired($parent.schema, propertyName)"
+      notifications.bind="notifications"
+      show-notifications.bind="showNotifications"
+    >
+    </schema-editor-wrapper>
+  </div>
 </template>
