@@ -230,15 +230,6 @@ export class SchemaEditorArray {
         return entryLabel;
       }
 
-      // TODO: REMOVE THIS:
-      // if (Array.isArray(this.options.expandable.itemLabelProperties)) {
-      //   return this.options.expandable.itemLabelProperties
-      //     .map(itemLabelProperty => {
-      //       return "" + this.getEntryLabel(entry, itemLabelProperty);
-      //     })
-      //     .join(" - ");
-      // }
-
       return undefined;
     });
   }
