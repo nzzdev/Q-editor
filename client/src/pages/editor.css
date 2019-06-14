@@ -24,48 +24,49 @@
   flex-direction: column;
 }
 
-.editor__preview .editor__options {
+.editor__options {
   width: 250px;
   flex-grow: 0;
   flex-shrink: 0;
   margin-right: calc(var(--q-space-base) * 2);
   overflow-y: auto;
-  --q-h1-size: 13px;
-  --q-h2-size: 13px;
-  --q-h3-size: 13px;
-  --q-h4-size: 13px;
-  --q-h5-size: 13px;
-  --q-h6-size: 13px;
+}
+
+.editor__options .input-group-title {
+  width: 100%;
+  display: block;
+  margin: calc(var(--q-space-base)) 0;
+
+  font-size: var(--q-h4-size);
+  font-weight: var(--q-h4-weight);
+  color: var(--q-text-color);
+  margin-bottom: var(--q-space-base);
 }
 
 .editor__options .schema-editor-input {
   margin-bottom: var(--q-space-base);
 }
 
-.editor__options legend {
-  width: 100%;
-  margin-top: calc(var(--q-space-base) * 2);
-
-  /* the following properties are copied from h6 style */
-  font-size: var(--q-h6-size);
-  font-weight: var(--q-h6-weight);
-  color: var(--q-text-light-color);
-  margin-bottom: var(--q-space-base);
+/* make the options more compact by removing the margin around schema-editor s */
+.editor__options schema-editor fieldset > schema-editor-wrapper {
+  margin: 0;
 }
 
-/* make the options more compact by removing the margin around fieldsets */
-.editor__options fieldset > schema-editor-wrapper {
-  margin: 0 !important;
-}
-
-.editor__options schema-editor-wrapper {
+.editor__options schema-editor schema-editor-wrapper {
   margin-bottom: 0;
 }
 
+.editor__options schema-editor schema-editor-wrapper schema-editor-wrapper {
+  border-bottom: 1px solid var(--q-color-gray-4);
+  margin-bottom: calc(var(--q-space-base) * 2);
+}
+
 .editor__options
+  schema-editor
   schema-editor-wrapper
   schema-editor-wrapper
   schema-editor-wrapper {
+  border: none;
   margin-bottom: 0;
 }
 

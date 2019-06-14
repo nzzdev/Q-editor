@@ -48,7 +48,7 @@
                 notifications.bind="optionsNotifications"
                 show-notifications.bind="false"
               >
-                <h6>${optionsSchema.title || 'Optionen'}</h6>
+                <h6 if.bind="optionsSchema.title">${optionsSchema.title}</h6>
               </schema-editor>
               <button
                 ref="optionsFormSubmitButton"
