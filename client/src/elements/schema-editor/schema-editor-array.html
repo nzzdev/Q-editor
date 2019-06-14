@@ -1,7 +1,7 @@
 <template>
   <require from="./schema-editor-wrapper"></require>
   <require from="./schema-editor-array.css"></require>
-  <label>
+  <label class="input-group-title">
     ${schema.title & toolT}
   </label>
   <div
@@ -10,7 +10,9 @@
     class="schema-editor-array__entry"
     style="z-index: ${data.length - $index}"
   >
-    <div class="schema-editor-array__entry-container">
+    <div
+      class="schema-editor-array__entry-container ${options.expandable ? 'schema-editor-array__entry-container--expandable' : ''} ${options.layout === 'compact' ? 'schema-editor-array__entry-container--compact' : ''}"
+    >
       <div
         class="schema-editor-array__control ${showNotifications ? 'schema-editor-input--with-notifications' : ''}"
       >
@@ -33,23 +35,23 @@
 
           <span
             class="q-text"
-            if.bind="options.expandable.itemLabelProperty && entryLabels[$index]"
+            if.bind="(options.expandable.itemLabelProperty || options.expandable.itemLabelTemplate) && entryLabels[$index]"
             innerhtml.bind="entryLabels[$index]"
           ></span>
           <span
             class="q-text"
-            if.bind="!options.expandable.itemLabelProperty || !entryLabels[$index]"
+            else
             >${$index + 1}</span
           >
           <div class="schema-editor-array__entry-actions">
             <button-tertiary
-              if.bind="!$first"
+              if.bind="!$first && options.sortable"
               icon="up"
               click.delegate="moveElementUp($index)"
               size="small"
             ></button-tertiary>
             <button-tertiary
-              if.bind="!$last"
+              if.bind="!$last && options.sortable"
               icon="down"
               click.delegate="moveElementDown($index)"
               size="small"
@@ -57,8 +59,16 @@
             <button-secondary
               class="schema-editor-array__button"
               click.delegate="deleteElement($index)"
+              if.bind="options.layout !== 'compact'"
             >
               ${'editor.arrayEntryRemove' & t: getArrayEntryOption($index)}
+            </button-secondary>
+            <button-secondary
+              click.delegate="deleteElement($index)"
+              icon="delete"
+              if.bind="options.layout === 'compact'"
+              size="small"
+            >
             </button-secondary>
           </div>
         </div>
@@ -67,23 +77,30 @@
           if.bind="!options.expandable"
         >
           <button-tertiary
-            if.bind="!$first"
+            if.bind="!$first && options.sortable"
             icon="up"
             click.delegate="moveElementUp($index)"
             size="small"
           ></button-tertiary>
           <button-tertiary
-            if.bind="!$last"
+            if.bind="!$last && options.sortable"
             icon="down"
             click.delegate="moveElementDown($index)"
             size="small"
           ></button-tertiary>
           <button-secondary
-            class="schema-editor-array__button"
-            click.delegate="deleteElement($index)"
-          >
-            ${'editor.arrayEntryRemove' & t: getArrayEntryOption($index)}
-          </button-secondary>
+              class="schema-editor-array__button"
+              click.delegate="deleteElement($index)"
+              if.bind="options.layout !== 'compact'"
+            >
+              ${'editor.arrayEntryRemove' & t: getArrayEntryOption($index)}
+            </button-secondary>
+            <button-secondary
+              click.delegate="deleteElement($index)"
+              icon="delete"
+              if.bind="options.layout === 'compact'"
+              size="small"
+            >
         </div>
       </div>
       <schema-editor-wrapper
