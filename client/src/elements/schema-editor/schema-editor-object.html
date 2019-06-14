@@ -1,14 +1,35 @@
 <template style="display: block">
+  <require from="./schema-editor-object.css!"></require>
   <require from="./schema-editor-wrapper"></require>
-  <legend if.bind="!noObjectTitle">
-    ${schema.title & toolT}
-  </legend>
+  <div class="schema-editor-object__header">
+    <div
+      if.bind="options.expandable"
+      class="schema-editor-object__header__controls"
+    >
+      <button-secondary
+        icon="expand"
+        size="small"
+        if.bind="collapsedState !== 'expanded'"
+        click.delegate="expand()"
+      ></button-secondary>
+      <button-secondary
+        icon="collapse"
+        size="small"
+        if.bind="collapsedState === 'expanded'"
+        click.delegate="collapse()"
+      ></button-secondary>
+    </div>
+    <label if.bind="!noObjectTitle" class="input-group-title">
+      ${schema.title & toolT}
+    </label>
+  </div>
+
   <div
     if.bind="schema.properties"
     repeat.for="propertyName of schema.properties | keys"
   >
     <fieldset
-      if.bind="noFieldsets || getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array'"
+      if.bind="(collapsedState === 'expanded' || !options.expandable) && (getType($parent.schema.properties[propertyName]) === 'object' || getType($parent.schema.properties[propertyName]) === 'array')"
       class="${isCompact($parent.schema.properties[propertyName]) ? 'compact' : ''}"
     >
       <schema-editor-wrapper
@@ -24,7 +45,7 @@
     </fieldset>
 
     <schema-editor-wrapper
-      if.bind="(!$parent.schema.properties[propertyName]['Q:options'] || !$parent.schema.properties[propertyName]['Q:options'].hideInEditor) && getType($parent.schema.properties[propertyName]) !== 'object' && getType($parent.schema.properties[propertyName]) !== 'array'"
+      if.bind="(collapsedState === 'expanded' || !options.expandable) && (!$parent.schema.properties[propertyName]['Q:options'] || !$parent.schema.properties[propertyName]['Q:options'].hideInEditor) && getType($parent.schema.properties[propertyName]) !== 'object' && getType($parent.schema.properties[propertyName]) !== 'array'"
       schema.bind="$parent.schema.properties[propertyName]"
       data.two-way="$parent.data[propertyName]"
       change.bind="$parent.change"
