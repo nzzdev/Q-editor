@@ -50,6 +50,7 @@ System.config({
     "leaflet": "github:Leaflet/Leaflet@1.3.1",
     "leaflet-geocoder-mapzen": "npm:leaflet-geocoder-mapzen@1.8.0",
     "leaflet-search": "npm:leaflet-search@2.3.7",
+    "mixin-deep": "npm:mixin-deep@2.0.0",
     "moment": "npm:moment@2.22.0",
     "set-value": "npm:set-value@3.0.0",
     "text": "github:systemjs/plugin-text@0.0.8",
