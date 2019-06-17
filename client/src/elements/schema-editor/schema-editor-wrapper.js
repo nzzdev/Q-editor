@@ -3,6 +3,9 @@ import { getType } from "./helpers";
 import NotificationChecker from "resources/checkers/NotificationChecker.js";
 import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
 
+import { resolveDynamicSchema } from "resources/schemaEditorDecorators.js";
+
+@resolveDynamicSchema()
 @inject(NotificationChecker, AvailabilityChecker, Element)
 export class SchemaEditorWrapper {
   @bindable
@@ -33,8 +36,7 @@ export class SchemaEditorWrapper {
     // Clear visible notification if previous notification was of type Required
     if (
       this.visibleNotification &&
-      this.visibleNotification.message.title ===
-      "notifications.required.title"
+      this.visibleNotification.message.title === "notifications.required.title"
     ) {
       this.visibleNotification = "";
     }
