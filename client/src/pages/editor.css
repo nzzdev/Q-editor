@@ -40,7 +40,6 @@
   font-size: var(--q-h4-size) !important;
   font-weight: var(--q-h4-weight) !important;
   color: var(--q-text-color);
-  margin-bottom: var(--q-space-base);
 }
 
 .editor__options .schema-editor-input {
