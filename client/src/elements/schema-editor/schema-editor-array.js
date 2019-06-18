@@ -18,9 +18,7 @@ export class SchemaEditorArray {
   // these are the defaults
   options = {
     expandable: false,
-    layout: {
-      compact: false
-    },
+    layout: "default",
     sortable: true
   };
 
