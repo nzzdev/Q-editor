@@ -222,7 +222,10 @@ export class SchemaEditorArray {
         for (const match of variableMatches) {
           entryLabel = entryLabel.replace(
             match,
-            this.getEntryLabel(entry, match.replace("${", "").replace("}", ""))
+            this.getEntryLabel(
+              entry,
+              match.replace("${", "").replace("}", "")
+            ) || ""
           );
         }
         return entryLabel;
