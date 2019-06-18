@@ -1,12 +1,14 @@
 import { bindable, inject } from "aurelia-framework";
+import { LogManager } from "aurelia-framework";
 import { getType } from "./helpers";
+import mixinDeep from "mixin-deep";
 import NotificationChecker from "resources/checkers/NotificationChecker.js";
 import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
+import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 
-import { resolveDynamicSchema } from "resources/schemaEditorDecorators.js";
+const log = LogManager.getLogger("Q");
 
-@resolveDynamicSchema()
-@inject(NotificationChecker, AvailabilityChecker, Element)
+@inject(NotificationChecker, AvailabilityChecker, ToolEndpointChecker, Element)
 export class SchemaEditorWrapper {
   @bindable
   schema;
@@ -25,9 +27,15 @@ export class SchemaEditorWrapper {
 
   options = {};
 
-  constructor(notificationChecker, availabilityChecker, element) {
+  constructor(
+    notificationChecker,
+    availabilityChecker,
+    toolEndpointChecker,
+    element
+  ) {
     this.notificationChecker = notificationChecker;
     this.availabilityChecker = availabilityChecker;
+    this.toolEndpointChecker = toolEndpointChecker;
     this.element = element;
     this.getType = getType;
   }
@@ -46,8 +54,23 @@ export class SchemaEditorWrapper {
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
+    // handle dynamicSchema
+    if (this.options.dynamicSchema) {
+      if (this.options.dynamicSchema.type !== "ToolEndpoint") {
+        throw new Error(
+          `${
+            this.options.dynamicSchema.type
+          } is not implemented as dynamicSchema type`
+        );
+      }
+      this.applyDynamicSchema();
+      this.reevaluateDynamicSchemaCallback = this.applyDynamicSchema.bind(this);
+      this.toolEndpointChecker.registerReevaluateCallback(
+        this.reevaluateDynamicSchemaCallback
+      );
+    }
 
-    // if this has notificationChecks
+    // handle notificationChecks
     if (Array.isArray(this.options.notificationChecks)) {
       this.applyNotifications();
       this.reevaluateNotificationsCallback = this.applyNotifications.bind(this);
@@ -56,7 +79,7 @@ export class SchemaEditorWrapper {
       );
     }
 
-    // if this has availabilityChecks
+    // handle availabilityChecks
     if (Array.isArray(this.options.availabilityChecks)) {
       this.applyAvailability();
       this.reevaluateAvailabilityCallback = this.applyAvailability.bind(this);
@@ -127,6 +150,30 @@ export class SchemaEditorWrapper {
           this.element
         );
       }
+    }
+  }
+
+  async getDynamicSchema(dynamicSchema) {
+    try {
+      return await this.toolEndpointChecker.check(dynamicSchema.config);
+    } catch (e) {
+      throw new Error(
+        `failed to get dynamicSchema for ${JSON.stringify(schema)} ${e}`
+      );
+    }
+  }
+
+  async applyDynamicSchema() {
+    try {
+      const dynamicSchema = await this.getDynamicSchema(
+        this.options.dynamicSchema
+      );
+      this.schema = mixinDeep(this.schema, dynamicSchema);
+    } catch (e) {
+      log.error(
+        `Failed to assign dynamicSchema to schema, you need to figure out why this happened as this case is not handled in a nice way and could feel pretty weird.`,
+        e
+      );
     }
   }
 }
