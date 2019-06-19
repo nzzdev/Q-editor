@@ -121,6 +121,7 @@
       class="schema-editor-array__button schema-editor-array__add-button"
       repeat.for="arrayEntryOption of arrayEntryOptions"
       click.delegate="addElement(arrayEntryOption.schema)"
+      if.bind="schema.maxItems === undefined || schema.maxItems > data.length"
     >
       ${'editor.arrayEntryAdd' & t: arrayEntryOption}
     </button-primary>
