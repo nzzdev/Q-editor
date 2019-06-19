@@ -24,22 +24,6 @@ function sortNotificationsByPriority(a, b) {
   );
 }
 
-// This function transforms the existing check config to the new format
-// After all the tools adopted the new configuration format this is
-// not needed anymore
-function getConfig(notificationCheck) {
-  const check = JSON.parse(JSON.stringify(notificationCheck));
-  if (check.config) {
-    return check.config;
-  }
-  delete check.type;
-  delete check.priority;
-  log.info(
-    "DEPRECATION NOTICE: In Q editor 4.0 you will have to configure the notificationCheck with a config property. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
-  );
-  return check;
-}
-
 @inject(I18N, Container, CurrentItemProvider)
 export default class NotificationChecker {
   reevaluateCallbacks = [];
@@ -78,7 +62,7 @@ export default class NotificationChecker {
 
           // get the notification from the checker or null
           const notification = await checker.getNotification(
-            getConfig(notificationCheck)
+            notificationCheck.config
           );
 
           // a notification needs to have at least a message object
@@ -136,7 +120,7 @@ export default class NotificationChecker {
     } else if (error) {
       notification = {};
     } else if (notificationChecks) {
-      notification = await this.getNotification(getConfig(notificationChecks));
+      notification = await this.getNotification(notificationChecks.config);
     } else {
       notification.priority = {
         type: "low",

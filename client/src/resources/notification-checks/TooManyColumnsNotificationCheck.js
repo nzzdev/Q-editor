@@ -1,7 +1,5 @@
-import { inject, LogManager } from "aurelia-framework";
+import { inject } from "aurelia-framework";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
-
-const log = LogManager.getLogger("Q");
 
 @inject(CurrentItemProvider)
 export default class TooManyColumnsNotificationCheck {
@@ -11,12 +9,7 @@ export default class TooManyColumnsNotificationCheck {
 
   getNotification(config) {
     let item;
-    if (config.data) {
-      item = this.currentItemProvider.getCurrentItemByFields(config.data);
-      log.info(
-        "DEPRECATION NOTICE: In Q editor 4.0 you will have to rename data to fields. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
-      );
-    } else {
+    if (Array.isArray(config.fields) && config.fields.length > 0) {
       item = this.currentItemProvider.getCurrentItemByFields(config.fields);
     }
     if (item.data[0] && item.data[0].length > config.options.limit) {

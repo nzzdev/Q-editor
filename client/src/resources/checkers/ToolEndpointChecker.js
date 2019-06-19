@@ -1,8 +1,6 @@
-import { inject, LogManager } from "aurelia-framework";
+import { inject } from "aurelia-framework";
 import qEnv from "resources/qEnv.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
-
-const log = LogManager.getLogger("Q");
 
 @inject(CurrentItemProvider)
 export default class ToolEndpointChecker {
@@ -38,25 +36,7 @@ export default class ToolEndpointChecker {
       method: "GET"
     };
 
-    if (config.withData) {
-      options.method = "POST";
-      options.body = JSON.stringify(item);
-      log.info(
-        "DEPRECATION NOTICE: In Q editor 4.0 you will have to adopt declaring the needed properties in fields as withData will be depricated. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
-      );
-    } else if (Array.isArray(config.data) && config.data.length > 0) {
-      const dataForEndpoint = {
-        data: this.currentItemProvider.getCurrentItemByData(config.data)
-      };
-      options.method = "POST";
-      if (config.hasOwnProperty("options")) {
-        dataForEndpoint.options = config.options;
-      }
-      options.body = JSON.stringify(dataForEndpoint);
-      log.info(
-        "DEPRECATION NOTICE: In Q editor 4.0 you will have to rename data to fields. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
-      );
-    } else if (Array.isArray(config.fields) && config.fields.length > 0) {
+    if (Array.isArray(config.fields) && config.fields.length > 0) {
       const dataForEndpoint = {
         item: this.currentItemProvider.getCurrentItemByFields(config.fields)
       };
