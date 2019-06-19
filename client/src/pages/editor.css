@@ -58,6 +58,7 @@
 .editor__options schema-editor schema-editor-wrapper schema-editor-wrapper {
   border-bottom: 1px solid var(--q-color-gray-4);
   margin-bottom: calc(var(--q-space-base) * 2);
+  padding-bottom: var(--q-space-base);
 }
 
 .editor__options
@@ -67,6 +68,7 @@
   schema-editor-wrapper {
   border: none;
   margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .q-bar__back {

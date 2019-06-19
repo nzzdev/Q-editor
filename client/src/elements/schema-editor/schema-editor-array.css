@@ -27,6 +27,8 @@ schema-editor-array {
   .schema-editor-array__control {
   order: 1;
   margin-left: var(--q-space-base);
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .schema-editor-array__entry-container--expandable
