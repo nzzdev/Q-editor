@@ -1,0 +1,8 @@
+.schema-editor-object__header {
+  display: flex;
+  align-items: center;
+}
+
+.schema-editor-object__header__controls {
+  padding-right: var(--q-space-base);
+}

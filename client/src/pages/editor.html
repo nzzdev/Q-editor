@@ -8,17 +8,32 @@
       <button-secondary icon="back" icon-size="medium"></button-secondary>
     </a>
     <language-switcher slot="language-switcher"></language-switcher>
-    <tool-status-bar slot="tool-status-bar" item.bind="item" save-action.call="userSave()" last-saved-date.bind="lastSavedDate"></tool-status-bar>
+    <tool-status-bar
+      slot="tool-status-bar"
+      item.bind="item"
+      save-action.call="userSave()"
+      last-saved-date.bind="lastSavedDate"
+    ></tool-status-bar>
   </q-bar>
   <main>
     <div class="editor">
       <section>
         <form ref="form" class="q-form" validate>
-          <schema-editor id="schema-editor--main" schema.bind="schema" data.bind="item.conf" change.call="handleChange()" notifications.bind="editorNotifications"
-            show-notifications.bind="true">
+          <schema-editor
+            id="schema-editor--main"
+            schema.bind="schema"
+            data.bind="item.conf"
+            change.call="handleChange()"
+            notifications.bind="editorNotifications"
+            show-notifications.bind="true"
+          >
             <h2>${ 'editor.title' & t }</h2>
           </schema-editor>
-          <button ref="formSubmitButton" type="submit" style="display: none;"></button>
+          <button
+            ref="formSubmitButton"
+            type="submit"
+            style="display: none;"
+          ></button>
         </form>
       </section>
       <section class="editor__preview-container">
@@ -26,23 +41,38 @@
         <div class="editor__preview">
           <div class="editor__options" if.bind="optionsSchema">
             <form ref="optionsForm" class="q-form" validate>
-              <schema-editor schema.bind="optionsSchema" data.bind="item.conf.options" change.call="handleChange()" notifications.bind="optionsNotifications"
-                show-notifications.bind="false">
-                <h6>${optionsSchema.title || 'Optionen'}</h6>
+              <schema-editor
+                schema.bind="optionsSchema"
+                data.bind="item.conf.options"
+                change.call="handleChange()"
+                notifications.bind="optionsNotifications"
+                show-notifications.bind="false"
+              >
+                <h6 if.bind="optionsSchema.title">${optionsSchema.title}</h6>
               </schema-editor>
-              <button ref="optionsFormSubmitButton" type="submit" style="display: none;"></button>
+              <button
+                ref="optionsFormSubmitButton"
+                type="submit"
+                style="display: none;"
+              ></button>
             </form>
           </div>
           <item-preview data.bind="previewData">
             <div slot="notifications">
-              <notification repeat.for="notification of optionsNotifications" notification.bind="notification"></notification>
+              <notification
+                repeat.for="notification of optionsNotifications"
+                notification.bind="notification"
+              ></notification>
             </div>
           </item-preview>
         </div>
       </section>
       <section>
         <h2>${ 'metaEditor.title' & t }</h2>
-        <meta-editor data.bind="item.conf" change.call="handleChange()"></meta-editor>
+        <meta-editor
+          data.bind="item.conf"
+          change.call="handleChange()"
+        ></meta-editor>
       </section>
     </div>
   </main>

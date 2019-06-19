@@ -15,8 +15,11 @@ export class SchemaEditorArray {
 
   arrayEntryOptions = [];
 
+  // these are the defaults
   options = {
-    expandable: false
+    expandable: false,
+    layout: "default",
+    sortable: true
   };
 
   collapsedStates = {};
@@ -71,6 +74,9 @@ export class SchemaEditorArray {
     if (this.data === undefined) {
       this.data = [];
       this.dataItemsSchemas = [];
+    }
+    if (!Array.isArray(this.dataItemsSchemas)) {
+      this.dataChanged();
     }
     const entry = this.objectFromSchemaGenerator.generateFromSchema(schema);
 
@@ -204,6 +210,27 @@ export class SchemaEditorArray {
           this.options.expandable.itemLabelProperty
         );
       }
+
+      if (this.options.expandable.itemLabelTemplate) {
+        const variableMatches = this.options.expandable.itemLabelTemplate.match(
+          /\${[a-zA-Z.]*}/gm
+        );
+        if (variableMatches === null) {
+          return this.options.expandable.itemLabelTemplate;
+        }
+        let entryLabel = this.options.expandable.itemLabelTemplate;
+        for (const match of variableMatches) {
+          entryLabel = entryLabel.replace(
+            match,
+            this.getEntryLabel(
+              entry,
+              match.replace("${", "").replace("}", "")
+            ) || ""
+          );
+        }
+        return entryLabel;
+      }
+
       return undefined;
     });
   }
