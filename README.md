@@ -281,7 +281,38 @@ There are three types of availability-checks:
 }
 ```
 
-#### Dynamic Enums
+#### Dynamic Schema
+
+Dynamic Schema allows you to alter the schema for a specific property based on dynamic data. This is for example used in the charts tool to change the maxItems of an array based on the data
+
+```json
+"highlightDataSeries": {
+  "title": "Hervorhebungen von Datenreihen",
+  "type": "array",
+  "Q:options": {
+    "dynamicSchema": {
+      "type": "ToolEndpoint",
+      "config": {
+        "endpoint": "dynamic-schema/highlighDataSeries",
+        "fields": ["data"]
+      }
+    }
+  }
+}
+```
+
+The endpoint in the tool returns JSON like this:
+
+```javascript
+{
+  maxItems: item.data[0].length - 2; // the number of data series - 1
+}
+```
+
+This will result in the maxItems property set in the `highlightDataSeries` object. You can use this feature to set any properties in the schema. Whatever you return from the endpoint will be deep merged with the existing schema.
+Use this feature to implement the deprecated functionality from `dynamicEnum`.
+
+#### Dynamic Enums (DEPRECATED, will be removed in Q-editor 5.0)
 
 Dynamic Enums allow to create a selection element (select menu, radio button) based on dynamic data. This is for example used in the charts tool to select a column that should be highlighted. The titles in the select menu are based on the data entered by the user.
 
