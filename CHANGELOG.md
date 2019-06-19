@@ -1,3 +1,11 @@
+# 4.0.0 (xx.xx.2019)
+
+- breaking: The support for the deprecated config style for AvailabilityChecks and NotificationChecks is removed. All config needs to follow the new style according to the docs in README
+- feature: dynamicSchema is a new property in `Q:config` in the JSON schema for schema-editor. It allows to dynamically alter the schema based on data. See README for details.
+- feature: schema-editor-object schemas support `expandable: true` in `Q:options` resulting in the object property inputs being hidden at first, expandable by a button (as is already supported for array entries)
+- feature: visual hierarchy is improved in the options pane
+- deprecated: `dynamicEnum` is deprecated and will be removed in v5. Use the new `dynamicSchema` to implement the same functionality.
+
 # 3.8.2 (22.01.2019)
 
 - fix: preview container doesn't grow in height across it's container anymore
