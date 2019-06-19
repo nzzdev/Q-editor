@@ -37,10 +37,9 @@
   display: block;
   margin: calc(var(--q-space-base)) 0;
 
-  font-size: var(--q-h4-size);
-  font-weight: var(--q-h4-weight);
+  font-size: var(--q-h4-size) !important;
+  font-weight: var(--q-h4-weight) !important;
   color: var(--q-text-color);
-  margin-bottom: var(--q-space-base);
 }
 
 .editor__options .schema-editor-input {
@@ -59,6 +58,7 @@
 .editor__options schema-editor schema-editor-wrapper schema-editor-wrapper {
   border-bottom: 1px solid var(--q-color-gray-4);
   margin-bottom: calc(var(--q-space-base) * 2);
+  padding-bottom: var(--q-space-base);
 }
 
 .editor__options
@@ -68,6 +68,7 @@
   schema-editor-wrapper {
   border: none;
   margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .q-bar__back {
