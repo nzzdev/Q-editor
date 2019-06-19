@@ -1,5 +1,8 @@
 import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
 import { Container } from "aurelia-dependency-injection";
+import { LogManager } from "aurelia-framework";
+
+const log = LogManager.getLogger("Q");
 
 export function resolveDynamicEnum() {
   return function(target) {
@@ -69,6 +72,10 @@ export function resolveDynamicEnum() {
       ) {
         return;
       }
+
+      log.info(
+        "DEPRECATION NOTICE: In Q editor 5.0 dynamicEnum support will be removed. Use dynamicSchema to implement to same functionality. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details."
+      );
 
       reevaluateCallbackId = toolEndpointChecker.registerReevaluateCallback(
         async () => {
