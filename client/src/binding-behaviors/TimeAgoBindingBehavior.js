@@ -1,14 +1,11 @@
 import { inject } from "aurelia-framework";
 import { bindingBehavior, ValueConverter } from "aurelia-binding";
 import { SignalBindingBehavior } from "aurelia-templating-resources";
-import { RelativeTime, I18N } from "aurelia-i18n";
 
 @bindingBehavior("timeAgo")
-@inject(RelativeTime, I18N, SignalBindingBehavior)
+@inject(SignalBindingBehavior)
 export class TimeAgoBindingBehavior {
-  constructor(relativeTime, i18n, signalBindingBehavior) {
-    this.relativeTime = relativeTime;
-    this.i18n = i18n;
+  constructor(signalBindingBehavior) {
     this.signalBindingBehavior = signalBindingBehavior;
   }
 
