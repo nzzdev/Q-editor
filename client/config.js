@@ -14,7 +14,7 @@ System.config({
     "aurelia-binding": "npm:aurelia-binding@2.3.1",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@2.3.3",
     "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.4.2",
-    "aurelia-dialog": "npm:aurelia-dialog@2.0.0-rc.6",
+    "aurelia-dialog": "npm:aurelia-dialog@1.1.0",
     "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.3",
     "aurelia-fetch-client": "npm:aurelia-fetch-client@1.8.2",
     "aurelia-framework": "npm:aurelia-framework@1.3.1",
@@ -159,10 +159,8 @@ System.config({
       "aurelia-metadata": "npm:aurelia-metadata@1.0.6",
       "aurelia-pal": "npm:aurelia-pal@1.8.2"
     },
-    "npm:aurelia-dialog@2.0.0-rc.6": {
-      "aurelia-binding": "npm:aurelia-binding@2.3.1",
+    "npm:aurelia-dialog@1.1.0": {
       "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.4.2",
-      "aurelia-framework": "npm:aurelia-framework@1.3.1",
       "aurelia-metadata": "npm:aurelia-metadata@1.0.6",
       "aurelia-pal": "npm:aurelia-pal@1.8.2",
       "aurelia-templating": "npm:aurelia-templating@1.10.2"
