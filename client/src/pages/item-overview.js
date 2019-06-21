@@ -8,6 +8,7 @@ import ToolsInfo from "resources/ToolsInfo.js";
 import qEnv from "resources/qEnv.js";
 import ItemActionController from "resources/ItemActionController";
 import QConfig from "resources/QConfig.js";
+import User from "resources/User.js";
 
 @inject(
   Notification,
@@ -16,7 +17,8 @@ import QConfig from "resources/QConfig.js";
   ItemStore,
   ToolsInfo,
   ItemActionController,
-  QConfig
+  QConfig,
+  User
 )
 export class ItemOverview {
   currentTarget;
@@ -28,7 +30,8 @@ export class ItemOverview {
     itemStore,
     toolsInfo,
     itemActionController,
-    qConfig
+    qConfig,
+    user
   ) {
     this.notification = notification;
     this.httpClient = httpClient;
@@ -37,6 +40,7 @@ export class ItemOverview {
     this.toolsInfo = toolsInfo;
     this.itemActionController = itemActionController;
     this.qConfig = qConfig;
+    this.user = user;
   }
 
   async attached() {
