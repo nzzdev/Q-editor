@@ -42,7 +42,7 @@ item-preview {
 .item-preview__notification {
   width: 180px;
   margin-top: calc(var(--q-space-base) / 2);
-  margin-bottom: calc(var(--q-space-base) / 2);
+  margin-right: calc(var(--q-space-base) / 2);
 }
 
 .item-preview__notification notification {
