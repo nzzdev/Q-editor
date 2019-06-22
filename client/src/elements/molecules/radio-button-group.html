@@ -5,9 +5,8 @@
       type="radio"
       name.bind="name"
       id="button-${name}-${option.value}"
-      value.bind="option.value"
+      model.bind="option.value"
       checked.bind="value"
-      matcher.bind="valueMatcher"
       input.delegate="change"
     />
     <label
