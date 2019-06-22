@@ -54,8 +54,8 @@ export class SchemaEditorWrapper {
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
-    // handle dynamicSchema
-    if (this.options.dynamicSchema) {
+    // dynamicSchema is only handled once, it's not possible to overwrite the dynamicSchema using dynamicSchema :-)
+    if (this.options.dynamicSchema && !this.dynamicSchemaApplied) {
       if (this.options.dynamicSchema.type !== "ToolEndpoint") {
         throw new Error(
           `${
@@ -63,6 +63,7 @@ export class SchemaEditorWrapper {
           } is not implemented as dynamicSchema type`
         );
       }
+      this.dynamicSchemaApplied = true;
       this.applyDynamicSchema();
       this.reevaluateDynamicSchemaCallback = this.applyDynamicSchema.bind(this);
       this.toolEndpointChecker.registerReevaluateCallback(
@@ -168,7 +169,8 @@ export class SchemaEditorWrapper {
       const dynamicSchema = await this.getDynamicSchema(
         this.options.dynamicSchema
       );
-      this.schema = mixinDeep(this.schema, dynamicSchema);
+      // make a copy of the schema so the schemaChangedCallbacks get applied
+      this.schema = Object.assign({}, mixinDeep(this.schema, dynamicSchema));
     } catch (e) {
       log.error(
         `Failed to assign dynamicSchema to schema, you need to figure out why this happened as this case is not handled in a nice way and could feel pretty weird.`,
