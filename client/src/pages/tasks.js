@@ -1,11 +1,13 @@
 import { inject } from "aurelia-framework";
 import { HttpClient } from "aurelia-fetch-client";
 import qEnv from "resources/qEnv.js";
+import User from "resources/User.js";
 
-@inject(HttpClient)
+@inject(HttpClient, User)
 export default class Tasks {
-  constructor(httpClient) {
+  constructor(httpClient, user) {
     this.httpClient = httpClient;
+    this.user = user;
   }
 
   tasks = [];
