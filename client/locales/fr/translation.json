@@ -19,10 +19,11 @@
     "only": "seulement",
     "graphic": "graphique",
     "graphic_plural": "graphiques",
-    "browserSupportMessage": "Q est optimisé pour Chrome et peut ne pas fonctionner dans votre navigateur.",
     "changesSaved": "Changements sauvegardés.",
     "failedToSaveChanges": "Impossible de sauvegarder les changements.",
     "loginFailed": "Votre identifiant ou mot de passe est incorrect.",
+    "loginTimeout": "Le serveur met trop de temps à répondre. Nous y travaillons. Veuillez réessayer plus tard.",
+    "genericServerError": " Il y a un problème sur le serveur. Nous y travaillons. Veuillez réessayer plus tard.",
     "serverConnectionFailed": "Impossible de se connecter au serveur.",
     "articlesWithThisGraphic": "Articles avec ce graphique",
     "loadMore": "Charger plus"

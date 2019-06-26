@@ -1,5 +1,4 @@
 import { inject } from "aurelia-framework";
-import { RelativeTime } from "aurelia-i18n";
 import { Notification } from "aurelia-notification";
 import { HttpClient } from "aurelia-fetch-client";
 import { Router } from "aurelia-router";
@@ -9,31 +8,31 @@ import ToolsInfo from "resources/ToolsInfo.js";
 import qEnv from "resources/qEnv.js";
 import ItemActionController from "resources/ItemActionController";
 import QConfig from "resources/QConfig.js";
+import User from "resources/User.js";
 
 @inject(
-  RelativeTime,
   Notification,
   HttpClient,
   Router,
   ItemStore,
   ToolsInfo,
   ItemActionController,
-  QConfig
+  QConfig,
+  User
 )
 export class ItemOverview {
   currentTarget;
 
   constructor(
-    relativeTime,
     notification,
     httpClient,
     router,
     itemStore,
     toolsInfo,
     itemActionController,
-    qConfig
+    qConfig,
+    user
   ) {
-    this.relativeTime = relativeTime;
     this.notification = notification;
     this.httpClient = httpClient;
     this.router = router;
@@ -41,6 +40,7 @@ export class ItemOverview {
     this.toolsInfo = toolsInfo;
     this.itemActionController = itemActionController;
     this.qConfig = qConfig;
+    this.user = user;
   }
 
   async attached() {

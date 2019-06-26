@@ -19,10 +19,11 @@
     "only": "only",
     "graphic": "graphic",
     "graphic_plural": "graphics",
-    "browserSupportMessage": "Q is optimised for Chrome and may does not work in your browser.",
     "changesSaved": "Changes saved.",
     "failedToSaveChanges": "Failed to save changes.",
     "loginFailed": "Your username or password is not correct.",
+    "loginTimeout": "Server takes too long to reply. We're working on it. Please try again later.",
+    "genericServerError": "A problem occured on the server. We're working on it. Please try again later",
     "serverConnectionFailed": "Failed to connect to server.",
     "articlesWithThisGraphic": "Articles with this graphic",
     "loadMore": "Load more"

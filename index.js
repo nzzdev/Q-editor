@@ -1,8 +1,7 @@
-const Hapi = require("hapi");
-const Boom = require("boom");
+const Hapi = require("@hapi/hapi");
 const routes = require("./routes/routes.js");
 
-const plugins = [require("inert")];
+const plugins = [require("@hapi/inert")];
 
 let server;
 

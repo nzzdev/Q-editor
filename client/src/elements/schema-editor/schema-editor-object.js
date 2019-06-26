@@ -15,6 +15,12 @@ export class SchemaEditorObject {
   @bindable
   showNotifications;
 
+  options = {
+    expandable: false
+  };
+
+  collapsedState = "collapsed";
+
   constructor() {
     this.getType = getType;
     this.isRequired = isRequired;
@@ -28,6 +34,17 @@ export class SchemaEditorObject {
     if (this.data === undefined) {
       this.data = {};
     }
+    this.applyOptions();
+  }
+
+  schemaChanged() {
+    this.applyOptions();
+  }
+
+  applyOptions() {
+    if (this.schema.hasOwnProperty("Q:options")) {
+      this.options = Object.assign(this.options, this.schema["Q:options"]);
+    }
   }
 
   isCompact(schema) {
@@ -35,5 +52,13 @@ export class SchemaEditorObject {
       return true;
     }
     return false;
+  }
+
+  expand() {
+    this.collapsedState = "expanded";
+  }
+
+  collapse() {
+    this.collapsedState = "collapsed";
   }
 }

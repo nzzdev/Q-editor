@@ -17,6 +17,7 @@ import NotificationChecker from "resources/checkers/NotificationChecker.js";
 import ToolsInfo from "resources/ToolsInfo.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
+import User from "resources/User.js";
 
 function getEditorSchema(fullSchema) {
   if (fullSchema.properties.hasOwnProperty("options")) {
@@ -47,7 +48,8 @@ function getOptionsSchema(fullSchema) {
   DialogService,
   I18N,
   EventAggregator,
-  TaskQueue
+  TaskQueue,
+  User
 )
 export class Editor {
   constructor(
@@ -62,7 +64,8 @@ export class Editor {
     dialogService,
     i18n,
     eventAggregator,
-    taskQueue
+    taskQueue,
+    user
   ) {
     this.itemStore = itemStore;
     this.notification = notification;
@@ -76,6 +79,7 @@ export class Editor {
     this.i18n = i18n;
     this.eventAggregator = eventAggregator;
     this.taskQueue = taskQueue;
+    this.user = user;
 
     // used to hold all the notifications appearing in
     // the schema-editor tree

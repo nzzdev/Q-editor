@@ -18,10 +18,26 @@ schema-editor-array {
   flex-wrap: wrap;
 }
 
+.schema-editor-array__entry-container--compact {
+  display: flex;
+  flex-direction: row;
+}
+
+.schema-editor-array__entry-container--compact:not(.schema-editor-array__entry-container--expandable)
+  .schema-editor-array__control {
+  order: 1;
+  margin-left: var(--q-space-base);
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.schema-editor-array__entry-container--expandable
+  .schema-editor-array__control {
+  width: 100%;
+}
+
 .schema-editor-array__control {
-  margin-top: calc(var(--q-space-base) * 2);
-  padding-top: calc(var(--q-space-base) * 2);
-  border-top: 1px solid var(--q-color-gray-4);
+  margin-top: calc(var(--q-space-base) * 3);
 }
 
 .schema-editor-array__collapsecontrol {
@@ -42,6 +58,13 @@ schema-editor-array {
   flex-grow: 1;
   z-index: 1; /* stay below collapsecontrol */
   margin-top: var(--q-space-base);
+}
+
+/* if the array entry is expandable, we add intentation to right-align it with the expand/collapse button */
+.schema-editor-array__entry
+  > .schema-editor-array__entry-container--expandable
+  > schema-editor-wrapper {
+  padding-left: calc(var(--q-space-base) * 4);
 }
 
 .schema-editor-array__button-container {

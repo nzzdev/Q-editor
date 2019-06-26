@@ -1,14 +1,12 @@
 <template class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
-  <label>
-    ${schema["title"] & toolT}
-    <select value.bind="data" change.delegate="change()" if.bind="selectType === 'select'">
-      <option repeat.for="option of schema.enum" model.bind="option">${optionLabels[$index] & toolT}</option>
-    </select>
-    <div if.bind="selectType === 'radio'">
-      <div repeat.for="option of schema.enum" class="q-form__radio">
-        <input id="option-${option}" type="radio" name.bind="$parent.schema.title" model.bind="option" checked.bind="$parent.data" change.delegate="change()"></input>
-        <label for="option-${option}">${optionLabels[$index] & toolT}</label>
-      </div>
+  <label class="${selectType === 'radio' ? 'input-group-title' : ''}">${schema["title"] & toolT}</label>
+  <select value.bind="data" change.delegate="change()" if.bind="selectType === 'select'">
+    <option repeat.for="option of schema.enum" model.bind="option">${optionLabels[$index] & toolT}</option>
+  </select>
+  <div if.bind="selectType === 'radio'">
+    <div repeat.for="option of schema.enum" class="q-form__radio">
+      <input id="option-${option}" type="radio" name.bind="$parent.schema.title" model.bind="option" checked.bind="$parent.data" change.delegate="change()"></input>
+      <label for="option-${option}">${optionLabels[$index] & toolT}</label>
     </div>
-  </label>
+  </div>
 </template>

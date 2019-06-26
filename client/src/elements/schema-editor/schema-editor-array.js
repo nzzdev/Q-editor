@@ -15,8 +15,11 @@ export class SchemaEditorArray {
 
   arrayEntryOptions = [];
 
+  // these are the defaults
   options = {
-    expandable: false
+    expandable: false,
+    layout: "default",
+    sortable: true
   };
 
   collapsedStates = {};
@@ -71,6 +74,9 @@ export class SchemaEditorArray {
     if (this.data === undefined) {
       this.data = [];
       this.dataItemsSchemas = [];
+    }
+    if (!Array.isArray(this.dataItemsSchemas)) {
+      this.dataChanged();
     }
     const entry = this.objectFromSchemaGenerator.generateFromSchema(schema);
 
@@ -148,7 +154,12 @@ export class SchemaEditorArray {
     // if we have a type in the schema in items, we use this as a schema directly
     if (this.schema.items && this.schema.items.type) {
       let arrayEntryLabel = "";
-      if (this.schema.items.title) {
+      if (
+        this.schema.items.hasOwnProperty("Q:options") &&
+        this.schema.items["Q:options"].buttonLabel
+      ) {
+        arrayEntryLabel = this.schema.items["Q:options"].buttonLabel;
+      } else if (this.schema.items.title) {
         arrayEntryLabel = this.schema.items.title;
       } else if (this.schema.title) {
         arrayEntryLabel = this.schema.title;
@@ -163,9 +174,18 @@ export class SchemaEditorArray {
     ) {
       for (let schema of this.getPossibleItemSchemas()) {
         if (await this.isItemWithSchemaAvailable(schema)) {
+          let arrayEntryLabel = "";
+          if (
+            schema.hasOwnProperty("Q:options") &&
+            this.schema["Q:options"].buttonLabel
+          ) {
+            arrayEntryLabel = this.schema["Q:options"].buttonLabel;
+          } else {
+            arrayEntryLabel = schema.title;
+          }
           this.arrayEntryOptions.push({
             schema: schema,
-            arrayEntryLabel: schema.title
+            arrayEntryLabel: arrayEntryLabel
           });
         }
       }
@@ -204,6 +224,27 @@ export class SchemaEditorArray {
           this.options.expandable.itemLabelProperty
         );
       }
+
+      if (this.options.expandable.itemLabelTemplate) {
+        const variableMatches = this.options.expandable.itemLabelTemplate.match(
+          /\${[a-zA-Z.]*}/gm
+        );
+        if (variableMatches === null) {
+          return this.options.expandable.itemLabelTemplate;
+        }
+        let entryLabel = this.options.expandable.itemLabelTemplate;
+        for (const match of variableMatches) {
+          entryLabel = entryLabel.replace(
+            match,
+            this.getEntryLabel(
+              entry,
+              match.replace("${", "").replace("}", "")
+            ) || ""
+          );
+        }
+        return entryLabel;
+      }
+
       return undefined;
     });
   }

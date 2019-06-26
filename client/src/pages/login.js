@@ -21,8 +21,6 @@ export class Login {
     this.user = user;
     this.i18n = i18n;
     this.router = router;
-    this.isChrome =
-      /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
   }
 
   async canActivate() {
@@ -49,7 +47,13 @@ export class Login {
       this.router.navigateToRoute("index");
     } catch (e) {
       log.error(e);
-      this.loginError = this.i18n.tr("general.loginFailed");
+      if (e.status === 401) {
+        this.loginError = this.i18n.tr("general.loginFailed");
+      } else if (e.status === 504) {
+        this.loginError = this.i18n.tr("general.loginTimeout");
+      } else {
+        this.loginError = this.i18n.tr("general.genericServerError");
+      }
     }
   }
 }

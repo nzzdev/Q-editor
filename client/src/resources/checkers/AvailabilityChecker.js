@@ -1,22 +1,5 @@
-import { inject, LogManager } from "aurelia-framework";
+import { inject } from "aurelia-framework";
 import { Container } from "aurelia-dependency-injection";
-
-const log = LogManager.getLogger("Q");
-
-// This function transforms the existing check config to the new format
-// After all the tools adopted the new configuration format this is
-// not needed anymore
-function getConfig(availabilityCheck) {
-  const check = JSON.parse(JSON.stringify(availabilityCheck));
-  if (check.config) {
-    return check.config;
-  }
-  delete check.type;
-  log.info(
-    "DEPRECATION NOTICE: In Q editor 4.0 you will have to configure the availabilityCheck with a config property. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details"
-  );
-  return check;
-}
 
 @inject(Container)
 export default class AvailabilityChecker {
@@ -47,23 +30,18 @@ export default class AvailabilityChecker {
   async getAvailabilityInfo(availabilityChecks) {
     try {
       for (let availabilityCheck of availabilityChecks) {
-        // The getConfig function transforms the existing check config to the new format
-        // After all the tools adopted the new configuration format this is
-        // not needed anymore
-        const availabilityCheckConfig = getConfig(availabilityCheck);
-
         let checker = this.diContainer.get(
           availabilityCheck.type + "AvailabilityCheck"
         );
 
-        const available = await checker.isAvailable(availabilityCheckConfig);
+        const available = await checker.isAvailable(availabilityCheck.config);
         if (!available) {
           const availabilityInfo = {
             isAvailable: false
           };
-          if (availabilityCheckConfig.hasOwnProperty("unavailableMessage")) {
+          if (availabilityCheck.config.hasOwnProperty("unavailableMessage")) {
             availabilityInfo.unavailableMessage =
-              availabilityCheckConfig.unavailableMessage;
+              availabilityCheck.config.unavailableMessage;
           }
           return availabilityInfo;
         }

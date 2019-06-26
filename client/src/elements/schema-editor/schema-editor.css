@@ -23,17 +23,29 @@ schema-editor fieldset fieldset.compact > schema-editor-wrapper {
   margin-top: var(--q-space-base);
 }
 
-schema-editor-wrapper legend {
+.schema-editor-input {
+  display: block;
+  margin-bottom: calc(var(--q-space-base) * 2);
+}
+
+.input-group-title {
+  margin: calc(var(--q-space-base) * 2) 0 var(--q-space-base) 0;
+}
+
+schema-editor-wrapper .input-group-title {
   font-size: var(--q-h2-size);
   font-weight: var(--q-h2-weight);
 }
 
-schema-editor-wrapper schema-editor-wrapper legend {
+schema-editor-wrapper schema-editor-wrapper .input-group-title {
   font-size: var(--q-h3-size);
   font-weight: var(--q-h3-weight);
 }
 
-schema-editor-wrapper schema-editor-wrapper schema-editor-wrapper legend {
+schema-editor-wrapper
+  schema-editor-wrapper
+  schema-editor-wrapper
+  .input-group-title {
   font-size: var(--q-h4-size);
   font-weight: var(--q-h4-weight);
 }
@@ -42,7 +54,7 @@ schema-editor-wrapper
   schema-editor-wrapper
   schema-editor-wrapper
   schema-editor-wrapper
-  legend {
+  .input-group-title {
   font-size: var(--q-h5-size);
   font-weight: var(--q-h5-weight);
 }
@@ -52,12 +64,7 @@ schema-editor-wrapper
   schema-editor-wrapper
   schema-editor-wrapper
   schema-editor-wrapper
-  legend {
+  .input-group-title {
   font-size: var(--q-h5-size);
   font-weight: var(--q-h5-weight);
-}
-
-.schema-editor-input {
-  display: block;
-  margin-bottom: calc(var(--q-space-base) * 2);
 }
