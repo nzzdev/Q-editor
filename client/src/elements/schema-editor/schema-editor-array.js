@@ -185,7 +185,7 @@ export class SchemaEditorArray {
           }
           this.arrayEntryOptions.push({
             schema: schema,
-            arrayEntryLabel: schema.title
+            arrayEntryLabel: arrayEntryLabel
           });
         }
       }
