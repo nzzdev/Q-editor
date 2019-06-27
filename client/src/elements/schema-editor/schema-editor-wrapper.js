@@ -54,8 +54,8 @@ export class SchemaEditorWrapper {
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
-    // dynamicSchema is only handled once, it's not possible to overwrite the dynamicSchema using dynamicSchema :-)
-    if (this.options.dynamicSchema && !this.dynamicSchemaApplied) {
+    // handle dynamicSchema
+    if (this.options.dynamicSchema && !this.reevaluateDynamicSchemaCallback) {
       if (this.options.dynamicSchema.type !== "ToolEndpoint") {
         throw new Error(
           `${
@@ -63,7 +63,6 @@ export class SchemaEditorWrapper {
           } is not implemented as dynamicSchema type`
         );
       }
-      this.dynamicSchemaApplied = true;
       this.applyDynamicSchema();
       this.reevaluateDynamicSchemaCallback = this.applyDynamicSchema.bind(this);
       this.toolEndpointChecker.registerReevaluateCallback(
@@ -72,7 +71,10 @@ export class SchemaEditorWrapper {
     }
 
     // handle notificationChecks
-    if (Array.isArray(this.options.notificationChecks)) {
+    if (
+      Array.isArray(this.options.notificationChecks) &&
+      !this.reevaluateAvailabilityCallback
+    ) {
       this.applyNotifications();
       this.reevaluateNotificationsCallback = this.applyNotifications.bind(this);
       this.notificationChecker.registerReevaluateCallback(
@@ -81,7 +83,10 @@ export class SchemaEditorWrapper {
     }
 
     // handle availabilityChecks
-    if (Array.isArray(this.options.availabilityChecks)) {
+    if (
+      Array.isArray(this.options.availabilityChecks) &&
+      !this.reevaluateAvailabilityCallback
+    ) {
       this.applyAvailability();
       this.reevaluateAvailabilityCallback = this.applyAvailability.bind(this);
       this.availabilityChecker.registerReevaluateCallback(
@@ -169,6 +174,24 @@ export class SchemaEditorWrapper {
       const dynamicSchema = await this.getDynamicSchema(
         this.options.dynamicSchema
       );
+      // these properties are not allowed in dynamicSchema, they would lead to problems
+      const forbiddenProperties = [
+        "notificationChecks",
+        "availabilityChecks",
+        "dynamicSchema"
+      ];
+      for (const forbiddenProperty of forbiddenProperties) {
+        if (
+          dynamicSchema["Q:options"] &&
+          dynamicSchema["Q:options"][forbiddenProperty]
+        ) {
+          log.error(
+            `It's not possible to add ${forbiddenProperty} using dynamicSchema`,
+            e
+          );
+          delete dynamicSchema["Q:options"][forbiddenProperty];
+        }
+      }
       // make a copy of the schema so the schemaChangedCallbacks get applied
       this.schema = Object.assign({}, mixinDeep(this.schema, dynamicSchema));
     } catch (e) {
