@@ -68,6 +68,7 @@ export function resolveDynamicEnum() {
 
       if (
         !this.schema.hasOwnProperty("Q:options") ||
+        !this.schema["Q:options"] ||
         !this.schema["Q:options"].hasOwnProperty("dynamicEnum")
       ) {
         return;
