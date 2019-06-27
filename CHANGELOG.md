@@ -1,3 +1,7 @@
+# 4.0.1 (27.06.2019)
+
+- fix: do not apply notificationChecks and availabilityChecks more than once, forbid them in dynamicSchema
+
 # 4.0.0 (26.06.2019)
 
 - breaking: The support for the deprecated config style for AvailabilityChecks and NotificationChecks is removed. All config needs to follow the new style according to the docs in README
