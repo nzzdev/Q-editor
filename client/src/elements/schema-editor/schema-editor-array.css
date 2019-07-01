@@ -21,6 +21,7 @@ schema-editor-array {
 .schema-editor-array__entry-container--compact {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 .schema-editor-array__entry-container--compact:not(.schema-editor-array__entry-container--expandable)
