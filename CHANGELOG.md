@@ -1,3 +1,8 @@
+# 4.0.2 (01.07.2019)
+
+- fix: show array entry add button if maxItems is defined but array is not yet defined
+- fix: show delete buttons next to form inputs in compact array layout
+
 # 4.0.1 (27.06.2019)
 
 - fix: do not apply notificationChecks and availabilityChecks more than once, forbid them in dynamicSchema
