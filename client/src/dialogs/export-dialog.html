@@ -1,0 +1,47 @@
+<template>
+  <require from="../styles/q-dialog.css"></require>
+  <require from="./export-dialog.css"></require>
+  <require from="elements/schema-editor/schema-editor"></require>
+
+  <div
+    class="q-dialog q-dialog--centered q-dialog--bottom-controls export-dialog"
+  >
+    <button-tertiary
+      class="q-dialog__close-button"
+      icon="close"
+      icon-size="medium"
+      click.delegate="controller.cancel()"
+    ></button-tertiary>
+    <div class="q-dialog__content">
+      <h1 class="q-dialog-title">
+        Grafik "${config.item.conf.title}" für Print herunterladen
+      </h1>
+      <form ref="form" class="q-form" validate>
+        <schema-editor
+          id="schema-editor--export"
+          schema.bind="schema"
+          data.bind="exportConf"
+          show-notifications.bind="false"
+          ,
+          change.bind="handleChange"
+        >
+          <h2>Optionen</h2>
+        </schema-editor>
+      </form>
+      <div>Grösse: 54mm x 78mm</div>
+      <div
+        style="background: lightgray; border: 1px solid darkgray; height: 400px;"
+      >
+        Vorschau
+      </div>
+    </div>
+    <div class="q-dialog__controls">
+      <button-secondary click.delegate="controller.cancel()"
+        >${config.cancelText}</button-secondary
+      >
+      <button-primary click.delegate="controller.ok()"
+        >${config.proceedText}</button-primary
+      >
+    </div>
+  </div>
+</template>

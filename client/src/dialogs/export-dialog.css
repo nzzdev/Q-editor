@@ -1,0 +1,7 @@
+.export-dialog schema-editor-select > div {
+  display: flex;
+}
+
+.export-dialog .q-form__radio {
+  margin-right: 8px;
+}

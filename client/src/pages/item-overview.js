@@ -2,6 +2,9 @@ import { inject } from "aurelia-framework";
 import { Notification } from "aurelia-notification";
 import { HttpClient } from "aurelia-fetch-client";
 import { Router } from "aurelia-router";
+import { DialogService } from "aurelia-dialog";
+
+import { ExportDialog } from "dialogs/export-dialog.js";
 
 import ItemStore from "resources/ItemStore.js";
 import ToolsInfo from "resources/ToolsInfo.js";
@@ -18,7 +21,8 @@ import User from "resources/User.js";
   ToolsInfo,
   ItemActionController,
   QConfig,
-  User
+  User,
+  DialogService
 )
 export class ItemOverview {
   currentTarget;
@@ -31,7 +35,8 @@ export class ItemOverview {
     toolsInfo,
     itemActionController,
     qConfig,
-    user
+    user,
+    dialogService
   ) {
     this.notification = notification;
     this.httpClient = httpClient;
@@ -41,6 +46,7 @@ export class ItemOverview {
     this.itemActionController = itemActionController;
     this.qConfig = qConfig;
     this.user = user;
+    this.dialogService = dialogService;
   }
 
   async attached() {
@@ -90,6 +96,22 @@ export class ItemOverview {
         return;
       }
       this.articlesWithItem = await response.json();
+    }
+  }
+
+  async exportWithModal() {
+    const openDialogResult = await this.dialogService.open({
+      viewModel: ExportDialog,
+      model: {
+        item: this.item,
+        proceedText: "herunterladen",
+        cancelText: "abbrechen"
+      }
+    });
+    const closeResult = await openDialogResult.closeResult;
+
+    if (closeResult.wasCancelled) {
+      return false;
     }
   }
 }
