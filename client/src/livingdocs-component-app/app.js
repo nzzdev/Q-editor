@@ -5,6 +5,7 @@ import QTargets from "resources/QTargets.js";
 import qEnv from "resources/qEnv.js";
 import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
+import QConfig from "resources/QConfig.js";
 
 const log = LogManager.getLogger("Q");
 
@@ -14,7 +15,8 @@ const log = LogManager.getLogger("Q");
   QTargets,
   ObjectFromSchemaGenerator,
   I18N,
-  CurrentItemProvider
+  CurrentItemProvider,
+  QConfig
 )
 export class App {
   constructor(
@@ -22,13 +24,15 @@ export class App {
     qTargets,
     objectFromSchemaGenerator,
     i18n,
-    currentItemProvider
+    currentItemProvider,
+    qConfig
   ) {
     this.itemStore = itemStore;
     this.qTargets = qTargets;
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
     this.i18n = i18n;
     this.currentItemProvider = currentItemProvider;
+    this.qConfig = qConfig;
     this.previewWidth = 290;
     this.displayOptionsSchema = {
       properties: {}
@@ -42,6 +46,7 @@ export class App {
     this.tools = await this.getTools();
     this.target = await this.getTarget();
     this.items = await this.getItems();
+    this.loadStylesheets();
     this.selectedItem = await this.getInitialSelectedItem();
     if (this.selectedItem) {
       await this.loadPreview();
@@ -199,7 +204,6 @@ export class App {
     if (!this.selectedItem.toolRuntimeConfig.displayOptions) {
       this.selectedItem.toolRuntimeConfig.displayOptions = await this.getDefaultDisplayOptions();
     }
-
     if (this.target) {
       this.renderingInfo = await this.getRenderingInfo();
     }
@@ -310,6 +314,38 @@ export class App {
       return renderingInfo;
     } catch (error) {
       log.error(error);
+    }
+  }
+
+  async loadStylesheets() {
+    // load any additional stylesheets defined for themeing or font-face loading as @font-face doesn't work within ShadowRoot (used for the preview)
+    try {
+      const stylesheets = await this.qConfig.get("stylesheets");
+      if (stylesheets && stylesheets.length) {
+        stylesheets
+          .map(stylesheet => {
+            if (!stylesheet.url && stylesheet.path) {
+              stylesheet.url = `${QServerBaseUrl}${stylesheet.path}`;
+            }
+            return stylesheet;
+          })
+          .map(stylesheet => {
+            if (stylesheet.url) {
+              let link = document.createElement("link");
+              link.type = "text/css";
+              link.rel = "stylesheet";
+              link.href = stylesheet.url;
+              document.head.appendChild(link);
+            } else if (stylesheet.content) {
+              let style = document.createElement("style");
+              style.type = "text/css";
+              style.appendChild(document.createTextNode(stylesheet.content));
+              document.head.appendChild(style);
+            }
+          });
+      }
+    } catch (e) {
+      // nevermind
     }
   }
 }
