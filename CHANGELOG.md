@@ -1,3 +1,8 @@
+# 4.0.3 (18.07.2019)
+
+- fix: load the additional editor stylesheets (used to load fonts needed for previews) in livingdocs-component.html to show a correct preview
+- fix: show the add element button in schema-editor-array if the array value is null
+
 # 4.0.2 (01.07.2019)
 
 - fix: show array entry add button if maxItems is defined but array is not yet defined
