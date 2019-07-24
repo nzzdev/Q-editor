@@ -12,7 +12,7 @@
   color: var(--q-text-light-color);
 }
 
-.q-form input,
+.q-form input:not(.autocomplete-control--search-input),
 .q-form textarea:not(.handsontableInput),
 .q-form select {
   font-family: Roboto, sans-serif;
@@ -28,7 +28,7 @@
   width: 100%;
 }
 
-.q-form input:valid {
+.q-form input:valid:not(.autocomplete-control--search-input) {
   border-color: var(--q-color-gray-3) !important;
 }
 
@@ -36,7 +36,7 @@
   border: solid 1px var(--q-color-error) !important;
 }
 
-.q-form input:focus,
+.q-form input:focus:not(.autocomplete-control--search-input),
 .q-form textarea:focus:not(.handsontableInput),
 .q-form select:focus {
   border-color: var(--q-color-gray-4);
@@ -45,13 +45,13 @@
 }
 
 .q-form .disabled,
-.q-form input:disabled,
+.q-form input:disabled:not(.autocomplete-control--search-input),
 .q-form textarea:disabled:not(.handsontableInput),
 .q-form select:disabled {
   opacity: 0.5;
 }
 
-.q-form input[type="text"],
+.q-form input[type="text"]:not(.autocomplete-control--search-input),
 .q-form input[type="url"],
 .q-form input[type="password"] {
   font-size: 14px;
