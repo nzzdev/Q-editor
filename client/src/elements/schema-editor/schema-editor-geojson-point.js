@@ -1,7 +1,7 @@
 import { bindable, inject, Loader } from "aurelia-framework";
 import QConfig from "resources/QConfig";
 import { isRequired } from "./helpers.js";
-import autocomplete from "@tarekraafat/autocomplete.js";
+import Autocomplete from "@tarekraafat/autocomplete.js";
 
 @inject(QConfig, Loader)
 export class SchemaEditorGeojsonPoint {
@@ -96,7 +96,7 @@ export class SchemaEditorGeojsonPoint {
       }
     });
 
-    this.autocomplete = new autocomplete({
+    this.autocomplete = new Autocomplete({
       data: {
         src: async () => {
           const query = document.querySelector(`#${this.autoCompleteInputId}`)
@@ -117,9 +117,8 @@ export class SchemaEditorGeojsonPoint {
                 properties: feature.properties
               };
             });
-          } else {
-            return [];
           }
+          return [];
         },
         key: ["label"],
         cache: false
