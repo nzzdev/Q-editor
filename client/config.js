@@ -8,6 +8,7 @@ System.config({
   },
 
   map: {
+    "@tarekraafat/autocomplete.js": "npm:@tarekraafat/autocomplete.js@6.1.0",
     "ajv": "npm:ajv@5.5.2",
     "array2d": "npm:array2d@0.0.5",
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.4",
@@ -38,7 +39,6 @@ System.config({
     "aurelia-templating-resources": "npm:aurelia-templating-resources@1.11.0",
     "aurelia-templating-router": "npm:aurelia-templating-router@1.4.0",
     "aurelia-testing": "npm:aurelia-testing@1.0.0",
-    "autocomplete.js": "npm:autocomplete.js@0.36.0",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "codemirror": "npm:codemirror@5.41.0",
@@ -332,10 +332,6 @@ System.config({
       "aurelia-pal": "npm:aurelia-pal@1.8.2",
       "aurelia-templating": "npm:aurelia-templating@1.10.2"
     },
-    "npm:autocomplete.js@0.36.0": {
-      "immediate": "npm:immediate@3.2.3",
-      "process": "github:jspm/nodelibs-process@0.1.2"
-    },
     "npm:babel-runtime@5.8.38": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
@@ -412,9 +408,6 @@ System.config({
       "i18next-xhr-backend": "npm:i18next-xhr-backend@1.5.1"
     },
     "npm:i18next@9.1.0": {
-      "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:immediate@3.2.3": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:inherits@2.0.1": {

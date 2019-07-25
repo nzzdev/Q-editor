@@ -10,64 +10,54 @@ schema-editor-geojson-point .lat-lng-input label {
   flex-grow: 1;
 }
 
-schema-editor-geojson-point .algolia-autocomplete {
+schema-editor-geojson-point .autoComplete_container {
   position: relative;
   float: right;
   width: 260px;
   margin: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 2) 0 0;
   font-size: var(--q-text-big-size);
   line-height: var(--q-text-big-line-height);
-  border-radius: calc(var(--q-space-base) / 2);
-  background-color: var(--q-color-white);
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
 }
 
-schema-editor-geojson-point .autocomplete-control--search-input {
+schema-editor-geojson-point .autoComplete_container > * {
   width: 100%;
+  border-radius: calc(var(--q-space-base) / 2);
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  background-color: var(--q-color-white);
+  pointer-events: auto;
+}
+
+schema-editor-geojson-point .autoComplete_input {
+  border: 0;
   height: calc(var(--q-space-base) * 5);
   padding: calc(var(--q-space-base) / 2) calc(var(--q-space-base) * 4);
-  border: 0;
-  background-color: transparent;
   font: inherit;
   color: var(--q-color-gray-6);
-  pointer-events: auto;
   outline: none;
 }
 
-schema-editor-geojson-point .algolia-autocomplete .aa-dropdown-menu {
-  width: 100%;
-  border-radius: calc(var(--q-space-base) / 2);
+schema-editor-geojson-point .autoComplete_results_list {
   font-size: var(--q-text-size);
   line-height: var(--q-text-line-height);
-  background-color: var(--q-color-white);
   margin-top: calc(var(--q-space-base) / 2);
   overflow: hidden;
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
-  pointer-events: auto;
+  list-style: none;
+  padding: 0;
 }
 
-schema-editor-geojson-point
-  .algolia-autocomplete
-  .aa-dropdown-menu
-  .aa-suggestion {
+schema-editor-geojson-point .autoComplete_result {
   cursor: default;
   padding: var(--q-space-base) calc(var(--q-space-base) * 2);
   color: var(--q-color-gray-6);
 }
 
-schema-editor-geojson-point
-  .algolia-autocomplete
-  .aa-dropdown-menu
-  .aa-suggestion.aa-cursor {
-  padding: var(--q-space-base) calc(var(--q-space-base) * 2);
-  color: var(--q-color-gray-6);
+schema-editor-geojson-point .autoComplete_result:hover {
   background-color: var(--q-color-gray-3);
   text-decoration: none;
   cursor: pointer;
 }
 
-schema-editor-geojson-point .algolia-autocomplete .aa-without-1 .aa-dataset-1 {
-  color: var(--q-color-gray-6);
+schema-editor-geojson-point .autoComplete_no-result {
   padding: var(--q-space-base) calc(var(--q-space-base) * 4);
   text-align: center;
 }

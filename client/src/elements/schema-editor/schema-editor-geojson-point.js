@@ -1,7 +1,7 @@
 import { bindable, inject, Loader } from "aurelia-framework";
 import QConfig from "resources/QConfig";
 import { isRequired } from "./helpers.js";
-import autocomplete from "autocomplete.js";
+import autocomplete from "@tarekraafat/autocomplete.js";
 
 @inject(QConfig, Loader)
 export class SchemaEditorGeojsonPoint {
@@ -62,7 +62,16 @@ export class SchemaEditorGeojsonPoint {
     this.map.dragRotate.disable();
     this.map.touchZoomRotate.disableRotation();
 
-    this.map.addControl(new AutocompleteControl(), "top-right");
+    this.autoCompleteInputId = `autoComplete_input_${Math.floor(
+      Math.random() * 100000
+    )}`;
+    this.autoCompleteResultsListId = `autoComplete_results_list_${Math.floor(
+      Math.random() * 100000
+    )}`;
+    this.map.addControl(
+      new AutocompleteControl({ id: this.autoCompleteInputId }),
+      "top-right"
+    );
 
     // Add marker if existing point is displayed
     if (
@@ -87,61 +96,83 @@ export class SchemaEditorGeojsonPoint {
       }
     });
 
-    // Initialize autocomplete instance
-    this.autocomplete = autocomplete(
-      "#autocomplete-control--search-input",
-      { hint: false, openOnFocus: true, clearOnSelected: true },
-      [
-        {
-          source: async (query, callback) => {
-            try {
-              const response = await fetch(
-                `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${
-                  schemaEditorConfig.geojson.opencagedata.apiKey
-                }&language=${
-                  schemaEditorConfig.geojson.opencagedata.language
-                }&abbrv=1`
-              );
-              if (response.ok) {
-                const json = await response.json();
-                // Only show five search suggestions at a time
-                callback(json.features.slice(0, 5));
-              } else {
-                callback([]);
-              }
-            } catch (error) {
-              callback([]);
-            }
-          },
-          templates: {
-            suggestion: suggestion => {
-              return suggestion.properties.formatted;
-            },
-            empty: (query, isEmpty) => {
-              return "Kein Resultate gefunden";
-            }
+    this.autocomplete = new autocomplete({
+      data: {
+        src: async () => {
+          const query = document.querySelector(`#${this.autoCompleteInputId}`)
+            .value;
+          const response = await fetch(
+            `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${
+              schemaEditorConfig.geojson.opencagedata.apiKey
+            }&language=${
+              schemaEditorConfig.geojson.opencagedata.language
+            }&abbrv=1`
+          );
+          if (response.ok) {
+            const json = await response.json();
+            return json.features.map(feature => {
+              return {
+                label: feature.properties.formatted,
+                geometry: feature.geometry,
+                properties: feature.properties
+              };
+            });
+          } else {
+            return [];
           }
-        }
-      ]
-    );
-
-    // Update the marker position when the user selects a suggestion
-    this.autocomplete.on(
-      "autocomplete:selected",
-      (event, suggestion, dataset, context) => {
-        this.data.geometry = suggestion.geometry;
-        this.data.properties.label = suggestion.properties.formatted;
+        },
+        key: ["label"],
+        cache: false
+      },
+      placeHolder: "Suche",
+      selector: `#${this.autoCompleteInputId}`,
+      threshold: 3,
+      debounce: 300,
+      searchEngine: "strict",
+      resultsList: {
+        render: true,
+        container: source => {
+          source.classList.add("autoComplete_results_list");
+          source.id = this.autoCompleteResultsListId;
+          return source;
+        },
+        destination: document.querySelector(`#${this.autoCompleteInputId}`),
+        position: "afterend",
+        element: "ul"
+      },
+      maxResults: 5,
+      resultItem: {
+        content: (data, source) => {
+          source.innerHTML = data.match;
+        },
+        element: "li"
+      },
+      noResults: () => {
+        const result = document.createElement("li");
+        result.setAttribute("class", "autoComplete_no-result");
+        result.setAttribute("tabindex", "1");
+        result.innerHTML = "Keine Resultate gefunden";
+        document
+          .querySelector(`#${this.autoCompleteResultsListId}`)
+          .appendChild(result);
+      },
+      onSelection: event => {
+        const selection = event.selection.value;
+        this.data.geometry = selection.geometry;
+        this.data.properties.label = selection.label;
+        const coordinates = selection.geometry.coordinates;
         if (!this.marker) {
-          this.marker = this.getMarker(suggestion.geometry.coordinates);
+          this.marker = this.getMarker(coordinates);
         } else {
-          this.marker.setLngLat(suggestion.geometry.coordinates);
+          this.marker.setLngLat(coordinates);
         }
-        this.map.jumpTo({ center: suggestion.geometry.coordinates });
+        this.map.jumpTo({ center: coordinates });
         if (this.change) {
           this.change();
         }
+        document.querySelector(`#${this.autoCompleteInputId}`).value = "";
       }
-    );
+    });
   }
 
   // Returns a new marker that is draggable
@@ -167,14 +198,18 @@ export class SchemaEditorGeojsonPoint {
 }
 
 export default class AutocompleteControl {
+  constructor(options) {
+    this._id = options.id;
+  }
+
   onAdd(map) {
     this._map = map;
     this._container = document.createElement("div");
+    this._container.classList.add("autoComplete_container");
     this._input = document.createElement("input");
-    this._input.id = "autocomplete-control--search-input";
-    this._input.classList.add("autocomplete-control--search-input");
+    this._input.id = this._id;
+    this._input.classList.add("autoComplete_input");
     this._input.type = "text";
-    this._input.placeholder = "Suche";
     this._container.appendChild(this._input);
     return this._container;
   }
