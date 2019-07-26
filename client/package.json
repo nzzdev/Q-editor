@@ -39,7 +39,11 @@
   },
   "jspm": {
     "dependencies": {
+      "@mapbox/mapbox-gl-draw": "npm:@mapbox/mapbox-gl-draw@^1.1.2",
       "@tarekraafat/autocomplete.js": "npm:@tarekraafat/autocomplete.js@^6.1.0",
+      "@turf/bbox": "npm:@turf/bbox@^6.0.1",
+      "@turf/bbox-polygon": "npm:@turf/bbox-polygon@^6.0.1",
+      "@turf/helpers": "npm:@turf/helpers@^6.1.4",
       "ajv": "npm:ajv@^5.3.0",
       "array2d": "npm:array2d@^0.0.5",
       "aurelia-animator-css": "npm:aurelia-animator-css@^1.0.4",
