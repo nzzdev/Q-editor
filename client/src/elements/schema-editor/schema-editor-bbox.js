@@ -2,8 +2,8 @@ import { bindable, inject, Loader } from "aurelia-framework";
 import QConfig from "resources/QConfig";
 import { isRequired } from "./helpers.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
-import BBox from "@turf/bbox";
-import BBoxPolygon from "@turf/bbox-polygon";
+import bbox from "@turf/bbox";
+import bboxPolygon from "@turf/bbox-polygon";
 import { featureCollection } from "@turf/helpers";
 
 @inject(QConfig, Loader, CurrentItemProvider)
@@ -93,7 +93,7 @@ export class SchemaEditorBbox {
     this.map.addControl(this.MapboxDraw);
     this.map.on("mousedown", this.mouseDown.bind(this));
     this.map.on("draw.update", event => {
-      this.data = BBox(event.features[0]);
+      this.data = bbox(event.features[0]);
       this.map.fitBounds(
         [[this.data[0], this.data[1]], [this.data[2], this.data[3]]],
         { padding: 60, duration: 0 }
@@ -110,25 +110,27 @@ export class SchemaEditorBbox {
       const field = this.item[this.options.fields[0]];
       if (field.length > 0) {
         const bboxPolygons = field.map(feature => {
-          return BBoxPolygon(BBox(feature));
+          return bboxPolygon(bbox(feature));
         });
-        this.setBBox(BBox(featureCollection(bboxPolygons)));
+        this.setBBox(bbox(featureCollection(bboxPolygons)));
       }
     }
   }
 
   mouseDown(event) {
     // Continue the rest of the function if the shiftkey is pressed.
-    if (!(event.originalEvent.shiftKey && event.originalEvent.button === 0))
+    if (!(event.originalEvent.shiftKey && event.originalEvent.button === 0)) {
       return;
+    }
     this.map.on("mouseup", this.mouseUp.bind(this));
     this.start = event.lngLat;
   }
 
   mouseUp(event) {
     // Continue the rest of the function if the shiftkey is pressed.
-    if (!(event.originalEvent.shiftKey && event.originalEvent.button === 0))
+    if (!(event.originalEvent.shiftKey && event.originalEvent.button === 0)) {
       return;
+    }
     this.setBBox([
       this.start.lng,
       this.start.lat,
@@ -137,10 +139,10 @@ export class SchemaEditorBbox {
     ]);
   }
 
-  setBBox(bbox) {
-    const bboxFeatureCollection = featureCollection([BBoxPolygon(bbox)]);
-    if (!(this.data === bbox)) {
-      this.data = BBox(bboxFeatureCollection);
+  setBBox(bboxItem) {
+    const bboxFeatureCollection = featureCollection([bboxPolygon(bboxItem)]);
+    if (!(this.data === bboxItem)) {
+      this.data = bbox(bboxFeatureCollection);
     }
     this.MapboxDraw.set(bboxFeatureCollection);
     this.map.fitBounds(
