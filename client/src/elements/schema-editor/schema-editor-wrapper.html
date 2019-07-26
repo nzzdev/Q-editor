@@ -163,6 +163,18 @@
     ></schema-editor-geojson-point>
   </div>
 
+  <div if.bind="getType(schema) === 'bbox'" class="schema-editor-block">
+    <require from="./schema-editor-bbox"></require>
+    <schema-editor-bbox
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"
+      show-notifications.bind="showNotifications"
+      invalid.capture="showRequiredNotification()"
+    ></schema-editor-bbox>
+  </div>
+
   <div if.bind="getType(schema) === 'json'" class="schema-editor-block">
     <require from="./schema-editor-json"></require>
     <schema-editor-json

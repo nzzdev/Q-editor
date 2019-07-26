@@ -1,0 +1,10 @@
+<template>
+  <require from="./schema-editor-bbox.css"></require>
+  <div class="title-container">
+    <label class="input-group-title">
+      ${schema["title"] & toolT}
+    </label>
+  </div>
+  <p class="q-text q-text--error" if.bind="showLoadingError" t="editor.failedToLoadEditorPart"></p>
+  <div class="schema-editor-input--with-notifications" style="height: 400px;" ref="mapContainer"></div>
+</template>

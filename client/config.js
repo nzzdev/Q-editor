@@ -8,7 +8,11 @@ System.config({
   },
 
   map: {
+    "@mapbox/mapbox-gl-draw": "npm:@mapbox/mapbox-gl-draw@1.1.2",
     "@tarekraafat/autocomplete.js": "npm:@tarekraafat/autocomplete.js@6.1.0",
+    "@turf/bbox": "npm:@turf/bbox@6.0.1",
+    "@turf/bbox-polygon": "npm:@turf/bbox-polygon@6.0.1",
+    "@turf/helpers": "npm:@turf/helpers@6.1.4",
     "ajv": "npm:ajv@5.5.2",
     "array2d": "npm:array2d@0.0.5",
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.4",
@@ -71,6 +75,9 @@ System.config({
       "url": "github:jspm/nodelibs-url@0.1.0",
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
+    "github:jspm/nodelibs-os@0.1.0": {
+      "os-browserify": "npm:os-browserify@0.1.2"
+    },
     "github:jspm/nodelibs-path@0.1.0": {
       "path-browserify": "npm:path-browserify@0.0.0"
     },
@@ -105,6 +112,16 @@ System.config({
       "systemjs-json": "github:systemjs/plugin-json@0.1.2",
       "wgs84": "npm:wgs84@0.0.0"
     },
+    "npm:@mapbox/geojson-coords@0.0.0": {
+      "@mapbox/geojson-normalize": "npm:@mapbox/geojson-normalize@0.0.1",
+      "geojson-flatten": "npm:geojson-flatten@0.2.4"
+    },
+    "npm:@mapbox/geojson-extent@0.3.2": {
+      "@mapbox/extent": "npm:@mapbox/extent@0.4.0",
+      "@mapbox/geojson-coords": "npm:@mapbox/geojson-coords@0.0.0",
+      "rw": "npm:rw@0.1.4",
+      "traverse": "npm:traverse@0.6.6"
+    },
     "npm:@mapbox/geojson-rewind@0.4.0": {
       "@mapbox/geojson-area": "npm:@mapbox/geojson-area@0.2.2",
       "concat-stream": "npm:concat-stream@1.6.2",
@@ -115,8 +132,34 @@ System.config({
       "child_process": "github:jspm/nodelibs-child_process@0.1.0",
       "fs": "github:jspm/nodelibs-fs@0.1.2"
     },
+    "npm:@mapbox/geojsonhint@2.2.0": {
+      "concat-stream": "npm:concat-stream@1.6.2",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "jsonlint-lines": "npm:jsonlint-lines@1.7.1",
+      "minimist": "npm:minimist@1.2.0",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "vfile": "npm:vfile@4.0.1",
+      "vfile-reporter": "npm:vfile-reporter@5.1.2"
+    },
     "npm:@mapbox/jsonlint-lines-primitives@2.0.2": {
       "fs": "github:jspm/nodelibs-fs@0.1.2"
+    },
+    "npm:@mapbox/mapbox-gl-draw@1.1.2": {
+      "@mapbox/geojson-area": "npm:@mapbox/geojson-area@0.2.2",
+      "@mapbox/geojson-extent": "npm:@mapbox/geojson-extent@0.3.2",
+      "@mapbox/geojson-normalize": "npm:@mapbox/geojson-normalize@0.0.1",
+      "@mapbox/geojsonhint": "npm:@mapbox/geojsonhint@2.2.0",
+      "@mapbox/point-geometry": "npm:@mapbox/point-geometry@0.1.0",
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "hat": "npm:hat@0.0.3",
+      "lodash.isequal": "npm:lodash.isequal@4.5.0",
+      "mapbox-gl": "npm:mapbox-gl@1.1.1",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2",
+      "xtend": "npm:xtend@4.0.2"
     },
     "npm:@mapbox/mapbox-gl-supported@1.4.1": {
       "mapbox-gl": "npm:mapbox-gl@1.1.1"
@@ -129,6 +172,20 @@ System.config({
     "npm:@mapbox/whoots-js@3.1.0": {
       "http": "github:jspm/nodelibs-http@1.7.1",
       "url": "github:jspm/nodelibs-url@0.1.0"
+    },
+    "npm:@turf/bbox-polygon@6.0.1": {
+      "@turf/helpers": "npm:@turf/helpers@6.1.4"
+    },
+    "npm:@turf/bbox@6.0.1": {
+      "@turf/helpers": "npm:@turf/helpers@6.1.4",
+      "@turf/meta": "npm:@turf/meta@6.0.2"
+    },
+    "npm:@turf/meta@6.0.2": {
+      "@turf/helpers": "npm:@turf/helpers@6.1.4",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:JSV@4.0.2": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:ajv@5.5.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
@@ -358,6 +415,11 @@ System.config({
       "redeyed": "npm:redeyed@0.4.4",
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
+    "npm:chalk@0.4.0": {
+      "ansi-styles": "npm:ansi-styles@1.0.0",
+      "has-color": "npm:has-color@0.1.7",
+      "strip-ansi": "npm:strip-ansi@0.1.1"
+    },
     "npm:codemirror@5.41.0": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
@@ -398,11 +460,25 @@ System.config({
     "npm:fast-json-stable-stringify@2.0.0": {
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
+    "npm:geojson-flatten@0.2.4": {
+      "get-stdin": "npm:get-stdin@6.0.0",
+      "minimist": "npm:minimist@1.2.0"
+    },
     "npm:geojson-vt@3.2.1": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:get-stdin@6.0.0": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:get-value@3.0.1": {
       "isobject": "npm:isobject@3.0.1"
+    },
+    "npm:has-color@0.1.7": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:has-flag@3.0.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:i18next-fetch-backend@0.0.1": {
       "i18next-xhr-backend": "npm:i18next-xhr-backend@1.5.1"
@@ -419,6 +495,9 @@ System.config({
     "npm:intl@1.2.5": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
+    "npm:is-buffer@2.0.3": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1"
+    },
     "npm:is-plain-object@2.0.4": {
       "isobject": "npm:isobject@3.0.1"
     },
@@ -428,9 +507,21 @@ System.config({
     "npm:json-schema-traverse@0.3.1": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
     },
+    "npm:jsonlint-lines@1.7.1": {
+      "JSV": "npm:JSV@4.0.2",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "nomnom": "npm:nomnom@1.8.1",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
     "npm:jwt-decode@2.2.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
+    "npm:lodash.isequal@4.5.0": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:mapbox-gl@1.1.1": {
       "@mapbox/geojson-rewind": "npm:@mapbox/geojson-rewind@0.4.0",
@@ -464,6 +555,15 @@ System.config({
       "tinyqueue": "npm:tinyqueue@2.0.3",
       "vt-pbf": "npm:vt-pbf@3.1.1",
       "zlib": "github:jspm/nodelibs-zlib@0.1.0"
+    },
+    "npm:nomnom@1.8.1": {
+      "chalk": "npm:chalk@0.4.0",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "underscore": "npm:underscore@1.6.0"
+    },
+    "npm:os-browserify@0.1.2": {
+      "os": "github:jspm/nodelibs-os@0.1.0"
     },
     "npm:pako@0.2.9": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
@@ -523,10 +623,18 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "vm": "github:jspm/nodelibs-vm@0.1.0"
     },
+    "npm:replace-ext@1.0.0": {
+      "path": "github:jspm/nodelibs-path@0.1.0"
+    },
     "npm:resolve-protobuf-schema@2.1.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "protocol-buffers-schema": "npm:protocol-buffers-schema@3.3.2"
+    },
+    "npm:rw@0.1.4": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.1",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:rw@1.3.3": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
@@ -557,6 +665,10 @@ System.config({
       "inherits": "npm:inherits@2.0.4",
       "readable-stream": "npm:readable-stream@1.1.14"
     },
+    "npm:string-width@2.1.1": {
+      "is-fullwidth-code-point": "npm:is-fullwidth-code-point@2.0.0",
+      "strip-ansi": "npm:strip-ansi@4.0.0"
+    },
     "npm:string_decoder@0.10.31": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1"
     },
@@ -564,13 +676,29 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
       "safe-buffer": "npm:safe-buffer@5.1.2"
     },
+    "npm:strip-ansi@0.1.1": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
+    "npm:strip-ansi@4.0.0": {
+      "ansi-regex": "npm:ansi-regex@3.0.0"
+    },
     "npm:supercluster@6.0.2": {
       "kdbush": "npm:kdbush@3.0.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:supports-color@5.5.0": {
+      "has-flag": "npm:has-flag@3.0.0",
+      "os": "github:jspm/nodelibs-os@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:through@2.3.8": {
       "process": "github:jspm/nodelibs-process@0.1.2",
       "stream": "github:jspm/nodelibs-stream@0.1.0"
+    },
+    "npm:unist-util-stringify-position@2.0.1": {
+      "@types/unist": "npm:@types/unist@2.0.3"
     },
     "npm:url@0.10.3": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
@@ -584,6 +712,28 @@ System.config({
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:vfile-message@2.0.1": {
+      "@types/unist": "npm:@types/unist@2.0.3",
+      "unist-util-stringify-position": "npm:unist-util-stringify-position@2.0.1"
+    },
+    "npm:vfile-reporter@5.1.2": {
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "repeat-string": "npm:repeat-string@1.6.1",
+      "string-width": "npm:string-width@2.1.1",
+      "supports-color": "npm:supports-color@5.5.0",
+      "unist-util-stringify-position": "npm:unist-util-stringify-position@2.0.1",
+      "vfile-sort": "npm:vfile-sort@2.2.1",
+      "vfile-statistics": "npm:vfile-statistics@1.1.3"
+    },
+    "npm:vfile@4.0.1": {
+      "@types/unist": "npm:@types/unist@2.0.3",
+      "is-buffer": "npm:is-buffer@2.0.3",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "replace-ext": "npm:replace-ext@1.0.0",
+      "unist-util-stringify-position": "npm:unist-util-stringify-position@2.0.1",
+      "vfile-message": "npm:vfile-message@2.0.1"
     },
     "npm:vm-browserify@0.0.4": {
       "indexof": "npm:indexof@0.0.1"
