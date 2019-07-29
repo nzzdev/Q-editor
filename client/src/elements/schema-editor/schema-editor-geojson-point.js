@@ -170,7 +170,6 @@ export class SchemaEditorGeojsonPoint {
         this.marker.getLngLat().lat
       ];
       this.data.geometry.coordinates = coordinates;
-      this.map.jumpTo({ center: coordinates });
       if (this.change) {
         this.change();
       }
