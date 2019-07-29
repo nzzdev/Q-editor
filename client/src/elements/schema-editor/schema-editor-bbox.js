@@ -1,14 +1,13 @@
 import { bindable, inject, Loader } from "aurelia-framework";
 import QConfig from "resources/QConfig";
 import { isRequired } from "./helpers.js";
-import CurrentItemProvider from "resources/CurrentItemProvider.js";
 import bbox from "@turf/bbox";
 import bboxPolygon from "@turf/bbox-polygon";
 import { featureCollection } from "@turf/helpers";
 import mapboxgl from "mapbox-gl";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 
-@inject(QConfig, Loader, CurrentItemProvider)
+@inject(QConfig, Loader)
 export class SchemaEditorBbox {
   @bindable
   schema;
@@ -19,11 +18,10 @@ export class SchemaEditorBbox {
   @bindable
   showNotifications;
 
-  constructor(qConfig, loader, currentItemProvider) {
+  constructor(qConfig, loader) {
     this.qConfig = qConfig;
     this.loader = loader;
     this.isRequired = isRequired;
-    this.currentItemProvider = currentItemProvider;
     this.loader.loadModule("npm:mapbox-gl@1.1.1/dist/mapbox-gl.css!");
     this.loader.loadModule(
       "npm:@mapbox/mapbox-gl-draw@1.1.2/dist/mapbox-gl-draw.css!"
@@ -61,12 +59,6 @@ export class SchemaEditorBbox {
       return;
     }
 
-    if (this.options.fields) {
-      this.item = this.currentItemProvider.getCurrentItemByFields(
-        this.options.fields
-      );
-    }
-
     mapboxgl.accessToken = schemaEditorConfig.geojson.layer.accessToken;
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
@@ -101,18 +93,6 @@ export class SchemaEditorBbox {
 
     if (this.data && this.data.length >= 4) {
       this.setBBox(this.data);
-    } else if (
-      this.item &&
-      this.options.fields &&
-      this.item[this.options.fields[0]]
-    ) {
-      const field = this.item[this.options.fields[0]];
-      if (field.length > 0) {
-        const bboxPolygons = field.map(feature => {
-          return bboxPolygon(bbox(feature));
-        });
-        this.setBBox(bbox(featureCollection(bboxPolygons)));
-      }
     }
   }
 
