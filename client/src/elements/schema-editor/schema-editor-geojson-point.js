@@ -1,6 +1,7 @@
 import { bindable, inject, Loader } from "aurelia-framework";
 import QConfig from "resources/QConfig";
 import { isRequired } from "./helpers.js";
+import mapboxgl from "mapbox-gl";
 import Autocomplete from "@tarekraafat/autocomplete.js";
 
 @inject(QConfig, Loader)
@@ -18,6 +19,7 @@ export class SchemaEditorGeojsonPoint {
     this.qConfig = qConfig;
     this.loader = loader;
     this.isRequired = isRequired;
+    this.loader.loadModule("npm:mapbox-gl@1.1.1/dist/mapbox-gl.css!");
   }
 
   async schemaChanged() {
@@ -37,16 +39,11 @@ export class SchemaEditorGeojsonPoint {
     const schemaEditorConfig = await this.qConfig.get("schemaEditor");
     this.showLoadingError = false;
 
-    // if we already have a map, return here
-    // this happens when array entry order is changed.
+    // if we already have a map, return here (happens when array entry order is changed)
     if (this.map) {
       return;
     }
 
-    if (!window.mapboxgl) {
-      this.loader.loadModule("npm:mapbox-gl@1.1.1/dist/mapbox-gl.css!");
-      window.mapboxgl = await this.loader.loadModule("mapbox-gl");
-    }
     mapboxgl.accessToken = schemaEditorConfig.geojson.layer.accessToken;
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
@@ -79,20 +76,14 @@ export class SchemaEditorGeojsonPoint {
       this.data.geometry.coordinates.length >= 2 &&
       !this.marker
     ) {
-      const coordinates = this.data.geometry.coordinates;
-      this.marker = this.getMarker([coordinates[0], coordinates[1]]);
-      this.map.jumpTo({ center: this.data.geometry.coordinates });
+      this.updateMarker();
     }
 
     // Add marker to the clicked area
     this.map.on("click", event => {
-      this.data.geometry.coordinates = [event.lngLat.lng, event.lngLat.lat];
-      this.data.properties.label = "";
       if (!this.marker) {
-        this.marker = this.getMarker([event.lngLat.lng, event.lngLat.lat]);
-        if (this.change) {
-          this.change();
-        }
+        this.data.geometry.coordinates = [event.lngLat.lng, event.lngLat.lat];
+        this.updateMarker();
       }
     });
 
@@ -159,16 +150,7 @@ export class SchemaEditorGeojsonPoint {
         const selection = event.selection.value;
         this.data.geometry = selection.geometry;
         this.data.properties.label = selection.label;
-        const coordinates = selection.geometry.coordinates;
-        if (!this.marker) {
-          this.marker = this.getMarker(coordinates);
-        } else {
-          this.marker.setLngLat(coordinates);
-        }
-        this.map.jumpTo({ center: coordinates });
-        if (this.change) {
-          this.change();
-        }
+        this.updateMarker();
         document.querySelector(`#${this.autoCompleteInputId}`).value = "";
       }
     });
@@ -183,16 +165,31 @@ export class SchemaEditorGeojsonPoint {
       .addTo(this.map);
 
     marker.on("dragend", () => {
-      this.data.geometry.coordinates = [
+      const coordinates = [
         this.marker.getLngLat().lng,
         this.marker.getLngLat().lat
       ];
+      this.data.geometry.coordinates = coordinates;
+      this.map.jumpTo({ center: coordinates });
       if (this.change) {
         this.change();
       }
     });
 
     return marker;
+  }
+
+  updateMarker() {
+    const coordinates = this.data.geometry.coordinates;
+    if (!this.marker) {
+      this.marker = this.getMarker(coordinates);
+    } else {
+      this.marker.setLngLat(coordinates);
+    }
+    this.map.jumpTo({ center: coordinates });
+    if (this.change) {
+      this.change();
+    }
   }
 }
 
