@@ -165,11 +165,10 @@ export class SchemaEditorGeojsonPoint {
       .addTo(this.map);
 
     marker.on("dragend", () => {
-      const coordinates = [
+      this.data.geometry.coordinates = [
         this.marker.getLngLat().lng,
         this.marker.getLngLat().lat
       ];
-      this.data.geometry.coordinates = coordinates;
       if (this.change) {
         this.change();
       }
