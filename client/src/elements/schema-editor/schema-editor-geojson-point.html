@@ -2,23 +2,23 @@
   <require from="./schema-editor-object"></require>
   <require from="./schema-editor-geojson-point.css"></require>
   <p class="q-text q-text--error" if.bind="showLoadingError" t="editor.failedToLoadEditorPart"></p>
-  <div class="schema-editor-input--with-notifications" style="height: 400px;" ref="mapContainer"></div>
-  <div>
-    <schema-editor-object
-      schema.bind="schema.properties.properties"
-      data.two-way="data.properties"
-      change.bind="change"
-      show-notifications.bind="showNotifications"></schema-editor-object>
-
-    <div class="lat-lng-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
-      <label>
-        Latitude
-        <input type="number" step="any" value.bind="data.geometry.coordinates[1] | forceNumber" input.delegate="updateMarker()" required.bind="isRequired(schema.properties.geometry, 'coordinates')">
-      </label>
-      <label>
-        Longitude
-        <input type="number" step="any" value.bind="data.geometry.coordinates[0] | forceNumber" input.delegate="updateMarker()" required.bind="isRequired(schema.properties.geometry, 'coordinates')">
-      </label>
+  <div class="container">
+    <div class="map-options">
+      <schema-editor-object
+        schema.bind="schema.properties.properties"
+        data.two-way="data.properties"
+        change.bind="change"></schema-editor-object>
+      <div class="coordinate-input">
+        <label>
+          Latitude
+          <input type="number" step="any" value.bind="data.geometry.coordinates[1] | forceNumber" input.delegate="updateMarker()" required.bind="isRequired(schema.properties.geometry, 'coordinates')">
+        </label>
+        <label>
+          Longitude
+          <input type="number" step="any" value.bind="data.geometry.coordinates[0] | forceNumber" input.delegate="updateMarker()" required.bind="isRequired(schema.properties.geometry, 'coordinates')">
+        </label>
+      </div>
     </div>
+    <div class="map schema-editor-input--with-notifications" ref="mapContainer"></div>
   </div>
 </template>

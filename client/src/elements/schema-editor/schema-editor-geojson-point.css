@@ -2,12 +2,26 @@ schema-editor-geojson-point {
   display: block;
 }
 
-schema-editor-geojson-point .lat-lng-input {
+schema-editor-geojson-point .container {
   display: flex;
 }
 
-schema-editor-geojson-point .lat-lng-input label {
+schema-editor-geojson-point .map {
   flex-grow: 1;
+  height: 400px;
+}
+
+schema-editor-geojson-point .map-options {
+  margin-right: calc(var(--q-space-base) * 2);
+}
+
+schema-editor-geojson-point .coordinate-input {
+  display: flex;
+  flex-direction: column;
+}
+
+schema-editor-geojson-point .coordinate-input label {
+  margin-bottom: calc(var(--q-space-base) * 2);
 }
 
 schema-editor-geojson-point .autoComplete_container {
