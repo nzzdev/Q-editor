@@ -11,7 +11,7 @@
     style="z-index: ${data.length - $index}"
   >
     <div
-      class="schema-editor-array__entry-container ${options.expandable ? 'schema-editor-array__entry-container--expandable' : ''} ${options.layout === 'compact' ? 'schema-editor-array__entry-container--compact' : ''}"
+      class="schema-editor-array__entry-container ${showNotifications ? 'schema-editor-input--with-notifications' : ''} ${options.expandable ? 'schema-editor-array__entry-container--expandable' : ''} ${options.layout === 'compact' ? 'schema-editor-array__entry-container--compact' : ''}"
     >
       <div
         class="schema-editor-array__control ${showNotifications ? 'schema-editor-input--with-notifications' : ''}"
