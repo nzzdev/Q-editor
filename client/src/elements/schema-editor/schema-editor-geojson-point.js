@@ -44,12 +44,12 @@ export class SchemaEditorGeojsonPoint {
       return;
     }
 
-    mapboxgl.accessToken = schemaEditorConfig.geojson.layer.accessToken;
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: schemaEditorConfig.geojson.layer.style,
-      center: [8.5474, 47.3652],
-      zoom: 13
+      style: schemaEditorConfig.shared.map.style,
+      center: schemaEditorConfig.shared.map.center,
+      zoom: schemaEditorConfig.shared.map.zoom,
+      maxZoom: schemaEditorConfig.shared.map.maxZoom
     });
 
     this.map.addControl(
@@ -94,9 +94,9 @@ export class SchemaEditorGeojsonPoint {
             .value;
           const response = await fetch(
             `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${
-              schemaEditorConfig.geojson.opencagedata.apiKey
+              schemaEditorConfig.shared.opencagedata.apiKey
             }&language=${
-              schemaEditorConfig.geojson.opencagedata.language
+              schemaEditorConfig.shared.opencagedata.language
             }&abbrv=1`
           );
           if (response.ok) {

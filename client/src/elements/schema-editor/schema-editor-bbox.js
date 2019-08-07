@@ -59,10 +59,10 @@ export class SchemaEditorBbox {
       return;
     }
 
-    mapboxgl.accessToken = schemaEditorConfig.geojson.layer.accessToken;
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: schemaEditorConfig.geojson.layer.style
+      style: schemaEditorConfig.shared.map.style,
+      maxZoom: schemaEditorConfig.shared.map.maxZoom
     });
 
     this.map.addControl(
