@@ -27,16 +27,16 @@ export class ExportDialog {
             selectType: "radio"
           }
         },
-        titleOption: {
-          title: "Titel Stil",
+        titleStyle: {
+          title: "Titelstil",
           type: "string",
           enum: ["normaler Titel", "Zwischentitel", "Titel ausblenden"], // normaler titel with kopflinie, andere ohne
           "Q:options": {
             selectType: "radio"
           }
         },
-        title: {
-          title: "Titel anpassen",
+        printTitel: {
+          title: "alternativen Titel erfassen",
           type: "string"
         }
       }
