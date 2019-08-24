@@ -30,4 +30,14 @@ export default class QTargets {
       return this.data[key];
     });
   }
+
+  getUserExportable() {
+    return this.loaded.then(() => {
+      return this.data.availableTargets.filter(target => {
+        return (
+          target.userExportable !== false && target.userExportable !== undefined
+        );
+      });
+    });
+  }
 }

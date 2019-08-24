@@ -30,6 +30,12 @@ export class PreviewContainer {
     this.showPreview(this.renderingInfo);
   }
 
+  detached() {
+    if (this.imageObjectURL) {
+      URL.revokeObjectURL(this.imageObjectURL);
+    }
+  }
+
   renderingInfoChanged(renderingInfo) {
     this.showPreview(this.renderingInfo);
   }
@@ -61,6 +67,16 @@ export class PreviewContainer {
 
     if (!renderingInfo) {
       this.previewElement.innerHTML = "";
+      return;
+    }
+
+    if (renderingInfo instanceof Blob) {
+      const imageElement = new Image();
+      URL.revokeObjectURL(this.imageObjectURL);
+      this.imageObjectURL = URL.createObjectURL(renderingInfo);
+      imageElement.setAttribute("src", this.imageObjectURL);
+      // remember to URL.revokeObjectURL;
+      const a = this.previewElement.appendChild(imageElement);
       return;
     }
 

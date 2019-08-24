@@ -2,6 +2,7 @@
   <require from="../styles/q-dialog.css"></require>
   <require from="./export-dialog.css"></require>
   <require from="elements/schema-editor/schema-editor"></require>
+  <require from="elements/item-preview/preview-container"></require>
 
   <div
     class="q-dialog q-dialog--centered q-dialog--bottom-controls export-dialog"
@@ -18,28 +19,32 @@
       </h1>
       <form ref="form" class="q-form" validate>
         <schema-editor
+          if.bind="schema"
           id="schema-editor--export"
           schema.bind="schema"
-          data.bind="exportConf"
+          data.bind="exportOptions"
           show-notifications.bind="false"
           ,
-          change.bind="handleChange"
+          change.call="handleChange()"
         >
           <h2>Optionen</h2>
         </schema-editor>
       </form>
       <div>Grösse: 54mm x 78mm</div>
-      <div
-        style="background: lightgray; border: 1px solid darkgray; height: 400px;"
-      >
-        Vorschau
+      <div>
+        <preview-container
+          style="height: 500px;"
+          rendering-info.bind="renderingInfo"
+          target.bind="config.target.userExportable.previewTarget"
+        ></preview-container>
+        <!-- <item-preview style="height: 500px;" target.bind="config.target.userExportable.previewTarget" id.bind="config.item.id"> -->
       </div>
     </div>
     <div class="q-dialog__controls">
       <button-secondary click.delegate="controller.cancel()"
         >${config.cancelText}</button-secondary
       >
-      <button-primary click.delegate="controller.ok()"
+      <button-primary click.delegate="export()"
         >${config.proceedText}</button-primary
       >
     </div>

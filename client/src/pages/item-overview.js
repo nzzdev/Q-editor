@@ -12,6 +12,8 @@ import qEnv from "resources/qEnv.js";
 import ItemActionController from "resources/ItemActionController";
 import QConfig from "resources/QConfig.js";
 import User from "resources/User.js";
+import QTargets from "resources/QTargets.js";
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
 @inject(
   Notification,
@@ -22,7 +24,9 @@ import User from "resources/User.js";
   ItemActionController,
   QConfig,
   User,
-  DialogService
+  DialogService,
+  QTargets,
+  CurrentItemProvider
 )
 export class ItemOverview {
   currentTarget;
@@ -36,7 +40,9 @@ export class ItemOverview {
     itemActionController,
     qConfig,
     user,
-    dialogService
+    dialogService,
+    qTargets,
+    currentItemProvider
   ) {
     this.notification = notification;
     this.httpClient = httpClient;
@@ -47,15 +53,19 @@ export class ItemOverview {
     this.qConfig = qConfig;
     this.user = user;
     this.dialogService = dialogService;
+    this.qTargets = qTargets;
+    this.currentItemProvider = currentItemProvider;
   }
 
   async attached() {
+    this.currentItemProvider.setCurrentItem(this.item);
     this.isToolAvailable = await this.toolsInfo.isToolWithNameAvailable(
       this.item.conf.tool
     );
     if (await this.qConfig.get("metaInformation")) {
       this.loadMetaInformation();
     }
+    this.userExportableTargets = await this.qTargets.getUserExportable();
   }
 
   async activate(routeParams) {
@@ -99,11 +109,12 @@ export class ItemOverview {
     }
   }
 
-  async exportWithModal() {
+  async exportWithModal(target) {
     const openDialogResult = await this.dialogService.open({
       viewModel: ExportDialog,
       model: {
         item: this.item,
+        target: target,
         proceedText: "herunterladen",
         cancelText: "abbrechen"
       }

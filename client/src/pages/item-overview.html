@@ -52,8 +52,8 @@
           <span t="item.delete"></span>
         </button-secondary>
 
-        <button-primary click.delegate="exportWithModal()">
-          <span>Für Print exportieren</span>
+        <button-primary click.delegate="exportWithModal(target)" repeat.for="target of userExportableTargets">
+          <span>${target.userExportable.buttonLabel}</span>
         </button-secondary>
 
       </aside>
