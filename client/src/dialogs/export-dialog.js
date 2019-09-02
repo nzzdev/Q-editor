@@ -79,14 +79,6 @@ export class ExportDialog {
 
   fetchRenderingInfo({ forPreview }) {
     const toolRuntimeConfig = {
-      size: {
-        width: [
-          {
-            value: 500,
-            comparison: "="
-          }
-        ]
-      },
       isPure: true,
       exportOptions: this.exportOptions
     };
@@ -123,12 +115,12 @@ export class ExportDialog {
 
   async export() {
     try {
+      this.isExportLoading = true;
       const exportRenderingInfo = await this.fetchRenderingInfo({
         forPreview: false
       });
       saveAs(exportRenderingInfo, `${this.config.item.id}-print.pdf`);
-
-      this.controller.ok();
+      this.isExportLoading = false;
     } catch (e) {
       log.error("failed to load renderingInfo for export");
     }

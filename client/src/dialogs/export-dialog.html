@@ -44,7 +44,9 @@
       <button-secondary click.delegate="controller.cancel()"
         >${config.cancelText}</button-secondary
       >
-      <button-primary click.delegate="export()"
+      <button-primary
+        is-loading.bind="isExportLoading"
+        click.delegate="export()"
         >${config.proceedText}</button-primary
       >
     </div>

@@ -118,7 +118,7 @@ export class ItemOverview {
         item: this.item,
         target: target,
         proceedText: "herunterladen",
-        cancelText: "abbrechen"
+        cancelText: "schliessen"
       }
     });
     const closeResult = await openDialogResult.closeResult;
