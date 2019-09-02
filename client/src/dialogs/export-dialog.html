@@ -42,12 +42,12 @@
     </div>
     <div class="q-dialog__controls">
       <button-secondary click.delegate="controller.cancel()"
-        >${config.cancelText}</button-secondary
+        >${config.cancelText & t}</button-secondary
       >
       <button-primary
         is-loading.bind="isExportLoading"
         click.delegate="export()"
-        >${config.proceedText}</button-primary
+        >${config.proceedText & t}</button-primary
       >
     </div>
   </div>

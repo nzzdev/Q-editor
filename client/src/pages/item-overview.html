@@ -54,7 +54,7 @@
 
         <div class="item-overview__controls__exports">
           <button-secondary click.delegate="exportWithModal(target)" repeat.for="target of userExportableTargets">
-            <span>${target.userExportable.buttonLabel}</span>
+            <span>${target.userExportable.buttonLabel & t}</span>
           </button-secondary>
         </div>
 

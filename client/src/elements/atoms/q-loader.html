@@ -1,5 +1,38 @@
 <template bindable="secondary">
-  <require from="./q-loader.css"></require>
-  <style></style>
+  <style>
+    .q-loader {
+      display: block;
+      width: 36px;
+      height: 36px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .q-loader:after {
+      content: " ";
+      display: block;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      border-color: var(--q-color-primary-3) transparent
+        var(--q-color-primary-3) transparent;
+      animation: q-loader-lds-dual-ring 1.2s linear infinite;
+      transform-origin: 50% 50%;
+    }
+
+    .q-loader--secondary::after {
+      border-color: var(--q-color-white) transparent var(--q-color-white)
+        transparent;
+    }
+
+    @keyframes q-loader-lds-dual-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
   <div class="q-loader ${secondary ? 'q-loader--secondary' : ''}"></div>
 </template>
