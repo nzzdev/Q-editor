@@ -43,6 +43,7 @@
     }
   </style>
   <div class="preview-element-container">
+    <q-loader if.bind="loadingStatus === 'loading'"></q-loader>
     <div
       class="preview-element"
       css="width: calc(${width}px + (2 * var(--q-preview-padding))); color: ${previewColor}; background-color: ${previewColor};"

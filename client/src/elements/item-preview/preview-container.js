@@ -83,8 +83,8 @@ export class PreviewContainer {
       // create new image element and append to preview
       this.imageElement = new Image();
       this.imageObjectURL = URL.createObjectURL(renderingInfo);
-      imageElement.setAttribute("src", this.imageObjectURL);
-      this.previewElement.appendChild(imageElement);
+      this.imageElement.setAttribute("src", this.imageObjectURL);
+      this.previewElement.appendChild(this.imageElement);
       return;
     }
 

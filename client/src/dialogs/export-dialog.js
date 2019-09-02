@@ -59,9 +59,7 @@ export class ExportDialog {
     if (!this.config.cancelText) {
       this.config.cancelText = this.i18n.tr("general.no");
     }
-    this.fetchRenderingInfo({ forPrewiew: true }).then(
-      renderingInfo => (this.renderingInfo = renderingInfo)
-    );
+    this.handleChange();
   }
 
   handleChange() {
@@ -71,9 +69,11 @@ export class ExportDialog {
       this.toolEndpointChecker.triggerReevaluation();
       // ... and update the preview
       this.renderingInfo = null;
-      this.fetchRenderingInfo({ forPreview: true }).then(
-        renderingInfo => (this.renderingInfo = renderingInfo)
-      );
+      this.previewLoadingStatus = "loading";
+      this.fetchRenderingInfo({ forPreview: true }).then(renderingInfo => {
+        this.previewLoadingStatus = "loaded";
+        this.renderingInfo = renderingInfo;
+      });
     });
   }
 
