@@ -72,12 +72,19 @@ export class PreviewContainer {
 
     // if we have a Blob here, we display this as an Image
     if (renderingInfo instanceof Blob) {
-      const imageElement = new Image();
-      URL.revokeObjectURL(this.imageObjectURL);
+      // cleanup
+      if (this.imageObjectURL) {
+        URL.revokeObjectURL(this.imageObjectURL);
+      }
+      if (this.imageElement) {
+        this.previewElement.removeChild(this.imageElement);
+      }
+
+      // create new image element and append to preview
+      this.imageElement = new Image();
       this.imageObjectURL = URL.createObjectURL(renderingInfo);
       imageElement.setAttribute("src", this.imageObjectURL);
-      // remember to URL.revokeObjectURL;
-      const a = this.previewElement.appendChild(imageElement);
+      this.previewElement.appendChild(imageElement);
       return;
     }
 
@@ -110,9 +117,7 @@ export class PreviewContainer {
         let link = document.createElement("link");
         link.type = "text/css";
         link.rel = "stylesheet";
-        link.href = `${
-          sophieConfig.buildServiceBaseUrl
-        }/bundle/${sophieModulesString}.css`;
+        link.href = `${sophieConfig.buildServiceBaseUrl}/bundle/${sophieModulesString}.css`;
         this.insertedElements.push(link);
         this.element.shadowRoot.appendChild(link);
       }

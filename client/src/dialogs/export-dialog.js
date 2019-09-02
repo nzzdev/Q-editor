@@ -130,7 +130,7 @@ export class ExportDialog {
 
       this.controller.ok();
     } catch (e) {
-      console.error("failed to load renderingInfo for export");
+      log.error("failed to load renderingInfo for export");
     }
   }
 }
