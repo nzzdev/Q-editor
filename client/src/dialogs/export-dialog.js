@@ -8,13 +8,15 @@ import { saveAs } from "file-saver";
 
 import AvailabilityChecker from "resources/checkers/AvailabilityChecker.js";
 import ToolEndpointChecker from "resources/checkers/ToolEndpointChecker.js";
+import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 
 @inject(
   DialogController,
   TaskQueue,
   QConfig,
   AvailabilityChecker,
-  ToolEndpointChecker
+  ToolEndpointChecker,
+  ObjectFromSchemaGenerator
 )
 export class ExportDialog {
   constructor(
@@ -22,13 +24,15 @@ export class ExportDialog {
     taskQueue,
     qConfig,
     availabilityChecker,
-    toolEndpointChecker
+    toolEndpointChecker,
+    objectFromSchemaGenerator
   ) {
     this.controller = controller;
     this.taskQueue = taskQueue;
     this.qConfig = qConfig;
     this.availabilityChecker = availabilityChecker;
     this.toolEndpointChecker = toolEndpointChecker;
+    this.objectFromSchemaGenerator = objectFromSchemaGenerator;
   }
 
   async activate(config) {
@@ -37,15 +41,16 @@ export class ExportDialog {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
     const response = await fetch(
-      `${QServerBaseUrl}/export-options-schema/${this.config.item.id}/${
-        this.config.target.key
-      }.json`
+      `${QServerBaseUrl}/export-options-schema/${this.config.item.id}/${this.config.target.key}.json`
     );
     if (!response.ok || !(response.status >= 200 && response.status < 400)) {
       log.error("failed to load exportOptionsSchema");
       return;
     }
     this.schema = await response.json();
+    this.exportOptions = this.objectFromSchemaGenerator.generateFromSchema(
+      this.schema
+    );
 
     if (!this.config.proceedText) {
       this.config.proceedText = this.i18n.tr("general.yes");
@@ -65,7 +70,7 @@ export class ExportDialog {
       this.availabilityChecker.triggerReevaluation();
       this.toolEndpointChecker.triggerReevaluation();
       // ... and update the preview
-      // this.previewData = JSON.parse(JSON.stringify(this.item.conf));
+      this.renderingInfo = null;
       this.fetchRenderingInfo({ forPreview: true }).then(
         renderingInfo => (this.renderingInfo = renderingInfo)
       );
@@ -103,7 +108,7 @@ export class ExportDialog {
     })
       .then(res => {
         if (res.ok && res.status >= 200 && res.status < 400) {
-          if (res.headers.get("content-type") === "application/json") {
+          if (res.headers.get("content-type").startsWith("application/json")) {
             return res.json();
           } else {
             return res.blob();
