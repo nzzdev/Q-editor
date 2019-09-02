@@ -65,7 +65,9 @@ export class ItemOverview {
     if (await this.qConfig.get("metaInformation")) {
       this.loadMetaInformation();
     }
-    this.userExportableTargets = await this.qTargets.getUserExportable();
+    this.userExportableTargets = await this.qTargets.getUserExportable({
+      tool: this.item.conf.tool
+    });
   }
 
   async activate(routeParams) {
