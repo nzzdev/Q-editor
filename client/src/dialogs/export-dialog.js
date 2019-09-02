@@ -110,9 +110,9 @@ export class ExportDialog {
         if (res.ok && res.status >= 200 && res.status < 400) {
           if (res.headers.get("content-type").startsWith("application/json")) {
             return res.json();
-          } else {
-            return res.blob();
           }
+          // if we do not have application/json here, we return the result as a blog (it's probably an image)
+          return res.blob();
         }
         throw res;
       })

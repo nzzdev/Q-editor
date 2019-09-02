@@ -70,6 +70,7 @@ export class PreviewContainer {
       return;
     }
 
+    // if we have a Blob here, we display this as an Image
     if (renderingInfo instanceof Blob) {
       const imageElement = new Image();
       URL.revokeObjectURL(this.imageObjectURL);
