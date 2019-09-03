@@ -118,7 +118,8 @@ export class ItemOverview {
         item: this.item,
         target: target,
         proceedText: "herunterladen",
-        cancelText: "schliessen"
+        cancelText: "schliessen",
+        modalTitle: target.userExportable.modalTitle
       }
     });
     const closeResult = await openDialogResult.closeResult;
