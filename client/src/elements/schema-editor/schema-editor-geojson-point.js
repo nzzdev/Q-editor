@@ -75,17 +75,6 @@ export class SchemaEditorGeojsonPoint {
     this.map.dragRotate.disable();
     this.map.touchZoomRotate.disableRotation();
 
-    this.autoCompleteInputId = `autoComplete_input_${Math.floor(
-      Math.random() * 100000
-    )}`;
-    this.autoCompleteResultsListId = `autoComplete_results_list_${Math.floor(
-      Math.random() * 100000
-    )}`;
-    this.map.addControl(
-      new AutocompleteControl({ id: this.autoCompleteInputId }),
-      "top-right"
-    );
-
     // Add marker if existing point is displayed
     if (
       this.data.geometry &&
@@ -103,23 +92,39 @@ export class SchemaEditorGeojsonPoint {
       }
     });
 
-    // if window.Autocomplete is not defined, we load it async here using the aurelia loader
-    if (!window.Autocomplete) {
-      try {
-        window.Autocomplete = await this.loader.loadModule(
-          "@tarekraafat/autocomplete.js"
-        );
-      } catch (e) {
-        log.error(e);
-      }
-    }
-    if (!window.Autocomplete) {
+    if (!schemaEditorConfig.shared.opencagedata.apiKey) {
       log.error(
-        "window.Autocomplete is not defined after loading @tarekraafat/autocomplete.js"
+        "no opencageApiKey given, will not load geocoder for geojson-point editor"
       );
-      this.showLoadingError = true;
-      return;
-    }
+    } else {
+      // if window.Autocomplete is not defined, we load it async here using the aurelia loader
+      if (!window.Autocomplete) {
+        try {
+          window.Autocomplete = await this.loader.loadModule(
+            "@tarekraafat/autocomplete.js"
+          );
+        } catch (e) {
+          log.error(e);
+        }
+      }
+      if (!window.Autocomplete) {
+        log.error(
+          "window.Autocomplete is not defined after loading @tarekraafat/autocomplete.js"
+        );
+        this.showLoadingError = true;
+        return;
+      }
+
+      this.autoCompleteInputId = `autoComplete_input_${Math.floor(
+        Math.random() * 100000
+      )}`;
+      this.autoCompleteResultsListId = `autoComplete_results_list_${Math.floor(
+        Math.random() * 100000
+      )}`;
+      this.map.addControl(
+        new AutocompleteControl({ id: this.autoCompleteInputId }),
+        "top-right"
+      );
 
     this.autocomplete = new Autocomplete({
       data: {
@@ -141,49 +146,47 @@ export class SchemaEditorGeojsonPoint {
           }
           return [];
         },
-        key: ["label"],
-        cache: false
-      },
-      placeHolder: "Suche",
-      selector: `#${this.autoCompleteInputId}`,
-      threshold: 3,
-      debounce: 300,
-      searchEngine: "strict",
-      resultsList: {
-        render: true,
-        container: source => {
-          source.classList.add("autoComplete_results_list");
-          source.id = this.autoCompleteResultsListId;
-          return source;
+        placeHolder: "Suche",
+        selector: `#${this.autoCompleteInputId}`,
+        threshold: 3,
+        debounce: 300,
+        searchEngine: "strict",
+        resultsList: {
+          render: true,
+          container: source => {
+            source.classList.add("autoComplete_results_list");
+            source.id = this.autoCompleteResultsListId;
+            return source;
+          },
+          destination: document.querySelector(`#${this.autoCompleteInputId}`),
+          position: "afterend",
+          element: "ul"
         },
-        destination: document.querySelector(`#${this.autoCompleteInputId}`),
-        position: "afterend",
-        element: "ul"
-      },
-      maxResults: 5,
-      resultItem: {
-        content: (data, source) => {
-          source.innerHTML = data.match;
+        maxResults: 5,
+        resultItem: {
+          content: (data, source) => {
+            source.innerHTML = data.match;
+          },
+          element: "li"
         },
-        element: "li"
-      },
-      noResults: () => {
-        const result = document.createElement("li");
-        result.setAttribute("class", "autoComplete_no-result");
-        result.setAttribute("tabindex", "1");
-        result.innerHTML = "Keine Resultate gefunden";
-        document
-          .querySelector(`#${this.autoCompleteResultsListId}`)
-          .appendChild(result);
-      },
-      onSelection: event => {
-        const selection = event.selection.value;
-        this.data.geometry = selection.geometry;
-        this.data.properties.label = selection.label;
-        this.updateMarker();
-        document.querySelector(`#${this.autoCompleteInputId}`).value = "";
-      }
-    });
+        noResults: () => {
+          const result = document.createElement("li");
+          result.setAttribute("class", "autoComplete_no-result");
+          result.setAttribute("tabindex", "1");
+          result.innerHTML = "Keine Resultate gefunden";
+          document
+            .querySelector(`#${this.autoCompleteResultsListId}`)
+            .appendChild(result);
+        },
+        onSelection: event => {
+          const selection = event.selection.value;
+          this.data.geometry = selection.geometry;
+          this.data.properties.label = selection.label;
+          this.updateMarker();
+          document.querySelector(`#${this.autoCompleteInputId}`).value = "";
+        }
+      });
+    }
   }
 
   // Returns a new marker that is draggable
