@@ -1,9 +1,8 @@
-import { bindable, inject, Loader } from "aurelia-framework";
+import { bindable, inject, Loader, LogManager } from "aurelia-framework";
 import QConfig from "resources/QConfig";
 import { isRequired } from "./helpers.js";
-import mapboxgl from "mapbox-gl";
-import Autocomplete from "@tarekraafat/autocomplete.js";
 
+const log = LogManager.getLogger("Q");
 @inject(QConfig, Loader)
 export class SchemaEditorGeojsonPoint {
   @bindable
@@ -19,7 +18,6 @@ export class SchemaEditorGeojsonPoint {
     this.qConfig = qConfig;
     this.loader = loader;
     this.isRequired = isRequired;
-    this.loader.loadModule("npm:mapbox-gl@1.1.1/dist/mapbox-gl.css!");
   }
 
   async schemaChanged() {
@@ -44,12 +42,30 @@ export class SchemaEditorGeojsonPoint {
       return;
     }
 
-    mapboxgl.accessToken = schemaEditorConfig.geojson.layer.accessToken;
+    // if window.mapboxgl is not defined, we load it async here using the aurelia loader
+    if (!window.mapboxgl) {
+      try {
+        window.mapboxgl = await this.loader.loadModule("mapbox-gl");
+        this.loader.loadModule("npm:mapbox-gl@1.1.1/dist/mapbox-gl.css!");
+      } catch (e) {
+        log.error(e);
+      }
+    }
+    if (!window.mapboxgl) {
+      log.error("window.mapboxgl is not defined after loading mapbox-gl");
+      this.showLoadingError = true;
+      return;
+    }
+
+    if (schemaEditorConfig.shared.map.accessToken) {
+      mapboxgl.accessToken = schemaEditorConfig.shared.map.accessToken;
+    }
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: schemaEditorConfig.geojson.layer.style,
-      center: [8.5474, 47.3652],
-      zoom: 13
+      style: schemaEditorConfig.shared.map.style,
+      center: schemaEditorConfig.shared.map.center,
+      zoom: schemaEditorConfig.shared.map.zoom,
+      maxZoom: schemaEditorConfig.shared.map.maxZoom
     });
 
     this.map.addControl(
@@ -87,17 +103,31 @@ export class SchemaEditorGeojsonPoint {
       }
     });
 
+    // if window.Autocomplete is not defined, we load it async here using the aurelia loader
+    if (!window.Autocomplete) {
+      try {
+        window.Autocomplete = await this.loader.loadModule(
+          "@tarekraafat/autocomplete.js"
+        );
+      } catch (e) {
+        log.error(e);
+      }
+    }
+    if (!window.Autocomplete) {
+      log.error(
+        "window.Autocomplete is not defined after loading @tarekraafat/autocomplete.js"
+      );
+      this.showLoadingError = true;
+      return;
+    }
+
     this.autocomplete = new Autocomplete({
       data: {
         src: async () => {
           const query = document.querySelector(`#${this.autoCompleteInputId}`)
             .value;
           const response = await fetch(
-            `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${
-              schemaEditorConfig.geojson.opencagedata.apiKey
-            }&language=${
-              schemaEditorConfig.geojson.opencagedata.language
-            }&abbrv=1`
+            `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${schemaEditorConfig.geojson.opencagedata.apiKey}&language=${schemaEditorConfig.geojson.opencagedata.language}&abbrv=1`
           );
           if (response.ok) {
             const json = await response.json();
