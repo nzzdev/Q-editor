@@ -1,11 +1,12 @@
 import { bindable, inject, Loader } from "aurelia-framework";
+import { DialogService } from "aurelia-dialog";
 import QConfig from "resources/QConfig";
 import { isRequired } from "./helpers.js";
 import bbox from "@turf/bbox";
 import bboxPolygon from "@turf/bbox-polygon";
 import { featureCollection } from "@turf/helpers";
 
-@inject(QConfig, Loader)
+@inject(QConfig, Loader, DialogService)
 export class SchemaEditorBbox {
   @bindable
   schema;
@@ -16,10 +17,11 @@ export class SchemaEditorBbox {
   @bindable
   showNotifications;
 
-  constructor(qConfig, loader) {
+  constructor(qConfig, loader, dialogService) {
     this.qConfig = qConfig;
     this.loader = loader;
     this.isRequired = isRequired;
+    this.dialogService = dialogService;
   }
 
   options = {};
