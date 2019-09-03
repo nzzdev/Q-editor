@@ -5,6 +5,11 @@
       ${schema["title"] & toolT}
     </label>
   </div>
+  <div>
+    <label>
+      ${ 'editor.bboxComponentNotice' & t }
+    </label>
+  </div>
   <p class="q-text q-text--error" if.bind="showLoadingError" t="editor.failedToLoadEditorPart"></p>
   <div class="schema-editor-input--with-notifications" style="height: 400px;" ref="mapContainer"></div>
 </template>
