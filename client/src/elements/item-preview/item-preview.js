@@ -109,10 +109,10 @@ export class ItemPreview {
       // set the default preview width to the most narrow variant
       this.previewWidthProxy.width = this.sizeOptions[0].value;
 
-      this.availableTargets = await this.qTargets.get("availableTargets");
+      const availableTargets = await this.qTargets.get("availableTargets");
 
       // get the list of publication filters
-      this.publications = await this.qConfig.get("publications");
+      const publications = await this.qConfig.get("publications");
 
       // wait for user loaded
       // get the users default publication
@@ -123,7 +123,7 @@ export class ItemPreview {
       if (this.user.data.publication) {
         let userDefaultPublication;
         // only use the users publication key if it is configured in the publications
-        for (let publication of this.publications) {
+        for (let publication of publications) {
           if (publication.key === this.user.data.publication) {
             userDefaultPublication = publication;
           }
@@ -132,7 +132,7 @@ export class ItemPreview {
           // only use the users default target if there is a target
           // available with the previewTarget key in the publication config
           let userDefaultTarget;
-          for (let target of this.availableTargets) {
+          for (let target of availableTargets) {
             if (target.key === userDefaultPublication.previewTarget) {
               userDefaultTarget = target;
             }
@@ -144,6 +144,11 @@ export class ItemPreview {
           }
         }
       }
+
+      if (!this.targetProxy.target) {
+        this.targetProxy.target = availableTargets[0];
+      }
+
       this.initialised = true;
     } catch (e) {
       log.error(e);
