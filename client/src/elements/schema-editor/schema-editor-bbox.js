@@ -4,8 +4,6 @@ import { isRequired } from "./helpers.js";
 import bbox from "@turf/bbox";
 import bboxPolygon from "@turf/bbox-polygon";
 import { featureCollection } from "@turf/helpers";
-import mapboxgl from "mapbox-gl";
-import MapboxDraw from "@mapbox/mapbox-gl-draw";
 
 @inject(QConfig, Loader)
 export class SchemaEditorBbox {
@@ -22,10 +20,6 @@ export class SchemaEditorBbox {
     this.qConfig = qConfig;
     this.loader = loader;
     this.isRequired = isRequired;
-    this.loader.loadModule("npm:mapbox-gl@1.1.1/dist/mapbox-gl.css!");
-    this.loader.loadModule(
-      "npm:@mapbox/mapbox-gl-draw@1.1.2/dist/mapbox-gl-draw.css!"
-    );
   }
 
   options = {};
@@ -59,6 +53,21 @@ export class SchemaEditorBbox {
       return;
     }
 
+    // if window.mapboxgl is not defined, we load it async here using the aurelia loader
+    if (!window.mapboxgl) {
+      try {
+        window.mapboxgl = await this.loader.loadModule("mapbox-gl");
+        this.loader.loadModule("npm:mapbox-gl@1.1.1/dist/mapbox-gl.css!");
+      } catch (e) {
+        log.error(e);
+      }
+    }
+    if (!window.mapboxgl) {
+      log.error("window.mapboxgl is not defined after loading mapbox-gl");
+      this.showLoadingError = true;
+      return;
+    }
+
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: schemaEditorConfig.shared.map.style,
@@ -71,6 +80,27 @@ export class SchemaEditorBbox {
     );
     this.map.dragRotate.disable();
     this.map.touchZoomRotate.disableRotation();
+
+    // if window.MapboxDraw is not defined, we load it async here using the aurelia loader
+    if (!window.MapboxDraw) {
+      try {
+        window.MapboxDraw = await this.loader.loadModule(
+          "@mapbox/mapbox-gl-draw"
+        );
+        this.loader.loadModule(
+          "npm:@mapbox/mapbox-gl-draw@1.1.2/dist/mapbox-gl-draw.css!"
+        );
+      } catch (e) {
+        log.error(e);
+      }
+    }
+    if (!window.MapboxDraw) {
+      log.error(
+        "window.MapboxDraw is not defined after loading mapbox-gl-draw"
+      );
+      this.showLoadingError = true;
+      return;
+    }
 
     this.MapboxDraw = new MapboxDraw({
       displayControlsDefault: false,
