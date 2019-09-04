@@ -28,6 +28,10 @@
   margin-bottom: calc(var(--q-space-base) * 2);
 }
 
+.item-overview__controls__exports {
+  margin-top: calc(var(--q-space-base) * 4);
+}
+
 .item-overview__status icon-active-state {
   float: right;
 }

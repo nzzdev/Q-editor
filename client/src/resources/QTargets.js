@@ -30,4 +30,22 @@ export default class QTargets {
       return this.data[key];
     });
   }
+
+  getUserExportable({ tool }) {
+    return this.loaded.then(() => {
+      return this.data.availableTargets.filter(target => {
+        let isExportable =
+          target.userExportable !== false &&
+          target.userExportable !== undefined;
+        if (
+          isExportable === true &&
+          tool !== undefined &&
+          Array.isArray(target.userExportable.onlyTools)
+        ) {
+          isExportable = target.userExportable.onlyTools.includes(tool);
+        }
+        return isExportable;
+      });
+    });
+  }
 }

@@ -1,4 +1,18 @@
-<template bindable="click, icon, code, size, iconSize, tabindex, type, disabled" class="button">
+<template
+  bindable="click, icon, code, size, iconSize, tabindex, type, disabled, isLoading"
+  class="button"
+>
   <require from="./button-secondary.css"></require>
-  <icon-button click.bind="click" icon.bind="icon" code.bind="code" size.bind="size" icon-size.bind="iconSize" tabindex.bind="tabindex" type.bind="type" disabled.bind="disabled"><slot></slot></icon-button>
+  <icon-button
+    click.bind="click"
+    icon.bind="icon"
+    code.bind="code"
+    size.bind="size"
+    icon-size.bind="iconSize"
+    tabindex.bind="tabindex"
+    type.bind="type"
+    disabled.bind="disabled || isLoading"
+    is-loading.bind="isLoading"
+    ><slot></slot
+  ></icon-button>
 </template>

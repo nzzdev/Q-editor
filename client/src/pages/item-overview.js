@@ -2,6 +2,9 @@ import { inject } from "aurelia-framework";
 import { Notification } from "aurelia-notification";
 import { HttpClient } from "aurelia-fetch-client";
 import { Router } from "aurelia-router";
+import { DialogService } from "aurelia-dialog";
+
+import { ExportDialog } from "dialogs/export-dialog.js";
 
 import ItemStore from "resources/ItemStore.js";
 import ToolsInfo from "resources/ToolsInfo.js";
@@ -9,6 +12,8 @@ import qEnv from "resources/qEnv.js";
 import ItemActionController from "resources/ItemActionController";
 import QConfig from "resources/QConfig.js";
 import User from "resources/User.js";
+import QTargets from "resources/QTargets.js";
+import CurrentItemProvider from "resources/CurrentItemProvider.js";
 
 @inject(
   Notification,
@@ -18,7 +23,10 @@ import User from "resources/User.js";
   ToolsInfo,
   ItemActionController,
   QConfig,
-  User
+  User,
+  DialogService,
+  QTargets,
+  CurrentItemProvider
 )
 export class ItemOverview {
   currentTarget;
@@ -31,7 +39,10 @@ export class ItemOverview {
     toolsInfo,
     itemActionController,
     qConfig,
-    user
+    user,
+    dialogService,
+    qTargets,
+    currentItemProvider
   ) {
     this.notification = notification;
     this.httpClient = httpClient;
@@ -41,15 +52,22 @@ export class ItemOverview {
     this.itemActionController = itemActionController;
     this.qConfig = qConfig;
     this.user = user;
+    this.dialogService = dialogService;
+    this.qTargets = qTargets;
+    this.currentItemProvider = currentItemProvider;
   }
 
   async attached() {
+    this.currentItemProvider.setCurrentItem(this.item);
     this.isToolAvailable = await this.toolsInfo.isToolWithNameAvailable(
       this.item.conf.tool
     );
     if (await this.qConfig.get("metaInformation")) {
       this.loadMetaInformation();
     }
+    this.userExportableTargets = await this.qTargets.getUserExportable({
+      tool: this.item.conf.tool
+    });
   }
 
   async activate(routeParams) {
@@ -90,6 +108,24 @@ export class ItemOverview {
         return;
       }
       this.articlesWithItem = await response.json();
+    }
+  }
+
+  async exportWithModal(target) {
+    const openDialogResult = await this.dialogService.open({
+      viewModel: ExportDialog,
+      model: {
+        item: this.item,
+        target: target,
+        proceedText: "herunterladen",
+        cancelText: "schliessen",
+        modalTitle: target.userExportable.modalTitle
+      }
+    });
+    const closeResult = await openDialogResult.closeResult;
+
+    if (closeResult.wasCancelled) {
+      return false;
     }
   }
 }
