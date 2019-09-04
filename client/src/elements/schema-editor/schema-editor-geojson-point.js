@@ -126,25 +126,28 @@ export class SchemaEditorGeojsonPoint {
         "top-right"
       );
 
-    this.autocomplete = new Autocomplete({
-      data: {
-        src: async () => {
-          const query = document.querySelector(`#${this.autoCompleteInputId}`)
-            .value;
-          const response = await fetch(
-            `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${schemaEditorConfig.shared.opencagedata.apiKey}&language=${schemaEditorConfig.shared.opencagedata.language}&abbrv=1`
-          );
-          if (response.ok) {
-            const json = await response.json();
-            return json.features.map(feature => {
-              return {
-                label: feature.properties.formatted,
-                geometry: feature.geometry,
-                properties: feature.properties
-              };
-            });
-          }
-          return [];
+      this.autocomplete = new Autocomplete({
+        data: {
+          src: async () => {
+            const query = document.querySelector(`#${this.autoCompleteInputId}`)
+              .value;
+            const response = await fetch(
+              `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${schemaEditorConfig.shared.opencagedata.apiKey}&language=${schemaEditorConfig.shared.opencagedata.language}&abbrv=1`
+            );
+            if (response.ok) {
+              const json = await response.json();
+              return json.features.map(feature => {
+                return {
+                  label: feature.properties.formatted,
+                  geometry: feature.geometry,
+                  properties: feature.properties
+                };
+              });
+            }
+            return [];
+          },
+          key: ["label"],
+          cache: false
         },
         placeHolder: "Suche",
         selector: `#${this.autoCompleteInputId}`,
