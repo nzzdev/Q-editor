@@ -43,7 +43,6 @@
     }
   </style>
   <div class="preview-element-container">
-    <q-loader if.bind="loadingStatus === 'loading'"></q-loader>
     <div
       class="preview-element"
       css="width: calc(${width}px + (2 * var(--q-preview-padding))); color: ${previewColor}; background-color: ${previewColor};"
@@ -52,6 +51,7 @@
         ref="previewElement"
         css="overflow: hidden; ${loadingStatus === 'loading' ? 'opacity: 0' : 'opacity: 1'};"
       ></div>
+      <q-loader if.bind="loadingStatus === 'loading'"></q-loader>
       <div class="preview-element__error-box" show.bind="error">
         <h4 class="preview-element__error-text">
           ${'preview.generalError.title' & t} ${'preview.generalError.body' & t}
