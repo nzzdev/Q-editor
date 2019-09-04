@@ -103,7 +103,7 @@ export class ExportDialog {
           if (res.headers.get("content-type").startsWith("application/json")) {
             return res.json();
           }
-          // if we do not have application/json here, we return the result as a blog (it's probably an image)
+          // if we do not have application/json here, we return the result as a blob (it's probably an image)
           return res.blob();
         }
         throw res;
