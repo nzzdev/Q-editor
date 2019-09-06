@@ -1,4 +1,4 @@
-# 4.1.0 (05.09.2019)
+# 4.1.0 (06.09.2019)
 
 - feat: exportable targets. targets configured as exportable get a button on the item-overview page opening a modal allowing to download the renderingInfo of this target
 - feat: buttons take an isLoading parameter to show a spinner when they are busy
