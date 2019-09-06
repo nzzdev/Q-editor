@@ -1,0 +1,54 @@
+<template>
+  <require from="../styles/q-dialog.css"></require>
+  <require from="./export-dialog.css"></require>
+  <require from="elements/schema-editor/schema-editor"></require>
+  <require from="elements/item-preview/preview-container"></require>
+
+  <div
+    class="q-dialog q-dialog--centered q-dialog--bottom-controls export-dialog"
+  >
+    <button-tertiary
+      class="q-dialog__close-button"
+      icon="close"
+      icon-size="medium"
+      click.delegate="controller.cancel()"
+    ></button-tertiary>
+    <div class="q-dialog__content">
+      <h1 class="q-dialog-title">
+        ${config.modalTitle}
+      </h1>
+      <form ref="form" class="q-form" validate>
+        <schema-editor
+          if.bind="schema"
+          id="schema-editor--export"
+          schema.bind="schema"
+          data.bind="exportOptions"
+          show-notifications.bind="false"
+          ,
+          change.call="handleChange()"
+        >
+          <h2>Optionen</h2>
+        </schema-editor>
+      </form>
+      <div>
+        <preview-container
+          style="height: 500px;"
+          rendering-info.bind="renderingInfo"
+          target.bind="config.target.userExportable.previewTarget"
+          loading-status.bind="previewLoadingStatus"
+        ></preview-container>
+        <!-- <item-preview style="height: 500px;" target.bind="config.target.userExportable.previewTarget" id.bind="config.item.id"> -->
+      </div>
+    </div>
+    <div class="q-dialog__controls">
+      <button-secondary click.delegate="controller.cancel()"
+        >${config.cancelText & t}</button-secondary
+      >
+      <button-primary
+        is-loading.bind="isExportLoading"
+        click.delegate="export()"
+        >${config.proceedText & t}</button-primary
+      >
+    </div>
+  </div>
+</template>

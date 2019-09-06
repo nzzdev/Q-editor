@@ -72,6 +72,7 @@
       "codemirror": "npm:codemirror@^5.41.0",
       "css": "github:systemjs/plugin-css@^0.1.32",
       "dropzone": "npm:dropzone@^5.5.1",
+      "file-saver": "npm:file-saver@^2.0.2",
       "get-value": "npm:get-value@^3.0.1",
       "handsontable": "github:handsontable/handsontable@^3.0.0",
       "heyman/leaflet-areaselect": "github:heyman/leaflet-areaselect@master",

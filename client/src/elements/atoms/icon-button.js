@@ -8,5 +8,7 @@ export class IconButton {
   @bindable iconSize;
   @bindable tabindex;
   @bindable disabled;
+  @bindable isLoading = false;
+  @bindable secondaryLoader = false;
   @bindable type = "button";
 }

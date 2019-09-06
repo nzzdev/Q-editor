@@ -1,3 +1,9 @@
+# 4.1.0 (06.09.2019)
+
+- feat: exportable targets. targets configured as exportable get a button on the item-overview page opening a modal allowing to download the renderingInfo of this target
+- feat: buttons take an isLoading parameter to show a spinner when they are busy
+- fix: if the user has no default preview target defined through the publication config, the first available target is used for the preview
+
 # 4.0.3 (18.07.2019)
 
 - fix: load the additional editor stylesheets (used to load fonts needed for previews) in livingdocs-component.html to show a correct preview
