@@ -135,7 +135,7 @@ export class ExportDialog {
         exportRenderingInfo,
         `${this.slugify(this.config.item.conf.title)}-${
           this.config.item.id
-        }-print${extension}`
+        }${extension}`
       );
       this.isExportLoading = false;
     } catch (e) {
