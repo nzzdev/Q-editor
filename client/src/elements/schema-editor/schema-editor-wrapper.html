@@ -208,6 +208,18 @@
       show-notifications.bind="showNotifications"
     ></schema-editor-files>
   </div>
+
+  <div if.bind="getType(schema) === 'dialog'" class="schema-editor-block">
+    <require from="./schema-editor-dialog"></require>
+    <schema-editor-dialog
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"
+      notifications.bind="notifications"
+      show-notifications.bind="showNotifications"
+    ></schema-editor-dialog>
+  </div>
   <notification
     if.bind="showNotifications && visibleNotification"
     notification.bind="visibleNotification"

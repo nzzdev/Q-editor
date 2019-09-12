@@ -47,6 +47,10 @@ export function getType(schema) {
     type = "select";
   }
 
+  if (schema && schema["Q:options"] && schema["Q:options"].openInDialog) {
+    type = "dialog";
+  }
+
   return type;
 }
 

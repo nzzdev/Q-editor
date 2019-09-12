@@ -1,0 +1,22 @@
+<template>
+  <require from="../styles/q-dialog.css"></require>
+  <require from="elements/schema-editor/schema-editor"></require>
+  <div class="q-dialog q-dialog--medium q-dialog--centered q-dialog--bottom-controls">
+    <button-tertiary class="q-dialog__close-button" icon="close" icon-size="big" click.delegate="dialogController.cancel()"></button-tertiary>
+    <div class="q-dialog__content">
+      <form ref="form" class="q-form" validate>
+        <schema-editor
+          schema.bind="config.schema"
+          data.bind="config.data"
+          notifications.bind="config.notifications"
+          show-notifications.bind="config.showNotifications"
+          change.call="config.change()">
+        </schema-editor>
+      </form>
+    </div>
+    <div class="q-dialog__controls">
+      <button-secondary click.delegate="dialogController.cancel()">${ 'general.cancel' & t }</button-secondary>
+      <button-primary click.delegate="save()">${ 'general.save' & t }</button-primary>
+    </div>
+  </div>
+</template>
