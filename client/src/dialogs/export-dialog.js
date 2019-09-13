@@ -131,15 +131,27 @@ export class ExportDialog {
         extension = `.${mimeInfo.extension[0]}`;
       }
 
-      saveAs(
-        exportRenderingInfo,
-        `${this.slugify(this.config.item.conf.title)}-${
-          this.config.item.id
-        }${extension}`
-      );
+      let filename = `${this.slugify(this.config.item.conf.title)}-${
+        this.config.item.id
+      }`;
+
+      if (
+        this.config.target.userExportable.download &&
+        this.config.target.userExportable.download.file &&
+        Number.isInteger(
+          this.config.target.userExportable.download.file.nameMaxLength
+        )
+      ) {
+        filename = filename.substr(
+          0,
+          this.config.target.userExportable.download.file.nameMaxLength
+        );
+      }
+
+      saveAs(exportRenderingInfo, `${filename}${extension}`);
       this.isExportLoading = false;
     } catch (e) {
-      log.error("failed to load renderingInfo for export");
+      log.error("failed to load renderingInfo for export", e);
     }
   }
 }
