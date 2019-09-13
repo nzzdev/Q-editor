@@ -18,8 +18,6 @@ export class SchemaEditorDialog {
   showNotifications;
 
   constructor(dialogService, i18n) {
-    this.getType = getType;
-    this.isRequired = isRequired;
     this.dialogService = dialogService;
     this.i18n = i18n;
   }
@@ -41,8 +39,7 @@ export class SchemaEditorDialog {
       viewModel: SchemaEditorDialogImplementation,
       model: {
         schema: this.schema,
-        data: this.data,
-        change: this.change,
+        data: JSON.parse(JSON.stringify(this.data)),
         notifications: this.notifications,
         showNotifications: this.showNotifications
       }
