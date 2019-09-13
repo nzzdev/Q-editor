@@ -1,4 +1,4 @@
-.q-form button-primary {
+.q-form button-primary:not(.schema-editor-dialog__button) {
   margin-top: calc(var(--q-space-base) * 4);
 }
 

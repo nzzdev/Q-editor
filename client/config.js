@@ -558,6 +558,9 @@ System.config({
       "vt-pbf": "npm:vt-pbf@3.1.1",
       "zlib": "github:jspm/nodelibs-zlib@0.1.0"
     },
+    "npm:mime-db@1.41.0": {
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
     "npm:nomnom@1.8.1": {
       "chalk": "npm:chalk@0.4.0",
       "path": "github:jspm/nodelibs-path@0.1.0",
@@ -570,9 +573,6 @@ System.config({
     "npm:pako@0.2.9": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:mime-db@1.41.0": {
-      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
