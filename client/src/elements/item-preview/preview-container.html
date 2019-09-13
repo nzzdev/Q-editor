@@ -14,9 +14,16 @@
 
     .preview-element {
       margin: auto;
-      min-height: calc(var(--q-preview-min-height) + 2 * var(--q-preview-padding) - 2px); /* minus 2px because of the border of the container */
+      min-height: calc(
+        var(--q-preview-min-height) + 2 * var(--q-preview-padding) - 2px
+      ); /* minus 2px because of the border of the container */
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
       padding: var(--q-preview-padding);
+    }
+
+    .preview-element > img {
+      display: block;
+      object-fit: contain;
     }
 
     .preview-element__error-box {
@@ -36,10 +43,19 @@
     }
   </style>
   <div class="preview-element-container">
-    <div class="preview-element" css="width: calc(${width}px + (2 * var(--q-preview-padding))); color: ${previewColor}; background-color: ${previewColor};">
-      <div ref="previewElement" css="overflow: hidden; ${loadingStatus === 'loading' ? 'opacity: 0' : 'opacity: 1'};"></div>
+    <div
+      class="preview-element"
+      css="width: calc(${width}px + (2 * var(--q-preview-padding))); color: ${previewColor}; background-color: ${previewColor};"
+    >
+      <div
+        ref="previewElement"
+        css="overflow: hidden; ${loadingStatus === 'loading' ? 'opacity: 0' : 'opacity: 1'};"
+      ></div>
+      <q-loader if.bind="loadingStatus === 'loading'"></q-loader>
       <div class="preview-element__error-box" show.bind="error">
-        <h4 class="preview-element__error-text">${'preview.generalError.title' & t} ${'preview.generalError.body' & t}</h4>
+        <h4 class="preview-element__error-text">
+          ${'preview.generalError.title' & t} ${'preview.generalError.body' & t}
+        </h4>
       </div>
     </div>
   </div>

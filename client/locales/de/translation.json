@@ -2,6 +2,8 @@
   "general": {
     "yes": "Ja",
     "no": "Nein",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
     "createLabel": "Neu erstellen",
     "searchEditLabel": "Suchen und bearbeiten",
     "showAllTools": "Alle Tools anzeigen",
@@ -57,7 +59,9 @@
     "failedToLoadEditorPart": "Der Editor für dieses Element konnte nicht geladen werden",
     "noAutosaveBecauseActive": "Automatisches speichern ist deaktiviert da die Grafik bereits aktiv ist",
     "required": "erforderlich",
-    "transpose": "Zeilen und Spalten tauschen"
+    "transpose": "Zeilen und Spalten tauschen",
+    "bboxComponentNotice": "Hinweis: Shift gedrückt halten und Rechteck mit der Maus aufziehen um Ausschnitt zu definieren",
+    "openDialog": "Dialog öffnen"
   },
   "metaEditor": {
     "title": "Metainfos für den internen Gebrauch",

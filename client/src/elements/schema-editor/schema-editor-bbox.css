@@ -1,0 +1,7 @@
+schema-editor-bbox {
+  display: block;
+}
+
+schema-editor-bbox .title-container {
+  margin-bottom: var(--q-space-base);
+}

@@ -154,7 +154,7 @@ export class SchemaEditorGeojsonPoint {
             const query = document.querySelector(`#${this.autoCompleteInputId}`)
               .value;
             const response = await fetch(
-              `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${schemaEditorConfig.geojson.opencagedata.apiKey}&language=${schemaEditorConfig.geojson.opencagedata.language}&abbrv=1`
+              `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${schemaEditorConfig.shared.opencagedata.apiKey}&language=${schemaEditorConfig.shared.opencagedata.language}&abbrv=1`
             );
             if (response.ok) {
               const json = await response.json();

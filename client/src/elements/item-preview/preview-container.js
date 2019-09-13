@@ -30,6 +30,12 @@ export class PreviewContainer {
     this.showPreview(this.renderingInfo);
   }
 
+  detached() {
+    if (this.imageObjectURL) {
+      URL.revokeObjectURL(this.imageObjectURL);
+    }
+  }
+
   renderingInfoChanged(renderingInfo) {
     this.showPreview(this.renderingInfo);
   }
@@ -64,6 +70,24 @@ export class PreviewContainer {
       return;
     }
 
+    // if we have a Blob here, we display this as an Image
+    if (renderingInfo instanceof Blob) {
+      // cleanup
+      if (this.imageObjectURL) {
+        URL.revokeObjectURL(this.imageObjectURL);
+      }
+      if (this.imageElement) {
+        this.previewElement.removeChild(this.imageElement);
+      }
+
+      // create new image element and append to preview
+      this.imageElement = new Image();
+      this.imageObjectURL = URL.createObjectURL(renderingInfo);
+      this.imageElement.setAttribute("src", this.imageObjectURL);
+      this.previewElement.appendChild(this.imageElement);
+      return;
+    }
+
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
     // remove all previously inserted elements
@@ -93,9 +117,7 @@ export class PreviewContainer {
         let link = document.createElement("link");
         link.type = "text/css";
         link.rel = "stylesheet";
-        link.href = `${
-          sophieConfig.buildServiceBaseUrl
-        }/bundle/${sophieModulesString}.css`;
+        link.href = `${sophieConfig.buildServiceBaseUrl}/bundle/${sophieModulesString}.css`;
         this.insertedElements.push(link);
         this.element.shadowRoot.appendChild(link);
       }

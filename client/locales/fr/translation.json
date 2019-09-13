@@ -2,6 +2,8 @@
   "general": {
     "yes": "Oui",
     "no": "Non",
+    "save": "Sauvegarder",
+    "cancel": "Abandonner",
     "createLabel": "Créer un graphique",
     "searchEditLabel": "Rechercher et modifier",
     "showAllTools": "Montrer tous les outils",
@@ -57,7 +59,9 @@
     "failedToLoadEditorPart": "L'éditeur ne peut être chargé en raison de cet élément",
     "noAutosaveBecauseActive": "La sauvegarde automatique est désactivée car ce graphique est déjà actif",
     "required": "requis",
-    "transpose": "Echange de lignes et de colonnes"
+    "transpose": "Echange de lignes et de colonnes",
+    "bboxComponentNotice": "Remarque: maintenez la touche Maj enfoncée et tracez un rectangle avec la souris pour définir la zone visuelle",
+    "openDialog": "Ouvrir le dialogue"
   },
   "metaEditor": {
     "title": "Informations pour usage interne",

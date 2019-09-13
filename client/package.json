@@ -39,7 +39,11 @@
   },
   "jspm": {
     "dependencies": {
+      "@mapbox/mapbox-gl-draw": "npm:@mapbox/mapbox-gl-draw@^1.1.2",
       "@tarekraafat/autocomplete.js": "npm:@tarekraafat/autocomplete.js@^6.1.0",
+      "@turf/bbox": "npm:@turf/bbox@^6.0.1",
+      "@turf/bbox-polygon": "npm:@turf/bbox-polygon@^6.0.1",
+      "@turf/helpers": "npm:@turf/helpers@^6.1.4",
       "ajv": "npm:ajv@^5.3.0",
       "array2d": "npm:array2d@^0.0.5",
       "aurelia-animator-css": "npm:aurelia-animator-css@^1.0.4",
@@ -73,6 +77,7 @@
       "codemirror": "npm:codemirror@^5.41.0",
       "css": "github:systemjs/plugin-css@^0.1.32",
       "dropzone": "npm:dropzone@^5.5.1",
+      "file-saver": "npm:file-saver@^2.0.2",
       "get-value": "npm:get-value@^3.0.1",
       "handsontable": "github:handsontable/handsontable@^3.0.0",
       "i18next": "npm:i18next@9",
