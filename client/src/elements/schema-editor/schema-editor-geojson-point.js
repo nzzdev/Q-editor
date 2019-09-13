@@ -14,6 +14,10 @@ export class SchemaEditorGeojsonPoint {
   @bindable
   showNotifications;
 
+  options = {
+    bbox: false
+  };
+
   constructor(qConfig, loader) {
     this.qConfig = qConfig;
     this.loader = loader;
@@ -78,10 +82,25 @@ export class SchemaEditorGeojsonPoint {
     // Add marker if existing point is displayed
     if (
       this.data.geometry &&
+      this.data.geometry.coordinates &&
       this.data.geometry.coordinates.length >= 2 &&
       !this.marker
     ) {
       this.updateMarker();
+    }
+
+    if (
+      this.options.bbox === "manual" &&
+      this.data.bbox &&
+      this.data.bbox.length === 4
+    ) {
+      this.map.fitBounds(this.data.bbox, { duration: 0 });
+    }
+
+    if (this.options.bbox === "manual") {
+      this.map.on("mouseout", event => {
+        this.updateBBox();
+      });
     }
 
     // Add marker to the clicked area
@@ -89,6 +108,9 @@ export class SchemaEditorGeojsonPoint {
       if (!this.marker) {
         this.data.geometry.coordinates = [event.lngLat.lng, event.lngLat.lat];
         this.updateMarker();
+        if (this.options.bbox === "manual") {
+          this.updateBBox();
+        }
       }
     });
 
@@ -186,6 +208,9 @@ export class SchemaEditorGeojsonPoint {
           this.data.geometry = selection.geometry;
           this.data.properties.label = selection.label;
           this.updateMarker();
+          if (this.options.bbox === "manual") {
+            this.updateBBox();
+          }
           document.querySelector(`#${this.autoCompleteInputId}`).value = "";
         }
       });
@@ -205,6 +230,9 @@ export class SchemaEditorGeojsonPoint {
         this.marker.getLngLat().lng,
         this.marker.getLngLat().lat
       ];
+      if (this.options.bbox === "manual") {
+        this.updateBBox();
+      }
       if (this.change) {
         this.change();
       }
@@ -220,7 +248,17 @@ export class SchemaEditorGeojsonPoint {
     } else {
       this.marker.setLngLat(coordinates);
     }
+
     this.map.jumpTo({ center: coordinates });
+
+    if (this.change) {
+      this.change();
+    }
+  }
+
+  updateBBox() {
+    const bounds = this.map.getBounds().toArray();
+    this.data.bbox = [bounds[0][0], bounds[0][1], bounds[1][0], bounds[1][1]];
     if (this.change) {
       this.change();
     }
