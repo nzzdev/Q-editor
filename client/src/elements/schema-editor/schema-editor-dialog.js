@@ -1,7 +1,6 @@
 import { bindable, inject } from "aurelia-framework";
 import { DialogService } from "aurelia-dialog";
 import { I18N } from "aurelia-i18n";
-import { getType, isRequired } from "./helpers.js";
 import { SchemaEditorDialogImplementation } from "../../dialogs/schema-editor-dialog.js";
 
 @inject(DialogService, I18N)
