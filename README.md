@@ -1,4 +1,4 @@
-# Q Editor [![Build Status](https://travis-ci.com/nzzdev/Q-editor.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-editor)
+# Q Editor [![Build Status](https://travis-ci.com/nzzdev/Q-editor.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-editor) [![Greenkeeper badge](https://badges.greenkeeper.io/nzzdev/Q-editor.svg)](https://greenkeeper.io/)
 
 **Maintainer**: [manuelroth](https://github.com/manuelroth)
 
