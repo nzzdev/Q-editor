@@ -16,6 +16,11 @@
   top: calc(var(--q-space-base) * 10);
 }
 
+.q-dialog--medium {
+  max-width: 1260px;
+  top: calc(var(--q-space-base) * 10);
+}
+
 .q-dialog-subtitle {
   margin: calc(var(--q-space-base) * 3) 0;
 }
