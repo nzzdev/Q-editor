@@ -1,4 +1,4 @@
-import { inject, LogManager, TaskQueue } from "aurelia-framework";
+import { inject, LogManager, TaskQueue, Loader } from "aurelia-framework";
 import { DialogController } from "aurelia-dialog";
 import QConfig from "resources/QConfig.js";
 import qEnv from "resources/qEnv.js";
@@ -13,6 +13,7 @@ import ObjectFromSchemaGenerator from "resources/ObjectFromSchemaGenerator.js";
 @inject(
   DialogController,
   TaskQueue,
+  Loader,
   QConfig,
   AvailabilityChecker,
   ToolEndpointChecker,
@@ -22,6 +23,7 @@ export class ExportDialog {
   constructor(
     controller,
     taskQueue,
+    loader,
     qConfig,
     availabilityChecker,
     toolEndpointChecker,
@@ -29,6 +31,7 @@ export class ExportDialog {
   ) {
     this.controller = controller;
     this.taskQueue = taskQueue;
+    this.loader = loader;
     this.qConfig = qConfig;
     this.availabilityChecker = availabilityChecker;
     this.toolEndpointChecker = toolEndpointChecker;
@@ -60,6 +63,9 @@ export class ExportDialog {
       this.config.cancelText = this.i18n.tr("general.no");
     }
     this.handleChange();
+
+    this.mimeDb = await this.loader.loadModule("mime-db");
+    this.slugify = await this.loader.loadModule("slugify");
   }
 
   handleChange() {
@@ -119,10 +125,33 @@ export class ExportDialog {
       const exportRenderingInfo = await this.fetchRenderingInfo({
         forPreview: false
       });
-      saveAs(exportRenderingInfo, `${this.config.item.id}-print.pdf`);
+      let extension = "";
+      const mimeInfo = this.mimeDb[exportRenderingInfo.type];
+      if (Array.isArray(mimeInfo.extensions.length)) {
+        extension = `.${mimeInfo.extension[0]}`;
+      }
+
+      let filename = `${this.slugify(this.config.item.conf.title)}-${
+        this.config.item.id
+      }`;
+
+      if (
+        this.config.target.userExportable.download &&
+        this.config.target.userExportable.download.file &&
+        Number.isInteger(
+          this.config.target.userExportable.download.file.nameMaxLength
+        )
+      ) {
+        filename = filename.substr(
+          0,
+          this.config.target.userExportable.download.file.nameMaxLength
+        );
+      }
+
+      saveAs(exportRenderingInfo, `${filename}${extension}`);
       this.isExportLoading = false;
     } catch (e) {
-      log.error("failed to load renderingInfo for export");
+      log.error("failed to load renderingInfo for export", e);
     }
   }
 }

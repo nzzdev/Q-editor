@@ -54,9 +54,11 @@ System.config({
     "i18next": "npm:i18next@9.1.0",
     "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
     "mapbox-gl": "npm:mapbox-gl@1.1.1",
+    "mime-db": "npm:mime-db@1.41.0",
     "mixin-deep": "npm:mixin-deep@2.0.0",
     "moment": "npm:moment@2.22.0",
     "set-value": "npm:set-value@3.0.0",
+    "slugify": "npm:slugify@1.3.5",
     "text": "github:systemjs/plugin-text@0.0.8",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.5.0"
@@ -568,6 +570,9 @@ System.config({
     "npm:pako@0.2.9": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:mime-db@1.41.0": {
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
