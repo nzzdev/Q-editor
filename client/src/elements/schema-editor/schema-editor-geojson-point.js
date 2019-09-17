@@ -206,7 +206,22 @@ export class SchemaEditorGeojsonPoint {
         onSelection: event => {
           const selection = event.selection.value;
           this.data.geometry = selection.geometry;
-          this.data.properties.label = selection.label;
+          try {
+            if (
+              selection.properties.components[
+                selection.properties.components._type
+              ]
+            ) {
+              this.data.properties.label =
+                selection.properties.components[
+                  selection.properties.components._type
+                ];
+            } else {
+              throw new Error("property not available");
+            }
+          } catch (e) {
+            this.data.properties.label = selection.properties.formatted;
+          }
           this.updateMarker();
           if (this.options.bbox === "manual") {
             this.updateBBox();
@@ -214,6 +229,8 @@ export class SchemaEditorGeojsonPoint {
           document.querySelector(`#${this.autoCompleteInputId}`).value = "";
         }
       });
+
+      document.getElementById(this.autoCompleteInputId).focus();
     }
   }
 
