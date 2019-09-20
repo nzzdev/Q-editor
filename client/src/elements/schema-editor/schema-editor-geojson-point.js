@@ -173,7 +173,6 @@ export class SchemaEditorGeojsonPoint {
         },
         placeHolder: "Suche",
         selector: `#${this.autoCompleteInputId}`,
-        threshold: 3,
         debounce: 300,
         searchEngine: "strict",
         resultsList: {
