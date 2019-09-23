@@ -1,0 +1,11 @@
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
+  <require from="./schema-editor-dialog.css"></require>
+  <div>
+    <button-primary
+    class="schema-editor-dialog__button"
+    click.delegate="open()">
+      <span if.bind="options.openInDialog.buttonText">${options.openInDialog.buttonText & toolT}</span>
+      <span else>${'editor.openDialog' & t}</span>
+    </button-primary>
+  </div>
+</template>

@@ -2,95 +2,76 @@ schema-editor-geojson-point {
   display: block;
 }
 
-schema-editor-geojson-point .lat-lng-input {
+schema-editor-geojson-point .container {
   display: flex;
 }
 
-schema-editor-geojson-point .lat-lng-input label {
+schema-editor-geojson-point .map {
   flex-grow: 1;
+  height: 400px;
 }
 
-schema-editor-geojson-point .leaflet-top.leaflet-left {
-  width: 100%;
+schema-editor-geojson-point .map-options {
+  margin-right: calc(var(--q-space-base) * 2);
 }
 
-schema-editor-geojson-point .leaflet-control-search {
-  width: 100%;
-  margin: 0 !important;
-  padding: 10px;
-}
-
-schema-editor-geojson-point .leaflet-control-search .search-input {
-  width: 90%;
-  padding-right: 60px;
-}
-
-schema-editor-geojson-point .leaflet-control-search .search-cancel {
-  position: absolute;
-  top: 14px;
-  right: 70px;
-  font-size: 20px;
-  color: black;
-  text-decoration: none;
-}
-
-schema-editor-geojson-point .leaflet-control-search .search-button {
-  width: 37px;
-  height: 37px;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  text-align: center;
-  text-decoration: none;
-  background: var(--q-color-white);
+schema-editor-geojson-point .coordinate-input {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid rgba(0,0,0,0.2);
-  border-radius: 2px;
+  flex-direction: column;
 }
 
-schema-editor-geojson-point .leaflet-control-search .search-button::before {
-  content: '🔍';
-  display: block;
-  font-size: 20px;
+schema-editor-geojson-point .coordinate-input label {
+  margin-bottom: calc(var(--q-space-base) * 2);
 }
 
-schema-editor-geojson-point .leaflet-control-search ul.search-tooltip {
-  margin: 5px 0 0 0;
-  padding: 0;
+schema-editor-geojson-point .autoComplete_container {
+  position: relative;
+  float: right;
+  width: 260px;
+  margin: calc(var(--q-space-base) * 2) calc(var(--q-space-base) * 2) 0 0;
+  font-size: var(--q-text-big-size);
+  line-height: var(--q-text-big-line-height);
+}
+
+schema-editor-geojson-point .autoComplete_container > * {
+  width: 100%;
+  border-radius: calc(var(--q-space-base) / 2);
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  background-color: var(--q-color-white);
+  pointer-events: auto;
+}
+
+schema-editor-geojson-point .autoComplete_input {
+  border: 0;
+  height: calc(var(--q-space-base) * 5);
+  padding: calc(var(--q-space-base) / 2) calc(var(--q-space-base) * 4);
+  font: inherit;
+  color: var(--q-color-gray-6);
+  outline: none;
+}
+
+schema-editor-geojson-point .autoComplete_results_list {
+  font-size: var(--q-text-size);
+  line-height: var(--q-text-line-height);
+  margin-top: calc(var(--q-space-base) / 2);
+  overflow: hidden;
   list-style: none;
+  padding: 0;
 }
 
-schema-editor-geojson-point .leaflet-control-search .search-tip {
-  padding: 10px;
-  background: var(--q-color-white);
+schema-editor-geojson-point .autoComplete_result {
+  cursor: default;
+  padding: var(--q-space-base) calc(var(--q-space-base) * 2);
+  color: var(--q-color-gray-6);
+}
+
+schema-editor-geojson-point .autoComplete_result:hover {
+  background-color: var(--q-color-gray-3);
+  text-decoration: none;
   cursor: pointer;
 }
 
-schema-editor-geojson-point .leaflet-control-search .search-tip-select,
-schema-editor-geojson-point .leaflet-control-search .search-tip:hover {
-  background: var(--q-color-primary-1);
-}
-
-schema-editor-geojson-point .leaflet-areaselect-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 900;
-  pointer-events: none;
-}
-
-schema-editor-geojson-point .leaflet-areaselect-shade {
-  position: absolute !important;
-  background: rgba(0,0,0, 0.4);
-}
-schema-editor-geojson-point .leaflet-areaselect-handle {
-  position: absolute !important;
-  background: #fff;
-  border: 1px solid #666;
-  box-shadow: 1px 1px rgba(0,0,0, 0.2);
-  width: 14px;
-  height: 14px;
-  cursor: move;
+schema-editor-geojson-point .autoComplete_no-result {
+  padding: var(--q-space-base) calc(var(--q-space-base) * 4);
+  text-align: center;
 }

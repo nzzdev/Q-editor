@@ -1,4 +1,4 @@
-.q-form button-primary {
+.q-form button-primary:not(.schema-editor-dialog__button) {
   margin-top: calc(var(--q-space-base) * 4);
 }
 
@@ -12,7 +12,7 @@
   color: var(--q-text-light-color);
 }
 
-.q-form input,
+.q-form input:not(.autoComplete_input),
 .q-form textarea:not(.handsontableInput),
 .q-form select {
   font-family: Roboto, sans-serif;
@@ -28,7 +28,7 @@
   width: 100%;
 }
 
-.q-form input:valid {
+.q-form input:valid:not(.autoComplete_input) {
   border-color: var(--q-color-gray-3) !important;
 }
 
@@ -36,7 +36,7 @@
   border: solid 1px var(--q-color-error) !important;
 }
 
-.q-form input:focus,
+.q-form input:focus:not(.autoComplete_input),
 .q-form textarea:focus:not(.handsontableInput),
 .q-form select:focus {
   border-color: var(--q-color-gray-4);
@@ -45,13 +45,13 @@
 }
 
 .q-form .disabled,
-.q-form input:disabled,
+.q-form input:disabled:not(.autoComplete_input),
 .q-form textarea:disabled:not(.handsontableInput),
 .q-form select:disabled {
   opacity: 0.5;
 }
 
-.q-form input[type="text"],
+.q-form input[type="text"]:not(.autoComplete_input),
 .q-form input[type="url"],
 .q-form input[type="password"] {
   font-size: 14px;
