@@ -50,7 +50,7 @@ export class SchemaEditorGeojsonPoint {
     if (!window.mapboxgl) {
       try {
         window.mapboxgl = await this.loader.loadModule("mapbox-gl");
-        this.loader.loadModule("npm:mapbox-gl@1.1.1/dist/mapbox-gl.css!");
+        this.loader.loadModule("npm:mapbox-gl@1.3.1/dist/mapbox-gl.css!");
       } catch (e) {
         log.error(e);
       }
