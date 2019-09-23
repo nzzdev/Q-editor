@@ -2,6 +2,7 @@
 
 - breaking: The schemaEditorConfig has a new key `shared` which stores config properties shared for multiple schema-editor components. The schema-editor-geojson component reads its config properties now from this shared namespace.
 - feature: A new schema-editor component called `schema-editor-bbox` which allows to enter a bounding box. The bounding box is stored as an array of [minX, minY, maxX, maxY] values
+- feature: New component `schema-editor-dialog`. It allows to open a part of the schema in a dialog. The Q-tool can define a `Q:options` property `openInDialog` to define that a subtree of the schema should be opened in a dialog
 - feature: Reimplemented the schema-editor component `schema-editor-geojson` using mapbox-gl-js and autocomplete.js to improve the user experience
 
 # 4.1.1 (09.09.2019)
