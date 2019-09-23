@@ -68,6 +68,9 @@ export class SchemaEditorBbox {
       return;
     }
 
+    if (schemaEditorConfig.shared.map.accessToken) {
+      mapboxgl.accessToken = schemaEditorConfig.shared.map.accessToken;
+    }
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: schemaEditorConfig.shared.map.style,
