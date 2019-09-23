@@ -2,6 +2,8 @@
   "general": {
     "yes": "yes",
     "no": "no",
+    "save": "save",
+    "cancel": "cancel",
     "createLabel": "Create a graphic",
     "searchEditLabel": "Search and edit",
     "showAllTools": "Show all tools",
@@ -57,7 +59,9 @@
     "failedToLoadEditorPart": "failed to load the editor for this element",
     "noAutosaveBecauseActive": "Automatic saving is deactivated because the graphic is already active",
     "required": "required",
-    "transpose": "Switch rows and columns"
+    "transpose": "Switch rows and columns",
+    "bboxComponentNotice": "Notice: Hold the Shift key and draw a rectangle with the mouse to define the visual area",
+    "openDialog": "Open dialog"
   },
   "metaEditor": {
     "title": "Metainfos for internal use",
