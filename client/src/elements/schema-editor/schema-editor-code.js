@@ -43,15 +43,15 @@ export class SchemaEditorCode {
       try {
         window.CodeMirror = await this.loader.loadModule("codemirror");
         await Promise.all([
-          this.loader.loadModule("npm:codemirror@5.41.0/lib/codemirror.css!"),
+          this.loader.loadModule("npm:codemirror@5.49.0/lib/codemirror.css!"),
           this.loader.loadModule(
-            "npm:codemirror@5.41.0/mode/javascript/javascript.js"
+            "npm:codemirror@5.49.0/mode/javascript/javascript.js"
           ),
           this.loader.loadModule(
-            "npm:codemirror@5.41.0/mode/htmlmixed/htmlmixed.js"
+            "npm:codemirror@5.49.0/mode/htmlmixed/htmlmixed.js"
           ),
-          this.loader.loadModule("npm:codemirror@5.41.0/mode/jinja2/jinja2.js"),
-          this.loader.loadModule("npm:codemirror@5.41.0/mode/css/css.js")
+          this.loader.loadModule("npm:codemirror@5.49.0/mode/jinja2/jinja2.js"),
+          this.loader.loadModule("npm:codemirror@5.49.0/mode/css/css.js")
         ]);
       } catch (e) {
         log.error(e);
