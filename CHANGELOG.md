@@ -1,3 +1,7 @@
+# 5.0.1 (27.09.2019)
+
+- fix: load stylesheets of the schema-editor-code component
+
 # 5.0.0 (23.09.2019)
 
 - breaking: The schemaEditorConfig has a new key `shared` which stores config properties shared for multiple schema-editor components. The schema-editor-geojson component reads its config properties now from this shared namespace.
