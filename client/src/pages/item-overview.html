@@ -2,9 +2,12 @@
   <require from="elements/item-preview/item-preview"></require>
   <require from="./item-overview.css"></require>
 
-  <q-bar if.bind="user.isLoggedIn" router.bind="router" class="q-bar--no-logo">
+  <q-bar if.bind="user.isLoggedIn" router.bind="router">
     <a slot="back-button" class="q-bar__back" route-href="route: index">
       <button-secondary icon="back" icon-size="medium"></button-secondary>
+    </a>
+    <a slot="logo" route-href="route: index">
+      <icon-logo class="q-bar__logo"></icon-logo>
     </a>
     <language-switcher slot="language-switcher"></language-switcher>
   </q-bar>

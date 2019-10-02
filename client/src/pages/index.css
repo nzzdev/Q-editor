@@ -9,11 +9,6 @@
   margin-bottom: calc(var(--q-space-base) * 2);
 }
 
-.index__logo {
-  width: 40px;
-  height: 40px;
-}
-
 .search {
   max-width: 400px;
   margin: calc(var(--q-space-base) * 3) auto;
