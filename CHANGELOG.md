@@ -1,3 +1,7 @@
+# 5.1.0 (03.10.2019)
+
+- feat: allow navigating between editor and item overview page directly using the back button (Q logo is in header on all pages, clicking it navigates to the index page)
+
 # 5.0.1 (27.09.2019)
 
 - fix: load stylesheets of the schema-editor-code component

@@ -19,7 +19,7 @@ tool-status-bar {
   min-width: 140px;
 }
 
-@media screen and (max-width: 1010px) {
+@media screen and (max-width: 1400px) {
   tool-status-bar .icon-button__text {
     display: none;
   }
