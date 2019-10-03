@@ -294,6 +294,12 @@ export default class AutocompleteControl {
     this._input.id = this._id;
     this._input.classList.add("autoComplete_input");
     this._input.type = "text";
+    this._input.addEventListener("keydown", event => {
+      if (event.keyCode === 13) {
+        // Prevent the event from bubbling up if the enter key is pressed
+        event.preventDefault();
+      }
+    });
     this._container.appendChild(this._input);
     return this._container;
   }
