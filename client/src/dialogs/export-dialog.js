@@ -44,14 +44,14 @@ export class ExportDialog {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
     const response = await fetch(
-      `${QServerBaseUrl}/export-options-schema/${this.config.item.id}/${this.config.target.key}.json`
+      `${QServerBaseUrl}/display-options-schema/${this.config.item.id}/${this.config.target.key}.json`
     );
     if (!response.ok || !(response.status >= 200 && response.status < 400)) {
-      log.error("failed to load exportOptionsSchema");
+      log.error("failed to load displayOptionsSchema");
       return;
     }
     this.schema = await response.json();
-    this.exportOptions = this.objectFromSchemaGenerator.generateFromSchema(
+    this.displayOptions = this.objectFromSchemaGenerator.generateFromSchema(
       this.schema
     );
 
@@ -86,7 +86,7 @@ export class ExportDialog {
   fetchRenderingInfo({ forPreview }) {
     const toolRuntimeConfig = {
       isPure: true,
-      exportOptions: this.exportOptions
+      displayOptions: this.displayOptions
     };
 
     const target = forPreview
