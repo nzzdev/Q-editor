@@ -184,7 +184,13 @@ export class SchemaEditorGeojsonPoint {
           },
           destination: document.querySelector(`#${this.autoCompleteInputId}`),
           position: "afterend",
-          element: "ul"
+          element: "ul",
+          navigation: (event, resList, input) => {
+            // Focus the first result in the list, so it will be selected when pressing enter after search.
+            if (resList.children.length > 0) {
+              resList.children[0].focus();
+            }
+          }
         },
         maxResults: 5,
         resultItem: {
@@ -230,6 +236,12 @@ export class SchemaEditorGeojsonPoint {
       });
 
       document.getElementById(this.autoCompleteInputId).focus();
+      // Prevents scrolling on the page when inside of autocomplete container and pressing arrow up and down keys
+      document.querySelector(".autoComplete_container").onkeydown = event => {
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+          event.view.event.preventDefault();
+        }
+      };
     }
   }
 
@@ -294,6 +306,12 @@ export default class AutocompleteControl {
     this._input.id = this._id;
     this._input.classList.add("autoComplete_input");
     this._input.type = "text";
+    this._input.addEventListener("keydown", event => {
+      if (event.keyCode === 13) {
+        // Prevent the event from bubbling up if the enter key is pressed
+        event.preventDefault();
+      }
+    });
     this._container.appendChild(this._input);
     return this._container;
   }

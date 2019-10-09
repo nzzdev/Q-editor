@@ -8,7 +8,7 @@ System.config({
   },
   map: {
     "@mapbox/mapbox-gl-draw": "npm:@mapbox/mapbox-gl-draw@1.1.2",
-    "@tarekraafat/autocomplete.js": "npm:@tarekraafat/autocomplete.js@6.1.0",
+    "@tarekraafat/autocomplete.js": "npm:@tarekraafat/autocomplete.js@7.0.3",
     "@turf/bbox": "npm:@turf/bbox@6.0.1",
     "@turf/bbox-polygon": "npm:@turf/bbox-polygon@6.0.1",
     "@turf/helpers": "npm:@turf/helpers@6.1.4",
