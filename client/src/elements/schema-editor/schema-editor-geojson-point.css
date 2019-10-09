@@ -65,10 +65,12 @@ schema-editor-geojson-point .autoComplete_result {
   color: var(--q-color-gray-6);
 }
 
+schema-editor-geojson-point .autoComplete_result:focus,
 schema-editor-geojson-point .autoComplete_result:hover {
   background-color: var(--q-color-gray-3);
   text-decoration: none;
   cursor: pointer;
+  outline: none;
 }
 
 schema-editor-geojson-point .autoComplete_no-result {
