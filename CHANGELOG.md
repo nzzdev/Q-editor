@@ -1,3 +1,8 @@
+# 6.0.0 (09.10.2019)
+
+- feat: Q-server@9 changes the route /export-options-schema to /display-options-schema. Q-editor@6.0.0 export dialog is compatible with this.
+- use node@12 for the Docker container
+
 # 5.1.0 (03.10.2019)
 
 - feat: allow navigating between editor and item overview page directly using the back button (Q logo is in header on all pages, clicking it navigates to the index page)
