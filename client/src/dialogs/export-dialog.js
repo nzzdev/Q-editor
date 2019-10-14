@@ -127,8 +127,8 @@ export class ExportDialog {
       });
       let extension = "";
       const mimeInfo = this.mimeDb[exportRenderingInfo.type];
-      if (Array.isArray(mimeInfo.extensions.length)) {
-        extension = `.${mimeInfo.extension[0]}`;
+      if (Array.isArray(mimeInfo.extensions) && mimeInfo.extensions[0]) {
+        extension = `.${mimeInfo.extensions[0]}`;
       }
 
       let filename = `${this.slugify(this.config.item.conf.title)}-${
