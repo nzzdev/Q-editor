@@ -75,7 +75,7 @@ export function resolveDynamicEnum() {
       }
 
       log.info(
-        "DEPRECATION NOTICE: In Q editor 5.0 dynamicEnum support will be removed. Use dynamicSchema to implement to same functionality. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details."
+        "DEPRECATION NOTICE: In an upcoming major release of Q editor dynamicEnum support will be removed. Use dynamicSchema to implement to same functionality. See https://github.com/nzzdev/Q-editor/blob/master/README.md for details."
       );
 
       reevaluateCallbackId = toolEndpointChecker.registerReevaluateCallback(

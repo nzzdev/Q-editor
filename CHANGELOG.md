@@ -1,3 +1,7 @@
+# 6.0.1 (14.10.2019)
+
+- fix: correctly append extension to filename on export
+
 # 6.0.0 (09.10.2019)
 
 - feat: Q-server@9 changes the route /export-options-schema to /display-options-schema. Q-editor@6.0.0 export dialog is compatible with this.
