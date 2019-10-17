@@ -1,3 +1,7 @@
+# 6.1.0 (17.10.2019)
+
+- feat: use new display-options route in livingdocs-component which makes display-options more configurable
+
 # 6.0.1 (14.10.2019)
 
 - fix: correctly append extension to filename on export
