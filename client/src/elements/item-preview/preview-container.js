@@ -36,7 +36,7 @@ export class PreviewContainer {
     }
   }
 
-  renderingInfoChanged(renderingInfo) {
+  renderingInfoChanged() {
     this.showPreview(this.renderingInfo);
   }
 
@@ -66,6 +66,12 @@ export class PreviewContainer {
     }
 
     if (!renderingInfo) {
+      if (
+        this.imageElement &&
+        this.imageElement.parentNode === this.previewElement
+      ) {
+        this.previewElement.removeChild(this.imageElement);
+      }
       this.previewElement.innerHTML = "";
       return;
     }
@@ -75,9 +81,6 @@ export class PreviewContainer {
       // cleanup
       if (this.imageObjectURL) {
         URL.revokeObjectURL(this.imageObjectURL);
-      }
-      if (this.imageElement) {
-        this.previewElement.removeChild(this.imageElement);
       }
 
       // create new image element and append to preview
