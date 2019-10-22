@@ -1,3 +1,8 @@
+# 6.1.1 (22.10.2019)
+
+- fix: chaing the renderingInfo when using image type renderingInfo works in the preview-container now.
+- fix: add spacing between multiple export buttons on item overview page
+
 # 6.1.0 (17.10.2019)
 
 - feat: use new display-options route in livingdocs-component which makes display-options more configurable
