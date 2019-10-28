@@ -42,15 +42,12 @@ export class ToolSelection {
       // set the alwaysVisibleToolCount to the number of tools the user has checked as
       // visible initially
       this.alwaysVisibleToolCount = Object.keys(userToolSelectionConfig.tools)
-        .map(toolName => {
-          return isInInitialToolSelection(userToolSelectionConfig, toolName);
+        .filter(toolName => {
+          return this.tools.find(tool => tool.name === toolName); // only keep the tools that are available
         })
-        .reduce((amountVisibleTools, isToolVisible) => {
-          if (isToolVisible) {
-            return amountVisibleTools + 1;
-          }
-          return amountVisibleTools;
-        }, 0);
+        .filter(toolName => {
+          return isInInitialToolSelection(userToolSelectionConfig, toolName);
+        }).length;
 
       // sort the tools by their config value for inInitialToolSelection;
       this.visibleTools = this.tools.slice(0).sort((a, b) => {
