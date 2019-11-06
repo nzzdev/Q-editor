@@ -1,3 +1,7 @@
+# 6.1.3 (06.11.2019)
+
+- fix: preview not visible if too many displayOptions in livingdocs-component
+
 # 6.1.2 (28.10.2019)
 
 - fix: show only the selected tools also if the users config still contains tools that are not available anymore
