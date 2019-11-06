@@ -177,6 +177,11 @@ html {
   margin: var(--q-space-base) auto 0 auto;
 }
 
+.livingdocs-component-item-options-container {
+  overflow-y: auto;
+  max-height: 40vh;
+}
+
 .livingdocs-component-item-options {
   width: 200px;
 }
@@ -193,14 +198,6 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.livingdocs-component-item-controls-container {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 0;
-  flex-shrink: 0;
-  justify-content: flex-end;
 }
 
 .livingdocs-component-item-controls {
