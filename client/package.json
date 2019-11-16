@@ -35,7 +35,7 @@
     "require-dir": "^1.2.0",
     "run-sequence": "^2.2.1",
     "vinyl-paths": "^3.0.0",
-    "yargs": "^14.0.0"
+    "yargs": "^15.0.1"
   },
   "greenkeeper": {
     "ignore": [
