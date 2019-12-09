@@ -1,6 +1,6 @@
 item-preview {
   --q-preview-min-height: 568px;
-  --q-preview-padding: calc(var(--q-space-base) * 2);
+  --q-preview-padding: calc(var(--q-space-base) * 3);
   --q-preview-settings-margin-bottom: calc(var(--q-space-base) * 2);
   display: block;
   position: relative;
