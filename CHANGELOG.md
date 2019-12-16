@@ -1,3 +1,7 @@
+# 6.1.4 (16.12.2019)
+
+- feat: change preview padding from 16px to 24px
+
 # 6.1.3 (06.11.2019)
 
 - fix: preview not visible if too many displayOptions in livingdocs-component
