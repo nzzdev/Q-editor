@@ -10,9 +10,9 @@ export default class ToolEndpointChecker {
     this.currentItemProvider = currentItemProvider;
   }
 
-  triggerReevaluation() {
+  async triggerReevaluation() {
     for (let cb of this.reevaluateCallbacks) {
-      cb();
+      await cb();
     }
   }
 

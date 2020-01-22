@@ -1,3 +1,9 @@
+# 6.2.0 (22.01.2020)
+
+- feat: awaits ToolEndpointChecks before rendering the preview
+- feat: `schema-editor-bbox` takes an optional bounds property
+- feat: `schema-editor-geojson` increases search input debounce value to one second
+
 # 6.1.4 (16.12.2019)
 
 - feat: change preview padding from 16px to 24px

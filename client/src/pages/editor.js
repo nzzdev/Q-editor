@@ -208,21 +208,21 @@ export class Editor {
     }
   }
 
-  triggerReevaluations() {
+  async triggerReevaluations() {
     // emtpy the notifications as we will get new ones
     this.editorNotifications = [];
     this.optionsNotifications = [];
     this.availabilityChecker.triggerReevaluation();
     this.notificationChecker.triggerReevaluation();
-    this.toolEndpointChecker.triggerReevaluation();
+    await this.toolEndpointChecker.triggerReevaluation();
   }
 
-  handleChange() {
-    this.taskQueue.queueMicroTask(() => {
+  async handleChange() {
+    this.taskQueue.queueMicroTask(async () => {
       this.item.changed();
 
       // whenever we have a change in data, we need to reevaluate all the checks...
-      this.triggerReevaluations();
+      await this.triggerReevaluations();
       // ... and update thte previewData to fetch new renderingInfo from the tool
       this.previewData = JSON.parse(JSON.stringify(this.item.conf));
     });

@@ -71,11 +71,18 @@ export class SchemaEditorBbox {
     if (schemaEditorConfig.shared.map.accessToken) {
       mapboxgl.accessToken = schemaEditorConfig.shared.map.accessToken;
     }
-    this.map = new mapboxgl.Map({
+
+    const options = {
       container: this.mapContainer,
       style: schemaEditorConfig.shared.map.style,
-      maxZoom: schemaEditorConfig.shared.map.maxZoom
-    });
+      maxZoom: schemaEditorConfig.shared.map.maxZoom,
+      fitBoundsOptions: { padding: 60, duration: 0 }
+    };
+
+    if (this.schema.bounds) {
+      options.bounds = this.schema.bounds;
+    }
+    this.map = new mapboxgl.Map(options);
 
     this.map.addControl(
       new mapboxgl.NavigationControl({ showCompass: false }),
@@ -116,7 +123,10 @@ export class SchemaEditorBbox {
     this.map.on("draw.update", event => {
       this.data = bbox(event.features[0]);
       this.map.fitBounds(
-        [[this.data[0], this.data[1]], [this.data[2], this.data[3]]],
+        [
+          [this.data[0], this.data[1]],
+          [this.data[2], this.data[3]]
+        ],
         { padding: 60, duration: 0 }
       );
     });
@@ -158,7 +168,10 @@ export class SchemaEditorBbox {
     }
     this.MapboxDraw.set(bboxFeatureCollection);
     this.map.fitBounds(
-      [[this.data[0], this.data[1]], [this.data[2], this.data[3]]],
+      [
+        [this.data[0], this.data[1]],
+        [this.data[2], this.data[3]]
+      ],
       { padding: 60, duration: 0 }
     );
   }
