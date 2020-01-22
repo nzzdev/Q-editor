@@ -8,7 +8,7 @@ export class SchemaEditorDialogImplementation {
   }
 
   activate(config) {
-    this.config = config;
+    this.config = JSON.parse(JSON.stringify(config));
     // The openInDialog option needs to be deleted so the schema-editor renders the correct type. Otherwise it would just render the openInDialog button again.
     delete this.config.schema["Q:options"].openInDialog;
   }
