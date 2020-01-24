@@ -205,7 +205,7 @@ export class SchemaEditorGeojsonPoint {
         },
         placeHolder: "Suche",
         selector: `#${this.autoCompleteInputId}`,
-        debounce: 1000,
+        debounce: 800,
         searchEngine: "strict",
         resultsList: {
           render: true,
