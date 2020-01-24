@@ -1,9 +1,15 @@
-import { bindable, inject, Loader, LogManager } from "aurelia-framework";
+import {
+  BindingEngine,
+  bindable,
+  inject,
+  Loader,
+  LogManager
+} from "aurelia-framework";
 import QConfig from "resources/QConfig";
 import { isRequired } from "./helpers.js";
 
 const log = LogManager.getLogger("Q");
-@inject(QConfig, Loader)
+@inject(BindingEngine, QConfig, Loader)
 export class SchemaEditorGeojsonPoint {
   @bindable
   schema;
@@ -18,10 +24,36 @@ export class SchemaEditorGeojsonPoint {
     bbox: false
   };
 
-  constructor(qConfig, loader) {
+  constructor(bindingEngine, qConfig, loader) {
+    this.bindingEngine = bindingEngine;
     this.qConfig = qConfig;
     this.loader = loader;
     this.isRequired = isRequired;
+  }
+
+  // Observe required properties coordinates[0] and coordinates[1] and trigger dataChanged event when their value changes
+  // Binding behaviour can only handle changes of primitive values (strings, numbers ect.) not properties of objects
+  // therefore this special handling is needed. More infos: https://aurelia.io/docs/binding/binding-engine#observing-an-expression-on-an-object
+  bind() {
+    this.coordinatesZeroSub = this.bindingEngine
+      .expressionObserver(this, "data.geometry.coordinates[0]")
+      .subscribe((newValue, oldValue) => {
+        this.triggerDataChanged();
+      });
+    this.coordinatesOneSub = this.bindingEngine
+      .expressionObserver(this, "data.geometry.coordinates[1]")
+      .subscribe((newValue, oldValue) => {
+        this.triggerDataChanged();
+      });
+  }
+
+  triggerDataChanged() {
+    this.data = JSON.parse(JSON.stringify(this.data));
+  }
+
+  detached() {
+    this.coordinatesZeroSub.dispose();
+    this.coordinatesOneSub.dispose();
   }
 
   async schemaChanged() {
@@ -173,7 +205,7 @@ export class SchemaEditorGeojsonPoint {
         },
         placeHolder: "Suche",
         selector: `#${this.autoCompleteInputId}`,
-        debounce: 1000,
+        debounce: 800,
         searchEngine: "strict",
         resultsList: {
           render: true,
@@ -270,6 +302,7 @@ export class SchemaEditorGeojsonPoint {
   }
 
   updateMarker() {
+    this.triggerDataChanged();
     const coordinates = this.data.geometry.coordinates;
     if (!this.marker) {
       this.marker = this.getMarker(coordinates);

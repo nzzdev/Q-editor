@@ -1,3 +1,7 @@
+# 6.2.1 (24.01.2020)
+
+- fix: (schema-editor-geojson-point) Implement change detection of coordinate property
+
 # 6.2.0 (22.01.2020)
 
 - feat: awaits ToolEndpointChecks before rendering the preview
