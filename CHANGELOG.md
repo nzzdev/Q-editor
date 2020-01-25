@@ -1,3 +1,7 @@
+# 6.2.2 (25.01.2020)
+
+- fix: (editor-page) If item id is not available yet, back button should point to index page
+
 # 6.2.1 (24.01.2020)
 
 - fix: (schema-editor-geojson-point) Implement change detection of coordinate property
