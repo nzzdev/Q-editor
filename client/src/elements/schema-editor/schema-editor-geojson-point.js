@@ -146,25 +146,21 @@ export class SchemaEditorGeojsonPoint {
       }
     });
 
-    if (!schemaEditorConfig.shared.opencagedata.apiKey) {
+    if (!schemaEditorConfig.shared.geocoder.key) {
       log.error(
-        "no opencageApiKey given, will not load geocoder for geojson-point editor"
+        "no geocoder key given, will not load geocoder for geojson-point editor"
       );
     } else {
-      // if window.Autocomplete is not defined, we load it async here using the aurelia loader
-      if (!window.Autocomplete) {
+      // if window.autocompleter is not defined, we load it async here using the aurelia loader
+      if (!window.autocompleter) {
         try {
-          window.Autocomplete = await this.loader.loadModule(
-            "@tarekraafat/autocomplete.js"
-          );
+          window.autocompleter = await this.loader.loadModule("autocompleter");
         } catch (e) {
           log.error(e);
         }
       }
-      if (!window.Autocomplete) {
-        log.error(
-          "window.Autocomplete is not defined after loading @tarekraafat/autocomplete.js"
-        );
+      if (!window.autocompleter) {
+        log.error("window.autocompleter is not defined");
         this.showLoadingError = true;
         return;
       }
@@ -172,109 +168,74 @@ export class SchemaEditorGeojsonPoint {
       this.autoCompleteInputId = `autoComplete_input_${Math.floor(
         Math.random() * 100000
       )}`;
-      this.autoCompleteResultsListId = `autoComplete_results_list_${Math.floor(
-        Math.random() * 100000
-      )}`;
       this.map.addControl(
         new AutocompleteControl({ id: this.autoCompleteInputId }),
         "top-right"
       );
 
-      this.autocomplete = new Autocomplete({
-        data: {
-          src: async () => {
-            const query = document.querySelector(`#${this.autoCompleteInputId}`)
-              .value;
-            const response = await fetch(
-              `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${schemaEditorConfig.shared.opencagedata.apiKey}&language=${schemaEditorConfig.shared.opencagedata.language}&abbrv=1`
-            );
-            if (response.ok) {
-              const json = await response.json();
-              return json.features.map(feature => {
-                return {
-                  label: feature.properties.formatted,
-                  geometry: feature.geometry,
-                  properties: feature.properties
-                };
-              });
-            }
-            return [];
-          },
-          key: ["label"],
-          cache: false
+      this.autoCompleteInput = document.querySelector(
+        `#${this.autoCompleteInputId}`
+      );
+      this.autoCompleteInput.focus();
+
+      this.autocomplete = window.autocompleter({
+        input: this.autoCompleteInput,
+        emptyMsg: "Keine Resultate gefunden",
+        minLength: 2,
+        debounceWaitMs: 500,
+        className: "autoComplete_results",
+        fetch: (text, update) => {
+          this.autoCompleteInput.classList.add("working");
+          this.geocode(text, schemaEditorConfig.shared.geocoder.key)
+            .then(results => {
+              this.autoCompleteInput.classList.remove("working");
+              update(results.features.slice(0, 5));
+            })
+            .catch(e => {
+              console.error("Geocoding error:", e);
+              this.autoCompleteInput.classList.remove("working");
+            });
         },
-        placeHolder: "Suche",
-        selector: `#${this.autoCompleteInputId}`,
-        debounce: 800,
-        searchEngine: "strict",
-        resultsList: {
-          render: true,
-          container: source => {
-            source.classList.add("autoComplete_results_list");
-            source.id = this.autoCompleteResultsListId;
-            return source;
-          },
-          destination: document.querySelector(`#${this.autoCompleteInputId}`),
-          position: "afterend",
-          element: "ul",
-          navigation: (event, resList, input) => {
-            // Focus the first result in the list, so it will be selected when pressing enter after search.
-            if (resList.children.length > 0) {
-              resList.children[0].focus();
-            }
-          }
-        },
-        maxResults: 5,
-        resultItem: {
-          content: (data, source) => {
-            source.innerHTML = data.match;
-          },
-          element: "li"
-        },
-        noResults: () => {
-          const result = document.createElement("li");
-          result.setAttribute("class", "autoComplete_no-result");
-          result.setAttribute("tabindex", "1");
-          result.innerHTML = "Keine Resultate gefunden";
-          document
-            .querySelector(`#${this.autoCompleteResultsListId}`)
-            .appendChild(result);
-        },
-        onSelection: event => {
-          const selection = event.selection.value;
-          this.data.geometry = selection.geometry;
-          try {
-            if (
-              selection.properties.components[
-                selection.properties.components._type
-              ]
-            ) {
-              this.data.properties.label =
-                selection.properties.components[
-                  selection.properties.components._type
-                ];
-            } else {
-              throw new Error("property not available");
-            }
-          } catch (e) {
-            this.data.properties.label = selection.properties.formatted;
-          }
+        onSelect: item => {
+          this.autoCompleteInput.value = "";
+          this.data.geometry.coordinates = item.center;
+          this.data.properties.label = item.text;
           this.updateMarker();
           if (this.options.bbox === "manual") {
             this.updateBBox();
           }
-          document.querySelector(`#${this.autoCompleteInputId}`).value = "";
+        },
+        render: (item, currentValue) => {
+          let name = item.text || item.place_name;
+          let context = item.context
+            ? item.context.map(c => c.text).join(", ")
+            : "";
+
+          let nameElement = document.createElement("span");
+          nameElement.className = "item-name";
+          nameElement.textContent = name;
+
+          let contextElement = document.createElement("span");
+          contextElement.className = "item-context";
+          contextElement.textContent = context;
+
+          let typeElement = document.createElement("span");
+          typeElement.className = "item-type";
+          typeElement.textContent = item.place_type;
+
+          const itemElement = document.createElement("div");
+          itemElement.append(nameElement, typeElement, contextElement);
+
+          return itemElement;
         }
       });
-
-      document.getElementById(this.autoCompleteInputId).focus();
-      // Prevents scrolling on the page when inside of autocomplete container and pressing arrow up and down keys
-      document.querySelector(".autoComplete_container").onkeydown = event => {
-        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
-          event.view.event.preventDefault();
-        }
-      };
     }
+  }
+
+  geocode(query, key) {
+    return fetch(
+      `https://api.maptiler.com/geocoding/${query}.json?key=${key}`
+    ).then(response => response.json());
   }
 
   // Returns a new marker that is draggable
@@ -345,6 +306,8 @@ export default class AutocompleteControl {
         event.preventDefault();
       }
     });
+    this._input.autocomplete = "off";
+    this._input.placeholder = "Suche";
     this._container.appendChild(this._input);
     return this._container;
   }
