@@ -1,3 +1,7 @@
+# 6.2.3 (30.01.2020)
+
+- feat: (schema-editor-geojson-point) Use maptiler geocoder
+
 # 6.2.2 (25.01.2020)
 
 - fix: (editor-page) If item id is not available yet, back button should point to index page
