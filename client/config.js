@@ -8,7 +8,6 @@ System.config({
   },
   map: {
     "@mapbox/mapbox-gl-draw": "npm:@mapbox/mapbox-gl-draw@1.1.2",
-    "@tarekraafat/autocomplete.js": "npm:@tarekraafat/autocomplete.js@7.0.3",
     "@turf/bbox": "npm:@turf/bbox@6.0.1",
     "@turf/bbox-polygon": "npm:@turf/bbox-polygon@6.0.1",
     "@turf/helpers": "npm:@turf/helpers@6.1.4",
@@ -42,6 +41,7 @@ System.config({
     "aurelia-templating-resources": "npm:aurelia-templating-resources@1.12.0",
     "aurelia-templating-router": "npm:aurelia-templating-router@1.4.0",
     "aurelia-testing": "npm:aurelia-testing@1.0.0",
+    "autocompleter": "npm:autocompleter@6.0.1",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "codemirror": "npm:codemirror@5.49.0",
