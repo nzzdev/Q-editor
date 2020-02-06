@@ -1,3 +1,7 @@
+# 6.2.4 (06.02.2020)
+
+- fix: (schema-editor-select) Show select/radio only if enum has elements
+
 # 6.2.3 (30.01.2020)
 
 - feat: (schema-editor-geojson-point) Use maptiler geocoder
