@@ -1,3 +1,7 @@
+# 6.2.4 (19.02.2020)
+
+- fix: Use patched version of handsontable
+
 # 6.2.3 (30.01.2020)
 
 - feat: (schema-editor-geojson-point) Use maptiler geocoder
