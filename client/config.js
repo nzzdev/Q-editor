@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   map: {
     "@mapbox/mapbox-gl-draw": "npm:@mapbox/mapbox-gl-draw@1.1.2",
     "@turf/bbox": "npm:@turf/bbox@6.0.1",
@@ -50,7 +51,7 @@ System.config({
     "dropzone": "npm:dropzone@5.5.1",
     "file-saver": "npm:file-saver@2.0.2",
     "get-value": "npm:get-value@3.0.1",
-    "handsontable": "github:handsontable/handsontable@6.2.2",
+    "handsontable": "github:nzzdev/handsontable@6.2.2-fix-excel-copy-paste",
     "i18next": "npm:i18next@9.1.0",
     "i18next-fetch-backend": "npm:i18next-fetch-backend@0.0.1",
     "mapbox-gl": "npm:mapbox-gl@1.3.1",
