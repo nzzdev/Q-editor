@@ -1,3 +1,7 @@
+# 6.2.5 (29.04.2020)
+
+- fix: Preview loads item twice on page load of item overview page
+
 # 6.2.4 (19.02.2020)
 
 - fix: Use patched version of handsontable
