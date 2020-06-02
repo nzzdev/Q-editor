@@ -1,3 +1,7 @@
+# 6.2.6 (02.06.2020)
+
+- fix: Options are not applied in geojson and bbox schema-editor components
+
 # 6.2.5 (29.04.2020)
 
 - fix: Preview loads item twice on page load of item overview page
