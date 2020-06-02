@@ -21,7 +21,6 @@ script:
   - cd client
   - npm install
   - jspm install
-  - gulp lint
   - gulp export
   - cd .. ;
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then docker build -t $DOCKER_IMAGE_NAME:$DOCKER_TAG .; fi'
