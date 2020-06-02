@@ -24,10 +24,6 @@ export class SchemaEditorBbox {
 
   options = {};
 
-  async schemaChanged() {
-    this.applyOptions();
-  }
-
   applyOptions() {
     if (!this.schema) {
       return;
@@ -44,6 +40,7 @@ export class SchemaEditorBbox {
   }
 
   async attached() {
+    this.applyOptions();
     const schemaEditorConfig = await this.qConfig.get("schemaEditor");
     this.showLoadingError = false;
 
@@ -76,7 +73,7 @@ export class SchemaEditorBbox {
       container: this.mapContainer,
       style: schemaEditorConfig.shared.map.style,
       maxZoom: schemaEditorConfig.shared.map.maxZoom,
-      fitBoundsOptions: { padding: 60, duration: 0 }
+      fitBoundsOptions: { padding: 60, duration: 0 },
     };
 
     if (this.schema.bounds) {
@@ -115,22 +112,22 @@ export class SchemaEditorBbox {
     this.MapboxDraw = new MapboxDraw({
       displayControlsDefault: false,
       controls: {
-        trash: true
-      }
+        trash: true,
+      },
     });
     this.map.addControl(this.MapboxDraw);
     this.map.on("mousedown", this.mouseDown.bind(this));
-    this.map.on("draw.update", event => {
+    this.map.on("draw.update", (event) => {
       this.data = bbox(event.features[0]);
       this.map.fitBounds(
         [
           [this.data[0], this.data[1]],
-          [this.data[2], this.data[3]]
+          [this.data[2], this.data[3]],
         ],
         { padding: 60, duration: 0 }
       );
     });
-    this.map.on("draw.delete", event => {
+    this.map.on("draw.delete", (event) => {
       this.data = [];
     });
 
@@ -157,7 +154,7 @@ export class SchemaEditorBbox {
       this.start.lng,
       this.start.lat,
       event.lngLat.lng,
-      event.lngLat.lat
+      event.lngLat.lat,
     ]);
   }
 
@@ -170,7 +167,7 @@ export class SchemaEditorBbox {
     this.map.fitBounds(
       [
         [this.data[0], this.data[1]],
-        [this.data[2], this.data[3]]
+        [this.data[2], this.data[3]],
       ],
       { padding: 60, duration: 0 }
     );
