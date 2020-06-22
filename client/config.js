@@ -6,7 +6,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-
   map: {
     "@mapbox/mapbox-gl-draw": "npm:@mapbox/mapbox-gl-draw@1.1.2",
     "@turf/bbox": "npm:@turf/bbox@6.0.1",
