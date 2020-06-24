@@ -208,6 +208,26 @@ export class SchemaEditorTable {
     this.applyOptions();
   }
 
+  isOverwritingAllowed(predefinedContent) {
+    if (predefinedContent.type === "column") {
+      array2d.eachColumn(this.data, (column, index) => {
+        if (hasNonNullInArray(column) && index !== predefinedContent.index) {
+          return false;
+        }
+      });
+      return true;
+    } else if (predefinedContent.type === "row") {
+      array2d.eachRow(this.data, (row, index) => {
+        if (hasNonNullInArray(row) && index !== predefinedContent.index) {
+          return false;
+        }
+      });
+
+      return true;
+    }
+    return false;
+  }
+
   applyOptions() {
     if (!this.schema) {
       return;
@@ -216,19 +236,13 @@ export class SchemaEditorTable {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
 
       if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
-        const predefinedValues = this.schema["Q:options"].predefinedContent
-          .values;
-        if (predefinedValues) {
-          let lastColumnWithValues = 0;
-          array2d.eachColumn(this.data, (column, index) => {
-            if (hasNonNullInArray(column)) {
-              lastColumnWithValues = index;
-            }
-          });
-          if (lastColumnWithValues === 0) {
-            this.setData(predefinedValues);
-            this.reloadHotData();
-          }
+        const predefinedContent = this.schema["Q:options"].predefinedContent;
+        if (
+          predefinedContent.values &&
+          this.isOverwritingAllowed(predefinedContent)
+        ) {
+          this.setData(predefinedContent.values);
+          this.reloadHotData();
         }
       }
     }
@@ -266,18 +280,13 @@ export class SchemaEditorTable {
         const cellProperties = {};
         if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
           const predefinedContent = this.schema["Q:options"].predefinedContent;
-          if (predefinedContent.readOnly) {
-            if (
-              (predefinedContent.type === "column" &&
-                col === predefinedContent.index) ||
-              (predefinedContent.type === "row" &&
-                row === predefinedContent.index) ||
-              (predefinedContent.type === "cell" &&
-                row === predefinedContent.index[0] &&
-                col === predefinedContent.index[1])
-            ) {
-              cellProperties.readOnly = true;
-            }
+          if (
+            (predefinedContent.type === "column" &&
+              col === predefinedContent.index) ||
+            (predefinedContent.type === "row" &&
+              row === predefinedContent.index)
+          ) {
+            cellProperties.readOnly = true;
           }
         }
         return cellProperties;
