@@ -268,21 +268,13 @@ export class SchemaEditorTable {
           const predefinedContent = this.schema["Q:options"].predefinedContent;
           if (predefinedContent.readOnly) {
             if (
-              predefinedContent.type === "column" &&
-              col === predefinedContent.index
-            ) {
-              cellProperties.readOnly = true;
-            }
-            if (
-              predefinedContent.type === "row" &&
-              row === predefinedContent.index
-            ) {
-              cellProperties.readOnly = true;
-            }
-            if (
-              predefinedContent.type === "cell" &&
-              col === predefinedContent.index[0] &&
-              row === predefinedContent.index[1]
+              (predefinedContent.type === "column" &&
+                col === predefinedContent.index) ||
+              (predefinedContent.type === "row" &&
+                row === predefinedContent.index) ||
+              (predefinedContent.type === "cell" &&
+                row === predefinedContent.index[0] &&
+                col === predefinedContent.index[1])
             ) {
               cellProperties.readOnly = true;
             }
