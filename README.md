@@ -1,4 +1,4 @@
-# Q Editor [![Build Status](https://travis-ci.com/nzzdev/Q-editor.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-editor) [![Greenkeeper badge](https://badges.greenkeeper.io/nzzdev/Q-editor.svg)](https://greenkeeper.io/)
+# Q Editor [![Build Status](https://travis-ci.com/nzzdev/Q-editor.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-editor)
 
 **Maintainer**: [manuelroth](https://github.com/manuelroth)
 
@@ -24,7 +24,6 @@ Demo: https://editor.q.tools
 git clone git@github.com:nzzdev/Q-editor.git
 cd ./Q-editor
 npm install
-npm run build
 ```
 
 ## Configuration
@@ -351,13 +350,12 @@ You need [Node.js](https://nodejs.org/) and `npm`.
 When you have this installed running the following commands in the root of this project should give you a working environment.
 
 ```
-npm install -g jspm
 cd client
 npm install
-jspm install
+npx jspm install
 ```
 
-After that you can start a live reloading webserver by running `gulp watch` within the folder `client`.
+After that you can start a live reloading webserver by running `npx gulp watch` within the folder `client`.
 
 ## Testing
 
@@ -392,6 +390,6 @@ If you choose to build your own docker image or deploy it some other way make su
 
 ## License
 
-Copyright (c) 2019 Neue Zürcher Zeitung. All rights reserved.
+Copyright (c) 2020 Neue Zürcher Zeitung. All rights reserved.
 
 This software is published under the MIT license.

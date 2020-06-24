@@ -155,10 +155,6 @@ export class ItemPreview {
     }
   }
 
-  attached() {
-    this.loadPreview();
-  }
-
   getCurrentSizeOption() {
     return this.sizeOptions.find(option => {
       return option.value === this.previewWidthProxy.width;

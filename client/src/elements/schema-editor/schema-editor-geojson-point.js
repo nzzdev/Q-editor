@@ -3,7 +3,7 @@ import {
   bindable,
   inject,
   Loader,
-  LogManager
+  LogManager,
 } from "aurelia-framework";
 import QConfig from "resources/QConfig";
 import { isRequired } from "./helpers.js";
@@ -21,7 +21,7 @@ export class SchemaEditorGeojsonPoint {
   showNotifications;
 
   options = {
-    bbox: false
+    bbox: false,
   };
 
   constructor(bindingEngine, qConfig, loader) {
@@ -56,10 +56,6 @@ export class SchemaEditorGeojsonPoint {
     this.coordinatesOneSub.dispose();
   }
 
-  async schemaChanged() {
-    this.applyOptions();
-  }
-
   applyOptions() {
     if (!this.schema) {
       return;
@@ -70,6 +66,7 @@ export class SchemaEditorGeojsonPoint {
   }
 
   async attached() {
+    this.applyOptions();
     const schemaEditorConfig = await this.qConfig.get("schemaEditor");
     this.showLoadingError = false;
 
@@ -101,7 +98,7 @@ export class SchemaEditorGeojsonPoint {
       style: schemaEditorConfig.shared.map.style,
       center: schemaEditorConfig.shared.map.center,
       zoom: schemaEditorConfig.shared.map.zoom,
-      maxZoom: schemaEditorConfig.shared.map.maxZoom
+      maxZoom: schemaEditorConfig.shared.map.maxZoom,
     });
 
     this.map.addControl(
@@ -130,13 +127,13 @@ export class SchemaEditorGeojsonPoint {
     }
 
     if (this.options.bbox === "manual") {
-      this.map.on("mouseout", event => {
+      this.map.on("mouseout", (event) => {
         this.updateBBox();
       });
     }
 
     // Add marker to the clicked area
-    this.map.on("click", event => {
+    this.map.on("click", (event) => {
       if (!this.marker) {
         this.data.geometry.coordinates = [event.lngLat.lng, event.lngLat.lat];
         this.updateMarker();
@@ -187,16 +184,16 @@ export class SchemaEditorGeojsonPoint {
         fetch: (text, update) => {
           this.autoCompleteInput.classList.add("working");
           this.geocode(text, schemaEditorConfig.shared.geocoder.key)
-            .then(results => {
+            .then((results) => {
               this.autoCompleteInput.classList.remove("working");
               update(results.features.slice(0, 5));
             })
-            .catch(e => {
+            .catch((e) => {
               console.error("Geocoding error:", e);
               this.autoCompleteInput.classList.remove("working");
             });
         },
-        onSelect: item => {
+        onSelect: (item) => {
           this.autoCompleteInput.value = "";
           this.data.geometry.coordinates = item.center;
           this.data.properties.label = item.text;
@@ -208,7 +205,7 @@ export class SchemaEditorGeojsonPoint {
         render: (item, currentValue) => {
           let name = item.text || item.place_name;
           let context = item.context
-            ? item.context.map(c => c.text).join(", ")
+            ? item.context.map((c) => c.text).join(", ")
             : "";
 
           let nameElement = document.createElement("span");
@@ -227,7 +224,7 @@ export class SchemaEditorGeojsonPoint {
           itemElement.append(nameElement, typeElement, contextElement);
 
           return itemElement;
-        }
+        },
       });
     }
   }
@@ -235,13 +232,13 @@ export class SchemaEditorGeojsonPoint {
   geocode(query, key) {
     return fetch(
       `https://api.maptiler.com/geocoding/${query}.json?key=${key}`
-    ).then(response => response.json());
+    ).then((response) => response.json());
   }
 
   // Returns a new marker that is draggable
   getMarker(coordinates) {
     const marker = new mapboxgl.Marker({
-      draggable: true
+      draggable: true,
     })
       .setLngLat(coordinates)
       .addTo(this.map);
@@ -249,7 +246,7 @@ export class SchemaEditorGeojsonPoint {
     marker.on("dragend", () => {
       this.data.geometry.coordinates = [
         this.marker.getLngLat().lng,
-        this.marker.getLngLat().lat
+        this.marker.getLngLat().lat,
       ];
       if (this.options.bbox === "manual") {
         this.updateBBox();
@@ -300,7 +297,7 @@ export default class AutocompleteControl {
     this._input.id = this._id;
     this._input.classList.add("autoComplete_input");
     this._input.type = "text";
-    this._input.addEventListener("keydown", event => {
+    this._input.addEventListener("keydown", (event) => {
       if (event.keyCode === 13) {
         // Prevent the event from bubbling up if the enter key is pressed
         event.preventDefault();
