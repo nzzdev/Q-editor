@@ -210,20 +210,22 @@ export class SchemaEditorTable {
 
   isOverwritingAllowed(predefinedContent) {
     if (predefinedContent.type === "column") {
+      let columnsWithValues = [];
       array2d.eachColumn(this.data, (column, index) => {
         if (hasNonNullInArray(column) && index !== predefinedContent.index) {
-          return false;
+          columnsWithValues.push(index);
         }
       });
-      return true;
+      return columnsWithValues.length === 0;
     } else if (predefinedContent.type === "row") {
+      let rowsWithValues = [];
       array2d.eachRow(this.data, (row, index) => {
         if (hasNonNullInArray(row) && index !== predefinedContent.index) {
-          return false;
+          rowsWithValues.push(index);
         }
       });
 
-      return true;
+      return rowsWithValues.length === 0;
     }
     return false;
   }
@@ -237,6 +239,8 @@ export class SchemaEditorTable {
 
       if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
         const predefinedContent = this.schema["Q:options"].predefinedContent;
+        console.log(predefinedContent.values);
+        console.log(this.isOverwritingAllowed(predefinedContent));
         if (
           predefinedContent.values &&
           this.isOverwritingAllowed(predefinedContent)
