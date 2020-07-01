@@ -239,8 +239,6 @@ export class SchemaEditorTable {
 
       if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
         const predefinedContent = this.schema["Q:options"].predefinedContent;
-        console.log(predefinedContent.values);
-        console.log(this.isOverwritingAllowed(predefinedContent));
         if (
           predefinedContent.values &&
           this.isOverwritingAllowed(predefinedContent)
