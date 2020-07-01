@@ -212,6 +212,7 @@ export class SchemaEditorTable {
     if (predefinedContent.type === "column") {
       let columnsWithValues = [];
       array2d.eachColumn(this.data, (column, index) => {
+        column = column.splice(1); // we exclude the header row for that check
         if (hasNonNullInArray(column) && index !== predefinedContent.index) {
           columnsWithValues.push(index);
         }
