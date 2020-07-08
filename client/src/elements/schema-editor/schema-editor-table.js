@@ -209,26 +209,38 @@ export class SchemaEditorTable {
   }
 
   isOverwritingAllowed(predefinedContent) {
-    if (predefinedContent.type === "column") {
-      let columnsWithValues = [];
-      array2d.eachColumn(this.data, (column, index) => {
-        column = column.splice(1); // we exclude the header row for that check
-        if (hasNonNullInArray(column) && index !== predefinedContent.index) {
-          columnsWithValues.push(index);
-        }
-      });
-      return columnsWithValues.length === 0;
-    } else if (predefinedContent.type === "row") {
-      let rowsWithValues = [];
-      array2d.eachRow(this.data, (row, index) => {
-        if (hasNonNullInArray(row) && index !== predefinedContent.index) {
-          rowsWithValues.push(index);
-        }
-      });
-
-      return rowsWithValues.length === 0;
+    if (!predefinedContent.protectOverwrites) {
+      return true;
     }
-    return false;
+
+    let hasNonPredefinedData = false;
+    const predefinedValues = predefinedContent.data;
+
+    array2d.eachCell(this.data, (cell, i, j) => {
+      // if overwrites are protected we check if there are values in cells
+      // which are not cells with predefined content and block overwrites in that case
+      if (cell !== undefined && cell !== null && cell !== "") {
+        const predefinedRow = predefinedValues[i];
+        if (predefinedRow) {
+          const predefinedCell = predefinedRow[j];
+          if (!predefinedCell) {
+            hasNonPredefinedData = true;
+          }
+        } else {
+          hasNonPredefinedData = true;
+        }
+      }
+    });
+    return !hasNonPredefinedData;
+  }
+
+  getValuesFromPredefinedContent(content) {
+    array2d.eachCell(content, (cell, i, j) => {
+      if (typeof cell === "object" && cell !== null) {
+        content[i][j] = cell.value;
+      }
+    });
+    return content;
   }
 
   applyOptions() {
@@ -240,11 +252,12 @@ export class SchemaEditorTable {
 
       if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
         const predefinedContent = this.schema["Q:options"].predefinedContent;
-        if (
-          predefinedContent.values &&
-          this.isOverwritingAllowed(predefinedContent)
-        ) {
-          this.setData(predefinedContent.values);
+
+        if (this.isOverwritingAllowed(predefinedContent)) {
+          const predefinedValues = this.getValuesFromPredefinedContent(
+            predefinedContent.data
+          );
+          this.setData(predefinedValues);
           this.reloadHotData();
         }
       }
@@ -282,15 +295,21 @@ export class SchemaEditorTable {
       cells: (row, col, prop) => {
         const cellProperties = {};
         if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
-          const predefinedContent = this.schema["Q:options"].predefinedContent;
-          if (
-            (predefinedContent.type === "column" &&
-              col === predefinedContent.index) ||
-            (predefinedContent.type === "row" &&
-              row === predefinedContent.index)
-          ) {
-            cellProperties.readOnly = true;
-          }
+          const predefinedContent = this.schema["Q:options"].predefinedContent
+            .data;
+          if (predefinedContent) {
+            try {
+              const predefinedCell = predefinedContent[row][col];
+              if (
+                predefinedCell !== undefined &&
+                predefinedCell !== null &&
+                typeof predefinedCell === "object" &&
+                predefinedCell.readOnly
+              ) {
+                cellProperties.readOnly = true;
+              }
+            } catch (ignore) {}
+          } // if anything goes wrong we just do not set the cell readonly
         }
         return cellProperties;
       },
