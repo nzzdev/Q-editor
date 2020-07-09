@@ -209,7 +209,7 @@ export class SchemaEditorTable {
   }
 
   isOverwritingAllowed(predefinedContent) {
-    if (!predefinedContent.protectOverwrites) {
+    if (predefinedContent.allowOverwrites) {
       return true;
     }
 
@@ -217,7 +217,7 @@ export class SchemaEditorTable {
     const predefinedValues = predefinedContent.data;
 
     array2d.eachCell(this.data, (cell, i, j) => {
-      // if overwrites are protected we check if there are values in cells
+      // if overwrites are not allowed per default we check if there are values in cells
       // which are not cells with predefined content and block overwrites in that case
       if (cell !== undefined && cell !== null && cell !== "") {
         const predefinedRow = predefinedValues[i];
