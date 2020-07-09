@@ -58,9 +58,7 @@ export class SchemaEditorWrapper {
     if (this.options.dynamicSchema && !this.reevaluateDynamicSchemaCallback) {
       if (this.options.dynamicSchema.type !== "ToolEndpoint") {
         throw new Error(
-          `${
-            this.options.dynamicSchema.type
-          } is not implemented as dynamicSchema type`
+          `${this.options.dynamicSchema.type} is not implemented as dynamicSchema type`
         );
       }
       this.applyDynamicSchema();
@@ -119,12 +117,12 @@ export class SchemaEditorWrapper {
     this.visibleNotification = {
       message: {
         title: "notifications.required.title",
-        body: "notifications.required.body"
+        body: "notifications.required.body",
       },
       priority: {
         type: "high",
-        value: 1
-      }
+        value: 1,
+      },
     };
   }
 
@@ -178,7 +176,7 @@ export class SchemaEditorWrapper {
       const forbiddenProperties = [
         "notificationChecks",
         "availabilityChecks",
-        "dynamicSchema"
+        "dynamicSchema",
       ];
       for (const forbiddenProperty of forbiddenProperties) {
         if (
