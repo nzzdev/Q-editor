@@ -66,8 +66,8 @@ function emptyToNull(data) {
 
 function hasNonEmptyProperty(obj, excludedProperties = []) {
   return Object.keys(obj)
-    .filter(prop => !excludedProperties.includes(prop))
-    .some(prop => {
+    .filter((prop) => !excludedProperties.includes(prop))
+    .some((prop) => {
       if (obj[prop] === undefined || obj[prop] === null) {
         return false;
       }
@@ -112,7 +112,7 @@ class MetaData {
                 colIndex = parseInt(colIndex, 10);
               }
               let cellMetaDataObject = this.data.cells.find(
-                cellMetaDataObjectCandidate =>
+                (cellMetaDataObjectCandidate) =>
                   cellMetaDataObjectCandidate.rowIndex === rowIndex &&
                   cellMetaDataObjectCandidate.colIndex === colIndex
               );
@@ -129,16 +129,16 @@ class MetaData {
                 this.data.cells.push(cellMetaDataObject);
               }
               return cellMetaDataObject;
-            }
+            },
           });
         }
         return rowProxies[rowIndex];
-      }
+      },
     });
   }
 
   hasMetaDataForCell(rowIndex, colIndex) {
-    return !!this.data.cells.find(cell => {
+    return !!this.data.cells.find((cell) => {
       return cell.rowIndex === rowIndex && cell.colIndex === colIndex;
     });
   }
@@ -147,7 +147,7 @@ class MetaData {
   cleanup() {
     const cleanedUpCells = [];
     // cleanup cells
-    this.data.cells = this.data.cells.filter(cell => {
+    this.data.cells = this.data.cells.filter((cell) => {
       // keep the cells that have at least one property besides the indexes that is not empty
       if (hasNonEmptyProperty(cell, ["colIndex", "rowIndex"])) {
         return true;
@@ -174,7 +174,7 @@ export class SchemaEditorTable {
 
   options = {
     allowTranspose: true,
-    minRowsDataTable: 8
+    minRowsDataTable: 8,
   };
 
   constructor(loader, objectFromSchemaGenerator, availabilityChecker) {
@@ -208,12 +208,59 @@ export class SchemaEditorTable {
     this.applyOptions();
   }
 
+  isOverwritingAllowed(predefinedContent) {
+    if (predefinedContent.allowOverwrites) {
+      return true;
+    }
+
+    let hasNonPredefinedData = false;
+    const predefinedValues = predefinedContent.data;
+
+    array2d.eachCell(this.data, (cell, i, j) => {
+      // if overwrites are not allowed per default we check if there are values in cells
+      // which are not cells with predefined content and block overwrites in that case
+      if (cell !== undefined && cell !== null && cell !== "") {
+        const predefinedRow = predefinedValues[i];
+        if (predefinedRow) {
+          const predefinedCell = predefinedRow[j];
+          if (!predefinedCell) {
+            hasNonPredefinedData = true;
+          }
+        } else {
+          hasNonPredefinedData = true;
+        }
+      }
+    });
+    return !hasNonPredefinedData;
+  }
+
+  getValuesFromPredefinedContent(content) {
+    array2d.eachCell(content, (cell, i, j) => {
+      if (typeof cell === "object" && cell !== null) {
+        content[i][j] = cell.value;
+      }
+    });
+    return content;
+  }
+
   applyOptions() {
     if (!this.schema) {
       return;
     }
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
+
+      if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
+        const predefinedContent = this.schema["Q:options"].predefinedContent;
+
+        if (this.isOverwritingAllowed(predefinedContent)) {
+          const predefinedValues = this.getValuesFromPredefinedContent(
+            predefinedContent.data
+          );
+          this.setData(predefinedValues);
+          this.reloadHotData();
+        }
+      }
     }
   }
 
@@ -243,7 +290,28 @@ export class SchemaEditorTable {
       rowHeights: 23,
       copyPaste: {
         rowsLimit: 10000,
-        columnsLimit: 100
+        columnsLimit: 100,
+      },
+      cells: (row, col, prop) => {
+        const cellProperties = {};
+        if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
+          const predefinedContent = this.schema["Q:options"].predefinedContent
+            .data;
+          if (predefinedContent) {
+            try {
+              const predefinedCell = predefinedContent[row][col];
+              if (
+                predefinedCell !== undefined &&
+                predefinedCell !== null &&
+                typeof predefinedCell === "object" &&
+                predefinedCell.readOnly
+              ) {
+                cellProperties.readOnly = true;
+              }
+            } catch (ignore) {}
+          } // if anything goes wrong we just do not set the cell readonly
+        }
+        return cellProperties;
       },
       afterChange: (changes, source) => {
         if (source !== "loadData") {
@@ -256,7 +324,7 @@ export class SchemaEditorTable {
         if (this.hot) {
           this.replaceCommaWithPointIfDecimal();
           this.hot.updateSettings({
-            height: this.getGridHeight()
+            height: this.getGridHeight(),
           });
         }
       },
@@ -314,8 +382,9 @@ export class SchemaEditorTable {
 
         // any other case (multiple cells selected) leads to hiding the metadata editor
         return this.hideMetaDataEditor();
-      }
+      },
     });
+
     this.reloadHotData();
     if (this.metaDataEditorEnabled) {
       this.setCellClassesFromMetaEditorState();
@@ -393,7 +462,7 @@ export class SchemaEditorTable {
     this.metaEditorData = new MetaData(
       this.data.metaData,
       {
-        cells: this.metaEditorSchema
+        cells: this.metaEditorSchema,
       },
       this.objectFromSchemaGenerator
     );
@@ -495,7 +564,7 @@ export class SchemaEditorTable {
     this.hot.loadData(array2d.transpose(this.hot.getData()));
     this.setData(trimNull(emptyToNull(this.hot.getData())));
     this.hot.updateSettings({
-      height: this.getGridHeight()
+      height: this.getGridHeight(),
     });
     this.change();
   }

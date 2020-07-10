@@ -1,3 +1,7 @@
+# 6.3.0 (09.07.2020)
+
+- feat: (schema-editor-table) readOnly cells and predefined content
+
 # 6.2.6 (02.06.2020)
 
 - fix: Options are not applied in geojson and bbox schema-editor components
