@@ -248,7 +248,6 @@ export class SchemaEditorTable {
     }
     if (this.schema.hasOwnProperty("Q:options")) {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
-      debugger;
 
       if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
         const predefinedContent = this.schema["Q:options"].predefinedContent;
@@ -298,13 +297,8 @@ export class SchemaEditorTable {
           const predefinedContent = this.schema["Q:options"].predefinedContent
             .data;
           if (predefinedContent) {
-            console.log(
-              `predefined content found for row ${row} and column ${col}`
-            );
-            debugger;
             try {
               const predefinedCell = predefinedContent[row][col];
-              console.log(predefinedCell);
               if (
                 predefinedCell !== undefined &&
                 predefinedCell !== null &&
