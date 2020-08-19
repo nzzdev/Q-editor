@@ -238,7 +238,9 @@ export class SchemaEditorTable {
     return array2d.map(predefinedContent, (cell, i, j) => {
       if (typeof cell === "object" && cell !== null) {
         return cell.value;
-      } else return cell;
+      } else {
+        return cell;
+      }
     });
   }
 
