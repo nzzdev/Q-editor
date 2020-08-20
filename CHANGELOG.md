@@ -1,3 +1,7 @@
+# 6.3.1 (20.08.2020)
+
+- fix: (schema-editor-table) don't modify predefined content in order to make readOnly cells work
+
 # 6.3.0 (09.07.2020)
 
 - feat: (schema-editor-table) readOnly cells and predefined content
