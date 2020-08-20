@@ -234,13 +234,14 @@ export class SchemaEditorTable {
     return !hasNonPredefinedData;
   }
 
-  getValuesFromPredefinedContent(content) {
-    array2d.eachCell(content, (cell, i, j) => {
+  getValuesFromPredefinedContent(predefinedContent) {
+    return array2d.map(predefinedContent, (cell, i, j) => {
       if (typeof cell === "object" && cell !== null) {
-        content[i][j] = cell.value;
+        return cell.value;
+      } else {
+        return cell;
       }
     });
-    return content;
   }
 
   applyOptions() {
