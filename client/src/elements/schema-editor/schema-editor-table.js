@@ -215,22 +215,27 @@ export class SchemaEditorTable {
 
     let hasNonPredefinedData = false;
     const predefinedValues = predefinedContent.data;
-
-    array2d.eachCell(this.data, (cell, i, j) => {
-      // if overwrites are not allowed per default we check if there are values in cells
-      // which are not cells with predefined content and block overwrites in that case
-      if (cell !== undefined && cell !== null && cell !== "") {
-        const predefinedRow = predefinedValues[i];
-        if (predefinedRow) {
-          const predefinedCell = predefinedRow[j];
-          if (!predefinedCell) {
+    if (array2d.cells(this.data) > 0) {
+      // predefinedValues can be of different dimensions (amount of rows and columns).
+      // rows and columns which are not in the predefinedValues range are ignored
+      const dimensions = array2d.dimensions(predefinedValues);
+      const data = array2d.crop(this.data, 0, 0, dimensions[0], dimensions[1]);
+      array2d.eachCell(data, (cell, i, j) => {
+        // if overwrites are not allowed per default we check if there are values in cells
+        // which are not cells with predefined content and block overwrites in that case
+        if (cell !== undefined && cell !== null && cell !== "") {
+          const predefinedRow = predefinedValues[i];
+          if (predefinedRow) {
+            const predefinedCell = predefinedRow[j];
+            if (!predefinedCell) {
+              hasNonPredefinedData = true;
+            }
+          } else {
             hasNonPredefinedData = true;
           }
-        } else {
-          hasNonPredefinedData = true;
         }
-      }
-    });
+      });
+    }
     return !hasNonPredefinedData;
   }
 
