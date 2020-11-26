@@ -1,3 +1,7 @@
+# 6.3.1 (10.12.2020)
+
+- fix: (schema-editor-table) ignore rows/columns which differ of range of predefinedValues
+
 # 6.3.0 (09.07.2020)
 
 - feat: (schema-editor-table) readOnly cells and predefined content
