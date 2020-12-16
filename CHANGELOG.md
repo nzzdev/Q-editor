@@ -1,3 +1,8 @@
+# 6.3.2 (16.12.2020)
+
+- fix: (schema-editor-table) ignore rows/columns which differ of range of predefinedValues
+- fix: (dynamic-schema) apply default values which are defined in dynamicSchema
+
 # 6.3.1 (20.08.2020)
 
 - fix: (schema-editor-table) don't modify predefined content in order to make readOnly cells work
