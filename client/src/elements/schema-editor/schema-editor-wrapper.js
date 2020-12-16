@@ -192,6 +192,15 @@ export class SchemaEditorWrapper {
       }
       // make a copy of the schema so the schemaChangedCallbacks get applied
       this.schema = Object.assign({}, mixinDeep(this.schema, dynamicSchema));
+
+      // apply default values that are set using dynamicSchema
+      if (
+        this.schema.default &&
+        this.data === undefined &&
+        this.data !== this.schema.default
+      ) {
+        this.data = this.schema.default;
+      }
     } catch (e) {
       log.error(
         `Failed to assign dynamicSchema to schema, you need to figure out why this happened as this case is not handled in a nice way and could feel pretty weird.`,

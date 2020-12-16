@@ -1,6 +1,7 @@
-# 6.3.1 (10.12.2020)
+# 6.3.1 (16.12.2020)
 
 - fix: (schema-editor-table) ignore rows/columns which differ of range of predefinedValues
+- fix: (dynamic-schema) apply default values which are defined in dynamicSchema
 
 # 6.3.0 (09.07.2020)
 
