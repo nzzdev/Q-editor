@@ -1,3 +1,7 @@
+# 6.3.3 (05.01.2021)
+
+- fix: (notifications) allow empty responses of ToolEndpoint requests
+
 # 6.3.2 (16.12.2020)
 
 - fix: (schema-editor-table) ignore rows/columns which differ of range of predefinedValues
