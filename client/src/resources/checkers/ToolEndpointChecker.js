@@ -33,12 +33,12 @@ export default class ToolEndpointChecker {
     const item = this.currentItemProvider.getCurrentItem().conf;
     const toolRequestBaseUrl = `${QServerBaseUrl}/tools/${item.tool}`;
     const options = {
-      method: "GET"
+      method: "GET",
     };
 
     if (Array.isArray(config.fields) && config.fields.length > 0) {
       const dataForEndpoint = {
-        item: this.currentItemProvider.getCurrentItemByFields(config.fields)
+        item: this.currentItemProvider.getCurrentItemByFields(config.fields),
       };
       options.method = "POST";
       if (config.hasOwnProperty("options")) {
@@ -51,7 +51,8 @@ export default class ToolEndpointChecker {
       options
     );
 
-    if (response.status !== 200) {
+    // Acceptable status codes of response are 200 (ok) or 204 (no content)
+    if (response && ![200, 204].includes(response.status)) {
       throw new Error(response.statusMessage);
     }
     try {
