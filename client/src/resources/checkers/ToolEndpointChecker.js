@@ -51,7 +51,7 @@ export default class ToolEndpointChecker {
       options
     );
 
-    // Acceptable status codes of response are 200 (ok) or 204 (no content)
+    // allow empty responses of ToolEndpoint requests (204 - no content)
     if (response && ![200, 204].includes(response.status)) {
       throw new Error(response.statusMessage);
     }
