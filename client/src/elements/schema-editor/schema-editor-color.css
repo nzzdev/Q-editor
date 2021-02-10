@@ -1,4 +1,4 @@
-schema-editor-color input[type='color'] {
+schema-editor-color input[type="text"] {
   width: 100px;
   height: 40px;
 }
