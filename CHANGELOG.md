@@ -1,3 +1,7 @@
+# 6.3.4 (10.02.2021)
+
+- fix: (schema-editor-color) show input as text input
+
 # 6.3.3 (05.01.2021)
 
 - fix: (notifications) allow empty responses of ToolEndpoint requests
