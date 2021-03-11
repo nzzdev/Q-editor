@@ -10,6 +10,11 @@ export default class User {
 
   constructor(httpClient) {
     this.httpClient = httpClient;
+    httpClient.configure((config) => {
+      config
+        .useStandardConfiguration()
+        .withDefaults({ credentials: "include" });
+    });
     this.isLoggedIn = false;
     this.loaded = this.load();
   }
@@ -18,7 +23,7 @@ export default class User {
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
-        credentials: "include"
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -87,7 +92,7 @@ export default class User {
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
         credentials: "include",
         method: "PUT",
-        body: JSON.stringify(this.data)
+        body: JSON.stringify(this.data),
       });
 
       if (!response.ok) {
