@@ -1,3 +1,7 @@
+# 6.3.4 (12.02.2021)
+
+- fix: makes sure that cookies are sent with authentication requests to q-server
+
 # 6.3.4 (10.02.2021)
 
 - fix: (schema-editor-color) show input as text input
