@@ -49,7 +49,8 @@ export default class Item {
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
 
     const response = await this.httpClient.fetch(
-      `${QServerBaseUrl}/item/${id}`
+      `${QServerBaseUrl}/item/${id}`,
+      { credentials: "include" }
     );
 
     if (!response.ok) {
@@ -114,7 +115,7 @@ export default class Item {
     const response = await this.httpClient.fetch(`${QServerBaseUrl}/item`, {
       method: method,
       credentials: "include",
-      body: JSON.stringify(this.conf)
+      body: JSON.stringify(this.conf),
     });
 
     if (!response.ok) {
