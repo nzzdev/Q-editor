@@ -31,9 +31,10 @@ export default class Auth {
 
     if (authConfig && authConfig.type === "token") {
       const authService = await this.getAuthService();
+      authService.config.client.defaults.credentials = "include";
       await authService.login({
         username: username,
-        password: password
+        password: password,
       });
     } else {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
@@ -42,8 +43,8 @@ export default class Auth {
         method: "POST",
         body: JSON.stringify({
           username: username,
-          password: password
-        })
+          password: password,
+        }),
       });
 
       if (!response.ok) {
@@ -65,7 +66,7 @@ export default class Auth {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       await fetch(`${QServerBaseUrl}/logout`, {
         credentials: "include",
-        method: "POST"
+        method: "POST",
       });
     }
 

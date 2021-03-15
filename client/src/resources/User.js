@@ -10,11 +10,6 @@ export default class User {
 
   constructor(httpClient) {
     this.httpClient = httpClient;
-    httpClient.configure((config) => {
-      config
-        .useStandardConfiguration()
-        .withDefaults({ credentials: "include" });
-    });
     this.isLoggedIn = false;
     this.loaded = this.load();
   }
