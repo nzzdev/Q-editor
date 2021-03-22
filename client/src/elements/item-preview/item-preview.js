@@ -11,18 +11,18 @@ const defaultSizeOptions = [
   {
     value: 290,
     min_height: 568,
-    label_i18n_key: "preview.small"
+    label_i18n_key: "preview.small",
   },
   {
     value: 560,
     min_height: 568,
-    label_i18n_key: "preview.medium"
+    label_i18n_key: "preview.medium",
   },
   {
     value: 800,
     min_height: 568,
-    label_i18n_key: "preview.large"
-  }
+    label_i18n_key: "preview.large",
+  },
 ];
 
 @inject(QTargets, QConfig, User, I18N, Element)
@@ -62,7 +62,7 @@ export class ItemPreview {
             this.loadPreview();
           }
           return true;
-        }
+        },
       }
     );
 
@@ -77,7 +77,7 @@ export class ItemPreview {
             this.handleSizeChange();
           }
           return true;
-        }
+        },
       }
     );
 
@@ -95,7 +95,7 @@ export class ItemPreview {
           const sizeOption = {
             value: previewSize.value,
             min_height: previewSize.min_height || 568,
-            label_i18n_key: `preview.${previewSizeName}`
+            label_i18n_key: `preview.${previewSizeName}`,
           };
           if (previewSize.label) {
             sizeOption.label = previewSize.label;
@@ -156,7 +156,7 @@ export class ItemPreview {
   }
 
   getCurrentSizeOption() {
-    return this.sizeOptions.find(option => {
+    return this.sizeOptions.find((option) => {
       return option.value === this.previewWidthProxy.width;
     });
   }
@@ -178,13 +178,13 @@ export class ItemPreview {
           title: "preview.technicalError.title",
           body: "preview.technicalError.body",
           parameters: {
-            errorMessage: this.errorMessage
-          }
+            errorMessage: this.errorMessage,
+          },
         },
         priority: {
           type: "high",
-          value: 10
-        }
+          value: 10,
+        },
       };
     } else if (!this.error) {
       this.applyPreviewHint();
@@ -205,12 +205,12 @@ export class ItemPreview {
       this.notification = {
         message: {
           title: "preview.hint.title",
-          body: "preview.hint.body"
+          body: "preview.hint.body",
         },
         priority: {
           type: "low",
-          value: 10
-        }
+          value: 10,
+        },
       };
     } else {
       this.notification = null;
@@ -234,26 +234,26 @@ export class ItemPreview {
         width: [
           {
             value: this.previewWidthProxy.width,
-            comparison: "="
-          }
-        ]
+            comparison: "=",
+          },
+        ],
       },
-      isPure: true
+      isPure: true,
     };
 
-    return qEnv.QServerBaseUrl.then(QServerBaseUrl => {
+    return qEnv.QServerBaseUrl.then((QServerBaseUrl) => {
       if (this.id) {
         return fetch(
           `${QServerBaseUrl}/rendering-info/${this.id}/${
             this.targetProxy.target.key
-          }?ignoreInactive=true&noCache=true&toolRuntimeConfig=${encodeURI(
+          }?ignoreInactive=true&noCache=true&toolRuntimeConfig=${encodeURIComponent(
             JSON.stringify(toolRuntimeConfig)
           )}`
         );
       } else if (this.data) {
         const body = {
           item: this.data,
-          toolRuntimeConfig: toolRuntimeConfig
+          toolRuntimeConfig: toolRuntimeConfig,
         };
         return fetch(
           `${QServerBaseUrl}/rendering-info/${this.targetProxy.target.key}`,
@@ -261,19 +261,19 @@ export class ItemPreview {
             method: "POST",
             body: JSON.stringify(body),
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           }
         );
       }
     })
-      .then(res => {
+      .then((res) => {
         if (res.ok && res.status >= 200 && res.status < 400) {
           return res.json();
         }
         throw res;
       })
-      .then(renderingInfo => {
+      .then((renderingInfo) => {
         // add stylesheets for target preview if any
         if (
           this.targetProxy.target.preview &&
@@ -282,7 +282,7 @@ export class ItemPreview {
           if (!renderingInfo.stylesheets) {
             renderingInfo.stylesheets = [];
           }
-          this.targetProxy.target.preview.stylesheets.forEach(stylesheet => {
+          this.targetProxy.target.preview.stylesheets.forEach((stylesheet) => {
             renderingInfo.stylesheets.push(stylesheet);
           });
         }
@@ -295,7 +295,7 @@ export class ItemPreview {
           if (!renderingInfo.scripts) {
             renderingInfo.scripts = [];
           }
-          this.targetProxy.target.preview.scripts.forEach(script => {
+          this.targetProxy.target.preview.scripts.forEach((script) => {
             renderingInfo.scripts.push(script);
           });
         }
@@ -315,13 +315,13 @@ export class ItemPreview {
     }
     this.loadingStatus = "loading";
     this.fetchRenderingInfo()
-      .then(renderingInfo => {
+      .then((renderingInfo) => {
         this.renderingInfo = renderingInfo;
         this.error = undefined;
         this.errorMessage = undefined;
         this.loadingStatus = "loaded";
       })
-      .catch(response => {
+      .catch((response) => {
         if (![400, 500].includes(response.status)) {
           this.errorMessage = response.statusText;
         }
