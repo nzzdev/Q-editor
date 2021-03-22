@@ -76,7 +76,7 @@ export class ExportDialog {
       // ... and update the preview
       this.renderingInfo = null;
       this.previewLoadingStatus = "loading";
-      this.fetchRenderingInfo({ forPreview: true }).then(renderingInfo => {
+      this.fetchRenderingInfo({ forPreview: true }).then((renderingInfo) => {
         this.previewLoadingStatus = "loaded";
         this.renderingInfo = renderingInfo;
       });
@@ -86,25 +86,25 @@ export class ExportDialog {
   fetchRenderingInfo({ forPreview }) {
     const toolRuntimeConfig = {
       isPure: true,
-      displayOptions: this.displayOptions
+      displayOptions: this.displayOptions,
     };
 
     const target = forPreview
       ? this.config.target.userExportable.preview.target
       : this.config.target.key;
 
-    return qEnv.QServerBaseUrl.then(QServerBaseUrl => {
+    return qEnv.QServerBaseUrl.then((QServerBaseUrl) => {
       if (this.config.item.id) {
         return fetch(
           `${QServerBaseUrl}/rendering-info/${
             this.config.item.id
-          }/${target}?ignoreInactive=true&noCache=true&toolRuntimeConfig=${encodeURI(
+          }/${target}?ignoreInactive=true&noCache=true&toolRuntimeConfig=${encodeURIComponent(
             JSON.stringify(toolRuntimeConfig)
           )}`
         );
       }
     })
-      .then(res => {
+      .then((res) => {
         if (res.ok && res.status >= 200 && res.status < 400) {
           if (res.headers.get("content-type").startsWith("application/json")) {
             return res.json();
@@ -114,7 +114,7 @@ export class ExportDialog {
         }
         throw res;
       })
-      .then(renderingInfo => {
+      .then((renderingInfo) => {
         return renderingInfo;
       });
   }
@@ -123,7 +123,7 @@ export class ExportDialog {
     try {
       this.isExportLoading = true;
       const exportRenderingInfo = await this.fetchRenderingInfo({
-        forPreview: false
+        forPreview: false,
       });
       let extension = "";
       const mimeInfo = this.mimeDb[exportRenderingInfo.type];

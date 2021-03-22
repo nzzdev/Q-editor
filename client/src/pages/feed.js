@@ -28,11 +28,11 @@ export default class Feed {
         width: [
           {
             value: 320,
-            comparison: "="
-          }
-        ]
+            comparison: "=",
+          },
+        ],
       },
-      isPure: true
+      isPure: true,
     };
     const QServerBaseUrl = await qEnv.QServerBaseUrl;
     if (item.id) {
@@ -43,7 +43,7 @@ export default class Feed {
         const response = await fetch(
           `${QServerBaseUrl}/rendering-info/${item.id}/${
             this.currentTarget.key
-          }?ignoreInactive=true&noCache=true&toolRuntimeConfig=${encodeURI(
+          }?ignoreInactive=true&noCache=true&toolRuntimeConfig=${encodeURIComponent(
             JSON.stringify(toolRuntimeConfig)
           )}`
         );
@@ -51,12 +51,12 @@ export default class Feed {
           this.renderingInfos[item.id] = await response.json();
         } else {
           this.renderingInfos[item.id] = {
-            markup: '<div style="color: black;">Failed to load</div>'
+            markup: '<div style="color: black;">Failed to load</div>',
           };
         }
       } catch (e) {
         this.renderingInfos[item.id] = {
-          markup: '<div style="color: black;">Failed to load</div>'
+          markup: '<div style="color: black;">Failed to load</div>',
         };
       }
     }

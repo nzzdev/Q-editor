@@ -35,7 +35,7 @@ export class App {
     this.qConfig = qConfig;
     this.previewWidth = 290;
     this.displayOptionsSchema = {
-      properties: {}
+      properties: {},
     };
     this.moreItemsAvailable = false;
     this.items = [];
@@ -90,7 +90,7 @@ export class App {
       if (targetQuery && targetQuery[1]) {
         targetKey = decodeURIComponent(targetQuery[1]);
       }
-      return targets.find(target => {
+      return targets.find((target) => {
         return target.key === targetKey;
       });
     } catch (error) {
@@ -121,7 +121,7 @@ export class App {
   async getItems(searchString, bookmark) {
     this.itemsLoading = true;
     const numberOfItemsToLoadPerStep = 9;
-    const availableToolNames = this.tools.map(tool => tool.name);
+    const availableToolNames = this.tools.map((tool) => tool.name);
     let result = await this.itemStore.getItems(
       searchString,
       numberOfItemsToLoadPerStep,
@@ -130,7 +130,7 @@ export class App {
     );
 
     // sets toolConfig to items
-    result.items = result.items.map(item => {
+    result.items = result.items.map((item) => {
       item.toolConfig = this.getToolConfig(item.conf);
       return item;
     });
@@ -142,13 +142,13 @@ export class App {
 
   getToolConfig(itemConf) {
     let toolConfig = {};
-    let tool = this.tools.find(toolItem => {
+    let tool = this.tools.find((toolItem) => {
       return toolItem.name === itemConf.tool;
     });
 
     if (tool) {
       toolConfig = {
-        icon: tool.icon
+        icon: tool.icon,
       };
     }
     return toolConfig;
@@ -159,7 +159,7 @@ export class App {
       id: item.conf._id,
       conf: item.conf,
       toolConfig: item.toolConfig,
-      toolRuntimeConfig: {}
+      toolRuntimeConfig: {},
     };
     if (this.selectedItem.conf.active) {
       await this.loadPreview();
@@ -173,7 +173,7 @@ export class App {
       Object.keys(this.selectedItem.toolRuntimeConfig.displayOptions).length > 0
     ) {
       Object.keys(this.selectedItem.toolRuntimeConfig.displayOptions).forEach(
-        displayOptionName => {
+        (displayOptionName) => {
           if (
             this.selectedItem.toolRuntimeConfig.displayOptions[
               displayOptionName
@@ -191,7 +191,7 @@ export class App {
     delete this.selectedItem.toolConfig;
     const message = {
       action: "update",
-      params: this.selectedItem
+      params: this.selectedItem,
     };
     window.parent.postMessage(message, "*");
   }
@@ -255,19 +255,21 @@ export class App {
                   .querySelector(".preview-element > *:first-child")
                   .getBoundingClientRect().width
               ),
-              comparison: "="
-            }
-          ]
+              comparison: "=",
+            },
+          ],
         },
         displayOptions: this.selectedItem.toolRuntimeConfig.displayOptions,
-        isPure: true
+        isPure: true,
       };
 
       let renderingInfo = {};
       const response = await fetch(
         `${this.QServerBaseUrl}/rendering-info/${this.selectedItem.id}/${
           this.target.key
-        }?toolRuntimeConfig=${encodeURI(JSON.stringify(toolRuntimeConfig))}`
+        }?toolRuntimeConfig=${encodeURIComponent(
+          JSON.stringify(toolRuntimeConfig)
+        )}`
       );
       if (response.ok) {
         renderingInfo = await response.json();
@@ -277,7 +279,7 @@ export class App {
         if (!renderingInfo.stylesheets) {
           renderingInfo.stylesheets = [];
         }
-        this.target.preview.stylesheets.forEach(stylesheet => {
+        this.target.preview.stylesheets.forEach((stylesheet) => {
           renderingInfo.stylesheets.push(stylesheet);
         });
       }
@@ -287,7 +289,7 @@ export class App {
         if (!renderingInfo.scripts) {
           renderingInfo.scripts = [];
         }
-        this.target.preview.scripts.forEach(script => {
+        this.target.preview.scripts.forEach((script) => {
           renderingInfo.scripts.push(script);
         });
       }
@@ -297,7 +299,7 @@ export class App {
         if (!renderingInfo.sophieModules) {
           renderingInfo.sophieModules = [];
         }
-        this.target.preview.sophieModules.forEach(sophieModule => {
+        this.target.preview.sophieModules.forEach((sophieModule) => {
           renderingInfo.sophieModules.push(sophieModule);
         });
       }
@@ -313,13 +315,13 @@ export class App {
       const stylesheets = await this.qConfig.get("stylesheets");
       if (stylesheets && stylesheets.length) {
         stylesheets
-          .map(stylesheet => {
+          .map((stylesheet) => {
             if (!stylesheet.url && stylesheet.path) {
               stylesheet.url = `${QServerBaseUrl}${stylesheet.path}`;
             }
             return stylesheet;
           })
-          .map(stylesheet => {
+          .map((stylesheet) => {
             if (stylesheet.url) {
               let link = document.createElement("link");
               link.type = "text/css";
