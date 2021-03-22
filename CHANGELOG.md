@@ -1,3 +1,7 @@
+# 6.3.7 (22.03.2021)
+
+- fix: (preview) Use encodeURIComponent instead of encodeURI to encode toolRuntimeConfig in renderingInfo request so that reserved characters are getting encoded
+
 # 6.3.6 (15.03.2021)
 
 - fix: makes sure that cookies are sent with authentication requests to q-server
