@@ -1,3 +1,7 @@
+# 6.3.8 (25.03.2021)
+
+- fix: (schema-editor-files) Send credentials with `/file` request
+
 # 6.3.7 (22.03.2021)
 
 - fix: (preview) Use encodeURIComponent instead of encodeURI to encode toolRuntimeConfig in renderingInfo request so that reserved characters are getting encoded
