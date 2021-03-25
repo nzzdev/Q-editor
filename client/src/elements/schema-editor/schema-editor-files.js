@@ -19,7 +19,7 @@ export class SchemaEditorFiles {
   showNotifications;
 
   options = {
-    maxFiles: null
+    maxFiles: null,
   };
 
   constructor(loader, authService, notification, i18n) {
@@ -81,27 +81,28 @@ export class SchemaEditorFiles {
         "dropzone.dictCancelUploadConfirmation"
       ),
       dictRemoveFile: this.i18n.tr("dropzone.dictRemoveFile"),
-      dictMaxFilesExceeded: this.i18n.tr("dropzone.dictMaxFilesExceeded")
+      dictMaxFilesExceeded: this.i18n.tr("dropzone.dictMaxFilesExceeded"),
     };
 
     const authorizationToken = [
       this.authService.config.authTokenType,
-      this.authService.getAccessToken()
+      this.authService.getAccessToken(),
     ].join(" ");
 
     this.dropzoneOptions = Object.assign(
       {
         addRemoveLinks: true,
         url: `${QServerBaseUrl}/file`,
+        withCredentials: true,
         headers: {
-          Authorization: authorizationToken
+          Authorization: authorizationToken,
         },
         thumbnailWidth: 120, // should keep aspect ratio,
         thumbnailHeight: null,
         thumbnailMethod: "contain",
-        renameFile: file => {
+        renameFile: (file) => {
           return file.fullPath || file.name;
-        }
+        },
       },
       this.options,
       translations
@@ -144,7 +145,7 @@ export class SchemaEditorFiles {
       }
     });
 
-    this.dropzone.on("removedfile", file => {
+    this.dropzone.on("removedfile", (file) => {
       // if the file was never accepted (coming from maxfilesexceeded) we do not have to remove it from our datastructure
       if (!file.accepted) {
         return;
@@ -159,7 +160,7 @@ export class SchemaEditorFiles {
       }
     });
 
-    this.dropzone.on("maxfilesexceeded", file => {
+    this.dropzone.on("maxfilesexceeded", (file) => {
       this.dropzone.removeFile(file);
       this.notification.error("notifications.maxNumberOfFilesExceed");
     });
@@ -181,7 +182,7 @@ export class SchemaEditorFiles {
         const mockFile = {
           name: file.url,
           size: file.size || 0,
-          accepted: true
+          accepted: true,
         };
 
         if (this.schema.type === "array") {
@@ -198,7 +199,7 @@ export class SchemaEditorFiles {
             this.dropzoneOptions.thumbnailHeight,
             this.dropzoneOptions.thumbnailMethod,
             false,
-            thumbnail => {
+            (thumbnail) => {
               this.dropzone.emit("thumbnail", mockFile, thumbnail);
               this.dropzone.emit("complete", mockFile);
               this.dropzone.emit("accepted", mockFile);
