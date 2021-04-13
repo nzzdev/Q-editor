@@ -30,8 +30,10 @@ export class SchemaEditorNumber {
   }
 
   onWheel(event) {
+    console.log("wheel!")
     if (event && event.target === document.activeElement) {
       // Bluring the input field prevents changing the value while using the mouse wheel
+      console.log("focus!")
       event.target.blur();
     }
     return true;
