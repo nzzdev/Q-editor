@@ -28,4 +28,12 @@ export class SchemaEditorNumber {
       this.options = Object.assign(this.options, this.schema["Q:options"]);
     }
   }
+
+  onWheel(event) {
+    if (event && event.target === document.activeElement) {
+      // Bluring the input field prevents changing the value while using the mouse wheel
+      event.target.blur();
+    }
+    return true;
+  }
 }
