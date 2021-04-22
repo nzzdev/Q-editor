@@ -1,3 +1,7 @@
+# 6.4.0 (22.04.2021)
+
+- feat: (ToolEndpointChecker) Send roles with every toolEndpoint request. This allows to use the roles information to calculate toolEndpoint results
+
 # 6.3.8 (25.03.2021)
 
 - fix: (schema-editor-files) Send credentials with `/file` request
