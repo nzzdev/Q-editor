@@ -1,13 +1,15 @@
 import { inject } from "aurelia-framework";
 import qEnv from "resources/qEnv.js";
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
+import User from "resources/User.js";
 
-@inject(CurrentItemProvider)
+@inject(CurrentItemProvider, User)
 export default class ToolEndpointChecker {
   reevaluateCallbacks = [];
 
-  constructor(currentItemProvider) {
+  constructor(currentItemProvider, user) {
     this.currentItemProvider = currentItemProvider;
+    this.user = user;
   }
 
   async triggerReevaluation() {
@@ -39,6 +41,7 @@ export default class ToolEndpointChecker {
     if (Array.isArray(config.fields) && config.fields.length > 0) {
       const dataForEndpoint = {
         item: this.currentItemProvider.getCurrentItemByFields(config.fields),
+        roles: Array.isArray(this.user.roles) ? this.user.roles : [],
       };
       options.method = "POST";
       if (config.hasOwnProperty("options")) {
