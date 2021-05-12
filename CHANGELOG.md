@@ -1,3 +1,7 @@
+# 6.4.1 (12.05.2021)
+
+- fix: (schema-editor-number) Prevent value change on wheel event
+
 # 6.4.0 (22.04.2021)
 
 - feat: (ToolEndpointChecker) Send roles with every toolEndpoint request. This allows to use the roles information to calculate toolEndpoint results

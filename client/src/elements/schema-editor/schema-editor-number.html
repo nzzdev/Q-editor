@@ -6,6 +6,6 @@
       <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
     </span>
     <input type="number" placeholder.to-view="options.placeholder || '' & toolT" required.bind="required" value.bind="data | forceNumber"
-      step.bind="options.step" min.bind="schema.minimum" max.bind="schema.maximum" keyup.delegate="change() & debounce:800">
+      step.bind="options.step" min.bind="schema.minimum" max.bind="schema.maximum" keyup.delegate="change() & debounce:800"  wheel.trigger="onWheel($event)">
   </label>
 </template>
