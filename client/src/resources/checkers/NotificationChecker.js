@@ -19,8 +19,8 @@ function sortNotificationsByPriority(a, b) {
   const notificationTypeValueA = getNotificationTypeValue(a.priority.type);
   const notificationTypeValueB = getNotificationTypeValue(b.priority.type);
   return (
-    notificationTypeValueA - notificationTypeValueB ||
-    a.priority.value - b.priority.value
+    notificationTypeValueB - notificationTypeValueA ||
+    b.priority.value - a.priority.value
   );
 }
 
