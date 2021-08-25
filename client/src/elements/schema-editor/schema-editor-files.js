@@ -139,21 +139,24 @@ export class SchemaEditorFiles {
         }
         this.data.push(newFile);
         this.change();
-
-        // the dataArrayIndex property is used when deleting a file to delete it as well from the data
-        file.dataArrayIndex = this.data.indexOf(newFile);
       }
     });
 
     this.dropzone.on("removedfile", (file) => {
+      let dataArrayIndex;
+
       // if the file was never accepted (coming from maxfilesexceeded) we do not have to remove it from our datastructure
       if (!file.accepted) {
         return;
       }
-      if (Array.isArray(this.data) && file.dataArrayIndex !== undefined) {
+
+      if (Array.isArray(this.data)) {
         // find the removed one in our data by
-        this.data.splice(file.dataArrayIndex, 1);
-        this.change();
+        dataArrayIndex = this.data.findIndex(data => data.url === file.name);
+        if (dataArrayIndex > -1) {
+          this.data.splice(dataArrayIndex, 1);
+          this.change();
+        }
       } else {
         this.data = {};
         this.change();
@@ -184,10 +187,6 @@ export class SchemaEditorFiles {
           size: file.size || 0,
           accepted: true,
         };
-
-        if (this.schema.type === "array") {
-          mockFile.dataArrayIndex = index; // the dataArrayIndex property is used when deleting a file to delete it as well from the data
-        }
 
         this.dropzone.files.push(mockFile);
         this.dropzone.emit("addedfile", mockFile);
