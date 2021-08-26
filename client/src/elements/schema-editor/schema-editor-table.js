@@ -81,6 +81,18 @@ function hasNonEmptyProperty(obj, excludedProperties = []) {
     });
 }
 
+function isNumeric(cell) {
+  if (!cell) {
+    return false;
+  }
+  cell = cell.trim(); // remove whitespaces
+  // check if positive or negative decimal number
+  if (cell.match(/^[+-]?\d+(\.\d+)?$/) === null) {
+    return false;
+  }
+  return cell && !Number.isNaN(parseFloat(cell));
+}
+
 class MetaData {
   constructor(initialMetaData, metaDataSchemas, objectFromSchemaGenerator) {
     this.data = initialMetaData;
@@ -546,7 +558,7 @@ export class SchemaEditorTable {
           }
 
           // if we do not have a floating point number now, return the original
-          if (str.search(/-*\d*\.\d*/) !== 0) {
+          if (isNumeric(str) === false) {
             return cell;
           }
 
