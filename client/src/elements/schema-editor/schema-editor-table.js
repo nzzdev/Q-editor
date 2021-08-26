@@ -86,6 +86,7 @@ function isNumeric(cell) {
     return false;
   }
   cell = cell.trim(); // remove whitespaces
+  // check if positive or negative decimal number
   if (cell.match(/^[+-]?\d+(\.\d+)?$/) === null) {
     return false;
   }
