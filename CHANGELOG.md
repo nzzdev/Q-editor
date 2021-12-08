@@ -1,3 +1,19 @@
+# 6.4.5 (08.12.2021)
+
+- fix: (aurelia-dialog) don't close the dialog window when clicking outside of it
+
+# 6.4.4 (26.08.2021)
+
+- fix: (schema-editor-table) The conversion from comma to point now only applies to numeric values (before strings with numeric values in them were also affected).
+
+# 6.4.3 (25.08.2021)
+
+- fix: (files) Multiple uploaded files can now properly be deleted
+
+# 6.4.2 (25.08.2021)
+
+- fix: (notifications) Notifications are now correctly sorted by their given priority (0 = lowest priority, 10 = highest priority)
+
 # 6.4.1 (12.05.2021)
 
 - fix: (schema-editor-number) Prevent value change on wheel event
