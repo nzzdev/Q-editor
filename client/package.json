@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "npx gulp watch"
+  },
   "devDependencies": {
     "aurelia-bundler": "^0.7.0",
     "aurelia-protractor-plugin": "^1.0.6",
