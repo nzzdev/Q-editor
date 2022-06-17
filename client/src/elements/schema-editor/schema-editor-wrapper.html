@@ -209,6 +209,17 @@
     ></schema-editor-files>
   </div>
 
+  <div if.bind="getType(schema) === 'time'" class="schema-editor-block">
+    <require from="./schema-editor-time"></require>
+    <schema-editor-time
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"
+      show-notifications.bind="showNotifications"
+    ></schema-editor-time>
+  </div>
+
   <div if.bind="getType(schema) === 'dialog'" class="schema-editor-block">
     <require from="./schema-editor-dialog"></require>
     <schema-editor-dialog

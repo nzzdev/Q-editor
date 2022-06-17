@@ -1,0 +1,10 @@
+<template class="schema-editor-input ${showNotifications ? 'schema-editor-input--with-notifications' : ''}">
+  <label>
+    ${schema["title"] & toolT}
+    <span show.bind="required">
+      <span>- </span>
+      <span style="color: var(--q-color-error)">${'editor.required' & t}</span>
+    </span>
+    <input type="time" required.bind="required" value.bind="data">
+  </label>
+</template>
