@@ -131,10 +131,9 @@ class MetaData {
 
               // if there is no cellMetaData object yet for the selected cell, create it from the schema
               if (!cellMetaDataObject) {
-                cellMetaDataObject =
-                  this.objectFromSchemaGenerator.generateFromSchema(
-                    this.metaDataSchemas.cells
-                  );
+                cellMetaDataObject = this.objectFromSchemaGenerator.generateFromSchema(
+                  this.metaDataSchemas.cells
+                );
                 // set the selected indexes
                 cellMetaDataObject.rowIndex = rowIndex;
                 cellMetaDataObject.colIndex = colIndex;
@@ -197,7 +196,6 @@ export class SchemaEditorTable {
   }
 
   setData(data) {
-    console.log("setData")
     if (this.metaDataEditorEnabled) {
       this.data[this.options.metaDataEditor.dataPropertyName] = data;
     } else {
@@ -206,7 +204,6 @@ export class SchemaEditorTable {
   }
 
   getData() {
-    console.log("getData")
     if (this.metaDataEditorEnabled) {
       return this.data[this.options.metaDataEditor.dataPropertyName];
     }
@@ -214,19 +211,16 @@ export class SchemaEditorTable {
   }
 
   reloadHotData() {
-    console.log("reloadHotData")
     if (this.hot) {
       this.hot.loadData(JSON.parse(JSON.stringify(this.getData())));
     }
   }
 
   async schemaChanged() {
-    console.log("schemaChanged")
     this.applyOptions();
   }
 
   isOverwritingAllowed(predefinedContent) {
-    console.log("isOverwritingAllowed")
     if (predefinedContent.allowOverwrites) {
       return true;
     }
@@ -258,7 +252,6 @@ export class SchemaEditorTable {
   }
 
   getValuesFromPredefinedContent(predefinedContent) {
-    console.log("getValuesFromPredefinedContent")
     return array2d.map(predefinedContent, (cell, i, j) => {
       if (typeof cell === "object" && cell !== null) {
         return cell.value;
@@ -269,7 +262,6 @@ export class SchemaEditorTable {
   }
 
   applyOptions() {
-    console.log("applyOptions")
     if (!this.schema) {
       return;
     }
@@ -291,9 +283,16 @@ export class SchemaEditorTable {
   }
 
   async attached() {
-    console.log("attached")
-    console.log(this.data);
-    let tableConfig = {
+    if (this.options.metaDataEditor) {
+      await this.enableMetaDataEditorIfAvailable();
+    }
+
+    this.loader.loadModule("handsontable/dist/handsontable.full.css!");
+    const Handsontable = await this.loader.loadModule(
+      "handsontable/dist/handsontable.full.js"
+    );
+
+    this.hot = new Handsontable(this.tableContainerElement, {
       dataSchema: [],
       height: this.getGridHeight(),
       minRows: this.options.minRowsDataTable,
@@ -310,6 +309,27 @@ export class SchemaEditorTable {
       copyPaste: {
         rowsLimit: 10000,
         columnsLimit: 100,
+      },
+      cells: (row, col, prop) => {
+        const cellProperties = {};
+        if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
+          const predefinedContent = this.schema["Q:options"].predefinedContent
+            .data;
+          if (predefinedContent) {
+            try {
+              const predefinedCell = predefinedContent[row][col];
+              if (
+                predefinedCell !== undefined &&
+                predefinedCell !== null &&
+                typeof predefinedCell === "object" &&
+                predefinedCell.readOnly
+              ) {
+                cellProperties.readOnly = true;
+              }
+            } catch (ignore) {}
+          } // if anything goes wrong we just do not set the cell readonly
+        }
+        return cellProperties;
       },
       afterChange: (changes, source) => {
         if (source !== "loadData") {
@@ -381,82 +401,7 @@ export class SchemaEditorTable {
         // any other case (multiple cells selected) leads to hiding the metadata editor
         return this.hideMetaDataEditor();
       },
-    };
-
-    if (this.options.metaDataEditor) {
-      await this.enableMetaDataEditorIfAvailable();
-    }
-
-    // TODO:
-    console.log(this.options);
-    console.log(this.data);
-    if (
-      this.options.table &&
-      this.options.table.headers &&
-      this.options.table.columns
-    ) {
-      console.log("column")
-      tableConfig.columns = [];
-      this.options.table.headers.forEach((item) => {
-        const findColumn = this.options.table.columns.find(
-          (column) => column.key === item
-        );
-
-        tableConfig.columns.push({
-          renderer: function (
-            instance,
-            td,
-            row,
-            col,
-            prop,
-            value,
-            cellProperties
-          ) {
-            if (row === 0) {
-              cellProperties.readOnly = true;
-              value = item;
-              Handsontable.renderers.TextRenderer.apply(this, arguments);
-              td.innerHTML = item;
-              return td;
-            } else if (findColumn && findColumn.type === "select") {
-              Handsontable.renderers.CheckboxRenderer.apply(this, arguments);
-            } else {
-              Handsontable.renderers.TextRenderer.apply(this, arguments);
-            }
-          },
-        });
-      });
-    } else {
-      tableConfig.cells = (row, col, prop) => {
-        const cellProperties = {};
-        console.log("predefined")
-        if (this.schema["Q:options"].hasOwnProperty("predefinedContent")) {
-          const predefinedContent =
-            this.schema["Q:options"].predefinedContent.data;
-          if (predefinedContent) {
-            try {
-              const predefinedCell = predefinedContent[row][col];
-              if (
-                predefinedCell !== undefined &&
-                predefinedCell !== null &&
-                typeof predefinedCell === "object" &&
-                predefinedCell.readOnly
-              ) {
-                cellProperties.readOnly = true;
-              }
-            } catch (ignore) {}
-          } // if anything goes wrong we just do not set the cell readonly
-        }
-        return cellProperties;
-      };
-    }
-
-    this.loader.loadModule("handsontable/dist/handsontable.full.css!");
-    const Handsontable = await this.loader.loadModule(
-      "handsontable/dist/handsontable.full.js"
-    );
-
-    this.hot = new Handsontable(this.tableContainerElement, tableConfig);
+    });
 
     this.reloadHotData();
     if (this.metaDataEditorEnabled) {
@@ -465,14 +410,12 @@ export class SchemaEditorTable {
   }
 
   detached() {
-    console.log("detached")
     this.availabilityChecker.unregisterReevaluateCallback(
       this.reevaluateMetaDataEditorAvailabilityCallback
     );
   }
 
   hideMetaDataEditor() {
-    console.log("hideMetaDataEditor")
     this.metaEditorWrapper.classList.add(
       "schema-editor-table__meta-editor--hidden"
     );
@@ -487,7 +430,6 @@ export class SchemaEditorTable {
   }
 
   showMetaDataEditorForCell(rowIndex, colIndex) {
-    console.log("showMetaDataEditorForCell")
     // if the selected cell is different than before, handle change to cleanup
     if (this.selectedRow !== rowIndex || this.selectedColumn !== colIndex) {
       this.handleMetaEditorChange();
@@ -513,13 +455,13 @@ export class SchemaEditorTable {
   }
 
   async enableMetaDataEditorIfAvailable() {
-    console.log("enableMetaDataEditorIfAvailable")
     // if this has availabilityChecks, we need to check them first
     if (Array.isArray(this.options.metaDataEditor.availabilityChecks)) {
       await this.applyMetaDataEditorAvailability();
 
-      this.reevaluateMetaDataEditorAvailabilityCallback =
-        this.applyMetaDataEditorAvailability.bind(this);
+      this.reevaluateMetaDataEditorAvailabilityCallback = this.applyMetaDataEditorAvailability.bind(
+        this
+      );
       this.availabilityChecker.registerReevaluateCallback(() => {
         this.reevaluateMetaDataEditorAvailabilityCallback;
       });
@@ -545,7 +487,6 @@ export class SchemaEditorTable {
   }
 
   async applyMetaDataEditorAvailability() {
-    console.log("applyMetaDataEditorAvailability")
     const availability = await this.availabilityChecker.getAvailabilityInfo(
       this.options.metaDataEditor.availabilityChecks
     );
@@ -557,7 +498,6 @@ export class SchemaEditorTable {
   }
 
   setCellClassesFromMetaEditorState() {
-    console.log("setCellClassesFromMetaEditorState")
     for (const cell of this.metaEditorData.data.cells) {
       const cellElement = this.hot.getCell(cell.rowIndex, cell.colIndex);
       if (cellElement) {
@@ -567,7 +507,6 @@ export class SchemaEditorTable {
   }
 
   handleMetaEditorChange() {
-    console.log("handleMetaEditorChange")
     // cleanup on every change
     const cleanedUpCells = this.metaEditorData.cleanup();
     for (const cell of cleanedUpCells) {
@@ -584,7 +523,6 @@ export class SchemaEditorTable {
   }
 
   getGridHeight() {
-    console.log("getGridHeight")
     return (
       Math.min(
         280,
@@ -594,7 +532,6 @@ export class SchemaEditorTable {
   }
 
   replaceCommaWithPointIfDecimal() {
-    console.log("replaceCommaWithPointIfDecimal")
     let changed = false;
     try {
       const newData = this.hot.getData().map((row, rowIndex) =>
@@ -642,7 +579,6 @@ export class SchemaEditorTable {
   }
 
   transpose() {
-    console.log("transpose")
     this.hot.loadData(array2d.transpose(this.hot.getData()));
     this.setData(trimNull(emptyToNull(this.hot.getData())));
     this.hot.updateSettings({
