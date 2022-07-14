@@ -188,6 +188,7 @@
   </div>
 
   <div if.bind="getType(schema) === 'table'" class="schema-editor-block">
+    sadlkfjdslöf
     <require from="./schema-editor-table"></require>
     <schema-editor-table
       schema.bind="schema"
@@ -196,6 +197,18 @@
       required.bind="required"
       show-notifications.bind="showNotifications"
     ></schema-editor-table>
+  </div>
+
+  <div if.bind="getType(schema) === 'table-custom'" class="schema-editor-block">
+    custom
+    <require from="./schema-editor-table-custom"></require>
+    <schema-editor-table-custom
+      schema.bind="schema"
+      data.two-way="data"
+      change.bind="change"
+      required.bind="required"
+      show-notifications.bind="showNotifications"
+    ></schema-editor-table-custom>
   </div>
 
   <div if.bind="getType(schema) === 'files'" class="schema-editor-block">

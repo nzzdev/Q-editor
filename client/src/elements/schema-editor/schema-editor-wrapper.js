@@ -168,6 +168,7 @@ export class SchemaEditorWrapper {
   }
 
   async applyDynamicSchema() {
+    console.log(this.data)
     try {
       const dynamicSchema = await this.getDynamicSchema(
         this.options.dynamicSchema
