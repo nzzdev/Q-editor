@@ -135,6 +135,24 @@ export class Editor {
       })
       .then(item => {
         if (item) {
+          if (item.conf.customSchema) {
+            let fullSchemaProperties = {};
+            console.log("customSchema available", item.conf.customSchema);
+
+            Object.keys(this.fullSchema.properties).forEach((value, index) => {
+              if (index === 2) {
+                for (const key of Object.keys(item.conf.customSchema)) {
+                  fullSchemaProperties[key] = item.conf.customSchema[key]; 
+                }
+              }
+              fullSchemaProperties[value] = this.fullSchema.properties[value];
+            });
+            
+            this.fullSchema.properties = fullSchemaProperties;
+            this.schema = getEditorSchema(this.fullSchema);
+            this.optionsSchema = getOptionsSchema(this.fullSchema);
+          }
+          
           this.currentItemProvider.setCurrentItem(item);
           this.item = item;
 
