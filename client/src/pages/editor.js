@@ -136,19 +136,20 @@ export class Editor {
       .then(item => {
         if (item) {
           if (item.conf.customSchema) {
-            let fullSchemaProperties = {};
-            console.log("customSchema available", item.conf.customSchema);
+            let newFullSchemaProperties = {};
 
-            Object.keys(this.fullSchema.properties).forEach((value, index) => {
-              if (index === 2) {
+            Object.keys(this.fullSchema.properties).forEach((value) => {
+              // Replace data table with custom element(s)
+              if (value === "data") {
                 for (const key of Object.keys(item.conf.customSchema)) {
-                  fullSchemaProperties[key] = item.conf.customSchema[key]; 
+                  newFullSchemaProperties[key] = item.conf.customSchema[key]; 
                 }
+              } else {
+                newFullSchemaProperties[value] = this.fullSchema.properties[value];
               }
-              fullSchemaProperties[value] = this.fullSchema.properties[value];
             });
             
-            this.fullSchema.properties = fullSchemaProperties;
+            this.fullSchema.properties = newFullSchemaProperties;
             this.schema = getEditorSchema(this.fullSchema);
             this.optionsSchema = getOptionsSchema(this.fullSchema);
           }
