@@ -138,14 +138,14 @@ export class Editor {
           if (item.conf.customSchema) {
             let newFullSchemaProperties = {};
 
-            Object.keys(this.fullSchema.properties).forEach((value) => {
+            Object.keys(this.fullSchema.properties).forEach((propertyKey) => {
               // Replace data table with custom element(s)
-              if (value === "data") {
-                for (const key of Object.keys(item.conf.customSchema)) {
-                  newFullSchemaProperties[key] = item.conf.customSchema[key]; 
+              if (propertyKey === "data") {
+                for (const customPropertyKey of Object.keys(item.conf.customSchema)) {
+                  newFullSchemaProperties[customPropertyKey] = item.conf.customSchema[customPropertyKey]; 
                 }
               } else {
-                newFullSchemaProperties[value] = this.fullSchema.properties[value];
+                newFullSchemaProperties[propertyKey] = this.fullSchema.properties[propertyKey];
               }
             });
             
