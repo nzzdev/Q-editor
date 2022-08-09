@@ -135,7 +135,7 @@ export class Editor {
       })
       .then(item => {
         if (item) {
-          if (item.conf.customSchema) {
+          if (item.conf.customSchema && Object.keys(item.conf.customSchema).length > 0) {
             let newFullSchemaProperties = {};
 
             Object.keys(this.fullSchema.properties).forEach((propertyKey) => {
