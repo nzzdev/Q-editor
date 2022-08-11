@@ -109,7 +109,7 @@ export class Editor {
     let item = routeParams.hasOwnProperty("id") && routeParams.id !== undefined
       ? await this.itemStore.getItem(routeParams.id)
       : undefined;
-    let payload = item.conf.customSchema
+    let payload = item && item.conf.customSchema
     ? {
       method: "POST",
       headers: {
