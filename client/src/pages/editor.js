@@ -106,9 +106,27 @@ export class Editor {
       }, 5000);
     });
 
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    let item = routeParams.hasOwnProperty("id") && routeParams.id !== undefined
+      ? await this.itemStore.getItem(routeParams.id)
+      : undefined;
+    let payload = item.conf.customSchema
+    ? {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        customSchema: item.conf.customSchema,
+        customSchemaDefinitions: item.conf.customSchemaDefinitions,
+      }),
+    }
+    : {
+      method: "GET",
+    };
+
     let allLoaded = fetch(
-      `${QServerBaseUrl}/tools/${this.toolName}/schema.json`
+      `${await qEnv.QServerBaseUrl}/tools/${this.toolName}/schema.json`,
+      payload
     )
       .then(response => {
         if (response.ok) {
@@ -135,25 +153,6 @@ export class Editor {
       })
       .then(item => {
         if (item) {
-          if (item.conf.customSchema && Object.keys(item.conf.customSchema).length > 0) {
-            let newFullSchemaProperties = {};
-
-            Object.keys(this.fullSchema.properties).forEach((propertyKey) => {
-              // Replace data table with custom element(s)
-              if (propertyKey === "data") {
-                for (const customPropertyKey of Object.keys(item.conf.customSchema)) {
-                  newFullSchemaProperties[customPropertyKey] = item.conf.customSchema[customPropertyKey]; 
-                }
-              } else {
-                newFullSchemaProperties[propertyKey] = this.fullSchema.properties[propertyKey];
-              }
-            });
-            
-            this.fullSchema.properties = newFullSchemaProperties;
-            this.schema = getEditorSchema(this.fullSchema);
-            this.optionsSchema = getOptionsSchema(this.fullSchema);
-          }
-          
           this.currentItemProvider.setCurrentItem(item);
           this.item = item;
 
