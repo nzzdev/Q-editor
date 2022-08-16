@@ -106,9 +106,27 @@ export class Editor {
       }, 5000);
     });
 
-    const QServerBaseUrl = await qEnv.QServerBaseUrl;
+    let item = routeParams.hasOwnProperty("id") && routeParams.id !== undefined
+      ? await this.itemStore.getItem(routeParams.id)
+      : undefined;
+    let payload = item && item.conf.customSchema
+    ? {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        customSchema: item.conf.customSchema,
+        customSchemaDefinitions: item.conf.customSchemaDefinitions,
+      }),
+    }
+    : {
+      method: "GET",
+    };
+
     let allLoaded = fetch(
-      `${QServerBaseUrl}/tools/${this.toolName}/schema.json`
+      `${await qEnv.QServerBaseUrl}/tools/${this.toolName}/schema.json`,
+      payload
     )
       .then(response => {
         if (response.ok) {
