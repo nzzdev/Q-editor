@@ -209,8 +209,8 @@ export class App {
   }
 
   async getDisplayOptionsSchema() {
+    let displayOptionsSchema = {};
     try {
-      let displayOptionsSchema = {};
       const response = await fetch(
         `${this.QServerBaseUrl}/display-options-schema/${this.selectedItem.id}/${this.target.key}.json`
       );
@@ -227,11 +227,10 @@ export class App {
           }
         }
       }
-
-      return displayOptionsSchema;
     } catch (error) {
       log.error(error);
     }
+    return displayOptionsSchema;
   }
 
   async getDefaultDisplayOptions() {
