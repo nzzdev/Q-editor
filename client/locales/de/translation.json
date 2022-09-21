@@ -28,7 +28,9 @@
     "genericServerError": "Es ist ein Problem auf dem Server aufgetreten. Wir arbeiten daran. Bitte versuch es später nochmals.",
     "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen.",
     "articlesWithThisGraphic": "Artikel mit dieser Grafik",
-    "loadMore": "Mehr laden"
+    "loadMore": "Mehr laden",
+    "mslogin": "Microsoft Login",
+    "orContinueWith": "oder weiter mit"
   },
   "userConfig": {
     "initials": "Initialen",

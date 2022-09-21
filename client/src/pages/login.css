@@ -1,0 +1,66 @@
+.q-login__ms-login {
+  margin: 32px 0 16px;
+}
+
+.q-login__continue-with h2 {
+  position: relative;
+  text-align: center;
+  font-size: 16px;
+}
+
+.q-login__continue-with h2::before {
+  top: 49%;
+  left: 0;
+  right: 0;
+  position: absolute;
+  border-bottom: 1px solid #eaeaea;
+  content: " ";
+}
+
+.q-login__continue-with h2 > span {
+  position: relative;
+  background-color: var(--q-color-gray-1);
+  padding: 0 8px;
+}
+
+.q-login__ms-login-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  font-family: inherit;
+  border: 0;
+  cursor: pointer;
+  overflow: visible;
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+  color: #6b6b6b;
+  background-color: #fff;
+  padding: 7px 13px;
+  border: 1px solid #eaeaea;
+  border-radius: 18px;
+  transition: color 120ms, background-color 120ms, border-color 120ms;
+  color: #007fff;
+  border-color: currentColor;
+}
+
+.q-login__ms-login-button a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #007fff;
+}
+
+.q-login__ms-login-button:hover {
+  outline: none;
+  text-decoration: none;
+  background-color: #f8f8f8;
+}
+
+.q-login__ms-login-button svg {
+  height: 16px;
+  width: 16px;
+  vertical-align: sub;
+  fill: #007fff;
+}

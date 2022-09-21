@@ -28,7 +28,9 @@
     "genericServerError": " Il y a un problème sur le serveur. Nous y travaillons. Veuillez réessayer plus tard.",
     "serverConnectionFailed": "Impossible de se connecter au serveur.",
     "articlesWithThisGraphic": "Articles avec ce graphique",
-    "loadMore": "Charger plus"
+    "loadMore": "Charger plus",
+    "mslogin": "Microsoft Login",
+    "orContinueWith": "ou continuer avec"
   },
   "userConfig": {
     "initials": "initiales",
