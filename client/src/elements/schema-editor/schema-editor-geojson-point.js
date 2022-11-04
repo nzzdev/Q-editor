@@ -231,7 +231,7 @@ export class SchemaEditorGeojsonPoint {
 
   geocode(query, key) {
     return fetch(
-      `https://api.maptiler.com/geocoding/${query}.json?key=${key}`
+      `https://api.maptiler.com/geocoding/${query}.json?key=${key}&language=de,en`
     ).then((response) => response.json());
   }
 
