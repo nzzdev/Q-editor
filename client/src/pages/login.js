@@ -40,11 +40,22 @@ export class Login {
     this.usernameInput.focus();
   }
 
-  async tryLogin() {
+  async tryAzureLogin() {
+    this.tryLogin(true);
+  }
+
+  async tryLogin(isAzure) {
     this.loginError = null;
     try {
-      await this.auth.login(this.username, this.password);
-      this.router.navigateToRoute("index");
+      if (isAzure) {
+        const QServerBaseUrl = await qEnv.QServerBaseUrl;
+        const azureLoginUrl = QServerBaseUrl + "/auth/azure";
+        // TODO: Check if better open in new tab
+        window.open(azureLoginUrl, "_self");
+      } else {
+        await this.auth.login(this.username, this.password);
+        this.router.navigateToRoute("index");
+      }
     } catch (e) {
       log.error(e);
       if (e.status === 401) {
