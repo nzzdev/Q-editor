@@ -36,6 +36,7 @@ export class ExportDialog {
     this.availabilityChecker = availabilityChecker;
     this.toolEndpointChecker = toolEndpointChecker;
     this.objectFromSchemaGenerator = objectFromSchemaGenerator;
+    this.abortFetchRenderingInfoController = new AbortController();
   }
 
   async activate(config) {
@@ -69,6 +70,9 @@ export class ExportDialog {
   }
 
   handleChange() {
+    this.abortFetchRenderingInfoController.abort();
+    this.abortFetchRenderingInfoController = new AbortController();
+
     this.taskQueue.queueMicroTask(() => {
       // whenever we have a change in data, we need to reevaluate all the checks...
       this.availabilityChecker.triggerReevaluation();
@@ -76,14 +80,17 @@ export class ExportDialog {
       // ... and update the preview
       this.renderingInfo = null;
       this.previewLoadingStatus = "loading";
-      this.fetchRenderingInfo({ forPreview: true }).then((renderingInfo) => {
+      this.fetchRenderingInfo({
+        forPreview: true,
+        signal: this.abortFetchRenderingInfoController.signal,
+      }).then((renderingInfo) => {
         this.previewLoadingStatus = "loaded";
         this.renderingInfo = renderingInfo;
       });
     });
   }
 
-  fetchRenderingInfo({ forPreview }) {
+  fetchRenderingInfo({ forPreview, signal }) {
     const toolRuntimeConfig = {
       isPure: true,
       displayOptions: this.displayOptions,
@@ -100,7 +107,8 @@ export class ExportDialog {
             this.config.item.id
           }/${target}?ignoreInactive=true&noCache=true&toolRuntimeConfig=${encodeURIComponent(
             JSON.stringify(toolRuntimeConfig)
-          )}`
+          )}`,
+          { signal }
         );
       }
     })
