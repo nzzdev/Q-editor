@@ -49,9 +49,11 @@ export class Login {
     try {
       if (isAzure) {
         const QServerBaseUrl = await qEnv.QServerBaseUrl;
-        const azureLoginUrl = QServerBaseUrl + "/auth/azure";
+        const azureLoginUrl = await QServerBaseUrl + "/auth/azure";
         // TODO: Check if better open in new tab
         window.open(azureLoginUrl, "_self");
+        this.user.loaded();
+
       } else {
         await this.auth.login(this.username, this.password);
         this.router.navigateToRoute("index");
