@@ -48,6 +48,7 @@
       "aurelia-authentication": "npm:aurelia-authentication@^3.8.3",
       "aurelia-binding": "npm:aurelia-binding@^2.3.1",
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^2.3.3",
+      "aurelia-cookie": "npm:aurelia-cookie@^1.0.10",
       "aurelia-dependency-injection": "npm:aurelia-dependency-injection@^1.4.2",
       "aurelia-dialog": "npm:aurelia-dialog@1",
       "aurelia-event-aggregator": "npm:aurelia-event-aggregator@^1.0.3",

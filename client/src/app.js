@@ -163,8 +163,8 @@ class ConfigAvailableCheckStep {
   }
 
   async run(navigationInstruction, next) {
-    document.cookie = "favorite_food=tripe; SameSite=None; Secure";
-    console.log(document.cookie)
+    const azureSession = Cookie.get('azureSession')
+    console.log(azureSession)
     if (
       navigationInstruction
         .getAllInstructions()

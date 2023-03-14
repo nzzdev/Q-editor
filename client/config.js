@@ -6,6 +6,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   map: {
     "@mapbox/mapbox-gl-draw": "npm:@mapbox/mapbox-gl-draw@1.1.2",
     "@turf/bbox": "npm:@turf/bbox@6.0.1",
@@ -17,6 +18,7 @@ System.config({
     "aurelia-authentication": "npm:aurelia-authentication@3.8.3",
     "aurelia-binding": "npm:aurelia-binding@2.5.0",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@2.3.3",
+    "aurelia-cookie": "npm:aurelia-cookie@1.0.10",
     "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.5.1",
     "aurelia-dialog": "npm:aurelia-dialog@1.1.0",
     "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.3",
