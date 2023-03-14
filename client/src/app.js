@@ -163,6 +163,8 @@ class ConfigAvailableCheckStep {
   }
 
   async run(navigationInstruction, next) {
+    document.cookie = "favorite_food=tripe; SameSite=None; Secure";
+    console.log(document.cookie)
     if (
       navigationInstruction
         .getAllInstructions()
