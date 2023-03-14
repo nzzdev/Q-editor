@@ -1,5 +1,6 @@
 import { inject } from "aurelia-framework";
 import { Redirect, Router } from "aurelia-router";
+import {Cookie} from 'aurelia-cookie';
 import User from "resources/User.js";
 import QConfig from "resources/QConfig.js";
 import qEnv from "resources/qEnv.js";
