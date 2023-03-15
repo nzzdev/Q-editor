@@ -1,6 +1,6 @@
 import { inject } from "aurelia-framework";
 import { Redirect, Router } from "aurelia-router";
-import {Cookie} from 'aurelia-cookie';
+import {AureliaCookie} from 'aurelia-cookie';
 import User from "resources/User.js";
 import QConfig from "resources/QConfig.js";
 import qEnv from "resources/qEnv.js";
@@ -164,8 +164,9 @@ class ConfigAvailableCheckStep {
   }
 
   async run(navigationInstruction, next) {
-    const azureSession = Cookie.get('azureSession')
+    const azureSession = AureliaCookie.get('azureSession')
     console.log(azureSession)
+    console.log(AureliaCookie.all())
     if (
       navigationInstruction
         .getAllInstructions()
