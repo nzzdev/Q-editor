@@ -134,6 +134,11 @@ class AuthorizeStep {
   run(navigationInstruction, next) {
     // Check if the route has an "auth" key
     if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
+      const azureSession = AureliaCookie.get('azureSession')
+      console.log(azureSession)
+      console.log(AureliaCookie.all())
+
+
       return this.user.loaded
         .then(() => {
           if (!this.user.isLoggedIn) {
@@ -164,9 +169,7 @@ class ConfigAvailableCheckStep {
   }
 
   async run(navigationInstruction, next) {
-    const azureSession = AureliaCookie.get('azureSession')
-    console.log(azureSession)
-    console.log(AureliaCookie.all())
+
     if (
       navigationInstruction
         .getAllInstructions()

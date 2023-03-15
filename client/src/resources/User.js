@@ -14,12 +14,16 @@ export default class User {
     this.loaded = this.load();
   }
 
-  async load() {
+  async load(header) {
     try {
+      header = Object.assign(
+        header,
+        {
+          credentials: "include",
+        }
+      );
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
-      const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
-        credentials: "include",
-      });
+      const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, header);
 
       if (!response.ok) {
         throw response;
