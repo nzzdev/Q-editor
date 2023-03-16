@@ -17,14 +17,6 @@ export default class User {
   async load(headers) {
     console.log("load")
     try {
-      headers = Object.assign(
-        headers,
-        {
-          credentials: "include",
-        }
-      );
-
-      console.log("header", headers)
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
         credentials: "include",
