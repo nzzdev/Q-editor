@@ -137,9 +137,14 @@ class AuthorizeStep {
       const azureSession = AureliaCookie.get('azureSession')
       console.log(azureSession)
       console.log(AureliaCookie.all())
+      console.log("bla")
+
+      const headers = {
+        Authorization: `Bearer ${azureSession}`,
+      };
 
 
-      return this.user.loaded
+      return this.user.loaded(headers)
         .then(() => {
           if (!this.user.isLoggedIn) {
             this.redirectBackAfterLoginRoute = navigationInstruction.fragment;

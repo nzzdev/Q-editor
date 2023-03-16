@@ -11,19 +11,25 @@ export default class User {
   constructor(httpClient) {
     this.httpClient = httpClient;
     this.isLoggedIn = false;
-    this.loaded = this.load();
+    this.loaded = this.load;
   }
 
-  async load(header) {
+  async load(headers) {
+    console.log("load")
     try {
-      header = Object.assign(
-        header,
+      headers = Object.assign(
+        headers,
         {
           credentials: "include",
         }
       );
+
+      console.log("header", headers)
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
-      const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, header);
+      const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
+        credentials: "include",
+        headers
+      });
 
       if (!response.ok) {
         throw response;
