@@ -59,8 +59,13 @@ export default class Auth {
     const authConfig = await this.qConfig.get("auth");
 
     if (authConfig && authConfig.type === "token") {
-      const authService = await this.getAuthService();
-      authService.logout();
+      // const authService = await this.getAuthService();
+      // authService.logout();
+      const QServerBaseUrl = await qEnv.QServerBaseUrl;
+      await fetch(`${QServerBaseUrl}/logout`, {
+        credentials: "include",
+        method: "POST",
+      });
     } else {
       // cookie logout
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
