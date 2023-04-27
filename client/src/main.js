@@ -58,7 +58,7 @@ export async function configure(aurelia) {
       config.useDefaults();
       config.settings.lock = false;
       config.settings.centerHorizontalOnly = true;
-      config.settings.overlayDismiss = true;
+      config.settings.overlayDismiss = false;
     })
     .plugin("aurelia-i18n", async (instance) => {
       // register backend plugin
