@@ -61,7 +61,7 @@ export default class Auth {
     if (authConfig && authConfig.type === "token") {
       // const authService = await this.getAuthService();
       // authService.logout();
-      console.log("test")
+      console.log("test more");
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       await fetch(`${QServerBaseUrl}/logout`, {
         credentials: "include",
