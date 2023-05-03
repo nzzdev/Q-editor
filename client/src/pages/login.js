@@ -45,7 +45,9 @@ export class Login {
   }
 
   attached() {
-    this.usernameInput.focus();
+    if(this.usernameInput) {
+      this.usernameInput.focus();
+    }
   }
 
   async tryAzureLogin() {
