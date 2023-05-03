@@ -58,17 +58,10 @@ export default class Auth {
   async logout() {
     const authConfig = await this.qConfig.get("auth");
 
-    if (authConfig && authConfig.type === "token") {
-      // const authService = await this.getAuthService();
-      // authService.logout();
-      console.log("test more");
-      const QServerBaseUrl = await qEnv.QServerBaseUrl;
-      await fetch(`${QServerBaseUrl}/logout`, {
-        credentials: "include",
-        method: "POST",
-      });
+    if (authConfig && authConfig.isLD && authConfig.type === "token") {
+      const authService = await this.getAuthService();
+      authService.logout();
     } else {
-      // cookie logout
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       await fetch(`${QServerBaseUrl}/logout`, {
         credentials: "include",
