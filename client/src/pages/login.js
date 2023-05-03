@@ -8,19 +8,27 @@ const log = LogManager.getLogger("Q");
 
 import Auth from "resources/Auth.js";
 import User from "resources/User.js";
+import QConfig from "resources/QConfig.js";
 import qEnv from "resources/qEnv.js";
 
-@inject(Auth, User, I18N, Router)
+@inject(Auth, User, QConfig, I18N, Router)
 export class Login {
   username;
   password;
   authData;
+  authConfig;
 
-  constructor(auth, user, i18n, router) {
+  constructor(auth, user, qConfig, i18n, router) {
     this.auth = auth;
     this.user = user;
     this.i18n = i18n;
     this.router = router;
+    this.qConfig = qConfig;
+    this.loadData();
+  }
+
+  async loadData() {
+    this.authConfig = await this.qConfig.get("auth");
   }
 
   async canActivate() {

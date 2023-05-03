@@ -14,45 +14,42 @@
       style="width: 100px; height: 100px; margin: 50px auto 100px auto"
     ></icon-logo>
     <form class="q-form">
-      <p
-        class="q-text"
-        if.bind="loginMessage"
-        innerhtml.bind="loginMessage"
-      ></p>
-      <div class="q-form__block">
-        <label>
-          <span t="general.username"></span>
-          <input
-            type="text"
-            id="username"
-            value.bind="username"
-            ref="usernameInput"
-            autocomplete="username"
-          />
-        </label>
+      <div if.bind="authConfig && authConfig.isLD">
+        <p
+          class="q-text"
+          if.bind="loginMessage"
+          innerhtml.bind="loginMessage"
+        ></p>
+        <div class="q-form__block">
+          <label>
+            <span t="general.username"></span>
+            <input
+              type="text"
+              id="username"
+              value.bind="username"
+              ref="usernameInput"
+              autocomplete="username"
+            />
+          </label>
+        </div>
+        <div class="q-form__block">
+          <label>
+            <span t="general.password"></span>
+            <input
+              type="password"
+              id="password"
+              value.bind="password"
+              autocomplete="current-password"
+            />
+          </label>
+        </div>
+        <p class="q-text q-text--error" if.bind="loginError">${loginError}</p>
+        <button-primary click.delegate="tryLogin()" type="submit"
+          ><span t="general.login"></span
+        ></button-primary>
       </div>
-      <div class="q-form__block">
-        <label>
-          <span t="general.password"></span>
-          <input
-            type="password"
-            id="password"
-            value.bind="password"
-            autocomplete="current-password"
-          />
-        </label>
-      </div>
-      <p class="q-text q-text--error" if.bind="loginError">${loginError}</p>
-      <button-primary click.delegate="tryLogin()" type="submit"
-        ><span t="general.login"></span
-      ></button-primary>
       <!-- Microsoft Login-->
-      <div class="q-login__ms-login">
-        <label class="q-login__continue-with">
-          <h2>
-            <span t="general.orContinueWith"></span>
-          </h2>
-        </label>
+      <div class="q-login__ms-login" else>
         <label class="q-login__ms-login-button">
           <a click.delegate="tryAzureLogin()">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
