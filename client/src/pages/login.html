@@ -14,7 +14,7 @@
       style="width: 100px; height: 100px; margin: 50px auto 100px auto"
     ></icon-logo>
     <form class="q-form">
-      <div if.bind="authConfig && authConfig.isLD">
+      <div if.bind="authConfig && Boolean(authConfig.isLD)">
         <p
           class="q-text"
           if.bind="loginMessage"
