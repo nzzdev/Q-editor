@@ -23,7 +23,7 @@
   padding: 0 8px;
 }
 
-.q-login__ms-login-button {
+.q-login__ms-login-button__label {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,24 +43,33 @@
   border-radius: 18px;
   transition: color 120ms, background-color 120ms, border-color 120ms;
   color: #007fff;
-  border-color: currentColor;
+  border-color: #007fff;
 }
 
-.q-login__ms-login-button a {
+.q-login__ms-login-button__label__text {
   text-decoration: none;
-  font-size: 14px;
+  font-size: 20px;
   color: #007fff;
 }
 
-.q-login__ms-login-button:hover {
+.q-login__ms-login-button:hover .q-login__ms-login-button__label {
   outline: none;
   text-decoration: none;
-  background-color: #f8f8f8;
+  color: #fff;
+  background-color: #007fff;
+}
+
+.q-login__ms-login-button:hover .q-login__ms-login-button__label__text {
+  color: #fff;
+}
+
+.q-login__ms-login-button:hover svg {
+  fill: #fff;
 }
 
 .q-login__ms-login-button svg {
-  height: 16px;
-  width: 16px;
+  height: 30px;
+  width: 30px;
   vertical-align: sub;
   fill: #007fff;
 }
