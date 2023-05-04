@@ -52,6 +52,10 @@
   color: #007fff;
 }
 
+.q-login__ms-login-button:hover {
+  text-decoration: none;
+}
+
 .q-login__ms-login-button:hover .q-login__ms-login-button__label {
   outline: none;
   text-decoration: none;
