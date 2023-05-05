@@ -34,6 +34,7 @@ export default class User {
     } catch (e) {
       console.log("EE" , e)
       this.data = null;
+      return false;
     } finally {
       this.setLoggedInState();
       return true;

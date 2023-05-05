@@ -143,7 +143,6 @@ class AuthorizeStep {
       console.log('guard', headers)
       return this.user.loaded(headers)
         .then(resp => {
-          console.log('resp', resp)
           if (!this.user.isLoggedIn) {
             this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
             return next.cancel(new Redirect("login"));
