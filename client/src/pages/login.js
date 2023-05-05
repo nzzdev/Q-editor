@@ -28,11 +28,6 @@ export class Login {
   }
 
   async loadData() {
-    var req = new XMLHttpRequest();
-    req.open("GET", document.location, false);
-    req.send(null);
-    var headers = req.getAllResponseHeaders().toLowerCase();
-    alert(headers);
     this.authConfig = await this.qConfig.get("auth");
   }
 
