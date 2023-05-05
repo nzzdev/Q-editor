@@ -28,6 +28,11 @@ export class Login {
   }
 
   async loadData() {
+    var req = new XMLHttpRequest();
+    req.open("GET", document.location, false);
+    req.send(null);
+    var headers = req.getAllResponseHeaders().toLowerCase();
+    alert(headers);
     this.authConfig = await this.qConfig.get("auth");
   }
 
@@ -45,7 +50,7 @@ export class Login {
   }
 
   attached() {
-    if(this.usernameInput) {
+    if (this.usernameInput) {
       this.usernameInput.focus();
     }
   }
@@ -59,7 +64,7 @@ export class Login {
     try {
       if (isAzure) {
         const QServerBaseUrl = await qEnv.QServerBaseUrl;
-        const azureLoginUrl = await QServerBaseUrl + "/auth/azure";
+        const azureLoginUrl = (await QServerBaseUrl) + "/auth/azure";
         // TODO: Check if better open in new tab
         window.open(azureLoginUrl, "_self");
       } else {
