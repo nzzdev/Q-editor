@@ -140,8 +140,10 @@ class AuthorizeStep {
       };
 
 
+      console.log('guard', headers)
       return this.user.loaded(headers)
-        .then(() => {
+        .then(resp => {
+          console.log('resp', resp)
           if (!this.user.isLoggedIn) {
             this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
             return next.cancel(new Redirect("login"));
@@ -154,6 +156,7 @@ class AuthorizeStep {
           return next();
         })
         .catch(e => {
+          console.log('e', e)
           this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
           return next.cancel(new Redirect("login"));
         });
