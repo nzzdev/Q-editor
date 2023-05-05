@@ -23,6 +23,7 @@ export default class User {
         headers
       });
 
+      console.log("user", response)
       if (!response.ok) {
         throw response;
       }
@@ -30,6 +31,7 @@ export default class User {
       this.data = await response.json();
       return true;
     } catch (e) {
+      console.log("EE" , e)
       this.data = null;
     } finally {
       this.setLoggedInState();
