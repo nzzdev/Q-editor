@@ -20,6 +20,7 @@ export default class User {
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
+        credentials: "include",
         headers
       });
 
