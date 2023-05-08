@@ -135,6 +135,7 @@ class AuthorizeStep {
     // Check if the route has an "auth" key
     if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
       const azureSession = AureliaCookie.get('azureSession');
+      console.log("cookie", document.cookie)
       const headers = {
         Authorization: `Bearer ${azureSession}`,
       };
