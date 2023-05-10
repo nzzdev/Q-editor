@@ -135,13 +135,11 @@ class AuthorizeStep {
     // Check if the route has an "auth" key
     if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
       const azureSession = AureliaCookie.get('azureSession');
-      console.log("cookie", document.cookie)
       const headers = {
         Authorization: `Bearer ${azureSession}`,
       };
 
 
-      console.log('guard', headers)
       return this.user.loaded(headers)
         .then(resp => {
           if (!this.user.isLoggedIn) {
@@ -156,7 +154,6 @@ class AuthorizeStep {
           return next();
         })
         .catch(e => {
-          console.log('e', e)
           this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
           return next.cancel(new Redirect("login"));
         });
