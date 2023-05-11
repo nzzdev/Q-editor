@@ -24,6 +24,7 @@
     "changesSaved": "Changements sauvegardés.",
     "failedToSaveChanges": "Impossible de sauvegarder les changements.",
     "loginFailed": "Votre identifiant ou mot de passe est incorrect.",
+    "loginFailedServer": "Votre identifiant ou mot de passe est incorrect.",
     "loginTimeout": "Le serveur met trop de temps à répondre. Nous y travaillons. Veuillez réessayer plus tard.",
     "genericServerError": " Il y a un problème sur le serveur. Nous y travaillons. Veuillez réessayer plus tard.",
     "serverConnectionFailed": "Impossible de se connecter au serveur.",

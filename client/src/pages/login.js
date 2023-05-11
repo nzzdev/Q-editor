@@ -80,8 +80,8 @@ export class Login {
   }
 
   readErrorDetails(routeParams) {
-    if (routeParams.error && routeParams.error === 403) {
-      this.loginError = this.i18n.tr("general.loginFailed");
+    if (routeParams.error && routeParams.error === "403") {
+      this.loginError = this.i18n.tr("general.loginFailedGeneric");
     }
   }
 }

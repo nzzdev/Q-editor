@@ -50,7 +50,13 @@
       </div>
       <!-- Microsoft Login-->
       <div class="q-login__ms-login" else>
-        <p class="q-text q-text--error" if.bind="loginError">${loginError}</p>
+        <p
+          class="q-text q-text--error"
+          style="text-align: center"
+          if.bind="loginError"
+        >
+          ${loginError}
+        </p>
         <a class="q-login__ms-login-button" click.delegate="tryAzureLogin()">
           <label class="q-login__ms-login-button__label">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
