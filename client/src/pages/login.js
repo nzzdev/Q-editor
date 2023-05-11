@@ -33,7 +33,7 @@ export class Login {
   }
 
   attached() {
-    this.readRedirectHeaders();
+    this.handleRedirectHeaders();
   }
 
   async canActivate() {
@@ -82,8 +82,8 @@ export class Login {
     }
   }
 
-  readRedirectHeaders() {
-    if (document.referrer) {
+  handleRedirectHeaders() {
+    if (document.referrer === "https://login.microsoftonline.com/") {
       const redirectUrl = document.referrer;
       const headersString = new URL(redirectUrl).searchParams.get("headers");
 
@@ -94,11 +94,12 @@ export class Login {
         this.headers = headers;
 
         // Handle the error or perform any necessary actions
-        const errorMessage = this.headers["X-Error-Message"];
-        const errorCode = this.headers["X-Error-Code"];
+        const errorMessage = this.headers["x-error-message"];
+        const errorCode = this.headers["x-error-code"];
 
         if (errorMessage && errorCode) {
           console.log(`Error: ${errorMessage}, Code: ${errorCode}`);
+          this.loginError = this.i18n.tr("general.loginFailed");
           // Perform error handling logic here
         }
       }
