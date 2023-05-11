@@ -15,7 +15,6 @@ export default class User {
   }
 
   async load(headers) {
-    console.log("load")
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
@@ -31,6 +30,7 @@ export default class User {
       return true;
     } catch (e) {
       this.data = null;
+      return false;
     } finally {
       this.setLoggedInState();
       return true;
