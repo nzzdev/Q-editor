@@ -32,10 +32,6 @@ export class Login {
     this.authConfig = await this.qConfig.get("auth");
   }
 
-  attached() {
-    this.readErrorDetails();
-  }
-
   async canActivate() {
     await this.user.loaded;
     if (this.user.isLoggedIn) {
@@ -45,8 +41,9 @@ export class Login {
     }
   }
 
-  async activate() {
+  async activate(routeParams) {
     this.loginMessage = await qEnv.loginMessage;
+    this.readErrorDetails(routeParams);
   }
 
   attached() {
@@ -82,25 +79,9 @@ export class Login {
     }
   }
 
-  readErrorDetails() {
-    const errorDetailsString = localStorage.getItem("azureError");
-
-    if (errorDetailsString) {
-      this.errorDetails = JSON.parse(errorDetailsString);
-
-      // Clear the error details from localStorage
-      localStorage.removeItem("azureError");
-
-      // Handle the error or perform any necessary actions
-      const errorMessage = this.errorDetails.errorMessage;
-      const errorCode = this.errorDetails.errorCode;
-
-      if (errorCode === 403) {
-        console.warn(`Error during login: ${errorMessage}`);
-        this.loginError = this.i18n.tr("general.loginFailed");
-      } else {
-        console.warn(`Unhandled error code: ${errorCode}`);
-      }
+  readErrorDetails(routeParams) {
+    if (routeParams.error && routeParams.error === 403) {
+      this.loginError = this.i18n.tr("general.loginFailed");
     }
   }
 }
