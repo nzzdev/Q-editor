@@ -24,10 +24,12 @@ export class Login {
     this.i18n = i18n;
     this.router = router;
     this.qConfig = qConfig;
+    this.headers = {};
     this.loadData();
+  }
 
-    // Listen to the storage event to capture headers sent during the redirect
-    window.addEventListener("storage", this.handleStorageEvent.bind(this));
+  attached() {
+    this.readRedirectHeaders();
   }
 
   async canActivate() {
@@ -76,23 +78,24 @@ export class Login {
     }
   }
 
-  handleStorageEvent(event) {
-    console.log("Catched a storage event", event);
-    if (event.key === 'X-Error-Code') {
-      console.log("Catched an error header", event.key);
-      // Retrieve the headers from the storage event
-      const headers = JSON.parse(event.newValue);
+  readRedirectHeaders() {
+    const redirectUrl = document.referrer;
+    const headersString = new URL(redirectUrl).searchParams.get("headers");
+
+    if (headersString) {
+      const headers = JSON.parse(atob(headersString));
 
       // Store the headers for later use
       this.headers = headers;
 
       // Handle the error or perform any necessary actions
-      const errorMessage = this.headers['X-Error-Message'];
-      const errorCode = this.headers['X-Error-Code'];
+      const errorMessage = this.headers["X-Error-Message"];
+      const errorCode = this.headers["X-Error-Code"];
 
       if (errorMessage && errorCode) {
         console.log(`Error: ${errorMessage}, Code: ${errorCode}`);
-        this.loginError = this.i18n.tr("general.loginFailed");
+        // Perform error handling logic here
       }
     }
+  }
 }
