@@ -25,7 +25,7 @@ export class Login {
     this.router = router;
     this.qConfig = qConfig;
     this.loadData();
-    this.headers = {};
+    this.errorDetails = null;
   }
 
   async loadData() {
@@ -33,7 +33,7 @@ export class Login {
   }
 
   attached() {
-    this.handleRedirectHeaders();
+    this.readErrorDetails();
   }
 
   async canActivate() {
@@ -82,26 +82,23 @@ export class Login {
     }
   }
 
-  handleRedirectHeaders() {
-    if (document.referrer === "https://login.microsoftonline.com/") {
-      const redirectUrl = document.referrer;
-      const headersString = new URL(redirectUrl).searchParams.get("headers");
+  readErrorDetails() {
+    const errorDetailsCookie = document.cookie
+      .split(";")
+      .find((cookie) => cookie.trim().startsWith("azureError="));
 
-      if (headersString) {
-        const headers = JSON.parse(atob(headersString));
+    if (errorDetailsCookie) {
+      const cookieValue = decodeURIComponent(errorDetailsCookie.split("=")[1]);
+      this.errorDetails = JSON.parse(cookieValue);
 
-        // Store the headers for later use
-        this.headers = headers;
+      // Clear the error details cookie
+      document.cookie =
+        "errorDetails=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-        // Handle the error or perform any necessary actions
-        const errorMessage = this.headers["x-error-message"];
-        const errorCode = this.headers["x-error-code"];
-
-        if (errorMessage && errorCode) {
-          console.log(`Error: ${errorMessage}, Code: ${errorCode}`);
-          this.loginError = this.i18n.tr("general.loginFailed");
-          // Perform error handling logic here
-        }
+      if (this.errorDetails === "403") {
+        this.loginError = this.i18n.tr("general.loginFailed");
+      } else {
+        console.warn(`Unhandled error code: ${errorCode}`);
       }
     }
   }
