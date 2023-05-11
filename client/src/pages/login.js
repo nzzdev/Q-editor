@@ -24,8 +24,12 @@ export class Login {
     this.i18n = i18n;
     this.router = router;
     this.qConfig = qConfig;
-    this.headers = {};
     this.loadData();
+    this.headers = {};
+  }
+
+  async loadData() {
+    this.authConfig = await this.qConfig.get("auth");
   }
 
   attached() {
