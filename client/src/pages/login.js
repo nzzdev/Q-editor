@@ -83,19 +83,20 @@ export class Login {
   }
 
   readErrorDetails() {
-    const errorDetailsCookie = document.cookie
-      .split(";")
-      .find((cookie) => cookie.trim().startsWith("azureError="));
+    const errorDetailsString = localStorage.getItem("azureError");
 
-    if (errorDetailsCookie) {
-      const cookieValue = decodeURIComponent(errorDetailsCookie.split("=")[1]);
-      this.errorDetails = JSON.parse(cookieValue);
+    if (errorDetailsString) {
+      this.errorDetails = JSON.parse(errorDetailsString);
 
-      // Clear the error details cookie
-      document.cookie =
-        "errorDetails=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      // Clear the error details from localStorage
+      localStorage.removeItem("azureError");
 
-      if (this.errorDetails === "403") {
+      // Handle the error or perform any necessary actions
+      const errorMessage = this.errorDetails.errorMessage;
+      const errorCode = this.errorDetails.errorCode;
+
+      if (errorCode === 403) {
+        console.warn(`Error during login: ${errorMessage}`);
         this.loginError = this.i18n.tr("general.loginFailed");
       } else {
         console.warn(`Unhandled error code: ${errorCode}`);
