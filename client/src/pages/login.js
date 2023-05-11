@@ -79,22 +79,24 @@ export class Login {
   }
 
   readRedirectHeaders() {
-    const redirectUrl = document.referrer;
-    const headersString = new URL(redirectUrl).searchParams.get("headers");
+    if (document.referrer) {
+      const redirectUrl = document.referrer;
+      const headersString = new URL(redirectUrl).searchParams.get("headers");
 
-    if (headersString) {
-      const headers = JSON.parse(atob(headersString));
+      if (headersString) {
+        const headers = JSON.parse(atob(headersString));
 
-      // Store the headers for later use
-      this.headers = headers;
+        // Store the headers for later use
+        this.headers = headers;
 
-      // Handle the error or perform any necessary actions
-      const errorMessage = this.headers["X-Error-Message"];
-      const errorCode = this.headers["X-Error-Code"];
+        // Handle the error or perform any necessary actions
+        const errorMessage = this.headers["X-Error-Message"];
+        const errorCode = this.headers["X-Error-Code"];
 
-      if (errorMessage && errorCode) {
-        console.log(`Error: ${errorMessage}, Code: ${errorCode}`);
-        // Perform error handling logic here
+        if (errorMessage && errorCode) {
+          console.log(`Error: ${errorMessage}, Code: ${errorCode}`);
+          // Perform error handling logic here
+        }
       }
     }
   }
