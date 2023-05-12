@@ -70,6 +70,12 @@
             ></span>
           </label>
         </a>
+        <p if.bind="loginError" style="text-align: center" class="q-text">
+          ${loginTechnicalHelp}
+          <a href="https://nzz.slack.com/archives/C9W43L6V9" target="_blank"
+            >${loginContactUsOnSlack}</a
+          >
+        </p>
       </div>
     </form>
   </main>

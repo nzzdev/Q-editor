@@ -42,8 +42,17 @@ export class Login {
   }
 
   async activate(routeParams) {
+    // Clear error param if not coming from Azure
+    if (
+      document.referrer !== "https://login.microsoftonline.com/" &&
+      routeParams.error &&
+      routeParams.error === "403"
+    ) {
+      this.router.navigateToRoute("login");
+    }
+
     this.loginMessage = await qEnv.loginMessage;
-    this.readErrorDetails(routeParams);
+    this.handleAzureError(routeParams);
   }
 
   attached() {
@@ -58,6 +67,8 @@ export class Login {
 
   async tryLogin(isAzure) {
     this.loginError = null;
+    this.loginTechnicalHelp = null;
+    this.loginContactUsOnSlack = null;
     try {
       if (isAzure) {
         const QServerBaseUrl = await qEnv.QServerBaseUrl;
@@ -75,13 +86,28 @@ export class Login {
         this.loginError = this.i18n.tr("general.loginTimeout");
       } else {
         this.loginError = this.i18n.tr("general.genericServerError");
+        this.loginTechnicalHelp = this.i18n.tr("general.loginTechnicalIssues");
+        this.loginContactUsOnSlack = this.i18n.tr(
+          "general.loginContactUsOnSlack"
+        );
       }
     }
   }
 
-  readErrorDetails(routeParams) {
-    if (routeParams.error && routeParams.error === "403") {
+  handleAzureError(routeParams) {
+    this.loginError = null;
+    this.loginTechnicalHelp = null;
+    this.loginContactUsOnSlack = null;
+    if (
+      document.referrer === "https://login.microsoftonline.com/" &&
+      routeParams.error &&
+      routeParams.error === "403"
+    ) {
       this.loginError = this.i18n.tr("general.loginFailedGeneric");
+      this.loginTechnicalHelp = this.i18n.tr("general.loginTechnicalIssues");
+      this.loginContactUsOnSlack = this.i18n.tr(
+        "general.loginContactUsOnSlack"
+      );
     }
   }
 }

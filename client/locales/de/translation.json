@@ -25,6 +25,8 @@
     "failedToSaveChanges": "Die Änderung konnten nicht gespeichert werden.",
     "loginFailed": "Ihr Benutzername oder Passwort ist unbekannt.",
     "loginFailedGeneric": "Anmeldung fehlgeschlagen.",
+    "loginTechnicalIssues": "Gibt es technische Probleme?",
+    "loginContactUsOnSlack": "Kontaktiert uns auf Slack.",
     "loginTimeout": "Server braucht zu lange um zu antworten. Wir arbeiten daran. Bitte versuch es später nochmals.",
     "genericServerError": "Es ist ein Problem auf dem Server aufgetreten. Wir arbeiten daran. Bitte versuch es später nochmals.",
     "serverConnectionFailed": "Die Verbindung zum Server ist fehlgeschlagen.",
