@@ -19,7 +19,7 @@ export default class User {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
         credentials: "include",
-        headers
+        headers,
       });
 
       if (!response.ok) {
@@ -83,13 +83,14 @@ export default class User {
     return this.data.username;
   }
 
-  async save() {
+  async save(headers) {
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
         credentials: "include",
         method: "PUT",
         body: JSON.stringify(this.data),
+        headers,
       });
 
       if (!response.ok) {
