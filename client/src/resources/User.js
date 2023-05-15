@@ -83,8 +83,12 @@ export default class User {
     return this.data.username;
   }
 
-  async save(headers) {
+  async save() {
     try {
+      const azureSession = AureliaCookie.get("azureSession");
+      const headers = {
+        Authorization: `Bearer ${azureSession}`,
+      };
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
         credentials: "include",
