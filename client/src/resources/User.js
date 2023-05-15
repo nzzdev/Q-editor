@@ -1,4 +1,5 @@
 import { inject, LogManager } from "aurelia-framework";
+import { AureliaCookie } from "aurelia-cookie";
 import { HttpClient } from "aurelia-fetch-client";
 import qEnv from "resources/qEnv.js";
 
