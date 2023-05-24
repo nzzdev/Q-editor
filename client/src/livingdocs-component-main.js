@@ -2,13 +2,10 @@ import QConfig from "resources/QConfig.js";
 import Backend from "i18next-fetch-backend";
 import ToolsInfo from "resources/ToolsInfo.js";
 import qEnv from "resources/qEnv.js";
+
 import CurrentItemProvider from "resources/CurrentItemProvider.js";
-import { AuthService } from "./auth-service.js";
-import { AuthGuard } from "./auth-guard.js";
-import { Router } from "aurelia-router";
 
 export async function configure(aurelia) {
-  aurelia.use.singleton(AuthService);
   aurelia.use.singleton(QConfig);
   aurelia.use.singleton(ToolsInfo);
   aurelia.use.singleton(CurrentItemProvider);
@@ -76,30 +73,5 @@ export async function configure(aurelia) {
       });
     });
 
-  aurelia.start().then((a) => {
-    const router = a.container.get(Router);
-    router.configure((config) => {
-      config.title = "LD Q-Picker";
-
-      config.map([
-        //{ route: "", moduleId: "home", nav: true, title: "Home" },
-        {
-          route: "static-page",
-          moduleId: "static-page",
-          nav: true,
-          title: "Static Page",
-          settings: { auth: true },
-        },
-      ]);
-
-      // Apply the AuthGuard to the static page route
-      config.mapUnknownRoutes((instruction) => {
-        if (instruction.config.settings.auth) {
-          return { route: "login" };
-        }
-      }).navModel.settings.authGuard = AuthGuard;
-    });
-
-    a.setRoot("livingdocs-component-app/app");
-  });
+  aurelia.start().then((a) => a.setRoot("livingdocs-component-app/app"));
 }
