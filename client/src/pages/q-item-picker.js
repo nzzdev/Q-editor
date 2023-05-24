@@ -1,4 +1,4 @@
-import { inject, singleton, LogManager } from "aurelia-framework";
+import { inject, LogManager } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import ItemStore from "resources/ItemStore.js";
 import QTargets from "resources/QTargets.js";
@@ -9,7 +9,6 @@ import QConfig from "resources/QConfig.js";
 
 const log = LogManager.getLogger("Q");
 
-@singleton()
 @inject(
   ItemStore,
   QTargets,
