@@ -71,6 +71,12 @@ export class App {
         auth: true,
       },
       {
+        route: ["q-item-picker"],
+        name: "q-item-picker",
+        moduleId: "pages/q-item-picker",
+        auth: true,
+      },
+      {
         route: ["server-unavailable"],
         name: "server-unavailable",
         moduleId: "pages/server-unavailable",

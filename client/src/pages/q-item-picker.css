@@ -1,0 +1,233 @@
+html {
+  box-sizing: border-box;
+  --q-preview-padding: calc(var(--q-space-base) * 3);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+.livingdocs-component {
+  display: flex;
+  overflow-y: hidden;
+  height: 100vh;
+}
+
+.livingdocs-component-item-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.livingdocs-component-search {
+  width: 50%;
+  border-right: 1px solid var(--q-color-gray-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.search {
+  width: 85%;
+  margin: calc(var(--q-space-base) * 3) auto;
+
+  display: flex;
+  align-items: center;
+}
+
+.search svg {
+  order: 1;
+
+  fill: var(--q-color-gray-6);
+  width: 20px;
+  position: relative;
+  left: calc(var(--q-space-base) * 2 + 20px);
+}
+
+.search input {
+  flex-grow: 1;
+  order: 2;
+
+  background: white;
+  box-shadow: 0px 0px 5px 0px var(--q-color-gray-4);
+
+  border: none;
+  border-radius: 8px;
+  padding-top: calc(var(--q-space-base) * 2);
+  padding-right: calc(var(--q-space-base) * 2);
+  padding-bottom: calc(var(--q-space-base) * 2);
+  padding-left: calc(var(--q-space-base) * 6);
+
+  font-size: var(--q-text-size);
+  caret-color: var(--q-color-primary-2);
+}
+
+.search input::placeholder {
+  color: var(--q-text-ultralight-color);
+}
+
+.search input:focus {
+  outline: none;
+}
+
+.search input:focus + svg {
+  fill: var(--q-color-gray-5);
+}
+
+.item-list {
+  width: 85%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: var(--q-space-base) auto;
+}
+
+.item-list__empty-message {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  text-align: center;
+  width: 85%;
+}
+
+.item-list-entry {
+  border-top: solid 1px var(--q-color-gray-3);
+  padding: var(--q-space-base) 0;
+  transition: transform 0.2s ease-in;
+}
+
+.item-list-entry:hover {
+  cursor: pointer;
+  background-color: var(--q-color-gray-2);
+}
+
+.item-list-entry.selected {
+  background-color: var(--q-color-gray-3);
+}
+
+.item-list-entry .tool-icon {
+  width: 26px;
+  height: 26px;
+  color: var(--q-color-primary-3);
+  margin-right: var(--q-space-base);
+}
+
+.item-list-entry span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-list-entry-title {
+  display: flex;
+  align-items: center;
+}
+
+.item-list-entry-title span {
+  flex-grow: 1;
+}
+
+.item-list-entry-info {
+  display: flex;
+  margin-top: var(--q-space-base);
+  margin-left: 34px;
+}
+
+.item-list-entry-info > * {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.item-list-entry__state-tag-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.item-list-entry__state-tag {
+  height: 20px;
+  width: calc(var(--q-space-base) * 7);
+  line-height: 20px !important;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.item-list-entry__state-tag--active {
+  background-color: var(--q-color-primary-2);
+  color: var(--q-color-white);
+}
+
+.item-list-entry__state-tag--inactive {
+  background-color: var(--q-color-primary-1);
+  color: var(--q-color-primary-2);
+}
+
+.livingdocs-component-search__load-more-button {
+  width: 85%;
+  margin: var(--q-space-base) auto;
+}
+
+.livingdocs-component-item-controls a:hover {
+  text-decoration: none;
+}
+
+.livingdocs-component-item-preview-container,
+.livingdocs-component-item-controls-container {
+  width: 90%;
+  margin: var(--q-space-base) auto 0 auto;
+}
+
+.livingdocs-component-item-options-container {
+  overflow-y: auto;
+  max-height: 40vh;
+}
+
+.livingdocs-component-item-options {
+  width: 200px;
+}
+
+.livingdocs-component-item-preview-container {
+  margin-top: 0;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  justify-content: center;
+}
+
+.livingdocs-component-item-preview-message-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.livingdocs-component-item-controls {
+  margin-bottom: var(--q-space-base);
+}
+
+.livingdocs-component-item-title {
+  margin-top: calc(var(--q-space-base) * 2);
+}
+
+.livingdocs-component-item-preview {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  margin-top: 0;
+}
+
+.livingdocs-component-item-preview preview-container {
+  --preview-container-overflow-y: hidden;
+  --preview-container-margin-top: 0px;
+  margin: 0;
+  height: 1px; /* set a fixed height so the container doesn't grow infinitely but stays within the flex container */
+  flex-grow: 1; /* let the preview-container grow to the remaining space */
+}
+
+.livingdocs-component-item-controls {
+  padding-top: var(--q-space-base);
+  border-top: 1px solid var(--q-color-gray-4);
+  display: flex;
+  justify-content: space-around;
+  min-height: 45px;
+}
