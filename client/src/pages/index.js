@@ -55,13 +55,13 @@ export class Index {
 
   activate() {
     if (document.referrer === "https://login.microsoftonline.com/") {
-      const redirectRoute = this.sessionStorage.getItem(
-        "redirectAfterLoginRoute"
+      const redirectPath = this.sessionStorage.getItem(
+        "redirectPathAfterLogin"
       );
 
-      if (redirectRoute) {
-        this.sessionStorage.removeItem("redirectAfterLoginRoute");
-        this.router.navigateToRoute(redirectRoute);
+      if (redirectPath) {
+        this.sessionStorage.removeItem("redirectPathAfterLogin");
+        this.router.navigateToRoute(redirectPath);
       }
     }
   }
