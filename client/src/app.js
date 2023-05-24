@@ -4,6 +4,7 @@ import { AureliaCookie } from "aurelia-cookie";
 import User from "resources/User.js";
 import QConfig from "resources/QConfig.js";
 import qEnv from "resources/qEnv.js";
+import { SessionStorage } from "./session-storage";
 
 @inject(QConfig, User, Router)
 export class App {
@@ -132,11 +133,12 @@ export class App {
   }
 }
 
-@inject(User, QConfig)
+@inject(User, QConfig, SessionStorage)
 class AuthorizeStep {
-  constructor(user, qConfig) {
+  constructor(user, qConfig, sessionStorage) {
     this.user = user;
     this.qConfig = qConfig;
+    this.sessionStorage = sessionStorage;
   }
 
   run(navigationInstruction, next) {
@@ -151,6 +153,10 @@ class AuthorizeStep {
         .loaded(headers)
         .then((resp) => {
           if (!this.user.isLoggedIn) {
+            // Store the current route to redirect after login (for azure login)
+            const currentUrl = window.location.href;
+            this.sessionStorage.setItem("redirectAfterLoginRoute", currentUrl);
+
             this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
             return next.cancel(new Redirect("login"));
           }
