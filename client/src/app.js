@@ -155,7 +155,10 @@ class AuthorizeStep {
           if (!this.user.isLoggedIn) {
             // Store the current route to redirect after login (for azure login)
             const currentPath = window.location.pathname;
-            this.sessionStorage.setItem("redirectPathAfterLogin", currentPath);
+            this.sessionStorage.setItem(
+              "redirectPathAfterLogin",
+              currentPath.slice(1)
+            );
 
             this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
             return next.cancel(new Redirect("login"));
