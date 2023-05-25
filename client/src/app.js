@@ -159,7 +159,10 @@ class AuthorizeStep {
               "redirectPathAfterLogin",
               currentPath.slice(1)
             ); */
-            this.sessionStorage.setItem(window.location.href);
+            this.sessionStorage.setItem(
+              "redirectPathAfterLogin",
+              window.location.href
+            );
 
             this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
             return next.cancel(new Redirect("login"));
