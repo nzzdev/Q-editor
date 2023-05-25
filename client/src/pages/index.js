@@ -62,7 +62,6 @@ export class Index {
       if (redirectPath) {
         this.sessionStorage.removeItem("redirectPathAfterLogin");
         window.location.href = redirectPath;
-        //this.router.navigateToRoute(redirectPath);
       }
     }
   }
