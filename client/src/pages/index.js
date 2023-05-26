@@ -59,7 +59,8 @@ export class Index {
         "redirectPathAfterLogin"
       );
 
-      if (redirectPath) {
+      // Redirect to specific route
+      if (redirectPath && document.location.pathname !== "/") {
         this.sessionStorage.removeItem("redirectPathAfterLogin");
         window.location.href = redirectPath;
       }
