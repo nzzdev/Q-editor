@@ -89,8 +89,6 @@ export class App {
 
     config.fallbackRoute("index");
 
-    config.mapUnknownRoutes("index");
-
     return qEnv.pushState.then((pushState) => {
       if (!pushState) {
         return;
