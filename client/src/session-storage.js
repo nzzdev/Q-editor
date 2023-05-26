@@ -1,4 +1,4 @@
-export default class SessionStorage {
+export class SessionStorage {
   setItem(key, value) {
     sessionStorage.setItem(key, JSON.stringify(value));
   }
