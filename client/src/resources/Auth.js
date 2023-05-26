@@ -60,9 +60,7 @@ export default class Auth {
   async logout() {
     const authConfig = await this.qConfig.get("auth");
 
-    if (this.sessionStorage.getItem("redirectPathAfterLogin")) {
-      this.sessionStorage.removeItem("redirectPathAfterLogin");
-    }
+    this.sessionStorage.removeItem("redirectPathAfterLogin");
 
     if (authConfig && authConfig.isLD && authConfig.type === "token") {
       const authService = await this.getAuthService();
