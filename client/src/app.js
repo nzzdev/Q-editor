@@ -1,8 +1,10 @@
 import { inject } from "aurelia-framework";
 import { Redirect, Router } from "aurelia-router";
+import { AureliaCookie } from "aurelia-cookie";
 import User from "resources/User.js";
 import QConfig from "resources/QConfig.js";
 import qEnv from "resources/qEnv.js";
+import { SessionStorage } from "./session-storage";
 
 @inject(QConfig, User, Router)
 export class App {
@@ -34,7 +36,7 @@ export class App {
         route: ["login"],
         name: "login",
         moduleId: "pages/login",
-        title: "Login"
+        title: "Login",
       },
       {
         route: ["", "index"],
@@ -43,45 +45,51 @@ export class App {
         title: "Q",
         auth: true,
         desc: "Übersicht",
-        iconName: "icon-logo"
+        iconName: "icon-logo",
       },
       {
         route: ["item/:id"],
         name: "item",
         moduleId: "pages/item-overview",
-        auth: true
+        auth: true,
       },
       {
         route: ["editor/:tool/:id?"],
         name: "editor",
         moduleId: "pages/editor",
-        auth: true
+        auth: true,
       },
       {
         route: ["feed"],
         name: "feed",
         moduleId: "pages/feed",
-        auth: true
+        auth: true,
       },
       {
         route: ["tasks/:id?"],
         name: "tasks",
         moduleId: "pages/tasks",
-        auth: true
+        auth: true,
+      },
+      {
+        route: ["q-item-picker"],
+        name: "q-item-picker",
+        moduleId: "pages/q-item-picker",
+        auth: true,
       },
       {
         route: ["server-unavailable"],
         name: "server-unavailable",
         moduleId: "pages/server-unavailable",
-        title: "Error"
-      }
+        title: "Error",
+      },
     ];
 
     config.map(routerMap);
 
     config.fallbackRoute("index");
 
-    return qEnv.pushState.then(pushState => {
+    return qEnv.pushState.then((pushState) => {
       if (!pushState) {
         return;
       }
@@ -96,13 +104,13 @@ export class App {
       const stylesheets = await this.qConfig.get("stylesheets");
       if (stylesheets && stylesheets.length) {
         stylesheets
-          .map(stylesheet => {
+          .map((stylesheet) => {
             if (!stylesheet.url && stylesheet.path) {
               stylesheet.url = `${QServerBaseUrl}${stylesheet.path}`;
             }
             return stylesheet;
           })
-          .map(stylesheet => {
+          .map((stylesheet) => {
             if (stylesheet.url) {
               let link = document.createElement("link");
               link.type = "text/css";
@@ -123,19 +131,32 @@ export class App {
   }
 }
 
-@inject(User, QConfig)
+@inject(User, QConfig, SessionStorage)
 class AuthorizeStep {
-  constructor(user, qConfig) {
+  constructor(user, qConfig, sessionStorage) {
     this.user = user;
     this.qConfig = qConfig;
+    this.sessionStorage = sessionStorage;
   }
 
   run(navigationInstruction, next) {
     // Check if the route has an "auth" key
-    if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
-      return this.user.loaded
-        .then(() => {
+    if (navigationInstruction.getAllInstructions().some((i) => i.config.auth)) {
+      const azureSession = AureliaCookie.get("azureSession");
+      const headers = {
+        Authorization: `Bearer ${azureSession}`,
+      };
+
+      return this.user
+        .loaded(headers)
+        .then((resp) => {
           if (!this.user.isLoggedIn) {
+            // Store the current route to redirect after login (for azure login)
+            this.sessionStorage.setItem(
+              "redirectPathAfterLogin",
+              window.location.href
+            );
+
             this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
             return next.cancel(new Redirect("login"));
           }
@@ -146,7 +167,7 @@ class AuthorizeStep {
           }
           return next();
         })
-        .catch(e => {
+        .catch((e) => {
           this.redirectBackAfterLoginRoute = navigationInstruction.fragment;
           return next.cancel(new Redirect("login"));
         });
@@ -166,7 +187,7 @@ class ConfigAvailableCheckStep {
     if (
       navigationInstruction
         .getAllInstructions()
-        .some(i => i.config.name === "server-unavailable")
+        .some((i) => i.config.name === "server-unavailable")
     ) {
       try {
         await this.qConfig.configLoaded;

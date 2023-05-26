@@ -15,7 +15,7 @@ export async function configure(aurelia) {
     .feature("resources/availability-checks")
     .feature("binding-behaviors")
     .feature("value-converters")
-    .plugin("aurelia-i18n", async instance => {
+    .plugin("aurelia-i18n", async (instance) => {
       // register backend plugin
       instance.i18next.use(Backend);
 
@@ -25,7 +25,7 @@ export async function configure(aurelia) {
           .get(QConfig)
           .get("languages");
         if (configuredLanguages && configuredLanguages.length > 0) {
-          availableLanguages = configuredLanguages.map(lang => lang.key);
+          availableLanguages = configuredLanguages.map((lang) => lang.key);
         }
       } catch (e) {
         // do not care and use the default availableLanguages
@@ -36,7 +36,7 @@ export async function configure(aurelia) {
       const configuredTools = await aurelia.container
         .get(ToolsInfo)
         .getAvailableTools();
-      const toolNames = configuredTools.map(tool => tool.name);
+      const toolNames = configuredTools.map((tool) => tool.name);
 
       // adapt options to your needs (see http://i18next.com/docs/options/)
       // make sure to return the promise of the setup method, in order to guarantee proper loading
@@ -58,8 +58,8 @@ export async function configure(aurelia) {
           init: {
             mode: "cors",
             credentials: "same-origin",
-            cache: "default"
-          }
+            cache: "default",
+          },
         },
         attributes: ["t", "i18n"],
         fallbackLng: "de",
@@ -69,9 +69,9 @@ export async function configure(aurelia) {
         defaultNS: "editorConfig",
         fallbackNS: "translation",
         load: "languageOnly",
-        debug: false
+        debug: false,
       });
     });
 
-  aurelia.start().then(a => a.setRoot("livingdocs-component-app/app"));
+  aurelia.start().then((a) => a.setRoot("livingdocs-component-app/app"));
 }

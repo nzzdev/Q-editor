@@ -24,11 +24,17 @@
     "changesSaved": "Changes saved.",
     "failedToSaveChanges": "Failed to save changes.",
     "loginFailed": "Your username or password is not correct.",
+    "loginFailedGeneric": "Failed to login.",
+    "loginTechnicalIssues": "Are there technical issues?",
+    "loginContactUsOnSlack": "Contact us on slack.",
+    "loginFailedServer": "Failed to login.",
     "loginTimeout": "Server takes too long to reply. We're working on it. Please try again later.",
     "genericServerError": "A problem occured on the server. We're working on it. Please try again later",
     "serverConnectionFailed": "Failed to connect to server.",
     "articlesWithThisGraphic": "Articles with this graphic",
-    "loadMore": "Load more"
+    "loadMore": "Load more",
+    "mslogin": "Microsoft Login",
+    "orContinueWith": "or continue with"
   },
   "userConfig": {
     "initials": "initials",

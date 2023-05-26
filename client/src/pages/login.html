@@ -1,24 +1,82 @@
 <template>
-	<main class="login-page" style="max-width: 500px; margin-left: auto; margin-right: auto; overflow-y: auto;">
-		<icon-logo style="width: 100px; height: 100px; margin: 50px auto 100px auto;"></icon-logo>
-		<form class="q-form">
-			<p class="q-text" if.bind="loginMessage" innerhtml.bind="loginMessage"></p>
-			<div class="q-form__block">
-				<label>
-					<span t="general.username"></span>
-					<input type="text" id="username" value.bind="username" ref="usernameInput" autocomplete="username">
-				</label>
-			</div>
-			<div class="q-form__block">
-				<label>
-					<span t="general.password"></span>
-					<input type="password" id="password" value.bind="password" autocomplete="current-password">
-				</label>
-			</div>
-			<p class="q-text q-text--error" if.bind="loginError">
-				${loginError}
-			</p>
-			<button-primary click.delegate="tryLogin()" type="submit"><span t="general.login"></span></button-primary>
-		</form>
-	</main>
+  <require from="./login.css"></require>
+
+  <main
+    class="login-page"
+    style="
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      overflow-y: auto;
+    "
+  >
+    <icon-logo
+      style="width: 100px; height: 100px; margin: 50px auto 100px auto"
+    ></icon-logo>
+    <form class="q-form">
+      <div if.bind="authConfig && authConfig.isLD">
+        <p
+          class="q-text"
+          if.bind="loginMessage"
+          innerhtml.bind="loginMessage"
+        ></p>
+        <div class="q-form__block">
+          <label>
+            <span t="general.username"></span>
+            <input
+              type="text"
+              id="username"
+              value.bind="username"
+              ref="usernameInput"
+              autocomplete="username"
+            />
+          </label>
+        </div>
+        <div class="q-form__block">
+          <label>
+            <span t="general.password"></span>
+            <input
+              type="password"
+              id="password"
+              value.bind="password"
+              autocomplete="current-password"
+            />
+          </label>
+        </div>
+        <p class="q-text q-text--error" if.bind="loginError">${loginError}</p>
+        <button-primary click.delegate="tryLogin()" type="submit"
+          ><span t="general.login"></span
+        ></button-primary>
+      </div>
+      <!-- Microsoft Login-->
+      <div class="q-login__ms-login" else>
+        <p
+          class="q-text q-text--error"
+          style="text-align: center"
+          if.bind="loginError"
+        >
+          ${loginError}
+        </p>
+        <a class="q-login__ms-login-button" click.delegate="tryAzureLogin()">
+          <label class="q-login__ms-login-button__label">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M13.05,4.24L6.56,18.05L2,18L7.09,9.24L13.05,4.24M13.75,5.33L22,19.76H6.74L16.04,18.1L11.17,12.31L13.75,5.33Z"
+              ></path>
+            </svg>
+            <span
+              class="q-login__ms-login-button__label__text"
+              t="general.mslogin"
+            ></span>
+          </label>
+        </a>
+        <p if.bind="loginError" style="text-align: center" class="q-text">
+          ${loginTechnicalHelp}
+          <a href="https://nzz.slack.com/archives/C9W43L6V9" target="_blank"
+            >${loginContactUsOnSlack}</a
+          >
+        </p>
+      </div>
+    </form>
+  </main>
 </template>

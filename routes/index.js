@@ -1,12 +1,12 @@
 const env = {
   headMarkup: process.env.HEAD_MARKUP || "",
   bodyStartMarkup: process.env.BODY_START_MARKUP || "",
-  bodyEndMarkup: process.env.BODY_END_MARKUP || ""
+  bodyEndMarkup: process.env.BODY_END_MARKUP || "",
 };
 
 const fs = require("fs");
 const indexFile = fs.readFileSync("./client/export/index.html", {
-  encoding: "utf-8"
+  encoding: "utf-8",
 });
 const compiledIndexFileContent = indexFile
   .replace("<!-- HEAD_MARKUP -->", env.headMarkup)
@@ -21,46 +21,51 @@ module.exports = [
   {
     method: "GET",
     path: "/",
-    handler: handler
+    handler: handler,
   },
   {
     method: "GET",
     path: "/index.html",
-    handler: handler
+    handler: handler,
   },
   {
     method: "GET",
     path: "/editor/{path*}",
-    handler: handler
+    handler: handler,
   },
   {
     method: "GET",
     path: "/item/{path*}",
-    handler: handler
+    handler: handler,
   },
   {
     method: "GET",
     path: "/login/{path*}",
-    handler: handler
+    handler: handler,
   },
   {
     method: "GET",
     path: "/feed",
-    handler: handler
+    handler: handler,
+  },
+  {
+    method: "GET",
+    path: "/q-item-picker",
+    handler: handler,
   },
   {
     method: "GET",
     path: "/tasks",
-    handler: handler
+    handler: handler,
   },
   {
     method: "GET",
     path: "/tasks/{path*}",
-    handler: handler
+    handler: handler,
   },
   {
     method: "GET",
     path: "/index/{path*}",
-    handler: handler
-  }
+    handler: handler,
+  },
 ];

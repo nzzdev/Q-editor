@@ -27,6 +27,7 @@ const aureliaBundle = [
   "aurelia-binding",
   "aurelia-binding",
   "aurelia-bootstrapper",
+  "aurelia-cookie",
   "aurelia-dependency-injection",
   "aurelia-dialog",
   "aurelia-event-aggregator",
