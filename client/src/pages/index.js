@@ -63,6 +63,8 @@ export class Index {
       if (redirectPath && document.location.pathname !== "/") {
         this.sessionStorage.removeItem("redirectPathAfterLogin");
         window.location.href = redirectPath;
+      } else {
+        this.sessionStorage.removeItem("redirectPathAfterLogin");
       }
     }
   }

@@ -3,21 +3,19 @@ import { Container } from "aurelia-dependency-injection";
 import qEnv from "resources/qEnv.js";
 import QConfig from "resources/QConfig.js";
 import User from "resources/User.js";
-import { SessionStorage } from "../session-storage.js";
 
-@inject(User, QConfig, Loader, Container, SessionStorage)
+@inject(User, QConfig, Loader, Container)
 export default class Auth {
   loginError = null;
 
   loginCallbacks = [];
 
-  constructor(user, qConfig, loader, diContainer, authService, sessionStorage) {
+  constructor(user, qConfig, loader, diContainer, authService) {
     this.user = user;
     this.qConfig = qConfig;
     this.loader = loader;
     this.diContainer = diContainer;
     this.authService = authService;
-    this.sessionStorage = sessionStorage;
   }
 
   async getAuthService() {
@@ -59,8 +57,6 @@ export default class Auth {
 
   async logout() {
     const authConfig = await this.qConfig.get("auth");
-
-    this.sessionStorage.removeItem("redirectPathAfterLogin");
 
     if (authConfig && authConfig.isLD && authConfig.type === "token") {
       const authService = await this.getAuthService();
