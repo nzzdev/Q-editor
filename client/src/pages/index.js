@@ -8,7 +8,7 @@ import ToolsInfo from "resources/ToolsInfo.js";
 import Statistics from "resources/Statistics.js";
 import QConfig from "resources/QConfig.js";
 import { AccountDialog } from "dialogs/account-dialog";
-import { SessionStorage } from "../session-storage";
+import { SessionStorage } from "../session-storage.js";
 
 @singleton()
 @inject(

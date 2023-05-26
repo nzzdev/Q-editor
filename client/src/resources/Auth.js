@@ -3,7 +3,7 @@ import { Container } from "aurelia-dependency-injection";
 import qEnv from "resources/qEnv.js";
 import QConfig from "resources/QConfig.js";
 import User from "resources/User.js";
-import { SessionStorage } from "../session-storage";
+import { SessionStorage } from "../session-storage.js";
 
 @inject(User, QConfig, Loader, Container, SessionStorage)
 export default class Auth {
