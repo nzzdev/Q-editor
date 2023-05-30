@@ -84,10 +84,7 @@ export class SchemaEditorFiles {
       dictMaxFilesExceeded: this.i18n.tr("dropzone.dictMaxFilesExceeded"),
     };
 
-    const authorizationToken = [
-      this.authService.config.authTokenType,
-      this.authService.getAccessToken(),
-    ].join(" ");
+    const azureSession = AureliaCookie.get("azureSession");
 
     this.dropzoneOptions = Object.assign(
       {
@@ -95,7 +92,7 @@ export class SchemaEditorFiles {
         url: `${QServerBaseUrl}/file`,
         withCredentials: true,
         headers: {
-          Authorization: authorizationToken,
+          Authorization: `Bearer ${azureSession}`,
         },
         thumbnailWidth: 120, // should keep aspect ratio,
         thumbnailHeight: null,
