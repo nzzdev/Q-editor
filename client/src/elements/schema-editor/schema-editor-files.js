@@ -3,6 +3,7 @@ import { Notification } from "aurelia-notification";
 import { I18N } from "aurelia-i18n";
 import qEnv from "resources/qEnv.js";
 import { AuthService } from "aurelia-authentication";
+import { AureliaCookie } from "aurelia-cookie";
 const log = LogManager.getLogger("Q");
 
 @inject(Loader, AuthService, Notification, I18N)
