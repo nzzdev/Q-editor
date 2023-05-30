@@ -152,7 +152,7 @@ export class SchemaEditorFiles {
 
       if (Array.isArray(this.data)) {
         // find the removed one in our data by
-        dataArrayIndex = this.data.findIndex(data => data.url === file.name);
+        dataArrayIndex = this.data.findIndex((data) => data.url === file.name);
         if (dataArrayIndex > -1) {
           this.data.splice(dataArrayIndex, 1);
           this.change();
