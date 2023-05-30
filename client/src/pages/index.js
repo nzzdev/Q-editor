@@ -59,13 +59,14 @@ export class Index {
         "redirectPathAfterLogin"
       );
 
+      this.sessionStorage.removeItem("redirectPathAfterLogin");
+
       // Redirect to specific route
-      if (redirectPath && document.location.pathname !== "/") {
-        this.sessionStorage.removeItem("redirectPathAfterLogin");
+      if (redirectPath && redirectPath !== document.location.href) {
         window.location.href = redirectPath;
-      } else {
-        this.sessionStorage.removeItem("redirectPathAfterLogin");
       }
+    } else {
+      this.sessionStorage.removeItem("redirectPathAfterLogin");
     }
   }
 
