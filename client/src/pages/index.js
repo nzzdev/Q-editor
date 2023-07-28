@@ -68,7 +68,7 @@ export class Index {
       }
     }
     // Close window after login
-    else if (document.referrer.includes("state=iframeLoginPopup")) {
+    else if (document.referrer.includes("origin=iframeLoginPopup")) {
       this.sessionStorage.removeItem("redirectPathAfterLogin");
       window.close();
     } else {
