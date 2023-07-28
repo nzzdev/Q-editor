@@ -95,7 +95,7 @@ export class Login {
         const azureLoginUrl = (await QServerBaseUrl) + "/auth/azure";
 
         // Open popup-login if in iframe
-        if (!!window.frameElement) {
+        if (window !== window.parent) {
           this.createLoginSuccessListener();
           const stateUrlArg = "&state=iframeLoginPopup";
           window.open(azureLoginUrl + stateUrlArg, "_blank");
