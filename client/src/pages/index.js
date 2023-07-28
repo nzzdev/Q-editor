@@ -54,6 +54,7 @@ export class Index {
   }
 
   activate() {
+    // Do redirect after login
     if (document.referrer === "https://login.microsoftonline.com/") {
       const redirectPath = this.sessionStorage.getItem(
         "redirectPathAfterLogin"
@@ -65,6 +66,11 @@ export class Index {
       if (redirectPath && redirectPath !== document.location.href) {
         window.location.href = redirectPath;
       }
+    }
+    // Close window after login
+    else if (document.referrer.includes("state=iframeLoginPopup")) {
+      this.sessionStorage.removeItem("redirectPathAfterLogin");
+      window.close();
     } else {
       this.sessionStorage.removeItem("redirectPathAfterLogin");
     }

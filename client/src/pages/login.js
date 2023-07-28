@@ -65,6 +65,26 @@ export class Login {
     this.tryLogin(true);
   }
 
+  handleLoginSuccess(event) {
+    // Ensure the message is coming from the editor to avoid potential security risks
+    if (event.origin !== document.location.href) {
+      return;
+    }
+
+    if (event.data === "loginSuccess") {
+      // Remove the event listener before navigating to the new route
+      window.removeEventListener("message", this.handleLoginSuccess);
+
+      // Perform the necessary actions for successful login
+      this.router.navigateToRoute("index");
+    }
+  }
+
+  createLoginSuccessListener() {
+    this.loginSuccessListener = this.handleLoginSuccess.bind(this);
+    return window.addEventListener("message", this.loginSuccessListener);
+  }
+
   async tryLogin(isAzure) {
     this.loginError = null;
     this.loginTechnicalHelp = null;
@@ -73,7 +93,15 @@ export class Login {
       if (isAzure) {
         const QServerBaseUrl = await qEnv.QServerBaseUrl;
         const azureLoginUrl = (await QServerBaseUrl) + "/auth/azure";
-        window.open(azureLoginUrl, "_self");
+
+        // Open popup-login if in iframe
+        if (!!window.frameElement) {
+          this.createLoginSuccessListener();
+          const stateUrlArg = "&state=iframeLoginPopup";
+          window.open(azureLoginUrl + stateUrlArg, "_blank");
+        } else {
+          window.open(azureLoginUrl, "_self");
+        }
       } else {
         await this.auth.login(this.username, this.password);
         this.router.navigateToRoute("index");
