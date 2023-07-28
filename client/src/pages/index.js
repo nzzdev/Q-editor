@@ -53,9 +53,15 @@ export class Index {
     return this.user.loaded;
   }
 
-  activate() {
+  activate(params) {
+    // Close window & send loginSuccess message to parent window
+    if (params && params.origin === "iframeLoginPopup") {
+      window.opener.postMessage("loginSuccess", document.location.origin);
+      this.sessionStorage.removeItem("redirectPathAfterLogin");
+      window.window.close();
+    }
     // Do redirect after login
-    if (document.referrer === "https://login.microsoftonline.com/") {
+    else if (document.referrer === "https://login.microsoftonline.com/") {
       const redirectPath = this.sessionStorage.getItem(
         "redirectPathAfterLogin"
       );
@@ -66,12 +72,6 @@ export class Index {
       if (redirectPath && redirectPath !== document.location.href) {
         window.location.href = redirectPath;
       }
-    }
-    // Close window & send loginSuccess message to parent window
-    else if (document.referrer.includes("origin=iframeLoginPopup")) {
-      window.opener.postMessage("loginSuccess", document.location.origin);
-      this.sessionStorage.removeItem("redirectPathAfterLogin");
-      window.window.close();
     } else {
       this.sessionStorage.removeItem("redirectPathAfterLogin");
     }
