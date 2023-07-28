@@ -67,10 +67,11 @@ export class Index {
         window.location.href = redirectPath;
       }
     }
-    // Close window after login
+    // Close window & send loginSuccess message to parent window
     else if (document.referrer.includes("origin=iframeLoginPopup")) {
+      window.opener.postMessage("loginSuccess", document.location.origin);
       this.sessionStorage.removeItem("redirectPathAfterLogin");
-      window.close();
+      window.window.close();
     } else {
       this.sessionStorage.removeItem("redirectPathAfterLogin");
     }

@@ -67,7 +67,7 @@ export class Login {
 
   handleLoginSuccess(event) {
     // Ensure the message is coming from the editor to avoid potential security risks
-    if (event.origin !== document.location.href) {
+    if (event.origin !== window.location.origin) {
       return;
     }
 
