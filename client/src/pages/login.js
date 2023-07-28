@@ -97,7 +97,7 @@ export class Login {
         // Open popup-login if in iframe
         if (window !== window.parent) {
           this.createLoginSuccessListener();
-          const stateUrlArg = "&origin=iframeLoginPopup";
+          const stateUrlArg = "?origin=iframeLoginPopup";
           window.open(azureLoginUrl + stateUrlArg, "_blank");
         } else {
           window.open(azureLoginUrl, "_self");
