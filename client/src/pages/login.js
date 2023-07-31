@@ -10,15 +10,17 @@ import Auth from "resources/Auth.js";
 import User from "resources/User.js";
 import QConfig from "resources/QConfig.js";
 import qEnv from "resources/qEnv.js";
+import { SessionStorage } from "../session-storage";
 
-@inject(Auth, User, QConfig, I18N, Router)
+@inject(Auth, User, QConfig, I18N, Router, SessionStorage)
 export class Login {
   username;
   password;
   authData;
   authConfig;
+  sessionStorage;
 
-  constructor(auth, user, qConfig, i18n, router) {
+  constructor(auth, user, qConfig, i18n, router, sessionStorage) {
     this.auth = auth;
     this.user = user;
     this.i18n = i18n;
@@ -26,6 +28,7 @@ export class Login {
     this.qConfig = qConfig;
     this.loadData();
     this.errorDetails = null;
+    this.sessionStorage = sessionStorage;
   }
 
   async loadData() {
@@ -75,8 +78,18 @@ export class Login {
       // Remove the event listener before navigating to the new route
       window.removeEventListener("message", this.handleLoginSuccess);
 
-      // Perform the necessary actions for successful login
-      this.router.navigateToRoute("index");
+      const redirectPath = this.sessionStorage.getItem(
+        "redirectPathAfterLogin"
+      );
+
+      this.sessionStorage.removeItem("redirectPathAfterLogin");
+
+      // Redirect to specific route
+      if (redirectPath) {
+        window.location.href = redirectPath;
+      } else {
+        this.router.navigateToRoute("index");
+      }
     }
   }
 

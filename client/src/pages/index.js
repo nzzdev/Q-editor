@@ -57,7 +57,6 @@ export class Index {
     // Close window & send loginSuccess message to parent window
     if (params && params.origin === "iframeLoginPopup") {
       window.opener.postMessage("loginSuccess", document.location.origin);
-      this.sessionStorage.removeItem("redirectPathAfterLogin");
       window.window.close();
     }
     // Do redirect after login
