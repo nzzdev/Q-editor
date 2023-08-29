@@ -1,4 +1,4 @@
-import { inject, singleton, LogManager } from "aurelia-framework";
+import { inject, LogManager } from "aurelia-framework";
 import { I18N } from "aurelia-i18n";
 import ItemStore from "resources/ItemStore.js";
 import QTargets from "resources/QTargets.js";
@@ -9,7 +9,6 @@ import QConfig from "resources/QConfig.js";
 
 const log = LogManager.getLogger("Q");
 
-@singleton()
 @inject(
   ItemStore,
   QTargets,
@@ -18,7 +17,7 @@ const log = LogManager.getLogger("Q");
   CurrentItemProvider,
   QConfig
 )
-export class App {
+export class QItemPicker {
   constructor(
     itemStore,
     qTargets,
@@ -201,7 +200,8 @@ export class App {
     this.title = this.selectedItem.conf.title;
     this.displayOptionsSchema = await this.getDisplayOptionsSchema();
     if (!this.selectedItem.toolRuntimeConfig.displayOptions) {
-      this.selectedItem.toolRuntimeConfig.displayOptions = await this.getDefaultDisplayOptions();
+      this.selectedItem.toolRuntimeConfig.displayOptions =
+        await this.getDefaultDisplayOptions();
     }
     if (this.target) {
       this.renderingInfo = await this.getRenderingInfo();

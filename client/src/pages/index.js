@@ -8,6 +8,7 @@ import ToolsInfo from "resources/ToolsInfo.js";
 import Statistics from "resources/Statistics.js";
 import QConfig from "resources/QConfig.js";
 import { AccountDialog } from "dialogs/account-dialog";
+import { SessionStorage } from "../session-storage.js";
 
 @singleton()
 @inject(
@@ -18,7 +19,8 @@ import { AccountDialog } from "dialogs/account-dialog";
   QConfig,
   Statistics,
   Notification,
-  DialogService
+  DialogService,
+  SessionStorage
 )
 export class Index {
   enoughNewItems = true;
@@ -33,7 +35,8 @@ export class Index {
     qConfig,
     statistics,
     notification,
-    dialogService
+    dialogService,
+    sessionStorage
   ) {
     this.itemStore = itemStore;
     this.user = user;
@@ -43,10 +46,34 @@ export class Index {
     this.statistics = statistics;
     this.notification = notification;
     this.dialogService = dialogService;
+    this.sessionStorage = sessionStorage;
   }
 
   canActivate() {
     return this.user.loaded;
+  }
+
+  activate(params) {
+    // Close window & send loginSuccess message to parent window
+    if (params && params.origin === "iframeLoginPopup") {
+      window.opener.postMessage("loginSuccess", document.location.origin);
+      window.window.close();
+    }
+    // Do redirect after login
+    else if (document.referrer === "https://login.microsoftonline.com/") {
+      const redirectPath = this.sessionStorage.getItem(
+        "redirectPathAfterLogin"
+      );
+
+      this.sessionStorage.removeItem("redirectPathAfterLogin");
+
+      // Redirect to specific route
+      if (redirectPath && redirectPath !== document.location.href) {
+        window.location.href = redirectPath;
+      }
+    } else {
+      this.sessionStorage.removeItem("redirectPathAfterLogin");
+    }
   }
 
   async attached() {
@@ -67,7 +94,7 @@ export class Index {
     // apply stored user filter selections
     if (this.user.getUserConfig("q-filters")) {
       for (let userFilterSelection of this.user.getUserConfig("q-filters")) {
-        this.availableFilters.map(filter => {
+        this.availableFilters.map((filter) => {
           if (filter.name === userFilterSelection.name) {
             filter.selected = userFilterSelection.selected;
           }
@@ -80,7 +107,7 @@ export class Index {
     // this observer will always observe the last item in the item list
     // it checks if the observed element is within the viewport
     // if so, we load more items
-    this.itemListScrollObserver = new IntersectionObserver(entries => {
+    this.itemListScrollObserver = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && this.moreItemsAvailable !== false) {
         this.loadMore();
       }
@@ -96,10 +123,10 @@ export class Index {
     if (this.user) {
       this.user.setUserConfig(
         "q-filters",
-        this.availableFilters.map(filter => {
+        this.availableFilters.map((filter) => {
           return {
             name: filter.name,
-            selected: filter.selected
+            selected: filter.selected,
           };
         })
       );
@@ -152,7 +179,8 @@ export class Index {
 
     try {
       let statsValues = {};
-      statsValues.totalActiveCount = await this.statistics.getNumberOfActiveItems();
+      statsValues.totalActiveCount =
+        await this.statistics.getNumberOfActiveItems();
 
       const lowNewItemsConfig = await this.qConfig.get("lowNewItems");
       statsValues.days = lowNewItemsConfig.days;
@@ -178,8 +206,8 @@ export class Index {
     const openDialogResult = await this.dialogService.open({
       viewModel: AccountDialog,
       model: {
-        router: this.router
-      }
+        router: this.router,
+      },
     });
     const closeResult = await openDialogResult.closeResult;
     if (closeResult.wasCancelled === false) {

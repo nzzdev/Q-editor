@@ -1,4 +1,5 @@
 import { inject, LogManager } from "aurelia-framework";
+import { AureliaCookie } from "aurelia-cookie";
 import { HttpClient } from "aurelia-fetch-client";
 import qEnv from "resources/qEnv.js";
 
@@ -11,14 +12,15 @@ export default class User {
   constructor(httpClient) {
     this.httpClient = httpClient;
     this.isLoggedIn = false;
-    this.loaded = this.load();
+    this.loaded = this.load;
   }
 
-  async load() {
+  async load(headers) {
     try {
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
         credentials: "include",
+        headers,
       });
 
       if (!response.ok) {
@@ -29,6 +31,7 @@ export default class User {
       return true;
     } catch (e) {
       this.data = null;
+      return false;
     } finally {
       this.setLoggedInState();
       return true;
@@ -83,11 +86,16 @@ export default class User {
 
   async save() {
     try {
+      const azureSession = AureliaCookie.get("azureSession");
+      const headers = {
+        Authorization: `Bearer ${azureSession}`,
+      };
       const QServerBaseUrl = await qEnv.QServerBaseUrl;
       const response = await this.httpClient.fetch(`${QServerBaseUrl}/user`, {
         credentials: "include",
         method: "PUT",
         body: JSON.stringify(this.data),
+        headers,
       });
 
       if (!response.ok) {

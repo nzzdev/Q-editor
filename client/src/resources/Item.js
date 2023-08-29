@@ -1,4 +1,5 @@
 import qEnv from "resources/qEnv.js";
+import { AureliaCookie } from "aurelia-cookie";
 
 export default class Item {
   conf = {};
@@ -103,6 +104,11 @@ export default class Item {
     }
     this.isSaving = true;
 
+    const azureSession = AureliaCookie.get("azureSession");
+    const headers = {
+      Authorization: `Bearer ${azureSession}`,
+    };
+
     // per default we use POST to store a new item
     let method = "POST";
 
@@ -116,6 +122,7 @@ export default class Item {
       method: method,
       credentials: "include",
       body: JSON.stringify(this.conf),
+      headers,
     });
 
     if (!response.ok) {

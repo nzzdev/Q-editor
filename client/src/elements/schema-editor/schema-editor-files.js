@@ -3,6 +3,7 @@ import { Notification } from "aurelia-notification";
 import { I18N } from "aurelia-i18n";
 import qEnv from "resources/qEnv.js";
 import { AuthService } from "aurelia-authentication";
+import { AureliaCookie } from "aurelia-cookie";
 const log = LogManager.getLogger("Q");
 
 @inject(Loader, AuthService, Notification, I18N)
@@ -84,10 +85,7 @@ export class SchemaEditorFiles {
       dictMaxFilesExceeded: this.i18n.tr("dropzone.dictMaxFilesExceeded"),
     };
 
-    const authorizationToken = [
-      this.authService.config.authTokenType,
-      this.authService.getAccessToken(),
-    ].join(" ");
+    const azureSession = AureliaCookie.get("azureSession");
 
     this.dropzoneOptions = Object.assign(
       {
@@ -95,7 +93,7 @@ export class SchemaEditorFiles {
         url: `${QServerBaseUrl}/file`,
         withCredentials: true,
         headers: {
-          Authorization: authorizationToken,
+          Authorization: `Bearer ${azureSession}`,
         },
         thumbnailWidth: 120, // should keep aspect ratio,
         thumbnailHeight: null,
@@ -152,7 +150,7 @@ export class SchemaEditorFiles {
 
       if (Array.isArray(this.data)) {
         // find the removed one in our data by
-        dataArrayIndex = this.data.findIndex(data => data.url === file.name);
+        dataArrayIndex = this.data.findIndex((data) => data.url === file.name);
         if (dataArrayIndex > -1) {
           this.data.splice(dataArrayIndex, 1);
           this.change();

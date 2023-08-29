@@ -1,16 +1,13 @@
 <template>
-  <require from="https://fonts.googleapis.com/css?family=Roboto!css"></require>
-  <require from="../styles/config.css"></require>
-  <require from="../styles/layout.css"></require>
-  <require from="../styles/fonts.css"></require>
-  <require from="../styles/q-form.css"></require>
-  <require from="../styles/app.css"></require>
-  <require from="./app.css"></require>
+  <require from="./q-item-picker.css"></require>
   <require from="../elements/atoms/box-icon.html"></require>
   <require from="../elements/item-preview/preview-container"></require>
   <require from="../elements/schema-editor/schema-editor"></require>
 
-  <div class="livingdocs-component">
+  <div
+    class="livingdocs-component"
+    style="width: calc(100vw - 16px); margin-top: -56px"
+  >
     <div class="livingdocs-component-search">
       <div class="search">
         <input
@@ -47,9 +44,7 @@
             <span class="q-text item-date" if.bind="!item.conf.updatedDate">
               ${item.conf.createdDate & timeAgo:7*24*60*60}
             </span>
-            <span class="q-text">
-              ${item.conf.createdBy}
-            </span>
+            <span class="q-text"> ${item.conf.createdBy} </span>
             <div class="item-list-entry__state-tag-container">
               <span
                 if.bind="item.conf.active"

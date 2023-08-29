@@ -53,6 +53,7 @@ export async function configure(aurelia) {
     .feature("resources/notification-checks")
     .feature("binding-behaviors")
     .feature("value-converters")
+    .plugin('aurelia-cookie')
     .plugin("aurelia-dialog", (config) => {
       config.useDefaults();
       config.settings.lock = false;
