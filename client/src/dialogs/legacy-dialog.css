@@ -1,0 +1,35 @@
+.export-dialog schema-editor-select > div {
+  display: flex;
+}
+
+.export-dialog .q-form__radio {
+  margin-right: 8px;
+}
+.q-bar__legacy-dialog {
+  position: absolute;
+  top: calc(var(--q-space-base) * 8);
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius: 20px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.05);
+  font-weight: 400;
+  text-rendering: optimizelegibility;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: normal;
+  color: rgb(150, 105, 0);
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.44;
+  background: rgb(255, 246, 221);
+  border: 1px solid rgb(255, 239, 170);
+  border-radius: 2px;
+  padding: 10px;
+}
+
+.q-bar__legacy-dialog__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  cursor: pointer;
+}

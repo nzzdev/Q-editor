@@ -9,6 +9,7 @@ import QConfig from "resources/QConfig.js";
 import User from "resources/User.js";
 import Auth from "resources/Auth.js";
 import ToolsInfo from "resources/ToolsInfo.js";
+import Cookie from "../resources/Cookie";
 
 @inject(
   DialogController,
@@ -18,7 +19,8 @@ import ToolsInfo from "resources/ToolsInfo.js";
   User,
   Auth,
   QConfig,
-  ToolsInfo
+  ToolsInfo,
+  Cookie
 )
 export class AccountDialog {
   toolSelectionTypes = [
@@ -40,7 +42,8 @@ export class AccountDialog {
     user,
     auth,
     qConfig,
-    toolsInfo
+    toolsInfo,
+    cookie
   ) {
     this.controller = controller;
     this.diContainer = diContainer;
@@ -50,6 +53,7 @@ export class AccountDialog {
     this.auth = auth;
     this.qConfig = qConfig;
     this.toolsInfo = toolsInfo;
+    this.cookie = cookie;
 
     this.loadData();
   }
@@ -105,6 +109,7 @@ export class AccountDialog {
   async logout() {
     this.controller.cancel();
     await this.auth.logout();
+    this.cookie.deleteCookie();
     this.router.navigateToRoute("index", { replace: true });
   }
 
