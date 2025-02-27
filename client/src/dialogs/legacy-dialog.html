@@ -1,0 +1,30 @@
+<template>
+  <require from="../styles/q-dialog.css"></require>
+  <require from="./legacy-dialog.css"></require>
+  <div class="q-dialog q-bar__legacy-dialog">
+    <button-tertiary
+      class="q-dialog__close-button q-bar__legacy-dialog__close"
+      icon="close"
+      icon-size="medium"
+      click.delegate="closeDialog()"
+    ></button-tertiary>
+    <div class="q-dialog__content">
+      <h1 class="q-dialog-title">Liebe Q-Nutzerin, lieber Q-Nutzer,</h1>
+      <section class="help-dialog__faq">
+        <p>
+          du befindest dich noch in der alten Version von Q. Diese wird am 25. März 2025 abgeschaltet. Bitte wechsle rechtzeitig zum neuen Q, um weiterhin alle Funktionen nutzen zu können.
+          <p><a href="https://qv2.st.nzz.ch/"
+            >👉 Klicke hier, um zum neuen Q zu gelangen.</a
+          ></p>
+        </p>
+        <p>
+          Falls du Fragen hast, melde dich gerne im
+          <a href="https://nzz.slack.com/archives/C11EXEZFX"
+            >#visuals-aktuell</a
+          >
+        </p>
+        <p>Vielen Dank! 😊</p>
+      </section>
+    </div>
+  </div>
+</template>
