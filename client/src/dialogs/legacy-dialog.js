@@ -21,10 +21,18 @@ export class LegacyDialog {
 
   async closeDialog() {
     try {
-      await this.cookie.setCookie("shown", 12); // Be explicit about the value we're setting
+      // First set the cookie
+      await this.cookie.setCookie("shown", 12);
+
+      // Then manually remove the ux-open-dialog class from body
+      document.body.classList.remove("ux-open-dialog");
+
+      // Finally close the dialog
       this.controller.cancel();
     } catch (error) {
-      console.error("Failed to set cookie:", error);
+      console.error("Failed to close dialog:", error);
+      // Ensure body class is removed even if there's an error
+      document.body.classList.remove("ux-open-dialog");
     }
   }
 }

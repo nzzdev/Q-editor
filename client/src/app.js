@@ -105,7 +105,13 @@ export class App {
   }
 
   async attached() {
-    // Wait for the app to be fully attached to the DOM
+    // Check if QLoadErrorTimeout exists and clear it
+    if (window.QLoadErrorTimeout) {
+      clearTimeout(window.QLoadErrorTimeout);
+    }
+
+    // Wait longer to ensure the app is completely loaded
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await this.openLegacyDialog();
   }
 
@@ -113,15 +119,18 @@ export class App {
     try {
       const legacyCookie = await this.cookie.getCookie();
       if (legacyCookie !== "shown") {
-        // Small delay to ensure app is fully loaded
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        await this.dialogService.open({
-          viewModel: LegacyDialog,
-          model: {},
-        });
+        // Check if body has loading class or other indicators
+        if (!document.body.classList.contains("loading")) {
+          await this.dialogService.open({
+            viewModel: LegacyDialog,
+            model: {},
+          });
+        }
       }
     } catch (error) {
       console.error("Failed to check legacy dialog cookie:", error);
+      // Ensure body class is clean in case of error
+      document.body.classList.remove("ux-open-dialog");
     }
   }
 }
