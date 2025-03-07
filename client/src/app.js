@@ -19,7 +19,6 @@ export class App {
     this.router = router;
     this.dialogService = dialogService;
     this.cookie = cookie;
-    this.openLegacyDialog();
   }
 
   canActivate() {
@@ -28,6 +27,7 @@ export class App {
 
   async activate() {
     this.isPlayground = await qEnv.playground;
+    await this.openLegacyDialog();
   }
 
   configureRouter(config, router) {
@@ -139,7 +139,7 @@ export class App {
   async openLegacyDialog() {
     const legacyCookie = await this.cookie.getCookie();
     if (!legacyCookie) {
-      this.dialogService.open({
+      await this.dialogService.open({
         viewModel: LegacyDialog,
         model: {},
       });
