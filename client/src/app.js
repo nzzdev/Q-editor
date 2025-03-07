@@ -27,7 +27,6 @@ export class App {
 
   async activate() {
     this.isPlayground = await qEnv.playground;
-    await this.openLegacyDialog();
   }
 
   configureRouter(config, router) {
@@ -105,27 +104,21 @@ export class App {
   }
 
   async attached() {
-    // Check if QLoadErrorTimeout exists and clear it
-    if (window.QLoadErrorTimeout) {
-      clearTimeout(window.QLoadErrorTimeout);
-    }
-
-    // Wait longer to ensure the app is completely loaded
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    await this.openLegacyDialog();
+    // Check if loading is complete
+    await this.dialogService.open({
+      viewModel: LegacyDialog,
+      model: {},
+    });
   }
 
   async openLegacyDialog() {
     try {
       const legacyCookie = await this.cookie.getCookie();
       if (legacyCookie !== "shown") {
-        // Check if body has loading class or other indicators
-        if (!document.body.classList.contains("loading")) {
-          await this.dialogService.open({
-            viewModel: LegacyDialog,
-            model: {},
-          });
-        }
+        await this.dialogService.open({
+          viewModel: LegacyDialog,
+          model: {},
+        });
       }
     } catch (error) {
       console.error("Failed to check legacy dialog cookie:", error);
