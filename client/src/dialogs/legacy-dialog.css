@@ -6,10 +6,11 @@
   margin-right: 8px;
 }
 .q-bar__legacy-dialog {
-  position: absolute;
+  position: fixed;
   top: calc(var(--q-space-base) * 8);
   left: 50%;
   transform: translate(-50%, 0);
+  z-index: 1000;
   border-radius: 20px;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.05);
   font-weight: 400;

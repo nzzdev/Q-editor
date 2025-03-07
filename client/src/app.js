@@ -5,15 +5,21 @@ import User from "resources/User.js";
 import QConfig from "resources/QConfig.js";
 import qEnv from "resources/qEnv.js";
 import { SessionStorage } from "./session-storage";
+import { LegacyDialog } from "dialogs/legacy-dialog";
+import Cookie from "resources/Cookie";
+import { DialogService } from "aurelia-dialog";
 
-@inject(QConfig, User, Router)
+@inject(QConfig, User, Router, DialogService, Cookie)
 export class App {
   routerMap;
 
-  constructor(qConfig, user, router) {
+  constructor(qConfig, user, router, dialogService, cookie) {
     this.qConfig = qConfig;
     this.user = user;
     this.router = router;
+    this.dialogService = dialogService;
+    this.cookie = cookie;
+    this.openLegacyDialog();
   }
 
   canActivate() {
@@ -127,6 +133,16 @@ export class App {
       }
     } catch (e) {
       // nevermind
+    }
+  }
+
+  async openLegacyDialog() {
+    const legacyCookie = await this.cookie.getCookie();
+    if (!legacyCookie) {
+      this.dialogService.open({
+        viewModel: LegacyDialog,
+        model: {},
+      });
     }
   }
 }

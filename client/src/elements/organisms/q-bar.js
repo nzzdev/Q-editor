@@ -2,7 +2,6 @@ import { bindable, inject } from "aurelia-framework";
 import { DialogService } from "aurelia-dialog";
 import { Router } from "aurelia-router";
 import { HelpDialog } from "dialogs/help-dialog";
-import { LegacyDialog } from "dialogs/legacy-dialog"; // Corrected import
 
 import User from "resources/User.js";
 import Auth from "resources/Auth.js";
@@ -20,17 +19,6 @@ export class QBar {
     this.router = router;
     this.dialogService = dialogService;
     this.cookie = cookie;
-    this.openLegacyDialog();
-  }
-
-  async openLegacyDialog() {
-    const legacyCookie = await this.cookie.getCookie();
-    if(!legacyCookie) {
-      this.dialogService.open({
-        viewModel: LegacyDialog,
-        model: {}
-      });
-    }
   }
 
   sizeChanged(newValue, oldValue) {
@@ -41,7 +29,7 @@ export class QBar {
   showHelp() {
     this.dialogService.open({
       viewModel: HelpDialog,
-      model: {}
+      model: {},
     });
   }
 }
