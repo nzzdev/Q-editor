@@ -105,42 +105,16 @@ export class App {
   }
 
   async attached() {
-    // load any additional stylesheets defined for themeing or font-face loading as @font-face doesn't work within ShadowRoot (used for the preview)
-    try {
-      const stylesheets = await this.qConfig.get("stylesheets");
-      if (stylesheets && stylesheets.length) {
-        stylesheets
-          .map((stylesheet) => {
-            if (!stylesheet.url && stylesheet.path) {
-              stylesheet.url = `${QServerBaseUrl}${stylesheet.path}`;
-            }
-            return stylesheet;
-          })
-          .map((stylesheet) => {
-            if (stylesheet.url) {
-              let link = document.createElement("link");
-              link.type = "text/css";
-              link.rel = "stylesheet";
-              link.href = stylesheet.url;
-              document.head.appendChild(link);
-            } else if (stylesheet.content) {
-              let style = document.createElement("style");
-              style.type = "text/css";
-              style.appendChild(document.createTextNode(stylesheet.content));
-              document.head.appendChild(style);
-            }
-          });
-      }
-    } catch (e) {
-      // nevermind
-    }
+    // Wait for the app to be fully attached to the DOM
+    await this.openLegacyDialog();
   }
 
   async openLegacyDialog() {
     try {
       const legacyCookie = await this.cookie.getCookie();
       if (legacyCookie !== "shown") {
-        // Be explicit about the value we're checking
+        // Small delay to ensure app is fully loaded
+        await new Promise((resolve) => setTimeout(resolve, 500));
         await this.dialogService.open({
           viewModel: LegacyDialog,
           model: {},
