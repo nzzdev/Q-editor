@@ -137,12 +137,17 @@ export class App {
   }
 
   async openLegacyDialog() {
-    const legacyCookie = await this.cookie.getCookie();
-    if (!legacyCookie) {
-      await this.dialogService.open({
-        viewModel: LegacyDialog,
-        model: {},
-      });
+    try {
+      const legacyCookie = await this.cookie.getCookie();
+      if (legacyCookie !== "shown") {
+        // Be explicit about the value we're checking
+        await this.dialogService.open({
+          viewModel: LegacyDialog,
+          model: {},
+        });
+      }
+    } catch (error) {
+      console.error("Failed to check legacy dialog cookie:", error);
     }
   }
 }

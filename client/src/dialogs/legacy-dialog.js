@@ -1,7 +1,7 @@
-import { inject } from 'aurelia-framework';
-import { DialogController } from 'aurelia-dialog';
-import QConfig from 'resources/QConfig.js';
-import Cookie from '../resources/Cookie';
+import { inject } from "aurelia-framework";
+import { DialogController } from "aurelia-dialog";
+import QConfig from "resources/QConfig.js";
+import Cookie from "../resources/Cookie";
 
 @inject(DialogController, QConfig, Cookie)
 export class LegacyDialog {
@@ -15,10 +15,16 @@ export class LegacyDialog {
 
   async activate(config) {
     this.config = config;
+    // Add a small delay to ensure dialog is fully rendered
+    await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
   async closeDialog() {
-    this.cookie.setCookie(true, 12); // set cookie to expire in 24 hours
-    this.controller.cancel();
+    try {
+      await this.cookie.setCookie("shown", 12); // Be explicit about the value we're setting
+      this.controller.cancel();
+    } catch (error) {
+      console.error("Failed to set cookie:", error);
+    }
   }
 }
