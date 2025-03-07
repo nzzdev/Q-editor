@@ -104,26 +104,16 @@ export class App {
   }
 
   async attached() {
-    // Check if loading is complete
-    await this.dialogService.open({
-      viewModel: LegacyDialog,
-      model: {},
-    });
+    await this.openLegacyDialog();
   }
 
   async openLegacyDialog() {
-    try {
-      const legacyCookie = await this.cookie.getCookie();
-      if (legacyCookie !== "shown") {
-        await this.dialogService.open({
-          viewModel: LegacyDialog,
-          model: {},
-        });
-      }
-    } catch (error) {
-      console.error("Failed to check legacy dialog cookie:", error);
-      // Ensure body class is clean in case of error
-      document.body.classList.remove("ux-open-dialog");
+    const legacyCookie = await this.cookie.getCookie();
+    if (!legacyCookie) {
+      this.dialogService.open({
+        viewModel: LegacyDialog,
+        model: {},
+      });
     }
   }
 }
