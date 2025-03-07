@@ -24,7 +24,13 @@
   background: rgb(255, 246, 221);
   border: 1px solid rgb(255, 239, 170);
   border-radius: 2px;
-  padding: 10px;
+  max-width: 600px;
+  width: 100%;
+  padding: 24px;
+}
+
+.q-bar__legacy-dialog .q-dialog__content {
+  width: 100%;
 }
 
 .q-bar__legacy-dialog__close {
